@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شقة عبدالله بن طاهر للبيع - سمسار طلبك</title>
+    <meta name="description" content="شقة للبيع في شارع عبدالله بن طاهر - مدينة نصر - 180م - 3 غرف - تشطيب سوبر لوكس - الدور الأول">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #e74c3c;
+            --accent: #d4af37;
+            --whatsapp: #25D366;
+            --text: #333;
+            --light-bg: #f8f9fa;
+            --street-color: #8e44ad;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background: var(--light-bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .nav-bar {
+            background: var(--primary);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo h1 {
+            color: white;
+            font-size: 1.8rem;
+        }
+
+        .property-details {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .detail-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin: 1.5rem 0;
+        }
+
+        /* معرض الصور المحسن */
+        .gallery-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .main-image-container {
+            width: 100%;
+            height: 70vh;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            position: relative;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            cursor: zoom-in;
+        }
+
+        .main-image.zoomed {
+            transform: scale(1.5);
+            cursor: zoom-out;
+        }
+
+        .thumbnails-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .thumbnail {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 3px solid transparent;
+        }
+
+        .thumbnail:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            border-color: var(--accent);
+        }
+
+        .active-thumbnail {
+            border-color: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        /* تحسينات عامة */
+        .price-tag {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin: 1.5rem 0;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            background: var(--primary);
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .back-btn:hover {
+            background: #1a252f;
+            transform: translateX(-5px);
+        }
+
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--whatsapp);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 1.5rem 0;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .section-title {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--accent);
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        .property-description {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            line-height: 1.8;
+            border-right: 4px solid var(--accent);
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .feature-item i {
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .location-badge {
+            background: var(--street-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .super-lux-badge {
+            background: var(--accent);
+            color: #000;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+        }
+
+        .year-badge {
+            background: #7f8c8d;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* التكيف مع الشاشات الصغيرة */
+        @media (max-width: 992px) {
+            .main-image-container {
+                height: 60vh;
+            }
+            
+            .thumbnail {
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-image-container {
+                height: 50vh;
+            }
+            
+            .thumbnails-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .price-tag {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .main-image-container {
+                height: 40vh;
+            }
+            
+            .thumbnail {
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <div class="logo">
+            <h1>سمسار طلبك</h1>
+        </div>
+        <a href="front page.html" class="back-btn">
+            <i class="fas fa-arrow-right"></i>
+            العودة للقائمة
+        </a>
+    </nav>
+
+    <main class="property-details">
+        <div class="detail-section">
+            <h1 class="section-title">شقة للبيع - شارع عبدالله بن طاهر</h1>
+            <div class="price-tag">5,000,000 ج.م</div>
+            
+            <!-- معرض الصور المحسن -->
+            <div class="gallery-container">
+                <div class="main-image-container">
+                    <img id="mainImage" class="main-image" src="https://i.postimg.cc/m2gKq2RP/image.webp" alt="واجهة شقة شارع عبدالله بن طاهر">
+                </div>
+                
+                <div class="thumbnails-grid">
+                    <img class="thumbnail active-thumbnail" 
+                         src="https://i.postimg.cc/m2gKq2RP/image.webp" 
+                         onclick="changeImage(this.src, this)" 
+                         alt="واجهة الشقة الرئيسية">
+                    
+                    <img class="thumbnail" 
+                         src="https://i.postimg.cc/445rBhCC/image.webp" 
+                         onclick="changeImage(this.src, this)" 
+                         alt="الريسبشن الكبير">
+                    
+                    <img class="thumbnail" 
+                         src="https://i.postimg.cc/RhXyF21C/image.webp" 
+                         onclick="changeImage(this.src, this)" 
+                         alt="أحد الغرف">
+                    
+                    <img class="thumbnail" 
+                         src="https://i.postimg.cc/4N2jTkNB/image.webp" 
+                         onclick="changeImage(this.src, this)" 
+                         alt="المطبخ">
+                </div>
+            </div>
+
+            <!-- وصف الشقة -->
+            <div class="property-description">
+                <h3 style="color: var(--primary); margin-bottom: 1rem;">وصف الشقة:</h3>
+                <p>شقة تمليك فاخرة للبيع في شارع عبدالله بن طاهر المتفرع من مكرم عبيد مباشرة بمدينة نصر. الشقة بمساحة 180 متر مربع وتتميز بتشطيب سوبر لوكس حديث وعالي الجودة. تتكون الشقة من 3 غرف نوم و2 حمام وريسبشن كبير. تقع الشقة في الدور الأول من عمارة تم بناؤها عام 2005 مما يجعلها مناسبة للعائلات التي تبحث عن سهولة الوصول دون الحاجة إلى استخدام المصاعد. الموقع مميز جداً بقلب مدينة نصر ويتميز بقربه من جميع الخدمات والمرافق.</p>
+            </div>
+
+            <!-- مميزات الشقة -->
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <h3>الموقع</h3>
+                        <p><span class="location-badge"><i class="fas fa-road"></i> شارع عبدالله بن طاهر - متفرع من مكرم عبيد</span></p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-expand"></i>
+                    <div>
+                        <h3>المساحة</h3>
+                        <p>180 متر مربع</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-bed"></i>
+                    <div>
+                        <h3>الغرف</h3>
+                        <p>3 غرف نوم</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-bath"></i>
+                    <div>
+                        <h3>الحمامات</h3>
+                        <p>2 حمام</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-couch"></i>
+                    <div>
+                        <h3>الريسبشن</h3>
+                        <p>كبير</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-paint-roller"></i>
+                    <div>
+                        <h3>التشطيب</h3>
+                        <p><span class="super-lux-badge"><i class="fas fa-star"></i> سوبر لوكس</span></p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-building"></i>
+                    <div>
+                        <h3>الدور</h3>
+                        <p>الأول</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <div>
+                        <h3>سنة البناء</h3>
+                        <p><span class="year-badge"><i class="fas fa-history"></i> 2005</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                          <a href="https://wa.me/201147758857?text=أريد الاستفسار عن شقة خلف مصر للطيران والمعايرجي" class="whatsapp-btn">
+                    <i class="fab fa-whatsapp"></i>
+                    تواصل الآن للتفاوض
+                </a>
+                <p style="margin-top: 1.5rem; color: var(--secondary); font-weight: bold; font-size: 1.1rem;">
+                    للاستفسار أو طلب المزيد من التفاصيل: 01147758857
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // تغيير الصورة الرئيسية عند النقر على المصغرات
+        function changeImage(src, clickedThumb) {
+            const mainImage = document.getElementById('mainImage');
+            mainImage.src = src;
+            
+            // إزالة التنشيط من جميع المصغرات
+            document.querySelectorAll('.thumbnail').forEach(thumb => {
+                thumb.classList.remove('active-thumbnail');
+            });
+            
+            // إضافة صنف التنشيط للمصغرة المختارة
+            clickedThumb.classList.add('active-thumbnail');
+            
+            // إعادة تعيين تأثير الزوم
+            mainImage.classList.remove('zoomed');
+        }
+        
+        // إضافة تأثير الزوم عند النقر على الصورة الرئيسية
+        document.getElementById('mainImage').addEventListener('click', function() {
+            this.classList.toggle('zoomed');
+        });
+        
+        // إضافة وصف للصورة عند التمرير عليها
+        document.querySelectorAll('.thumbnail').forEach(thumb => {
+            thumb.addEventListener('mouseover', function() {
+                this.title = this.alt;
+            });
+        });
+    </script>
+</body>
+</html>
