@@ -46,6 +46,7 @@
             background: var(--light-bg);
             color: var(--text);
             line-height: 1.6;
+            text-align: right;
         }
         
         .nav-bar {
@@ -149,7 +150,7 @@
         .back-to-top {
             position: fixed;
             bottom: 30px;
-            left: 30px;
+            right: 30px;
             background: var(--primary);
             color: white;
             width: 50px;
@@ -179,6 +180,11 @@
             .contact-cards {
                 grid-template-columns: 1fr;
             }
+            
+            .nav-bar {
+                flex-direction: column;
+                gap: 1rem;
+            }
         }
     </style>
 </head>
@@ -205,11 +211,11 @@
     
     <main class="contact-container">
         <div class="contact-cards">
-                    <!-- بطاقة  محمد عادل-->
+            <!-- بطاقة محمد عادل -->
             <div class="contact-card">
-                <div id="waleed-status" class="status-badge"></div>
+                <div id="mohamed-status" class="status-badge"></div>
                 <h3>محمد عادل</h3>
-                <p>متخصص في تقييم العقارات ومعرفه اتجاهات السوق</p>
+                <p>متخصص في تقييم العقارات ومعرفة اتجاهات السوق</p>
                 <a href="tel:+201006430028" class="contact-btn phone-btn">
                     <i class="fas fa-phone"></i> اتصل الآن
                 </a>
@@ -217,6 +223,7 @@
                     <i class="fab fa-whatsapp"></i> واتساب
                 </a>
             </div>
+            
             <!-- بطاقة أميرة وليد -->
             <div class="contact-card">
                 <div id="amira-status" class="status-badge"></div>
@@ -274,6 +281,13 @@
                 <a href="about.html" style="color: white; margin: 0 10px;">عنّا</a>
             </div>
             
+            <div style="margin: 20px 0;">
+                <a href="https://www.facebook.com/Tarekonly" target="_blank" style="color: white; margin: 0 10px;">فيسبوك</a>
+                <a href="https://www.linkedin.com/company/smsar-talabk-madinat-nasr/" target="_blank" style="color: white; margin: 0 10px;">لينكدإن</a>
+                <a href="https://maps.app.goo.gl/hr3dndj1dwMvXaNz5?g_st=ac" target="_blank" style="color: white; margin: 0 10px;">خرائط جوجل</a>
+                <a href="https://pin.it/4tCl3jl6r" target="_blank" style="color: white; margin: 0 10px;">Pinterest</a>
+            </div>
+            
             <p style="margin-top: 20px; font-size: 14px;">&copy; <span id="currentYear"></span> سمسار طلبك. جميع الحقوق محفوظة.</p>
         </div>
     </footer>
@@ -288,6 +302,7 @@
             const amiraStatus = document.getElementById('amira-status');
             const waleedStatus = document.getElementById('waleed-status');
             const tarekStatus = document.getElementById('tarek-status');
+            const mohamedStatus = document.getElementById('mohamed-status');
             
             if (currentTime >= openingTime && currentTime < closingTime) {
                 amiraStatus.textContent = "متاحة الآن حتى 9 مساءً";
@@ -296,6 +311,8 @@
                 waleedStatus.className = "status-badge open";
                 tarekStatus.textContent = "متاح الآن حتى 9 مساءً";
                 tarekStatus.className = "status-badge open";
+                mohamedStatus.textContent = "متاح الآن حتى 9 مساءً";
+                mohamedStatus.className = "status-badge open";
             } else {
                 amiraStatus.textContent = "سيتوفر غداً 9 صباحاً";
                 amiraStatus.className = "status-badge closed";
@@ -303,6 +320,8 @@
                 waleedStatus.className = "status-badge closed";
                 tarekStatus.textContent = "سيتوفر غداً 9 صباحاً";
                 tarekStatus.className = "status-badge closed";
+                mohamedStatus.textContent = "سيتوفر غداً 9 صباحاً";
+                mohamedStatus.className = "status-badge closed";
             }
         }
         
@@ -329,27 +348,5 @@
         // تحديث حالة العمل عند تحميل الصفحة
         window.onload = updateStatus;
     </script>
-     <footer style="background-color: #1a1a1a; color: white; padding: 40px 20px; text-align: center;">
-  <div style="max-width: 1200px; margin: auto;">
-    <h3 style="color: #00cc66;">سمسار طلبك</h3>
-    
-    <p>نخدمك في مدينة نصر وما حولها - بيع، شراء، وتأجير بأمان واحترافية.</p>
-
-    <div style="margin: 20px 0;">
-      <a href="privacy policy .html" style="color: white; margin: 0 10px;">سياسة الخصوصية</a>
-      <a href="Contact us.html" style="color: white; margin: 0 10px;">تواصل معنا</a>
-      <a href="About us.html" style="color: white; margin: 0 10px;">عنّا</a>
-    </div>
-
-    <div style="margin: 20px 0;">
-      <a href="https://www.facebook.com/Tarekonly" target="_blank" style="margin: 0 8px;">فيسبوك</a>
-      <a href="https://www.linkedin.com/company/smsar-talabk-madinat-nasr/" target="_blank" style="margin: 0 8px;">لينكدإن</a>
-      <a href="https://maps.app.goo.gl/hr3dndj1dwMvXaNz5?g_st=ac" target="_blank" style="margin: 0 8px;">خرائط Google</a>
-      <a href="https://pin.it/4tCl3jl6r" target="_blank" style="margin: 0 8px;">Pinterest</a>
-    </div>
-
-    <p style="margin-top: 20px; font-size: 14px;">&copy; 2025 سمسار طلبك. جميع الحقوق محفوظة.</p>
-  </div>
-    </footer>
 </body>
 </html>
