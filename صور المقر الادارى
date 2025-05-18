@@ -39,7 +39,7 @@
   <title>مقر تجاري فاخر للبيع في عمارات العبور | فرصة استثمارية ممتازة | سمسار طلبك</title>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <style>
+ <style>
     :root {
       --primary: #2c3e50;
       --secondary: #e74c3c;
@@ -162,6 +162,74 @@
       text-align: center;
     }
 
+    .rent-price {
+      font-size: 1.8rem;
+      color: var(--rental);
+      margin: 1rem 0;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: white;
+      text-decoration: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 5px;
+      background: var(--primary);
+      transition: all 0.3s;
+      font-weight: bold;
+    }
+
+    .back-btn:hover {
+      background: #1a252f;
+      transform: translateX(-5px);
+    }
+
+    .whatsapp-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--whatsapp);
+      color: white;
+      padding: 1.2rem 2.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin: 1rem;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    }
+
+    .whatsapp-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+    }
+
+    .call-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--call);
+      color: white;
+      padding: 1.2rem 2.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin: 1rem;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    }
+
+    .call-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
+    }
+
     .section-title {
       color: var(--primary);
       margin-bottom: 1.5rem;
@@ -221,6 +289,17 @@
 
     .location-badge {
       background: var(--primary);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .rental-badge {
+      background: var(--rental);
       color: white;
       padding: 0.5rem 1rem;
       border-radius: 20px;
@@ -345,49 +424,6 @@
       transform: translateY(-5px);
       box-shadow: 0 8px 20px rgba(231, 76, 60, 0.4);
       background: #d62c1a;
-    }
-
-    /* أزرار الاتصال - تم التعديل هنا لتكون مطابقة للصفحة الأولى */
-    .whatsapp-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--whatsapp);
-      color: white;
-      padding: 1.2rem 2.5rem;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1.2rem;
-      margin: 1rem;
-      transition: all 0.3s;
-      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-    }
-
-    .whatsapp-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
-    }
-
-    .call-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--call);
-      color: white;
-      padding: 1.2rem 2.5rem;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1.2rem;
-      margin: 1rem;
-      transition: all 0.3s;
-      box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
-    }
-
-    .call-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
     }
 
     /* التكيف مع الشاشات الصغيرة */
