@@ -1,122 +1,104 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-
+This XML file does not appear to have any style information associated with it. The document tree is shown below.
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!--  created with Free Online Sitemap Generator www.xml-sitemaps.com  -->
 <url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/</loc>
-  <lastmod>2025-05-11</lastmod>
-  <changefreq>weekly</changefreq>
-  <priority>1.00</priority>
+<loc>https://nasr-realestate.github.io/samsar-talabak/</loc>
+<lastmod>2025-05-18T13:07:05+00:00</lastmod>
+<priority>1.00</priority>
 </url>
 <url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/front%20page.html</loc>
-  <lastmod>2025-05-11</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.80</priority>
+<loc>https://nasr-realestate.github.io/samsar-talabak/front%20page.html</loc>
+<lastmod>2025-05-18T13:07:05+00:00</lastmod>
+<priority>0.80</priority>
 </url>
 <url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/privacy%20policy%20.html</loc>
-  <lastmod>2025-05-11</lastmod>
-  <changefreq>yearly</changefreq>
-  <priority>0.80</priority>
+<loc>https://nasr-realestate.github.io/samsar-talabak/About%20us.html</loc>
+<lastmod>2025-05-18T13:07:05+00:00</lastmod>
+<priority>0.80</priority>
 </url>
 <url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/Contact%20us.html</loc>
-  <lastmod>2025-05-11</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.80</priority>
+<loc>https://nasr-realestate.github.io/samsar-talabak/Contact%20us.html</loc>
+<lastmod>2025-05-18T13:07:05+00:00</lastmod>
+<priority>0.80</priority>
 </url>
 <url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/About%20us.html</loc>
-  <lastmod>2025-05-11</lastmod>
-  <changefreq>yearly</changefreq>
-  <priority>0.80</priority>
+<loc>https://nasr-realestate.github.io/samsar-talabak/%D9%85%D8%AD%D9%84%20%D8%B9%D8%A8%D8%A7%D8%B3%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%AF%20%D9%84%D9%84%D8%A8%D9%8A%D8%B9.html</loc>
+<lastmod>2025-05-18T13:07:05+00:00</lastmod>
+<priority>0.80</priority>
 </url>
 <url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/%D8%B5%D9%88%D8%B1%20%D8%B4%D9%82%D9%87%20%D8%B9%D8%A8%D8%A7%D8%B3%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%AF.html</loc>
-  <lastmod>2025-05-11</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.64</priority>
+<loc>https://nasr-realestate.github.io/samsar-talabak/%D8%B5%D9%88%D8%B1%20%D8%B4%D9%82%D9%87%20%D8%B9%D8%A8%D8%A7%D8%B3%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%AF.html</loc>
+<lastmod>2025-05-18T13:07:05+00:00</lastmod>
+<priority>0.64</priority>
 </url>
 <url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/%D8%B5%D9%88%D8%B1%20%D8%B4%D9%82%D9%87%20%D8%B1%D8%A7%D8%A8%D8%B9%D9%87%20%D8%A7%D9%84%D8%B9%D8%AF%D9%88%D9%8A%D9%87.html</loc>
-  <lastmod>2025-05-11</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.64</priority>
+<loc>https://nasr-realestate.github.io/samsar-talabak/%D8%B5%D9%88%D8%B1%20%D8%B4%D9%82%D9%87%20%D8%B1%D8%A7%D8%A8%D8%B9%D9%87%20%D8%A7%D9%84%D8%B9%D8%AF%D9%88%D9%8A%D9%87.html</loc>
+<lastmod>2025-05-18T13:07:05+00:00</lastmod>
+<priority>0.64</priority>
 </url>
 <url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/%D8%B5%D9%88%D8%B1%20%D8%B4%D9%82%D9%87%20%D8%AE%D9%84%D9%81%20%D8%AD%D8%AF%D9%8A%D9%82%D9%87%20%D8%A7%D9%84%D8%B7%D9%81%D9%84.html</loc>
-  <lastmod>2025-05-11</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.64</priority>
+<loc>https://nasr-realestate.github.io/samsar-talabak/%D8%B5%D9%88%D8%B1%20%D8%B4%D9%82%D9%87%20%D8%AE%D9%84%D9%81%20%D8%AD%D8%AF%D9%8A%D9%82%D9%87%20%D8%A7%D9%84%D8%B7%D9%81%D9%84.html</loc>
+<lastmod>2025-05-18T13:07:05+00:00</lastmod>
+<priority>0.64</priority>
 </url>
 <url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/%D8%B5%D9%88%D8%B1%20%D8%B4%D9%82%D9%87%20%D8%A7%D9%84%D8%AD%D9%8A%20%D8%A7%D9%84%D8%B3%D8%A7%D8%A8%D8%B9.html</loc>
-  <lastmod>2025-05-11</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.64</priority>
+<loc>https://nasr-realestate.github.io/samsar-talabak/%D8%B5%D9%88%D8%B1%20%D8%B4%D9%82%D9%87%20%D8%A7%D9%84%D8%AD%D9%8A%20%D8%A7%D9%84%D8%B3%D8%A7%D8%A8%D8%B9.html</loc>
+<lastmod>2025-05-18T13:07:05+00:00</lastmod>
+<priority>0.64</priority>
 </url>
 <url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/%D8%B5%D9%88%D8%B1%20%D8%B4%D9%82%D9%87%20%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D9%87.html</loc>
-  <lastmod>2025-05-11</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.64</priority>
+<loc>https://nasr-realestate.github.io/samsar-talabak/%D8%B5%D9%88%D8%B1%20%D8%B4%D9%82%D9%87%20%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D9%87.html</loc>
+<lastmod>2025-05-18T13:07:05+00:00</lastmod>
+<priority>0.64</priority>
 </url>
 <url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/%D8%B5%D9%88%D8%B1%20%D8%B4%D9%82%D9%87%20%D8%A7%D9%84%D8%B1%D9%81%D8%A7%D8%B9%D9%8A.html</loc>
-  <lastmod>2025-05-11</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.64</priority>
+<loc>https://nasr-realestate.github.io/samsar-talabak/%D8%B5%D9%88%D8%B1%20%D8%B4%D9%82%D9%87%20%D8%A7%D9%84%D8%B1%D9%81%D8%A7%D8%B9%D9%8A.html</loc>
+<lastmod>2025-05-18T13:07:05+00:00</lastmod>
+<priority>0.64</priority>
 </url>
 <url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/A%20Real%20Estate%20Gallery%20Page3.html</loc>
-  <lastmod>2025-05-11</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.64</priority>
+<loc>https://nasr-realestate.github.io/samsar-talabak/privacy%20policy%20.html</loc>
+<lastmod>2025-05-18T13:07:05+00:00</lastmod>
+<priority>0.64</priority>
 </url>
 <url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/index.html</loc>
-  <lastmod>2025-05-11</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.64</priority>
+<loc>https://nasr-realestate.github.io/samsar-talabak/index.html</loc>
+<lastmod>2025-05-18T13:07:05+00:00</lastmod>
+<priority>0.64</priority>
 </url>
 <url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/%D8%B5%D9%88%D8%B1%20%D8%B4%D9%82%D9%87%20%D8%AC%D8%B1%D9%8A%D9%86%20%D9%87%D9%8A%D9%84%D8%B2.html</loc>
-  <lastmod>2025-05-11</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.51</priority>
+<loc>https://nasr-realestate.github.io/samsar-talabak/A%20Real%20Estate%20Gallery%20Page3.html</loc>
+<lastmod>2025-05-18T13:07:05+00:00</lastmod>
+<priority>0.51</priority>
 </url>
 <url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/%D8%B5%D9%88%D8%B1%D8%B4%D9%82%D9%87%D8%A3%D8%B1%D8%B6%20%D8%A7%D9%84%D8%AC%D9%88%D9%84%D9%81.html</loc>
-  <lastmod>2025-05-11</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.51</priority>
+<loc>https://nasr-realestate.github.io/samsar-talabak/%D8%B5%D9%88%D8%B1%20%D8%B4%D9%82%D9%87%20%D8%AC%D8%B1%D9%8A%D9%86%20%D9%87%D9%8A%D9%84%D8%B2.html</loc>
+<lastmod>2025-05-18T13:07:05+00:00</lastmod>
+<priority>0.41</priority>
 </url>
 <url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/%D8%B5%D9%88%D8%B1%20%D8%B4%D9%82%D9%87%20%D8%A7%D9%84%D8%AD%D9%8A%20%D8%A7%D9%84%D8%B9%D8%A7%D8%B4%D8%B1.html</loc>
-  <lastmod>2025-05-11</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.51</priority>
+<loc>https://nasr-realestate.github.io/samsar-talabak/%D8%B5%D9%88%D8%B1%D8%B4%D9%82%D9%87%D8%A3%D8%B1%D8%B6%20%D8%A7%D9%84%D8%AC%D9%88%D9%84%D9%81.html</loc>
+<lastmod>2025-05-18T13:07:05+00:00</lastmod>
+<priority>0.41</priority>
 </url>
 <url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/%D8%B5%D9%88%D8%B1%20%D8%B4%D9%82%D9%87%20%D8%B9%D8%A8%D8%AF%20%D8%A7%D9%84%D9%84%D9%87%20%D8%A8%D9%86%20%D8%B7%D8%A7%D9%87%D8%B1.html</loc>
-  <lastmod>2025-05-11</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.51</priority>
+<loc>https://nasr-realestate.github.io/samsar-talabak/%D8%B5%D9%88%D8%B1%20%D8%B4%D9%82%D9%87%20%D8%A7%D9%84%D8%AD%D9%8A%20%D8%A7%D9%84%D8%B9%D8%A7%D8%B4%D8%B1.html</loc>
+<lastmod>2025-05-18T13:07:05+00:00</lastmod>
+<priority>0.41</priority>
 </url>
 <url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/%D8%B5%D9%88%D8%B1%20%D8%B4%D9%82%D9%87%20%D8%A8%D8%B1%D8%AC%20%D8%A7%D9%84%D8%B2%D9%87%D8%B1%D8%A7%D8%A1.html</loc>
-  <lastmod>2025-05-11</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.51</priority>
+<loc>https://nasr-realestate.github.io/samsar-talabak/%D8%B5%D9%88%D8%B1%20%D8%B4%D9%82%D9%87%20%D8%B9%D8%A8%D8%AF%20%D8%A7%D9%84%D9%84%D9%87%20%D8%A8%D9%86%20%D8%B7%D8%A7%D9%87%D8%B1.html</loc>
+<lastmod>2025-05-18T13:07:05+00:00</lastmod>
+<priority>0.41</priority>
 </url>
 <url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/%D8%B5%D9%88%D8%B1%20%D8%B4%D9%82%D9%87%20%D8%A7%D9%88%D9%84%20%D9%85%D8%A7%D9%8A%D9%88.html</loc>
-  <lastmod>2025-05-11</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.51</priority>
+<loc>https://nasr-realestate.github.io/samsar-talabak/%D8%B5%D9%88%D8%B1%20%D8%B4%D9%82%D9%87%20%D8%A8%D8%B1%D8%AC%20%D8%A7%D9%84%D8%B2%D9%87%D8%B1%D8%A7%D8%A1.html</loc>
+<lastmod>2025-05-18T13:07:05+00:00</lastmod>
+<priority>0.41</priority>
+</url>
+<url>
+<loc>https://nasr-realestate.github.io/samsar-talabak/%D8%B5%D9%88%D8%B1%20%D8%B4%D9%82%D9%87%20%D8%A7%D9%88%D9%84%20%D9%85%D8%A7%D9%8A%D9%88.html</loc>
+<lastmod>2025-05-18T13:07:05+00:00</lastmod>
+<priority>0.41</priority>
 </url>
 </urlset>
