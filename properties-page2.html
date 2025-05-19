@@ -200,6 +200,73 @@
                 grid-template-columns: 1fr;
             }
         }
+        /* تنسيقات أزرار التنقل الجديدة */
+.nav-links {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s;
+    font-size: 0.95rem;
+}
+
+.golden-btn {
+    background: linear-gradient(135deg, #D4AF37 0%, #F5D327 100%);
+    box-shadow: 0 2px 5px rgba(212, 175, 55, 0.3);
+}
+
+.browse-btn {
+    background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+}
+
+.nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.active {
+    position: relative;
+    border: 2px solid white;
+}
+
+.active::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 3px;
+    background: var(--accent);
+}
+
+/* تعديلات للشاشات الصغيرة */
+@media (max-width: 768px) {
+    .nav-bar {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .nav-links {
+        margin-top: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .nav-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+}
     </style>
 </head>
 <body>
@@ -210,11 +277,25 @@
 </noscript>
 <!-- End Google Tag Manager (noscript) -->
   
-    <nav class="nav-bar">
-        <div class="logo">
-            <h1>سمسار طلبك</h1>
-        </div>
-    </nav>
+   <nav class="nav-bar">
+    <div class="logo">
+        <h1>سمسار طلبك</h1>
+    </div>
+    
+    <div class="nav-links">
+        <!-- زر العروض الذهبية -->
+        <a href="Golden offers.html" class="nav-btn golden-btn">
+            <i class="fas fa-crown"></i>
+            العروض الذهبية
+        </a>
+        
+        <!-- زر تصفح العروض (مميز لأنه الصفحة الحالية) -->
+        <a href="browse-offers.html" class="nav-btn browse-btn active">
+            <i class="fas fa-search"></i>
+            تصفح العروض
+        </a>
+    </div>
+</nav>
 
     <header class="page-header">
         <h1>عروض شقق تمليك في مدينة نصر</h1>
