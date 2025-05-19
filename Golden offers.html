@@ -219,6 +219,71 @@
                 grid-template-columns: 1fr;
             }
         }
+        /* تنسيقات أزرار التنقل للعروض الذهبية */
+.golden-badge {
+    background: linear-gradient(135deg, #D4AF37 0%, #F5D327 100%);
+    color: white;
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    margin-right: 0.5rem;
+    box-shadow: 0 2px 5px rgba(212, 175, 55, 0.3);
+}
+
+.nav-links {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.browse-btn {
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    box-shadow: 0 2px 5px rgba(44, 62, 80, 0.3);
+}
+
+.home-btn {
+    background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+    box-shadow: 0 2px 5px rgba(39, 174, 96, 0.3);
+}
+
+.nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* للشاشات الصغيرة */
+@media (max-width: 768px) {
+    .nav-bar {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .logo h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .nav-links {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .nav-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+}
     </style>
 </head>
 <body>
@@ -226,11 +291,25 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MHPZ8NP" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
-    <nav class="nav-bar">
-        <div class="logo">
-            <h1>سمسار طلبك</h1>
-        </div>
-    </nav>
+  <nav class="nav-bar">
+    <div class="logo">
+        <h1>سمسار طلبك <span class="golden-badge">العروض الذهبية</span></h1>
+    </div>
+    
+    <div class="nav-links">
+        <!-- زر تصفح العروض -->
+        <a href="browse-offers.html" class="nav-btn browse-btn">
+            <i class="fas fa-search"></i>
+            تصفح العروض
+        </a>
+        
+        <!-- زر الصفحة الرئيسية -->
+        <a href="index.html" class="nav-btn home-btn">
+            <i class="fas fa-home"></i>
+            الرئيسية
+        </a>
+    </div>
+</nav>
     <header class="page-header">
         <h1>العروض الذهبية الحصرية</h1>
         <p>أفضل الشقق الفاخرة بمواصفات خاصة وأسعار تنافسية</p>
