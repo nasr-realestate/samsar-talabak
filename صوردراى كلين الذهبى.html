@@ -39,8 +39,472 @@
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
-    /* جميع أنماط CSS السابقة تبقى كما هي بدون تغيير */
-    /* يفضل الاحتفاظ بنفس أنماط التصميم للحفاظ على الهوية البصرية */
+  :root {
+      --primary: #D4AF37; /* اللون الذهبي الأساسي */
+      --secondary: #B8860B; /* لون ذهبي داكن */
+      --accent: #FFD700; /* لون ذهبي فاتح */
+      --whatsapp: #25D366;
+      --call: #3498db;
+      --text: #333;
+      --light-bg: #f8f9fa;
+      --commercial: #8e44ad;
+      --rental: #27ae60;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    body {
+      background: var(--light-bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .nav-bar {
+      background: var(--primary);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo h1 {
+      color: white;
+      font-size: 1.8rem;
+    }
+
+    .golden-badge {
+      background: var(--primary);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: bold;
+      display: inline-block;
+      margin-left: 0.5rem;
+    }
+
+    .property-details {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .detail-section {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      margin: 1.5rem 0;
+      border-top: 5px solid var(--primary);
+    }
+
+    /* معرض الصور المحسن */
+    .gallery-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .main-image-container {
+      width: 100%;
+      height: 60vh;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      position: relative;
+    }
+
+    .main-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+      cursor: zoom-in;
+    }
+
+    .main-image.zoomed {
+      transform: scale(1.5);
+      cursor: zoom-out;
+    }
+
+    .thumbnails-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .thumbnail {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border: 3px solid transparent;
+    }
+
+    .thumbnail:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      border-color: var(--accent);
+    }
+
+    .active-thumbnail {
+      border-color: var(--secondary);
+      transform: scale(1.05);
+    }
+
+    /* تحسينات عامة */
+    .price-tag {
+      font-size: 2.5rem;
+      color: var(--secondary);
+      margin: 1.5rem 0;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .rent-price {
+      font-size: 1.8rem;
+      color: var(--rental);
+      margin: 1rem 0;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: white;
+      text-decoration: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 5px;
+      background: var(--secondary);
+      transition: all 0.3s;
+      font-weight: bold;
+    }
+
+    .back-btn:hover {
+      background: #9a6d0b;
+      transform: translateX(-5px);
+    }
+
+    .whatsapp-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--whatsapp);
+      color: white;
+      padding: 1.2rem 2.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin: 1rem;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    }
+
+    .whatsapp-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+    }
+
+    .call-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--call);
+      color: white;
+      padding: 1.2rem 2.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin: 1rem;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    }
+
+    .call-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
+    }
+
+    .section-title {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 2px solid var(--accent);
+      font-size: 1.8rem;
+      text-align: center;
+    }
+
+    .property-description {
+      background: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin: 2rem 0;
+      line-height: 1.8;
+      border-right: 4px solid var(--accent);
+    }
+
+    .highlight-box {
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin: 2rem 0;
+      border-left: 4px solid var(--secondary);
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    .feature-item i {
+      color: var(--secondary);
+      font-size: 1.2rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .commercial-badge {
+      background: var(--commercial);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .location-badge {
+      background: var(--primary);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .rental-badge {
+      background: var(--rental);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+      margin: 2rem 0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .cta-section {
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+      border-radius: 12px;
+      margin: 3rem 0;
+      color: white;
+    }
+
+    .cta-title {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      color: var(--accent);
+    }
+
+    .urgency-badge {
+      background: var(--secondary);
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 20px;
+      font-size: 1rem;
+      display: inline-block;
+      margin: 1rem 0;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .payment-plan {
+      background: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin: 2rem 0;
+      border: 1px dashed var(--commercial);
+    }
+
+    /* زر العودة للصفحة الرئيسية */
+    .home-btn {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      z-index: 99;
+      background: var(--accent);
+      color: white;
+      padding: 0.8rem 1.2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .home-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+      background: #c9a42d;
+    }
+
+    /* زر التمرير لأعلى الصفحة */
+    .scroll-top-btn {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      z-index: 99;
+      background: var(--secondary);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(184, 134, 11, 0.3);
+      transition: all 0.3s;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .scroll-top-btn.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .scroll-top-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(184, 134, 11, 0.4);
+      background: #9a6d0b;
+    }
+
+    /* التكيف مع الشاشات الصغيرة */
+    @media (max-width: 992px) {
+      .main-image-container {
+        height: 50vh;
+      }
+      
+      .thumbnail {
+        height: 150px;
+      }
+
+      .home-btn {
+        top: 70px;
+        right: 15px;
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .main-image-container {
+        height: 40vh;
+      }
+      
+      .price-tag {
+        font-size: 2rem;
+      }
+      
+      .whatsapp-btn, .call-btn {
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+        margin: 0.5rem;
+      }
+
+      .home-btn {
+        top: 60px;
+        right: 10px;
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+      }
+
+      .scroll-top-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+        bottom: 20px;
+        left: 20px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .main-image-container {
+        height: 30vh;
+      }
+      
+      .thumbnail {
+        height: 100px;
+      }
+      
+      .cta-title {
+        font-size: 1.5rem;
+      }
+
+      .home-btn {
+        top: 50px;
+        right: 5px;
+        padding: 0.4rem 0.6rem;
+        font-size: 0.7rem;
+      }
+    }
   </style>
 </head>
 <body>
