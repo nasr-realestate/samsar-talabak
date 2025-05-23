@@ -1,132 +1,184 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://github.com/nasr-realest/index.html</loc>
+        <lastmod>2025-05-22T00:00:00+00:00</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/front%20page.html</loc>
+        <lastmod>2025-05-22T00:00:00+00:00</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/A%20Real%20Estate%20Gallery%20Page3....html</loc>
+        <lastmod>2025-05-22T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/About%20us.html</loc>
+        <lastmod>2025-05-09T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/Contact%20us.html</loc>
+        <lastmod>2025-05-09T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/Golden%20offers.html</loc>
+        <lastmod>2025-05-22T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/golden-offers-el-akkad.html</loc>
+        <lastmod>2025-05-22T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/privacy%20policy%20.html</loc>
+        <lastmod>2025-05-09T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/properties-page2.html</loc>
+        <lastmod>2025-05-22T00:00:00+00:00</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/samsar-talabak-products-sa....html</loc>
+        <lastmod>2025-05-16T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/saudi-company-apartment....html</loc>
+        <lastmod>2025-05-22T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/seventh-district-apartment....html</loc>
+        <lastmod>2025-05-22T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/shop-tawfikia-golden-musta....html</loc>
+        <lastmod>2025-05-22T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/tookh-ground-floor-apartme....html</loc>
+        <lastmod>2025-05-22T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 
-
-<url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/</loc>
-  <lastmod>2025-05-23T16:08:06+00:00</lastmod>
-  <priority>1.00</priority>
-</url>
-<url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/front%20page.html</loc>
-  <lastmod>2025-05-23T16:08:06+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/About%20us.html</loc>
-  <lastmod>2025-05-23T16:08:06+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/Contact%20us.html</loc>
-  <lastmod>2025-05-23T16:08:06+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/Golden%20offers.html</loc>
-  <lastmod>2025-05-23T16:08:06+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/abbas-akkad-apartment.html</loc>
-  <lastmod>2025-05-23T16:08:06+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/rabaa-adaweya-apartment.html</loc>
-  <lastmod>2025-05-23T16:08:06+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/behind-child-park-apartment.html</loc>
-  <lastmod>2025-05-23T16:08:06+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/seventh-district-apartment.html</loc>
-  <lastmod>2025-05-23T16:08:06+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/saudi-company-apartment.html</loc>
-  <lastmod>2025-05-23T16:08:06+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/abdul-hakim-refaie-apartment.html</loc>
-  <lastmod>2025-05-23T16:08:06+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/privacy%20policy%20.html</loc>
-  <lastmod>2025-05-23T16:08:06+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/index.html</loc>
-  <lastmod>2025-05-23T16:08:06+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/administrative-headquarters-1.html</loc>
-  <lastmod>2025-05-23T16:08:06+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/golden-offers-el-akkad.html</loc>
-  <lastmod>2025-05-23T16:08:06+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/shop-tawfikia-golden-mustafa-alnahas-nasr-city.html</loc>
-  <lastmod>2025-05-23T16:08:06+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/dryclean-golden-ganina-mall-nasr-city.html</loc>
-  <lastmod>2025-05-23T16:08:06+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/A%20Real%20Estate%20Gallery%20Page3.html</loc>
-  <lastmod>2025-05-23T16:08:06+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/apartment-green-hills-nasr-street.html</loc>
-  <lastmod>2025-05-23T16:08:06+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/apartment-ard-el-golf-nasr-city.html</loc>
-  <lastmod>2025-05-23T16:08:06+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/apartment-hay-10.html</loc>
-  <lastmod>2025-05-23T16:08:06+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/apartment-abdallah-bin-taher-nasr-city.html</loc>
-  <lastmod>2025-05-23T16:08:06+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/apartment-hafez-ibrahim-zahraa-tower.html</loc>
-  <lastmod>2025-05-23T16:08:06+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://nasr-realestate.github.io/samsar-talabak/apartment-awal-may-between-abbas-mokram.html</loc>
-  <lastmod>2025-05-23T16:08:06+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-
-
+    <url>
+        <loc>https://github.com/nasr-realest/abbasa-akkad-apartment.html</loc>
+        <lastmod>2025-05-22T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/abdul-hakim-refaie-apartment....html</loc>
+        <lastmod>2025-05-23T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/abdullah-el-arabi-apartment....html</loc>
+        <lastmod>2025-05-22T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/administrative-headquarter....html</loc>
+        <lastmod>2025-05-22T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/al-senhouri-apartment.html</loc>
+        <lastmod>2025-05-22T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/apartment-abdallah-bin-tah....html</loc>
+        <lastmod>2025-05-22T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/apartment-ard-el-golf-nasr-c....html</loc>
+        <lastmod>2025-05-22T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/apartment-awal-may-betwe....html</loc>
+        <lastmod>2025-05-22T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/apartment-behind-egyptair....html</loc>
+        <lastmod>2025-05-22T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/apartment-green-hills-nasr-....html</loc>
+        <lastmod>2025-05-22T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/apartment-hafez-ibrahim-za....html</loc>
+        <lastmod>2025-05-22T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/apartment-hay-10.html</loc>
+        <lastmod>2025-05-22T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/behind-child-park-apartmen....html</loc>
+        <lastmod>2025-05-22T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/manteqa-10-apartment.html</loc>
+        <lastmod>2025-05-22T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/maqrifry-apartment.html</loc>
+        <lastmod>2025-05-22T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://github.com/nasr-realest/rabaa-adaweya-apartment.h....html</loc>
+        <lastmod>2025-05-22T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 </urlset>
