@@ -52,6 +52,79 @@
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
 
+  <!-- إضافة ستايل لشريط الحالة فقط -->
+  <style>
+    /* شريط حالة النشاط المحسن */
+    .business-status-bar {
+      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      border-bottom: 1px solid #eaeaea;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+      font-family: 'Tajawal', sans-serif;
+      position: relative;
+      z-index: 1000;
+    }
+
+    .status-logo {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      border-radius: 50%;
+      border: 1px solid #f0f0f0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .status-open {
+      color: #2e7d32;
+      font-weight: 700;
+    }
+
+    .status-closed {
+      color: #c62828;
+      font-weight: 700;
+    }
+
+    #business-status-text {
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* أيقونات الحالة */
+    #business-status-text:before {
+      content: "";
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-left: 8px;
+    }
+
+    .status-open#business-status-text:before {
+      background-color: #4caf50;
+      animation: pulse 2s infinite;
+    }
+
+    .status-closed#business-status-text:before {
+      background-color: #f44336;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.95); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.7; }
+      100% { transform: scale(0.95); opacity: 1; }
+    }
+
+    /* تأثير عند التحويم */
+    .business-status-bar:hover {
+      background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+    }
+  </style>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -60,10 +133,9 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe>
   </noscript>
 
-  <!-- شريط حالة النشاط -->
+  <!-- شريط حالة النشاط المحسن -->
   <div class="business-status-bar">
-    <!-- استبدل "favicon.ico" بمسار شعارك الصغير إذا كان مختلفاً -->
-    <img src="favicon.ico" alt="شعار سمسار طلبك" class="status-logo">
+    <img src="https://i.postimg.cc/FsVFV0F0/me.png" alt="شعار سمسار طلبك" class="status-logo">
     <span id="business-status-text" aria-live="polite">جارٍ تحميل حالة النشاط...</span>
   </div>
   
@@ -164,17 +236,17 @@
       });
     });
 
-    // سكربت حالة النشاط
+    // سكربت حالة النشاط المحسن
     const statusTextElement = document.getElementById('business-status-text');
     if (statusTextElement) {
-        const currentTime = new Date().getHours(); // 0-23 (توقيت 24 ساعة)
-        // const currentDay = new Date().getDay(); // 0 (الأحد) - 6 (السبت) // uncomment if you need to check for specific days
+        const currentTime = new Date();
+        const currentHour = currentTime.getHours();
+        const currentMinutes = currentTime.getMinutes();
+        const currentDay = currentTime.getDay(); // 0 (الأحد) - 6 (السبت)
 
-        // تعيين ساعات العمل (مثال: من 12 ظهراً إلى 9 مساءً)
-        const openingTime = 12; // 12:00 PM
-        const closingTime = 21; // 9:00 PM
-        // مثال: إذا أردت تحديد يوم عطلة (مثلاً الجمعة = 5)
-        // const holidayDay = 5; // 0 for Sunday, 1 for Monday, ..., 5 for Friday, 6 for Saturday
+        // إعدادات ساعات العمل (مثال: من 10 صباحاً إلى 10 مساءً يومياً)
+        const openingTime = 10; // 10 صباحاً
+        const closingTime = 22; // 10 مساءً
 
         let statusMessage = "";
         let statusClass = "";
@@ -182,43 +254,26 @@
         // دالة لتنسيق الوقت بصيغة 12 ساعة مع ص/م
         const formatTime12Hour = (hour24) => {
             const hour = hour24 % 12 || 12; // يحول 0 أو 12 إلى 12
-            const minutes = "00"; // نفترض دائماً أنها على رأس الساعة
             const period = hour24 < 12 || hour24 === 24 ? "ص" : "م"; // صباحاً أو مساءً
-            return `${hour}:${minutes} ${period}`;
+            return `${hour} ${period}`;
         };
         
-        //  // مثال: إذا أردت إضافة يوم عطلة (مثلاً الجمعة) - قم بإزالة التعليق عن currentDay و holidayDay في الأعلى
-        // if (currentDay === holidayDay) {
-        //    statusMessage = "مغلق اليوم (عطلة أسبوعية). نعود غداً.";
-        //    statusClass = "status-closed";
-        // } else 
-        if (currentTime >= openingTime && currentTime < closingTime) {
-            statusMessage = `مفتوح الآن (حتى ${formatTime12Hour(closingTime)})`;
+        if (currentHour >= openingTime && currentHour < closingTime) {
+            const remainingHours = closingTime - currentHour;
+            statusMessage = `مفتوح الآن - متاح حتى ${formatTime12Hour(closingTime)}`;
             statusClass = "status-open";
         } else {
             statusClass = "status-closed";
-            if (currentTime >= closingTime) { // بعد وقت الإغلاق اليوم
-                // // إذا كان اليوم السابق للعطلة (مثلاً الخميس إذا كانت العطلة الجمعة)
-                // // قم بإزالة التعليق عن currentDay و holidayDay
-                // if (currentDay === (holidayDay - 1 + 7) % 7 ) { // (holidayDay - 1 + 7) % 7 handles Sunday if holiday is Monday
-                //    statusMessage = `مغلق حاليًا. سيفتح بعد غد الساعة ${formatTime12Hour(openingTime)}`;
-                // } else {
-                   statusMessage = `مغلق حاليًا. سيفتح غداً الساعة ${formatTime12Hour(openingTime)}`;
-                // }
-            } else { // قبل وقت الافتتاح اليوم
-                statusMessage = `مغلق حاليًا. سيفتح اليوم الساعة ${formatTime12Hour(openingTime)}`;
+            if (currentHour >= closingTime) {
+                statusMessage = `مغلق الآن - سيفتح غداً ${formatTime12Hour(openingTime)} صباحاً`;
+            } else {
+                statusMessage = `مغلق الآن - سيفتح ${formatTime12Hour(openingTime)} صباحاً`;
             }
         }
 
         statusTextElement.textContent = statusMessage;
-        // إزالة الفئات القديمة قبل إضافة الجديدة لضمان عدم التضارب
-        statusTextElement.classList.remove('status-open', 'status-closed');
-        if (statusClass) {
-            statusTextElement.classList.add(statusClass);
-        }
+        statusTextElement.className = statusClass;
     }
   </script>
-  <!-- إذا كنت ستستخدم ResponsiveVoice، قم بإلغاء التعليق وإضافة مفتاح API الخاص بك -->
-  <!-- <script src="https://code.responsivevoice.org/responsivevoice.js?key=YOUR_API_KEY"></script> -->
 </body>
-  </html>
+</html>
