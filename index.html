@@ -34,19 +34,17 @@
     })(window,document,'script','dataLayer','GTM-MHPZ8NP');
   </script>
 
-  <!-- Google Analytics / Ads (إذا لم يكن يتم إدارته عبر GTM بشكل كامل) -->
-  <!-- تم إزالة gtag المكرر، يفترض أن GTM أو gtag واحد كافٍ -->
+  <!-- Google Analytics / Ads -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-56WMJPYZWX"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-56WMJPYZWX');
-    // إذا كنت تستخدم Google Ads بشكل منفصل أيضًا
-    // gtag('config', 'AW-10840749717'); // قم بإلغاء التعليق إذا لزم الأمر وإذا لم يكن مدارًا بـ GTM
+    // gtag('config', 'AW-10840749717'); // إذا كنت تستخدمه بشكل منفصل
   </script>
 
-  <!-- Open Graph / Social Media Meta Tags (مثال) -->
+  <!-- Open Graph / Social Media Meta Tags -->
   <meta property="og:title" content="بوابة سمسار طلبك | عقارات مدينة نصر" />
   <meta property="og:description" content="اكتشف أفضل العروض العقارية المميزة في مدينة نصر." />
   <meta property="og:image" content="https://nasr-realestate.github.io/samsar-talabak/path-to-your-og-image.jpg" />
@@ -61,6 +59,13 @@
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MHPZ8NP"
     height="0" width="0" style="display:none;visibility:hidden"></iframe>
   </noscript>
+
+  <!-- شريط حالة النشاط -->
+  <div class="business-status-bar">
+    <!-- استبدل "favicon.ico" بمسار شعارك الصغير إذا كان مختلفاً -->
+    <img src="favicon.ico" alt="شعار سمسار طلبك" class="status-logo">
+    <span id="business-status-text" aria-live="polite">جارٍ تحميل حالة النشاط...</span>
+  </div>
   
   <div class="overlay"></div>
 
@@ -158,6 +163,62 @@
         console.log('Golden offer button/link clicked - event tracked.'); // للتأكد من العمل، يمكن إزالته لاحقًا
       });
     });
+
+    // سكربت حالة النشاط
+    const statusTextElement = document.getElementById('business-status-text');
+    if (statusTextElement) {
+        const currentTime = new Date().getHours(); // 0-23 (توقيت 24 ساعة)
+        // const currentDay = new Date().getDay(); // 0 (الأحد) - 6 (السبت) // uncomment if you need to check for specific days
+
+        // تعيين ساعات العمل (مثال: من 12 ظهراً إلى 9 مساءً)
+        const openingTime = 12; // 12:00 PM
+        const closingTime = 21; // 9:00 PM
+        // مثال: إذا أردت تحديد يوم عطلة (مثلاً الجمعة = 5)
+        // const holidayDay = 5; // 0 for Sunday, 1 for Monday, ..., 5 for Friday, 6 for Saturday
+
+        let statusMessage = "";
+        let statusClass = "";
+
+        // دالة لتنسيق الوقت بصيغة 12 ساعة مع ص/م
+        const formatTime12Hour = (hour24) => {
+            const hour = hour24 % 12 || 12; // يحول 0 أو 12 إلى 12
+            const minutes = "00"; // نفترض دائماً أنها على رأس الساعة
+            const period = hour24 < 12 || hour24 === 24 ? "ص" : "م"; // صباحاً أو مساءً
+            return `${hour}:${minutes} ${period}`;
+        };
+        
+        //  // مثال: إذا أردت إضافة يوم عطلة (مثلاً الجمعة) - قم بإزالة التعليق عن currentDay و holidayDay في الأعلى
+        // if (currentDay === holidayDay) {
+        //    statusMessage = "مغلق اليوم (عطلة أسبوعية). نعود غداً.";
+        //    statusClass = "status-closed";
+        // } else 
+        if (currentTime >= openingTime && currentTime < closingTime) {
+            statusMessage = `مفتوح الآن (حتى ${formatTime12Hour(closingTime)})`;
+            statusClass = "status-open";
+        } else {
+            statusClass = "status-closed";
+            if (currentTime >= closingTime) { // بعد وقت الإغلاق اليوم
+                // // إذا كان اليوم السابق للعطلة (مثلاً الخميس إذا كانت العطلة الجمعة)
+                // // قم بإزالة التعليق عن currentDay و holidayDay
+                // if (currentDay === (holidayDay - 1 + 7) % 7 ) { // (holidayDay - 1 + 7) % 7 handles Sunday if holiday is Monday
+                //    statusMessage = `مغلق حاليًا. سيفتح بعد غد الساعة ${formatTime12Hour(openingTime)}`;
+                // } else {
+                   statusMessage = `مغلق حاليًا. سيفتح غداً الساعة ${formatTime12Hour(openingTime)}`;
+                // }
+            } else { // قبل وقت الافتتاح اليوم
+                statusMessage = `مغلق حاليًا. سيفتح اليوم الساعة ${formatTime12Hour(openingTime)}`;
+            }
+        }
+
+        statusTextElement.textContent = statusMessage;
+        // إزالة الفئات القديمة قبل إضافة الجديدة لضمان عدم التضارب
+        statusTextElement.classList.remove('status-open', 'status-closed');
+        if (statusClass) {
+            statusTextElement.classList.add(statusClass);
+        }
+    }
   </script>
+  <!-- إذا كنت ستستخدم ResponsiveVoice، قم بإلغاء التعليق وإضافة مفتاح API الخاص بك -->
+  <!-- <script src="https://code.responsivevoice.org/responsivevoice.js?key=YOUR_API_KEY"></script> -->
 </body>
-                                        </html>
+  </html>
