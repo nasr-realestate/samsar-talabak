@@ -1,4 +1,5 @@
+
 User-agent: *
 Disallow:
 
-Sitemap: https://github.com/nasr-realestate/samsar-talabak/sitemap.xml
+Sitemap: https://nasr-realestate.github.io/samsar-talabak/sitemap.xml
