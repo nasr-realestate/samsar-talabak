@@ -1,89 +1,124 @@
-This XML file does not appear to have any style information associated with it. The document tree is shown below.
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!--  created with Free Online Sitemap Generator www.xml-sitemaps.com  -->
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+                            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- Sitemap Pagename: nasr-realestate.github.io/samsar-talabak/sitemap.xml -->
+<!-- Manually reviewed and updated: index.html entry removed, filenames updated to reflect renaming, lastmod updated to current UTC -->
+
 <url>
-<loc>https://nasr-realestate.github.io/samsar-talabak/</loc>
-<lastmod>2025-05-27T22:39:15+00:00</lastmod>
-<priority>1.00</priority>
+  <loc>https://nasr-realestate.github.io/samsar-talabak/</loc>
+  <lastmod>2025-05-28T20:55:00+00:00</lastmod> <!-- PLEASE CONFIRM DATE IS CORRECT FOR TODAY, TIME IS 20:55 UTC -->
+  <priority>1.00</priority>
 </url>
 <url>
-<loc>https://nasr-realestate.github.io/samsar-talabak/index.html</loc>
-<lastmod>2025-05-27T22:39:15+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://nasr-realestate.github.io/samsar-talabak/about-us.html</loc>
+  <lastmod>2025-05-28T20:55:00+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://nasr-realestate.github.io/samsar-talabak/about-us.html</loc>
-<lastmod>2025-05-27T22:39:15+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://nasr-realestate.github.io/samsar-talabak/contact-us.html</loc>
+  <lastmod>2025-05-28T20:55:00+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://nasr-realestate.github.io/samsar-talabak/contact-us.html</loc>
-<lastmod>2025-05-27T22:39:15+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://nasr-realestate.github.io/samsar-talabak/golden-offers.html</loc>
+  <lastmod>2025-05-28T20:55:00+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://nasr-realestate.github.io/samsar-talabak/golden-offers.html</loc>
-<lastmod>2025-05-27T22:39:15+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://nasr-realestate.github.io/samsar-talabak/front-page.html</loc>
+  <lastmod>2025-05-28T20:55:00+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://nasr-realestate.github.io/samsar-talabak/front-page.html</loc>
-<lastmod>2025-05-27T22:39:15+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://nasr-realestate.github.io/samsar-talabak/privacy-policy.html</loc>
+  <lastmod>2025-05-28T20:55:00+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://nasr-realestate.github.io/samsar-talabak/privacy-policy.html</loc>
-<lastmod>2025-05-27T22:39:15+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://nasr-realestate.github.io/samsar-talabak/administrative-headquarters-1.html</loc>
+  <lastmod>2025-05-28T20:55:00+00:00</lastmod>
+  <priority>0.64</priority>
 </url>
 <url>
-<loc>https://nasr-realestate.github.io/samsar-talabak/administrative-headquarters-1.html</loc>
-<lastmod>2025-05-27T22:39:15+00:00</lastmod>
-<priority>0.64</priority>
+  <loc>https://nasr-realestate.github.io/samsar-talabak/golden-offers-el-akkad.html</loc>
+  <lastmod>2025-05-28T20:55:00+00:00</lastmod>
+  <priority>0.64</priority>
 </url>
 <url>
-<loc>https://nasr-realestate.github.io/samsar-talabak/golden-offers-el-akkad.html</loc>
-<lastmod>2025-05-27T22:39:15+00:00</lastmod>
-<priority>0.64</priority>
+  <loc>https://nasr-realestate.github.io/samsar-talabak/shop-tawfikia-golden-mustafa-alnahas-nasr-city.html</loc>
+  <lastmod>2025-05-28T20:55:00+00:00</lastmod>
+  <priority>0.64</priority>
 </url>
 <url>
-<loc>https://nasr-realestate.github.io/samsar-talabak/shop-tawfikia-golden-mustafa-alnahas-nasr-city.html</loc>
-<lastmod>2025-05-27T22:39:15+00:00</lastmod>
-<priority>0.64</priority>
+  <loc>https://nasr-realestate.github.io/samsar-talabak/dryclean-golden-ganina-mall-nasr-city.html</loc>
+  <lastmod>2025-05-28T20:55:00+00:00</lastmod>
+  <priority>0.64</priority>
 </url>
 <url>
-<loc>https://nasr-realestate.github.io/samsar-talabak/dryclean-golden-ganina-mall-nasr-city.html</loc>
-<lastmod>2025-05-27T22:39:15+00:00</lastmod>
-<priority>0.64</priority>
+  <loc>https://nasr-realestate.github.io/samsar-talabak/abbas-akkad-apartment.html</loc>
+  <lastmod>2025-05-28T20:55:00+00:00</lastmod>
+  <priority>0.64</priority>
 </url>
 <url>
-<loc>https://nasr-realestate.github.io/samsar-talabak/abbas-akkad-apartment.html</loc>
-<lastmod>2025-05-27T22:39:15+00:00</lastmod>
-<priority>0.64</priority>
+  <loc>https://nasr-realestate.github.io/samsar-talabak/rabaa-adaweya-apartment.html</loc>
+  <lastmod>2025-05-28T20:55:00+00:00</lastmod>
+  <priority>0.64</priority>
 </url>
 <url>
-<loc>https://nasr-realestate.github.io/samsar-talabak/rabaa-adaweya-apartment.html</loc>
-<lastmod>2025-05-27T22:39:15+00:00</lastmod>
-<priority>0.64</priority>
+  <loc>https://nasr-realestate.github.io/samsar-talabak/behind-child-park-apartment.html</loc>
+  <lastmod>2025-05-28T20:55:00+00:00</lastmod>
+  <priority>0.64</priority>
 </url>
 <url>
-<loc>https://nasr-realestate.github.io/samsar-talabak/behind-child-park-apartment.html</loc>
-<lastmod>2025-05-27T22:39:15+00:00</lastmod>
-<priority>0.64</priority>
+  <loc>https://nasr-realestate.github.io/samsar-talabak/seventh-district-apartment.html</loc>
+  <lastmod>2025-05-28T20:55:00+00:00</lastmod>
+  <priority>0.64</priority>
 </url>
 <url>
-<loc>https://nasr-realestate.github.io/samsar-talabak/seventh-district-apartment.html</loc>
-<lastmod>2025-05-27T22:39:15+00:00</lastmod>
-<priority>0.64</priority>
+  <loc>https://nasr-realestate.github.io/samsar-talabak/saudi-company-apartment.html</loc>
+  <lastmod>2025-05-28T20:55:00+00:00</lastmod>
+  <priority>0.64</priority>
 </url>
 <url>
-<loc>https://nasr-realestate.github.io/samsar-talabak/saudi-company-apartment.html</loc>
-<lastmod>2025-05-27T22:39:15+00:00</lastmod>
-<priority>0.64</priority>
+  <loc>https://nasr-realestate.github.io/samsar-talabak/abdul-hakim-refaie-apartment.html</loc>
+  <lastmod>2025-05-28T20:55:00+00:00</lastmod>
+  <priority>0.64</priority>
 </url>
 <url>
-<loc>https://nasr-realestate.github.io/samsar-talabak/abdul-hakim-refaie-apartment.html</loc>
-<lastmod>2025-05-27T22:39:15+00:00</lastmod>
-<priority>0.64</priority>
+  <loc>https://nasr-realestate.github.io/samsar-talabak/a-real-estate-gallery-page3.html</loc> <!-- Assuming this file was renamed -->
+  <lastmod>2025-05-28T20:55:00+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://nasr-realestate.github.io/samsar-talabak/apartment-green-hills-nasr-street.html</loc>
+  <lastmod>2025-05-28T20:55:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://nasr-realestate.github.io/samsar-talabak/apartment-ard-el-golf-nasr-city.html</loc>
+  <lastmod>2025-05-28T20:55:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://nasr-realestate.github.io/samsar-talabak/apartment-hay-10.html</loc>
+  <lastmod>2025-05-28T20:55:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://nasr-realestate.github.io/samsar-talabak/apartment-abdallah-bin-taher-nasr-city.html</loc>
+  <lastmod>2025-05-28T20:55:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://nasr-realestate.github.io/samsar-talabak/apartment-hafez-ibrahim-zahraa-tower.html</loc>
+  <lastmod>2025-05-28T20:55:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://nasr-realestate.github.io/samsar-talabak/apartment-awal-may-between-abbas-mokram.html</loc>
+  <lastmod>2025-05-28T20:55:00+00:00</lastmod>
+  <priority>0.51</priority>
 </url>
 </urlset>
