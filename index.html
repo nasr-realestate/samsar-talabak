@@ -8,14 +8,14 @@
   <meta name="description" content="البوابة الرئيسية لعقارات مدينة نصر - اكتشف أفضل العروض العقارية المميزة في أفضل مناطق مدينة نصر مع تفاصيل دقيقة ووساطة موثوقة منذ 2014." />
   <meta name="google-site-verification" content="ozxUgrS2657mo8HYSvgjhYSeYv1FCcc8ig_3wjmSoGA" />
   
-  <!-- Favicon (استبدل بمسار الأيقونة الخاصة بك) -->
+  <!-- Favicon -->
   <link rel="icon" href="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" type="image/x-icon">
 
   <!-- رابط السايت ماب -->
   <link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.xml" />
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet" />
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -42,22 +42,26 @@
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-56WMJPYZWX');
-    // gtag('config', 'AW-10840749717'); // إذا كنت تستخدمه بشكل منفصل
+    // gtag('config', 'AW-10840749717'); 
   </script>
 
   <!-- Open Graph / Social Media Meta Tags -->
   <meta property="og:title" content="بوابة سمسار طلبك | عقارات مدينة نصر" />
   <meta property="og:description" content="اكتشف أفضل العروض العقارية المميزة في مدينة نصر." />
-  <meta property="og:image" content="https://nasr-realestate.github.io/samsar-talabak/path-to-your-og-image.jpg" />
+  <meta property="og:image" content="https://nasr-realestate.github.io/samsar-talabak/og-image.jpg" /> <!-- استبدل path-to-your-og-image.jpg بمسار صورة مناسبة -->
   <meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak/" />
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="سمسار طلبك" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="بوابة سمسار طلبك | عقارات مدينة نصر" />
+  <meta name="twitter:description" content="اكتشف أفضل العروض العقارية المميزة في مدينة نصر." />
+  <meta name="twitter:image" content="https://nasr-realestate.github.io/samsar-talabak/twitter-image.jpg" /> <!-- استبدل path-to-your-twitter-image.jpg بمسار صورة مناسبة لتويتر -->
 
-  <!-- إضافة ستايل لشريط الحالة فقط -->
+
+  <!-- إضافة ستايل لشريط الحالة فقط (مدمج لأنه صغير ومحدد) -->
   <style>
-    /* شريط حالة النشاط المحسن */
     .business-status-bar {
-      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+      background: var(--logo-light-grey, #f8f9fa); /* استخدام متغير CSS مع قيمة احتياطية */
       padding: 10px 15px;
       display: flex;
       align-items: center;
@@ -69,7 +73,6 @@
       position: relative;
       z-index: 1000;
     }
-
     .status-logo {
       width: 28px;
       height: 28px;
@@ -78,53 +81,22 @@
       border: 1px solid #f0f0f0;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
-
-    .status-open {
-      color: #2e7d32;
-      font-weight: 700;
-    }
-
-    .status-closed {
-      color: #c62828;
-      font-weight: 700;
-    }
-
-    #business-status-text {
-      font-size: 15px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    /* أيقونات الحالة */
+    .status-open { color: var(--logo-green, #2e7d32); font-weight: 700; }
+    .status-closed { color: #c62828; font-weight: 700; }
+    #business-status-text { font-size: 15px; display: flex; align-items: center; gap: 8px; }
     #business-status-text:before {
-      content: "";
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      margin-left: 8px;
+      content: ""; display: inline-block; width: 10px; height: 10px;
+      border-radius: 50%; margin-left: 8px; /* RTL: margin-right: 8px; */
     }
-
-    .status-open#business-status-text:before {
-      background-color: #4caf50;
-      animation: pulse 2s infinite;
-    }
-
-    .status-closed#business-status-text:before {
-      background-color: #f44336;
-    }
-
+    html[dir="rtl"] #business-status-text:before { margin-left: 0; margin-right: 8px; }
+    .status-open#business-status-text:before { background-color: var(--logo-green, #4caf50); animation: pulse 2s infinite; }
+    .status-closed#business-status-text:before { background-color: #f44336; }
     @keyframes pulse {
       0% { transform: scale(0.95); opacity: 1; }
       50% { transform: scale(1.1); opacity: 0.7; }
       100% { transform: scale(0.95); opacity: 1; }
     }
-
-    /* تأثير عند التحويم */
-    .business-status-bar:hover {
-      background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
-    }
+    .business-status-bar:hover { background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%); }
   </style>
 </head>
 <body>
@@ -140,7 +112,7 @@
     <span id="business-status-text" aria-live="polite">جارٍ تحميل حالة النشاط...</span>
   </div>
   
-  <div class="overlay"></div>
+  <div class="overlay"></div> <!-- يستخدم مع قائمة الهامبرجر النشطة -->
 
   <header class="site-header">
     <nav class="nav-bar">
@@ -154,11 +126,11 @@
       </button>
       <div class="nav-links-container">
         <ul class="nav-links">
-          <li><a href="index.html" class="nav-link">الرئيسية</a></li>
+          <li><a href="index.html" class="nav-link active">الرئيسية</a></li> <!-- تم إضافة active للصفحة الحالية -->
           <li><a href="about-us.html" class="nav-link">عن الشركة</a></li>
           <li><a href="contact-us.html" class="nav-link">اتصل بنا</a></li>
           <li>
-            <a href="golden-offers.html" class="nav-link golden-link golden-pulse">
+            <a href="golden-offers.html" class="nav-link golden-link"> <!-- تم إزالة golden-pulse من هنا، يمكن إضافتها بالـ JS إذا أردت حركة دائمة -->
               <i class="fas fa-crown"></i> العروض الذهبية
             </a>
           </li>
@@ -169,20 +141,23 @@
 
   <main class="main-content">
     <section class="hero-section">
-      <h1 class="main-title">اكتشف أفضل العقارات في مدينة نصر</h1>
-      <p class="main-description">
-        بوابة العثور على شقق تمليك وإيجار بأسعار تنافسية. نوفر لك أحدث العروض العقارية 
-        في أفضل مناطق مدينة نصر مع تفاصيل دقيقة ووساطة موثوقة منذ 2014.
-      </p>
-      <div class="cta-buttons-container">
-        <a href="front-page.html" class="cta-button"> <!-- أو رابط لصفحة العروض مباشرة -->
-          تصفح العروض الآن <i class="fas fa-arrow-left"></i>
-        </a>
-        <a href="golden-offers.html" class="cta-button golden-button golden-pulse">
-          <i class="fas fa-crown"></i> العروض الذهبية
-        </a>
+      <div class="hero-content">
+        <h1 class="main-title">اكتشف أفضل العقارات في مدينة نصر</h1>
+        <p class="main-description">
+          بوابة العثور على شقق تمليك وإيجار بأسعار تنافسية. نوفر لك أحدث العروض العقارية 
+          في أفضل مناطق مدينة نصر مع تفاصيل دقيقة ووساطة موثوقة منذ 2014.
+        </p>
+        <div class="cta-buttons-container">
+          <a href="front-page.html" class="cta-button primary-cta"> <!-- أو رابط لصفحة العروض مباشرة -->
+            تصفح العروض الآن <i class="fas fa-arrow-left"></i>
+          </a>
+          <a href="golden-offers.html" class="cta-button golden-cta">
+            <i class="fas fa-crown"></i> العروض الذهبية
+          </a>
+        </div>
       </div>
     </section>
+    <!-- قسم الخدمات يمكن إضافته هنا إذا أردت -->
   </main>
 
   <div class="scroll-down" aria-hidden="true">
@@ -190,27 +165,32 @@
   </div>
   
   <footer class="site-footer-bottom">
-    <div class="footer-links">
-        <a href="sitemap.xml">خريطة الموقع</a> | 
-        <a href="privacy-policy.html">سياسة الخصوصية</a>
+    <div class="footer-content">
+      <div class="footer-links">
+          <a href="sitemap.xml">خريطة الموقع</a> | 
+          <a href="privacy-policy.html">سياسة الخصوصية</a>
+      </div>
+      <p class="copyright-text">جميع الحقوق محفوظة © سمسار طلبك <span id="currentYear"></span></p>
     </div>
-    <p class="copyright-text">جميع الحقوق محفوظة © سمسار طلبك <span id="currentYear"></span></p>
   </footer>
 
   <script>
     // JavaScript لتحديث السنة الحالية في الحقوق المحفوظة
     document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-    // JavaScript بسيط لقائمة الهامبرجر (يمكن تحسينه)
+    // قائمة الهامبرجر
     const navToggle = document.querySelector('.nav-toggle');
     const navLinksContainer = document.querySelector('.nav-links-container');
+    const overlay = document.querySelector('.overlay');
 
-    if (navToggle && navLinksContainer) {
+    if (navToggle && navLinksContainer && overlay) {
       navToggle.addEventListener('click', () => {
         const isExpanded = navToggle.getAttribute('aria-expanded') === 'true' || false;
         navToggle.setAttribute('aria-expanded', !isExpanded);
         navLinksContainer.classList.toggle('active');
-        // تغيير أيقونة الهامبرجر
+        overlay.classList.toggle('active'); // تفعيل/إلغاء تفعيل الـ overlay
+        document.body.classList.toggle('no-scroll'); // لمنع التمرير عند فتح القائمة
+
         const icon = navToggle.querySelector('i');
         if (navLinksContainer.classList.contains('active')) {
             icon.classList.remove('fa-bars');
@@ -220,12 +200,20 @@
             icon.classList.add('fa-bars');
         }
       });
+
+      // إغلاق القائمة عند النقر على الـ overlay
+      overlay.addEventListener('click', () => {
+        if (navLinksContainer.classList.contains('active')) {
+          navToggle.click(); // محاكاة النقر على زر التبديل لإغلاق القائمة
+        }
+      });
     }
     
-    // تتبع النقر على زر العروض الذهبية (يفضل إرسال حدث لـ GA/GTM)
-    document.querySelectorAll('.golden-link, .golden-button').forEach(btn => {
-      btn.addEventListener('click', function() {
-        // مثال لإرسال حدث لـ Google Analytics (إذا كان gtag مهيأ)
+    // تتبع النقر على زر العروض الذهبية
+    document.querySelectorAll('.golden-link, .golden-cta').forEach(btn => {
+      btn.addEventListener('click', function(event) {
+        // يمكنك منع السلوك الافتراضي إذا كنت تعالج الانتقال بالـ JS فقط
+        // event.preventDefault(); 
         if (typeof gtag === 'function') {
           gtag('event', 'click', {
             'event_category': 'engagement',
@@ -233,7 +221,8 @@
             'value': 1
           });
         }
-        console.log('Golden offer button/link clicked - event tracked.'); // للتأكد من العمل، يمكن إزالته لاحقًا
+        console.log('Golden offer button/link clicked - event tracked.');
+        // window.location.href = this.href; // إذا منعت السلوك الافتراضي
       });
     });
 
@@ -242,39 +231,56 @@
     if (statusTextElement) {
         const currentTime = new Date();
         const currentHour = currentTime.getHours();
-        const currentMinutes = currentTime.getMinutes();
-        const currentDay = currentTime.getDay(); // 0 (الأحد) - 6 (السبت)
+        // const currentMinutes = currentTime.getMinutes(); // غير مستخدم حاليا
+        // const currentDay = currentTime.getDay(); // غير مستخدم حاليا
 
-        // إعدادات ساعات العمل (مثال: من 10 صباحاً إلى 10 مساءً يومياً)
-        const openingTime = 10; // 10 صباحاً
-        const closingTime = 22; // 10 مساءً
+        const openingTime = 10; 
+        const closingTime = 22; 
 
         let statusMessage = "";
         let statusClass = "";
 
-        // دالة لتنسيق الوقت بصيغة 12 ساعة مع ص/م
         const formatTime12Hour = (hour24) => {
-            const hour = hour24 % 12 || 12; // يحول 0 أو 12 إلى 12
-            const period = hour24 < 12 || hour24 === 24 ? "ص" : "م"; // صباحاً أو مساءً
+            const hour = hour24 % 12 || 12; 
+            const period = hour24 < 12 || hour24 === 24 ? "ص" : "م"; 
             return `${hour} ${period}`;
         };
         
         if (currentHour >= openingTime && currentHour < closingTime) {
-            const remainingHours = closingTime - currentHour;
             statusMessage = `مفتوح الآن - متاح حتى ${formatTime12Hour(closingTime)}`;
             statusClass = "status-open";
         } else {
             statusClass = "status-closed";
-            if (currentHour >= closingTime) {
-                statusMessage = `مغلق الآن - سيفتح غداً ${formatTime12Hour(openingTime)} صباحاً`;
-            } else {
-                statusMessage = `مغلق الآن - سيفتح ${formatTime12Hour(openingTime)} صباحاً`;
+            if (currentHour >= closingTime || currentHour < openingTime) { // تم تبسيط الشرط
+                const nextOpeningHour = openingTime; // نفترض أنه يفتح دائمًا في نفس الوقت
+                const opensTomorrow = currentHour >= closingTime;
+                statusMessage = `مغلق الآن - سيفتح ${opensTomorrow ? 'غداً ' : ''}${formatTime12Hour(nextOpeningHour)}`;
             }
         }
-
         statusTextElement.textContent = statusMessage;
         statusTextElement.className = statusClass;
     }
+
+    // تأثير النبض للعروض الذهبية (يمكن تفعيله/إلغاؤه)
+    function applyPulseAnimation() {
+        const goldenElements = document.querySelectorAll('.golden-link, .golden-cta');
+        goldenElements.forEach(el => {
+            el.style.animation = 'goldenPulse 2s infinite';
+        });
+    }
+    // يمكنك استدعاء هذه الدالة بناءً على شرط معين أو دائمًا
+    // applyPulseAnimation(); 
+    // أو إضافة الكلاس مباشرة في HTML وإزالة الأنماط من CSS إذا كانت دائمة:
+    // .golden-pulse { animation: goldenPulse 2s infinite; }
+    // في style.css
+    // @keyframes goldenPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+
+    // إخفاء رسالة "جار التحميل" بعد تحميل كل شيء
+    window.addEventListener('load', () => {
+        // إذا كان لديك رسالة تحميل معينة تريد إخفاءها
+    });
+
   </script>
 </body>
-</html>
+  </html>
