@@ -1,34 +1,39 @@
 /* ==== ROOT VARIABLES (COLOR PALETTE & TYPOGRAPHY) ==== */
 :root {
-  /* ألوان الشعار الأساسية */
-  --logo-green: #00D974; /* أخضر حيوي ومشرق */
-  --logo-yellow: #F1C40F; /* أصفر ذهبي */
-  --logo-dark: #121212;   /* أسود فحمي داكن للخلفيات الرئيسية */
+  /* ألوان الشعار الأساسية - تم اختيار درجات مناسبة للويب */
+  --logo-green: #39FF14; /* أخضر نيون ساطع ولكنه قابل للقراءة */
+  /* بديل أخف قليلاً إذا كان السابق فاقعًا جدًا: --logo-green-alt: #2ECC71; */
+  --logo-yellow: #FFD700; /* أصفر ذهبي كلاسيكي */
+  --logo-black: #0D0D0D;   /* أسود عميق لخلفية الموقع الأساسية */
+  --logo-dark-surface: #1A1A1A; /* سطح أغمق قليلاً من الأسود للعناصر الثانوية */
   --logo-white: #FFFFFF;
-  --logo-light-grey: #f0f0f0; /* رمادي فاتح جدا للخلفيات الثانوية */
-  --logo-medium-grey: #757575; /* رمادي متوسط للنصوص الفرعية */
-  --logo-red: #E74C3C; /* أحمر من الشعار (للاستخدامات المحدودة) */
-  --logo-blue: #3498DB; /* أزرق من الشعار (للاستخدامات المحدودة) */
+  --logo-light-grey: #E0E0E0; /* رمادي فاتح للنصوص أو الحدود على الخلفيات الداكنة */
+  --logo-medium-grey: #BDBDBD; /* رمادي متوسط للنصوص الفرعية */
+  --logo-red: #E53935; /* أحمر للشعار (للاستخدام المحدود مثل الإغلاق) */
+  --logo-blue: #1E88E5; /* أزرق للشعار (للاستخدام المحدود) */
 
   /* تعيين متغيرات الموقع */
   --primary-color: var(--logo-green);
   --secondary-color: var(--logo-yellow);
-  --background-color: var(--logo-dark);
-  --surface-color: #1e1e1e; /* لون أغمق قليلاً من الأسود للخلفيات الثانوية */
-  --text-color-on-dark: var(--logo-white);
-  --text-color-on-light: #2c3e50; /* أزرق داكن للنص على خلفيات فاتحة */
-  --light-bg-elements: var(--logo-light-grey); /* لخلفيات العناصر الفاتحة مثل شريط الحالة */
+  --background-color: var(--logo-black);
+  --surface-color: var(--logo-dark-surface);
+  --text-color: var(--logo-light-grey); /* اللون الافتراضي للنص على الخلفيات الداكنة */
+  --text-color-strong: var(--logo-white); /* للنصوص الأكثر أهمية أو العناوين */
+  --text-color-muted: var(--logo-medium-grey);
+  --accent-color-1: var(--logo-red);
+  --accent-color-2: var(--logo-blue);
 
-  /* متغيرات الخطوط */
+  /* متغيرات الخطوط (موجودة في HTML، هنا للتذكير) */
   --font-family-main: 'Tajawal', sans-serif;
   --font-weight-normal: 400;
   --font-weight-bold: 700;
-  --font-weight-black: 900; /* للخطوط العريضة جدا */
+  --font-weight-black: 900;
 
   /* متغيرات أخرى */
-  --border-radius-main: 8px;
-  --box-shadow-main: 0 4px 15px rgba(0, 0, 0, 0.2);
-  --transition-main: all 0.3s ease-in-out;
+  --border-radius-main: 6px; /* استدارة أقل حدة قليلاً */
+  --box-shadow-light: 0 2px 8px rgba(0, 0, 0, 0.3); /* ظل أفتح قليلاً */
+  --box-shadow-strong: 0 4px 15px rgba(0, 0, 0, 0.5); /* ظل أقوى */
+  --transition-main: all 0.25s ease-in-out;
 }
 
 /* ==== GENERAL RESETS & BODY STYLES ==== */
@@ -40,64 +45,79 @@
 
 html {
   scroll-behavior: smooth;
-  font-size: 16px; /* حجم الخط الأساسي للموقع */
+  font-size: 16px;
 }
 
 body {
   background-color: var(--background-color);
-  color: var(--text-color-on-dark);
+  color: var(--text-color);
   font-family: var(--font-family-main);
   line-height: 1.7;
-  overflow-x: hidden; /* منع التمرير الأفقي */
+  overflow-x: hidden;
 }
 body.no-scroll {
-  overflow-y: hidden; /* منع التمرير الرأسي عند فتح القائمة */
+  overflow-y: hidden;
 }
 
 /* ==== TYPOGRAPHY ==== */
 h1, h2, h3, h4, h5, h6 {
   font-weight: var(--font-weight-bold);
   line-height: 1.3;
+  color: var(--text-color-strong); /* العناوين باللون الأبيض الأقوى */
 }
-h1.main-title { font-size: clamp(2.5rem, 6vw, 4rem); /* حجم متجاوب */ }
-p.main-description { font-size: clamp(1rem, 2.5vw, 1.3rem); }
+h1.main-title { 
+  font-size: clamp(2.2rem, 5.5vw, 3.8rem); 
+  font-weight: var(--font-weight-black); /* استخدام الخط الأعرض */
+}
+p.main-description { 
+  font-size: clamp(1rem, 2.2vw, 1.25rem); 
+  color: var(--text-color-muted); /* وصف أقل حدة */
+}
+a {
+  color: var(--primary-color); /* الروابط باللون الأخضر افتراضيًا */
+  text-decoration: none;
+  transition: color var(--transition-main);
+}
+a:hover {
+  color: var(--secondary-color); /* تغيير اللون إلى الأصفر عند التحويم */
+}
 
 /* ==== HEADER & NAVIGATION ==== */
 .site-header {
-  position: sticky; /* جعل الهيدر ثابتًا في الأعلى عند التمرير */
+  position: sticky;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 999; /* ضمان بقائه فوق العناصر الأخرى */
-  background-color: rgba(18, 18, 18, 0.85); /* خلفية شبه شفافة */
-  backdrop-filter: blur(10px); /* تأثير ضبابي للخلفية */
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  z-index: 999;
+  background-color: rgba(13, 13, 13, 0.8); /* خلفية الهيدر أغمق قليلاً بشفافية */
+  backdrop-filter: blur(8px);
+  box-shadow: var(--box-shadow-light);
 }
 
 .nav-bar {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem 1.5rem;
+  padding: 0.8rem 1.5rem; /* تعديل الـ padding */
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .logo h1 {
-  font-size: 1.8rem;
+  font-size: 1.7rem; /* تعديل حجم خط الشعار */
   font-weight: var(--font-weight-black);
-  color: var(--text-color-on-dark);
+  color: var(--text-color-strong);
 }
 .logo h1 span {
   color: var(--primary-color); /* "طلبك" باللون الأخضر */
 }
 
 .nav-toggle {
-  display: none; /* مخفي في الشاشات الكبيرة */
+  display: none;
   background: none;
   border: none;
-  color: var(--text-color-on-dark);
-  font-size: 1.8rem;
+  color: var(--text-color-strong);
+  font-size: 1.6rem; /* تعديل حجم أيقونة الهامبرجر */
   cursor: pointer;
   padding: 0.5rem;
 }
@@ -110,30 +130,31 @@ p.main-description { font-size: clamp(1rem, 2.5vw, 1.3rem); }
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 1.5rem; /* مسافة بين الروابط */
+  gap: 1.2rem; /* تعديل المسافة بين الروابط */
   align-items: center;
 }
 
 .nav-link {
-  color: var(--text-color-on-dark);
+  color: var(--text-color);
   text-decoration: none;
   font-weight: var(--font-weight-bold);
-  padding: 0.5rem 0;
+  padding: 0.4rem 0;
   position: relative;
   transition: color var(--transition-main);
 }
 .nav-link:hover, .nav-link.active {
   color: var(--primary-color);
 }
-.nav-link::after { /* خط سفلي عند التحويم/النشاط */
+.nav-link::after {
   content: '';
   position: absolute;
   width: 0;
-  height: 2px;
-  bottom: 0;
-  right: 0; /* RTL: left: 0; */
+  height: 3px; /* زيادة سمك الخط السفلي */
+  bottom: -2px; /* تعديل موضع الخط */
+  right: 0; 
   background-color: var(--primary-color);
   transition: width var(--transition-main);
+  border-radius: 2px; /* استدارة خفيفة للخط */
 }
 html[dir="rtl"] .nav-link::after { right: auto; left: 0; }
 .nav-link:hover::after, .nav-link.active::after {
@@ -142,140 +163,166 @@ html[dir="rtl"] .nav-link::after { right: auto; left: 0; }
 
 .golden-link {
   background-color: var(--secondary-color);
-  color: var(--logo-dark) !important; /* !important لضمان تطبيق اللون */
-  padding: 0.6rem 1.2rem !important;
+  color: var(--logo-black) !important; 
+  padding: 0.5rem 1rem !important; /* تعديل الـ padding */
   border-radius: var(--border-radius-main);
   transition: var(--transition-main), transform 0.2s ease;
+  font-weight: var(--font-weight-bold);
 }
 .golden-link:hover {
   background-color: var(--primary-color);
-  color: var(--logo-white) !important;
-  transform: scale(1.05);
+  color: var(--logo-black) !important; /* الحفاظ على نص أسود على الأخضر إذا كان واضحًا */
+  /* أو color: var(--logo-white) !important; إذا كان التباين أفضل */
+  transform: scale(1.03); /* تعديل تأثير التحويم */
+  box-shadow: 0 2px 10px rgba(255, 215, 0, 0.4); /* ظل أصفر خفيف عند التحويم */
 }
-.golden-link i { margin-left: 0.5rem; /* RTL: margin-right: 0.5rem; */ }
-html[dir="rtl"] .golden-link i { margin-left: 0; margin-right: 0.5rem; }
+.golden-link i { margin-left: 0.4rem; }
+html[dir="rtl"] .golden-link i { margin-left: 0; margin-right: 0.4rem; }
 
-/* تأثير النبض للعروض الذهبية */
+/* تأثير النبض للعروض الذهبية - يمكن تفعيله عبر كلاس golden-pulse-animation */
 @keyframes goldenPulse {
-  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(241, 196, 15, 0.7); }
-  50% { transform: scale(1.05); box-shadow: 0 0 10px 10px rgba(241, 196, 15, 0); }
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(var(--secondary-color-rgb, 255, 215, 0), 0.5); }
+  50% { transform: scale(1.05); box-shadow: 0 0 8px 12px rgba(var(--secondary-color-rgb, 255, 215, 0), 0); }
 }
-.golden-pulse-animation { /* يمكن إضافة هذا الكلاس عبر JS أو مباشرة */
-  animation: goldenPulse 2s infinite;
+/* لإضافة الألوان كـ RGB لـ box-shadow في النبض */
+:root {
+    --secondary-color-rgb: 255, 215, 0; /* Corresponds to #FFD700 */
+    /* If --logo-yellow is #F1C40F, then RGB is 241, 196, 15 */
+    /* --secondary-color-rgb: 241, 196, 15; */
+}
+.golden-pulse-animation { 
+  animation: goldenPulse 2.5s infinite ease-out;
 }
 
 
 /* ==== HERO SECTION ==== */
 .hero-section {
-  min-height: calc(100vh - 80px); /* 80px هو ارتفاع تقريبي للهيدر وشريط الحالة */
+  min-height: calc(100vh - 65px - 49px); /* ارتفاع شاشة العرض - ارتفاع شريط الحالة - ارتفاع الهيدر التقريبي */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
   padding: 2rem 1.5rem;
-  background: linear-gradient(rgba(18, 18, 18, 0.8), rgba(18, 18, 18, 0.8)), 
-              url('https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center/cover; /* صورة خلفية مناسبة */
+  background: linear-gradient(rgba(13, 13, 13, 0.75), rgba(13, 13, 13, 0.75)), 
+              url('https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center/cover;
   position: relative;
+  overflow: hidden; /* لإخفاء أي عناصر زخرفية قد تتجاوز الحدود */
 }
+/* إضافة عناصر زخرفية إذا أردت (اختياري) */
+/* .hero-section::before, .hero-section::after {
+  content: '';
+  position: absolute;
+  opacity: 0.1;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  z-index: 1;
+}
+.hero-section::before { width: 200px; height: 200px; top: -50px; left: -50px; }
+.hero-section::after { width: 300px; height: 300px; bottom: -100px; right: -100px; } */
+
 .hero-content {
-    max-width: 800px; /* تحديد عرض المحتوى */
+    max-width: 750px; 
     z-index: 2;
 }
 .main-title {
-  color: var(--text-color-on-dark);
-  font-weight: var(--font-weight-black);
-  margin-bottom: 1rem;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  color: var(--text-color-strong);
+  margin-bottom: 1.2rem; /* تعديل المسافة */
+  text-shadow: 0 2px 10px rgba(0,0,0,0.6); /* تعديل ظل النص */
 }
 .main-description {
-  color: var(--logo-light-grey);
-  margin-bottom: 2.5rem;
-  max-width: 600px;
+  color: var(--text-color-muted);
+  margin-bottom: 2.2rem; /* تعديل المسافة */
+  max-width: 580px; /* تعديل العرض */
   margin-left: auto;
   margin-right: auto;
 }
 .cta-buttons-container {
   display: flex;
-  gap: 1rem;
+  gap: 0.8rem; /* تعديل الفجوة */
   justify-content: center;
-  flex-wrap: wrap; /* للسماح بانتقال الأزرار لأسفل في الشاشات الصغيرة */
+  flex-wrap: wrap;
 }
 .cta-button {
-  padding: 0.9rem 2rem;
+  padding: 0.8rem 1.8rem; /* تعديل الـ padding */
   border-radius: var(--border-radius-main);
   text-decoration: none;
   font-weight: var(--font-weight-bold);
-  font-size: 1.1rem;
+  font-size: 1.05rem; /* تعديل حجم الخط */
   transition: var(--transition-main), transform 0.2s ease;
   border: 2px solid transparent;
-  display: inline-flex; /* لمحاذاة الأيقونة مع النص */
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem; /* تعديل الفجوة مع الأيقونة */
+  text-transform: uppercase; /* جعل النص بأحرف كبيرة (اختياري) */
+  letter-spacing: 0.5px; /* تباعد طفيف بين الأحرف */
 }
-.cta-button:hover { transform: translateY(-3px) scale(1.03); }
+.cta-button:hover { 
+  transform: translateY(-2px) scale(1.02); 
+  box-shadow: var(--box-shadow-strong); /* إضافة ظل عند التحويم */
+}
 
 .cta-button.primary-cta {
   background-color: var(--primary-color);
-  color: var(--logo-dark); /* نص داكن على الأخضر المشرق */
+  color: var(--logo-black); 
   border-color: var(--primary-color);
 }
 .cta-button.primary-cta:hover {
   background-color: var(--secondary-color);
-  color: var(--logo-dark);
+  color: var(--logo-black);
   border-color: var(--secondary-color);
 }
 .cta-button.golden-cta {
   background-color: var(--secondary-color);
-  color: var(--logo-dark);
+  color: var(--logo-black);
   border-color: var(--secondary-color);
 }
 .cta-button.golden-cta:hover {
   background-color: var(--primary-color);
-  color: var(--logo-dark); /* أو var(--logo-white) إذا كان التباين أفضل */
+  color: var(--logo-black); 
   border-color: var(--primary-color);
 }
 
 /* أيقونة التمرير لأسفل */
 .scroll-down {
   position: absolute;
-  bottom: 30px;
+  bottom: 25px; /* تعديل الموضع */
   left: 50%;
   transform: translateX(-50%);
-  color: rgba(255, 255, 255, 0.7);
-  animation: bounce 2s infinite;
+  color: rgba(224, 224, 224, 0.6); /* تعديل لون الشفافية */
+  animation: bounce 2.5s infinite ease-in-out;
   z-index: 2;
 }
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-  40% { transform: translateX(-50%) translateY(-15px); }
-  60% { transform: translateX(-50%) translateY(-7px); }
+  0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.8; }
+  40% { transform: translateX(-50%) translateY(-12px); opacity: 1; }
+  60% { transform: translateX(-50%) translateY(-6px); opacity: 0.9; }
 }
 
 /* ==== FOOTER ==== */
 .site-footer-bottom {
   background-color: var(--surface-color);
-  color: var(--logo-medium-grey);
-  padding: 1.5rem 1rem;
+  color: var(--text-color-muted);
+  padding: 1.8rem 1rem; /* تعديل الـ padding */
   text-align: center;
-  font-size: 0.9rem;
-  border-top: 1px solid rgba(255,255,255,0.1);
+  font-size: 0.85rem; /* تعديل حجم الخط */
+  border-top: 1px solid rgba(255,255,255,0.08); /* تعديل لون الحد */
 }
 .footer-content {
     max-width: 1200px;
     margin: 0 auto;
 }
 .footer-links a {
-  color: var(--logo-medium-grey);
+  color: var(--text-color-muted);
   text-decoration: none;
-  margin: 0 0.5rem;
+  margin: 0 0.6rem; /* تعديل المسافة */
   transition: color var(--transition-main);
 }
 .footer-links a:hover {
   color: var(--primary-color);
 }
 .copyright-text {
-  margin-top: 0.5rem;
+  margin-top: 0.8rem; /* تعديل المسافة */
 }
 
 /* ==== OVERLAY FOR MOBILE MENU ==== */
@@ -285,69 +332,78 @@ html[dir="rtl"] .golden-link i { margin-left: 0; margin-right: 0.5rem; }
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 990; /* أقل من القائمة ولكن فوق المحتوى */
+  background-color: rgba(0, 0, 0, 0.6); /* زيادة شفافية الـ overlay قليلاً */
+  z-index: 990; 
   opacity: 0;
   visibility: hidden;
-  transition: opacity var(--transition-main), visibility var(--transition-main);
+  transition: opacity var(--transition-main), visibility 0s 0.3s; /* تأخير إخفاء الـ visibility */
 }
 .overlay.active {
   opacity: 1;
   visibility: visible;
+  transition: opacity var(--transition-main), visibility 0s;
 }
 
 /* ==== RESPONSIVE STYLES (MOBILE MENU) ==== */
 @media (max-width: 768px) {
   .nav-toggle {
     display: block;
-    z-index: 1000; /* ليكون فوق القائمة عند الفتح/الإغلاق */
+    z-index: 1000; 
   }
   .nav-links-container {
     position: fixed;
     top: 0;
-    right: -100%; /* RTL: left: -100%; يبدأ خارج الشاشة */
-    width: 70%; /* عرض القائمة المنسدلة */
-    max-width: 300px; /* أقصى عرض للقائمة */
+    right: -100%; 
+    width: 75%; 
+    max-width: 320px; 
     height: 100vh;
     background-color: var(--surface-color);
-    box-shadow: -5px 0 15px rgba(0,0,0,0.2); /* RTL: 5px 0 15px rgba(0,0,0,0.2); */
+    box-shadow: -8px 0 20px rgba(0,0,0,0.3); 
     flex-direction: column;
-    padding-top: 5rem; /* مسافة من الأعلى للعناصر */
-    transition: right 0.4s ease-in-out; /* RTL: left 0.4s ease-in-out; */
+    padding-top: 6rem; 
+    transition: right 0.35s cubic-bezier(0.25, 0.1, 0.25, 1); /* تعديل سرعة وتأثير الانتقال */
     z-index: 998;
   }
-  html[dir="rtl"] .nav-links-container { right: auto; left: -100%; }
+  html[dir="rtl"] .nav-links-container { right: auto; left: -100%; transition: left 0.35s cubic-bezier(0.25, 0.1, 0.25, 1); }
 
   .nav-links-container.active {
-    right: 0; /* RTL: left: 0; */
+    right: 0; 
   }
   html[dir="rtl"] .nav-links-container.active { right: auto; left: 0; }
 
   .nav-links {
     flex-direction: column;
-    align-items: center; /* توسط الروابط */
+    align-items: stretch; /* جعل الروابط تمتد بعرض القائمة */
     width: 100%;
+    gap: 0; /* إزالة الفجوة، سيتم التحكم بالمسافات عبر padding الروابط */
   }
   .nav-links li {
     width: 100%;
-    text-align: center;
+    text-align: right; /* RTL: text-align: left; */
   }
+  html[dir="rtl"] .nav-links li { text-align: left; }
+
   .nav-link {
-    display: block; /* لجعل كل رابط يأخذ عرضًا كاملاً */
-    padding: 1rem 0; /* زيادة الـ padding الرأسي */
-    font-size: 1.2rem; /* تكبير الخط في القائمة المنسدلة */
-    border-bottom: 1px solid rgba(255,255,255,0.05); /* فاصل بين الروابط */
+    display: block; 
+    padding: 1.1rem 1.5rem; /* تعديل الـ padding */
+    font-size: 1.15rem; 
+    border-bottom: 1px solid rgba(255,255,255,0.05);
   }
+  .nav-link::after { display: none; } /* إخفاء الخط السفلي في وضع الجوال */
   .nav-links li:last-child .nav-link {
     border-bottom: none;
   }
-  .golden-link { margin-top: 1rem; } /* مسافة إضافية للزر الذهبي */
+  .golden-link { 
+      margin: 1rem 1.5rem; /* تحديد هوامش للزر الذهبي */
+      display: block; /* جعله block ليتناسب مع باقي الروابط */
+      text-align: center;
+  }
 
-  .hero h1.main-title { font-size: clamp(2rem, 8vw, 3rem); }
-  .hero p.main-description { font-size: clamp(0.9rem, 4vw, 1.1rem); }
-  .cta-buttons-container { flex-direction: column; gap: 0.8rem; }
-  .cta-button { width: 100%; max-width: 300px; }
-}
+  .hero-section { min-height: calc(100vh - 60px - 49px); } /* تعديل ارتفاع الهيرو للجوال */
+  .hero h1.main-title { font-size: clamp(1.8rem, 7vw, 2.8rem); }
+  .hero p.main-description { font-size: clamp(0.85rem, 3.5vw, 1.05rem); }
+  .cta-buttons-container { flex-direction: column; gap: 0.9rem; }
+  .cta-button { width: 90%; max-width: 320px; margin: 0 auto; }
 
-/* أنماط إضافية للصفحات الأخرى (About, Contact, etc.) يمكن وضعها هنا أو في ملفات CSS منفصلة */
-/* على سبيل المثال، أنماط قسم "الخدمات" أو "الشهادات" التي استخدمناها سابقًا */
+  .scroll-down { bottom: 20px; } /* تعديل موضع أيقونة التمرير للجوال */
+  }
