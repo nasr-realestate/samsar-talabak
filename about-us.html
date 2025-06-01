@@ -7,34 +7,32 @@
   <meta name="keywords" content="عن سمسار طلبك، سمسار عقارات مدينة نصر، فريق العمل, شهادات عملاء سمسار طلبك, تقييمات سمسار طلبك" />
   <title>عنّا - سمسار طلبك</title>
 
+  <!-- Google Fonts & Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet" /> <!-- استخدام Tajawal بأوزان أكثر -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
   <!-- Favicon (يفضل استخدام نفس الأيقونة المستخدمة في الصفحة الرئيسية) -->
   <link rel="icon" href="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" type="image/x-icon">
 
-  <!-- Canonical Tag (تأكد من أن هذا هو الرابط الصحيح لصفحة "عنّا") -->
-  <link rel="canonical" href="https://nasr-realestate.github.io/samsar-talabak/about-us.html" />
+  <!-- Canonical Tag -->
+  <link rel="canonical" href="https://nasr-realestate.github.io/samsar-talabak/about-us.html" /> <!-- تأكد من صحة هذا الرابط لصفحة عنّا -->
 
   <!-- Open Graph / Social Media Meta Tags (مقترح - قم بتخصيصها) -->
   <meta property="og:title" content="عن سمسار طلبك | خبرة وثقة في عقارات مدينة نصر" />
   <meta property="og:description" content="تعرف على فريق سمسار طلبك المتخصص، رسالتنا وقيمنا، وخبرتنا الطويلة في سوق العقارات بمدينة نصر. نساعدك بثقة وأمان." />
-  <meta property="og:image" content="https://nasr-realestate.github.io/samsar-talabak/images/og-about-us.jpg" /> <!-- ضع رابط صورة مناسبة لصفحة "عنّا" -->
+  <meta property="og:image" content="رابط_صورة_مناسبة_لصفحة_عن_نا.jpg" /> <!--  <<<< غيّر هذا الرابط -->
   <meta property="og:image:alt" content="فريق سمسار طلبك - خبراء عقارات مدينة نصر" />
   <meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak/about-us.html" />
-  <meta property="og:type" content="article" /> <!-- "article" مناسب للصفحات الداخلية -->
+  <meta property="og:type" content="article" />
   <meta property="og:site_name" content="سمسار طلبك" />
   <meta property="og:locale" content="ar_AR" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="عن سمسار طلبك | خبرة وثقة في عقارات مدينة نصر" />
   <meta name="twitter:description" content="تعرف على فريق سمسار طلبك المتخصص، رسالتنا وقيمنا، وخبرتنا الطويلة في سوق العقارات بمدينة نصر." />
-  <meta name="twitter:image" content="https://nasr-realestate.github.io/samsar-talabak/images/twitter-about-us.jpg" /> <!-- ضع رابط صورة مناسبة لتويتر -->
+  <meta name="twitter:image" content="رابط_صورة_مناسبة_لتويتر_صفحة_عن_نا.jpg" /> <!--  <<<< غيّر هذا الرابط -->
   <meta name="twitter:image:alt" content="فريق سمسار طلبك" />
 
-  <!-- Google Fonts & Font Awesome -->
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-
-  <!-- External CSS (نفس ملف الأنماط المستخدم في الصفحة الرئيسية) -->
-  <link rel="stylesheet" href="style.css" />
 
   <!-- Google Tag Manager -->
   <script>
@@ -48,57 +46,248 @@
   <!-- Cookiebot -->
   <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="afd0aac9-9e97-4a7b-9d12-d323a91f32b3" data-blockingmode="auto" type="text/javascript"></script>
 
-  <!-- ستايل شريط الحالة (إذا كنت ستستخدمه في هذه الصفحة أيضًا) -->
   <style>
-    .business-status-bar {
-      background: var(--light-bg-elements, #f8f9fa); 
-      padding: 10px 15px;
+    :root {
+      --primary: #2c3e50; /* لون الناف بار الأصلي */
+      --secondary: #e74c3c; /* لون التحويم الأصلي للزر */
+      --light-bg: #f8f9fa;
+      --text: #333;
+      --star-color: #f39c12;
+      --logo-span-color: #39FF14; /* <<< اللون الأخضر لكلمة "طلبك" */
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    body {
+      background: var(--light-bg);
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    .nav-bar {
+      background: var(--primary);
+      padding: 1rem 2rem;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      gap: 12px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-      font-family: var(--font-family-main, 'Tajawal', sans-serif);
-      position: relative; 
-      z-index: 1000;
-      color: var(--text-color-on-light, #333); 
     }
-    .status-logo {
-      width: 28px;
-      height: 28px;
-      object-fit: contain;
+
+    .nav-bar h1 {
+      color: white; /* لون "سمسار" */
+      font-size: 1.8rem;
+      font-weight: 900; /* استخدام الخط الأعرض للشعار */
+    }
+    .nav-bar h1 span {
+      color: var(--logo-span-color); /* لون "طلبك" */
+    }
+
+    .contact-btn {
+      background: var(--primary);
+      color: white;
+      padding: 0.6rem 1rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    .contact-btn:hover {
+      background: var(--secondary);
+    }
+
+    header.page-header {
+      text-align: center;
+      padding: 2rem;
+      /* استخدام نفس لون الناف بار للهيدر أو لون متناسق */
+      background: linear-gradient(rgba(44,62,80,0.9), rgba(44,62,80,0.9)); 
+      color: white;
+    }
+     header.page-header h1 {
+        font-size: 2.2rem; /* تكبير خط عنوان الصفحة قليلاً */
+     }
+
+
+    .about-section, .testimonials-section {
+      max-width: 900px;
+      margin: 2.5rem auto; /* زيادة المسافة قليلاً */
+      padding: 0 1.5rem; /* زيادة الحشو الجانبي قليلاً */
+      background-color: #fff; /* إضافة خلفية بيضاء للأقسام لمزيد من التحديد */
+      border-radius: 8px; /* استدارة حواف الأقسام */
+      box-shadow: 0 5px 15px rgba(0,0,0,0.07); /* ظل خفيف للأقسام */
+      padding-top: 2rem; /* حشو علوي للقسم */
+      padding-bottom: 2rem; /* حشو سفلي للقسم */
+    }
+
+    .about-section h2, .testimonials-section h2 {
+      color: var(--primary); /* استخدام اللون الأساسي للعناوين الداخلية */
+      margin-bottom: 1.5rem; /* زيادة المسافة السفلية */
+      text-align: center;
+      font-size: 2rem; /* تكبير خط العناوين الداخلية */
+    }
+
+    .about-section p {
+      margin-bottom: 1.2rem;
+      color: #4a4a4a; /* تعديل لون الفقرات قليلاً */
+      font-size: 1.08rem; /* تعديل حجم خط الفقرات قليلاً */
+    }
+     .about-section p strong {
+        color: var(--secondary); /* لون النصوص الهامة */
+     }
+
+
+    .testimonials-section {
+      padding-top: 1rem; 
+    }
+    .testimonials-intro {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+      color: #555;
+    }
+    .testimonials-intro .google-rating {
+        font-weight: bold;
+        color: var(--primary);
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .testimonial-card {
+      background: #fdfdfd; /* خلفية أفتح قليلاً لبطاقات الشهادات */
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid #eee; /* حد خفيف للبطاقات */
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .testimonial-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    .testimonial-card .stars {
+      color: var(--star-color);
+      margin-bottom: 0.75rem;
+      font-size: 1.1rem;
+    }
+     .testimonial-card .stars .fa-star.empty {
+        color: #ccc; 
+    }
+
+    .testimonial-card .quote {
+      font-style: italic;
+      color: #333;
+      margin-bottom: 1rem;
+      flex-grow: 1; 
+    }
+    .testimonial-card .quote::before {
+        content: "“";
+        font-size: 1.5em;
+        color: var(--primary);
+        margin-right: 0.2em;
+        font-weight: bold;
+    }
+    .testimonial-card .quote::after {
+        content: "”";
+        font-size: 1.5em;
+        color: var(--primary);
+        margin-left: 0.2em;
+        font-weight: bold;
+    }
+
+
+    .testimonial-card .author {
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 0.25rem;
+      text-align: left;
+    }
+    html[dir="rtl"] .testimonial-card .author { text-align: right; }
+
+    .testimonial-card .source {
+        font-size: 0.9em;
+        color: #777;
+        text-align: left;
+    }
+    html[dir="rtl"] .testimonial-card .source { text-align: right; }
+
+
+    .more-reviews-link {
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+    .more-reviews-link .contact-btn { 
+        background-color: var(--secondary);
+        color: white; /* التأكد من لون النص */
+    }
+    .more-reviews-link .contact-btn:hover {
+        background-color: var(--primary);
+        color: white; /* التأكد من لون النص */
+    }
+
+
+    footer {
+      background-color: #1a1a1a; /* نفس لون الفوتر في الهوية الجديدة */
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    footer h3 {
+      color: #39FF14; /* <<< اسم الشركة في الفوتر باللون الأخضر الجديد */
+      font-weight: 700;
+      font-size: 1.6rem;
+    }
+    footer a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none; /* إزالة الخط تحت الروابط */
+    }
+    footer a:hover {
+        color: var(--secondary); /* لون التحويم القديم للروابط */
+    }
+
+
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      background: var(--primary);
+      color: white;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2rem;
+      z-index: 99;
+      transition: all 0.3s;
     }
-    .status-open { color: var(--primary-color, #2e7d32) !important; font-weight: var(--font-weight-bold, 700); } 
-    .status-closed { color: var(--accent-color-1, #c62828) !important; font-weight: var(--font-weight-bold, 700); }
-    #business-status-text { 
-        font-size: 0.95rem; 
-        display: flex; 
-        align-items: center; 
-        gap: 8px; 
-    }
-    #business-status-text:before {
-      content: ""; display: inline-block; width: 10px; height: 10px;
-      border-radius: 50%; margin-left: 8px; 
-    }
-    html[dir="rtl"] #business-status-text:before { margin-left: 0; margin-right: 8px; }
-    
-    .status-open#business-status-text:before { background-color: var(--primary-color, #4caf50); animation: pulse 2s infinite; }
-    .status-closed#business-status-text:before { background-color: var(--accent-color-1, #f44336); }
-    
-    @keyframes pulse {
-      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(var(--primary-color-rgb, 57, 255, 20), 0.7); } 
-      70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(var(--primary-color-rgb, 57, 255, 20), 0); }
-      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(var(--primary-color-rgb, 57, 255, 20), 0); }
-    }
-    /* :root (primary-color-rgb) is already defined in the main style.css if it's linked */
-    /* If style.css is not linked or variables are not available, define it here: */
-    /* :root { --primary-color-rgb: 57, 255, 20; } */
 
+    .back-to-top:hover {
+      background: var(--secondary);
+      transform: translateY(-3px);
+    }
 
-    .business-status-bar:hover { 
-        background: var(--light-bg-elements, #f0f0f0); 
+    .back-to-top.show {
+      display: flex;
+    }
+
+    html[dir="rtl"] .back-to-top {
+        right: 30px;
+        left: auto;
     }
   </style>
 </head>
@@ -108,46 +297,17 @@
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MHPZ8NP" height="0" width="0" style="display:none;visibility:hidden"></iframe>
   </noscript>
   
-  <!-- شريط حالة النشاط (إذا كنت ستستخدمه في هذه الصفحة) -->
-  <div class="business-status-bar">
-    <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار سمسار طلبك" class="status-logo">
-    <span id="business-status-text" aria-live="polite">جارٍ تحميل حالة النشاط...</span>
-  </div>
+  <nav class="nav-bar">
+    <h1>سمسار <span>طلبك</span></h1> <!-- <<< تم التعديل هنا -->
+    <a href="index.html" class="contact-btn"><i class="fas fa-home"></i> الرئيسية</a>
+  </nav>
 
-  <!-- الهيدر مع الناف بار (سيأخذ الأنماط من style.css) -->
-  <header class="site-header">
-    <nav class="nav-bar">
-      <div class="logo">
-        <a href="index.html" aria-label="الصفحة الرئيسية لسمسار طلبك">
-          <h1>سمسار <span>طلبك</span></h1>
-        </a>
-      </div>
-      <button class="nav-toggle" aria-label="فتح قائمة التنقل" aria-expanded="false">
-        <i class="fas fa-bars"></i>
-      </button>
-      <div class="nav-links-container">
-        <ul class="nav-links">
-          <li><a href="index.html" class="nav-link">الرئيسية</a></li>
-          <li><a href="about-us.html" class="nav-link active">عن الشركة</a></li> <!-- active لهذه الصفحة -->
-          <li><a href="contact-us.html" class="nav-link">اتصل بنا</a></li>
-          <li>
-            <a href="golden-offers.html" class="nav-link golden-link">
-              <i class="fas fa-crown"></i> العروض الذهبية
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </header>
-
-  <!-- هيدر الصفحة الداخلية (سيأخذ الأنماط من style.css) -->
   <header class="page-header">
     <h1>عن سمسار طلبك</h1>
     <p>معك في كل خطوة عقارية بثقة وخبرة</p>
   </header>
 
-  <main>
-    <!-- قسم "عنّا" (سيأخذ الأنماط من style.css) -->
+  <main> <!-- تم إضافة وسم main لاحتواء الأقسام -->
     <section class="about-section">
       <h2>من نحن</h2>
       <p>
@@ -170,7 +330,7 @@
       </p>
     </section>
 
-    <!-- قسم الشهادات (سيأخذ الأنماط من style.css) -->
+    <!-- Testimonials Section START -->
     <section class="testimonials-section">
       <h2>ماذا يقول عملاؤنا</h2>
       <p class="testimonials-intro">
@@ -216,119 +376,64 @@
         </div>
       </div>
       <div class="more-reviews-link">
-        <a href="https://search.google.com/local/reviews?placeid=ChIJa3zQ32w-WBQRIxuJURKnXOI" target="_blank" rel="noopener noreferrer" class="cta-button primary-cta"> <!-- تم تغيير الكلاس ليناسب الأزرار الجديدة -->
-          <i class="fab fa-google"></i> اقرأ المزيد من التقييمات
+        <a href="https://search.google.com/local/reviews?placeid=ChIJa3zQ32w-WBQRIxuJURKnXOI" target="_blank" rel="noopener noreferrer" class="contact-btn">
+          <i class="fab fa-google"></i> اقرأ المزيد من التقييمات على جوجل
         </a>
       </div>
     </section>
+    <!-- Testimonials Section END -->
   </main>
 
-  <!-- زر العودة للأعلى (سيأخذ الأنماط من style.css) -->
-  <!-- <button id="backToTopBtn" class="back-to-top" aria-label="العودة إلى الأعلى">
+  <button id="backToTopBtn" class="back-to-top" aria-label="العودة إلى الأعلى">
     <i class="fas fa-arrow-up"></i>
-  </button> -->
-  <!-- إذا كان ملف style.css يحتوي بالفعل على تعريف لـ .back-to-top، لا حاجة لتكراره هنا -->
-  <!-- ولكن إذا لم يكن موجودًا، يمكنك إضافته هنا أو في style.css -->
-
-
-  <!-- الفوتر (سيأخذ الأنماط من style.css) -->
-  <footer class="site-footer-bottom">
-    <div class="footer-content">
-      <div class="footer-links">
-          <a href="index.html">الرئيسية</a> |
-          <a href="sitemap.xml">خريطة الموقع</a> | 
-          <a href="privacy-policy.html">سياسة الخصوصية</a> |
-          <a href="contact-us.html">اتصل بنا</a>
-          <!-- يمكنك إضافة المزيد من روابط الفوتر هنا إذا أردت -->
+  </button>
+  
+  <footer> <!-- تم إزالة الأنماط المدمجة من هنا، ستأتي من CSS -->
+    <div style="max-width: 1200px; margin: auto;">
+      <h3>سمسار طلبك</h3>
+      
+      <p>نخدمك في مدينة نصر وما حولها - بيع، شراء، وتأجير بأمان واحترافية.</p>
+  
+       <div style="margin: 20px 0;">
+          <a href="privacy-policy.html">سياسة الخصوصية</a>
+          <a href="contact-us.html">تواصل معنا</a>
+          <a href="about-us.html">عنّا</a>
+          <a href="index.html">الرئيسية</a> <!-- رابط إضافي للصفحة الرئيسية في الفوتر -->
+        </div>
+  
+      <div style="margin: 20px 0;">
+        <a href="https://www.facebook.com/Tarekonly" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i> فيسبوك</a>
+        <a href="https://www.linkedin.com/company/smsar-talabk-madinat-nasr/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i> لينكدإن</a>
+        <a href="https://maps.app.goo.gl/hr3dndj1dwMvXaNz5?g_st=ac" target="_blank" aria-label="Google Maps"><i class="fas fa-map-marker-alt"></i> خرائط Google</a>
+        <a href="https://pin.it/4tCl3jl6r" target="_blank" aria-label="Pinterest"><i class="fab fa-pinterest"></i> Pinterest</a>
       </div>
-      <p class="copyright-text">جميع الحقوق محفوظة © سمسار طلبك <span id="currentYear"></span></p>
+  
+      <p style="margin-top: 20px; font-size: 0.9rem;">© <span id="currentYear"></span> سمسار طلبك. جميع الحقوق محفوظة.</p> <!-- تعديل حجم الخط -->
     </div>
   </footer>
-  
-  <!-- نفس السكريبتات المستخدمة في الصفحة الرئيسية -->
+
   <script>
-    // JavaScript لتحديث السنة الحالية في الحقوق المحفوظة
+    // Footer Current Year
     document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-    // قائمة الهامبرجر (نفس كود الصفحة الرئيسية)
-    const navToggle = document.querySelector('.nav-toggle');
-    const navLinksContainer = document.querySelector('.nav-links-container');
-    const overlay = document.querySelector('.overlay');
-
-    if (navToggle && navLinksContainer && overlay) {
-      navToggle.addEventListener('click', () => {
-        const isExpanded = navToggle.getAttribute('aria-expanded') === 'true' || false;
-        navToggle.setAttribute('aria-expanded', !isExpanded);
-        navLinksContainer.classList.toggle('active');
-        overlay.classList.toggle('active'); 
-        document.body.classList.toggle('no-scroll'); 
-
-        const icon = navToggle.querySelector('i');
-        if (navLinksContainer.classList.contains('active')) {
-            icon.classList.remove('fa-bars');
-            icon.classList.add('fa-times');
+    // Back to Top Button
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    if (backToTopBtn) { // التأكد من وجود الزر قبل إضافة المستمعين
+        window.addEventListener('scroll', function () {
+        if (window.pageYOffset > 300) {
+            backToTopBtn.classList.add('show');
         } else {
-            icon.classList.remove('fa-times');
-            icon.classList.add('fa-bars');
+            backToTopBtn.classList.remove('show');
         }
-      });
+        });
 
-      overlay.addEventListener('click', () => {
-        if (navLinksContainer.classList.contains('active')) {
-          navToggle.click(); 
-        }
-      });
+        backToTopBtn.addEventListener('click', function () {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+        });
     }
-
-    // سكربت حالة النشاط (نفس كود الصفحة الرئيسية)
-    const statusTextElement = document.getElementById('business-status-text');
-    if (statusTextElement) {
-        const currentTime = new Date();
-        const currentHour = currentTime.getHours();
-        const openingTime = 10; 
-        const closingTime = 22; 
-        let statusMessage = "";
-        let statusClass = "";
-        const formatTime12Hour = (hour24) => {
-            const hour = hour24 % 12 || 12; 
-            const period = hour24 < 12 || hour24 === 24 ? "ص" : "م"; 
-            return `${hour} ${period}`;
-        };
-        if (currentHour >= openingTime && currentHour < closingTime) {
-            statusMessage = `مفتوح الآن - متاح حتى ${formatTime12Hour(closingTime)}`;
-            statusClass = "status-open";
-        } else {
-            statusClass = "status-closed";
-            const nextOpeningHour = openingTime; 
-            const opensTomorrow = currentHour >= closingTime;
-            statusMessage = `مغلق الآن - سيفتح ${opensTomorrow ? 'غداً ' : ''}${formatTime12Hour(nextOpeningHour)}`;
-        }
-        statusTextElement.textContent = statusMessage;
-        statusTextElement.classList.remove('status-open', 'status-closed');
-        statusTextElement.classList.add(statusClass);
-    }
-
-    // زر العودة للأعلى (Back to Top Button) - (إذا لم يكن موجودًا في style.css العام)
-    // إذا كان .back-to-top معرفًا بالفعل في style.css، فلا حاجة لهذا الكود هنا
-    // const backToTopBtn = document.getElementById('backToTopBtn');
-    // if (backToTopBtn) {
-    //     window.addEventListener('scroll', function () {
-    //     if (window.pageYOffset > 300) {
-    //         backToTopBtn.classList.add('show');
-    //     } else {
-    //         backToTopBtn.classList.remove('show');
-    //     }
-    //     });
-    //     backToTopBtn.addEventListener('click', function () {
-    //     window.scrollTo({
-    //         top: 0,
-    //         behavior: 'smooth',
-    //     });
-    //     });
-    // }
-    // تأكد من أن لديك هذا العنصر في HTML إذا كنت تريد تفعيل هذا السكربت:
-    // <button id="backToTopBtn" class="back-to-top" aria-label="العودة إلى الأعلى"><i class="fas fa-arrow-up"></i></button>
-    // ويفضل أن يكون تعريفه الـ CSS في ملف style.css العام
   </script>
 </body>
-            </html>
+    </html>
