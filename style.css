@@ -1,159 +1,110 @@
+ ==== ROOT VARIABLES (COLOR PALETTE & TYPOGRAPHY) ==== */
 :root {
-  --primary-color: #2e7d32; /* الأخضر الداكن - اللون الأساسي */
-  --primary-light: #4caf50; /* أخضر فاتح للتدرجات */
-  --accent-color-1: #ffc107; /* الذهبي - للتأكيدات والعروض */
-  --accent-color-2: #c62828; /* الأحمر الداكن - للتنبيهات */
-  --dark-bg: #2c3e50; /* الأزرق الداكن - للخلفيات */
-  --light-bg: #f8f9fa; /* الخلفيات الفاتحة */
-  --text-color-on-light: #333; /* نص على خلفيات فاتحة */
-  --text-color-on-dark: #fff; /* نص على خلفيات داكنة */
-  
-  /* ألوان جديدة متناغمة مع الشعار */
-  --gold-gradient: linear-gradient(135deg, #ffc107, #ff9800);
-  --gold-light: #ffecb3;
-  --green-light: #e8f5e9;
-  --dark-blue-light: #546e7a;
-  
-  --border-radius: 8px;
-  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --transition: all 0.3s ease;
+  /* ألوان الشعار الأساسية - تم اختيار درجات مناسبة للويب */
+  --logo-green: #39FF14; /* أخضر نيون ساطع ولكنه قابل للقراءة */
+  --logo-yellow: #FFD700; /* أصفر ذهبي كلاسيكي */
+  --logo-black: #0D0D0D;   /* أسود عميق لخلفية الموقع الأساسية */
+  --logo-dark-surface: #1A1A1A; /* سطح أغمق قليلاً من الأسود للعناصر الثانوية */
+  --logo-white: #FFFFFF;
+  --logo-light-grey: #E0E0E0; /* رمادي فاتح للنصوص أو الحدود على الخلفيات الداكنة */
+  --logo-medium-grey: #BDBDBD; /* رمادي متوسط للنصوص الفرعية */
+  --logo-red: #E53935; /* أحمر للشعار (للاستخدام المحدود مثل الإغلاق) */
+  --logo-blue: #1E88E5; /* أزرق للشعار (للاستخدام المحدود) */
+
+  /* تعيين متغيرات الموقع */
+  --primary-color: var(--logo-green);
+  --secondary-color: var(--logo-yellow);
+  --background-color: var(--logo-black);
+  --surface-color: var(--logo-dark-surface);
+  --text-color: var(--logo-light-grey); 
+  --text-color-strong: var(--logo-white); 
+  --text-color-muted: var(--logo-medium-grey);
+  --accent-color-1: var(--logo-red);
+  --accent-color-2: var(--logo-blue);
+
+  /* متغيرات الخطوط */
+  --font-family-main: 'Tajawal', sans-serif;
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+  --font-weight-black: 900;
+
+  /* متغيرات أخرى */
+  --border-radius-main: 6px; 
+  --box-shadow-light: 0 2px 8px rgba(0, 0, 0, 0.3); 
+  --box-shadow-strong: 0 4px 15px rgba(0, 0, 0, 0.5); 
+  --transition-main: all 0.25s ease-in-out;
+
+  /* متغيرات RGB للألوان الرئيسية إذا احتجت إليها في box-shadow أو ما شابه */
+  --primary-color-rgb: 57, 255, 20; /* Corresponds to #39FF14 */
+  --secondary-color-rgb: 255, 215, 0; /* Corresponds to #FFD700 */
 }
 
-/* شريط حالة النشاط - تعديل الألوان */
-.business-status-bar {
-  background: var(--dark-bg);
-  color: var(--text-color-on-dark);
-  border-bottom: 1px solid var(--primary-light);
+/* ==== GENERAL RESETS & BODY STYLES ==== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.status-open {
-  color: #aed581 !important; /* أخضر فاتح للحالة المفتوحة */
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  width: 100%; /* محاولة لضمان عدم تجاوز HTML للعرض */
 }
 
-.status-open#business-status-text:before {
-  background-color: #aed581;
-  animation: pulse 2s infinite;
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--font-family-main);
+  line-height: 1.7;
+  width: 100%; /* محاولة لضمان عدم تجاوز body للعرض */
+  overflow-x: hidden; /* أبقِ على هذا لمنع شريط التمرير، ولكن المشكلة الأساسية يجب حلها */
+}
+body.no-scroll {
+  overflow-y: hidden;
 }
 
-/* الهيدر والتنقل - تحسين التصميم */
+/* ==== TYPOGRAPHY ==== */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--font-weight-bold);
+  line-height: 1.3;
+  color: var(--text-color-strong); 
+}
+h1.main-title { 
+  font-size: clamp(2.2rem, 5.5vw, 3.8rem); 
+  font-weight: var(--font-weight-black); 
+}
+p.main-description { 
+  font-size: clamp(1rem, 2.2vw, 1.25rem); 
+  color: var(--text-color-muted); 
+}
+a {
+  color: var(--primary-color); 
+  text-decoration: none;
+  transition: color var(--transition-main);
+}
+a:hover {
+  color: var(--secondary-color); 
+}
+
+/* ==== HEADER & NAVIGATION ==== */
 .site-header {
-  background: var(--dark-bg);
-  color: var(--text-color-on-dark);
-}
-
-.logo h1 {
-  color: var(--text-color-on-dark);
-}
-
-.logo span {
-  color: var(--accent-color-1);
-}
-
-.nav-link {
-  color: var(--text-color-on-dark);
-}
-
-.nav-link:hover, .nav-link.active {
-  color: var(--accent-color-1);
-}
-
-.nav-link:after {
-  background-color: var(--accent-color-1);
-}
-
-.golden-link {
-  background: var(--gold-gradient);
-  color: #5d4037; /* بني داكن لتحسين إمكانية القراءة */
-  box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
-}
-
-/* قسم الهيرو - تحسين التصميم */
-.hero-section {
-  background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.9)), 
-              url('https://i.postimg.cc/25Wkxstn/20250601-015414.jpg') center/cover no-repeat;
-}
-
-.main-title {
-  color: var(--accent-color-1);
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.main-description {
-  color: #e0e0e0;
-}
-
-.cta-button {
-  border: 2px solid transparent;
-}
-
-.primary-cta {
-  background-color: var(--primary-color);
-  color: white;
-  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.4);
-}
-
-.primary-cta:hover {
-  background-color: var(--primary-light);
-  border-color: white;
-}
-
-.golden-cta {
-  background: var(--gold-gradient);
-  color: #5d4037;
-  box-shadow: 0 4px 12px rgba(255, 193, 7, 0.4);
-}
-
-.golden-cta:hover {
-  border-color: white;
-}
-
-/* التذييل - تحسين التصميم */
-.site-footer-bottom {
-  background-color: var(--dark-bg);
-  color: var(--text-color-on-dark);
-}
-
-.footer-links a {
-  color: #b0bec5;
-}
-
-.footer-links a:hover {
-  color: var(--accent-color-1);
-}
-
-/* تحسينات للتصميم المتجاوب */
-@media (max-width: 768px) {
-  .nav-links-container {
-    background-color: var(--dark-bg);
-  }
-  
-  .nav-link {
-    border-bottom: 1px solid var(--dark-blue-light);
-  }
-  
-  .hero-section {
-    padding: 100px 5% 60px;
-  }
-}
-
-/* إضافة تأثيرات بصرية جديدة */
-@keyframes shine {
-  0% { background-position: -100px; }
-  100% { background-position: 200px; }
-}
-
-.golden-link, .golden-cta {
-  position: relative;
-  overflow: hidden;
-}
-
-.golden-link:after, .golden-cta:after {
-  content: '';
-  position: absolute;
+  position: sticky;
   top: 0;
-  left: -100%;
+  left: 0; 
   width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-  animation: shine 2s infinite;
+  z-index: 999;
+  background-color: rgba(13, 13, 13, 0.8); 
+  backdrop-filter: blur(8px);
+  box-shadow: var(--box-shadow-light);
+}
+
+.nav-bar {
+  max-width: 1200px;
+  width: 100%; /* تأكد من أن الناف بار الداخلي لا يتجاوز */
+  margin: 0 auto; 
+  padding: 0.8rem 1.5rem; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
