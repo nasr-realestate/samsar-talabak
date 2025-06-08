@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -27,7 +28,6 @@
   <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="afd0aac9-9e97-4a7b-9d12-d323a91f32b3" data-blockingmode="auto" type="text/javascript"></script>
 
   <!-- Google Tag Manager -->
-  <link rel="stylesheet" href="css/navbar.css">
   <script>
     (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -139,26 +139,28 @@
   <div class="overlay"></div> <!-- يستخدم مع قائمة الهامبرجر النشطة -->
 
   <header class="site-header">
-<nav class="nav-bar">
-  <div class="logo">
-    <h1>سمسار <span>طلبك</span></h1>
-  </div>
-  
-  <div class="nav-links">
-    <a href="index.html" class="nav-link">
-      <i class="fas fa-home"></i> الرئيسية
-    </a>
-    <a href="about-us.html" class="nav-link">
-      <i class="fas fa-info-circle"></i> عنّا
-    </a>
-    <a href="front-page.html" class="nav-link">
-      <i class="fas fa-building"></i> العقارات
-    </a>
-    <a href="contact-us.html" class="nav-link cta-button">
-      <i class="fas fa-phone-alt"></i> اتصل بنا
-    </a>
-  </div>
-</nav>
+    <nav class="nav-bar">
+      <div class="logo">
+        <a href="index.html" aria-label="الصفحة الرئيسية لسمسار طلبك">
+          <h1>سمسار <span>طلبك</span></h1>
+        </a>
+      </div>
+      <button class="nav-toggle" aria-label="فتح قائمة التنقل" aria-expanded="false">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="nav-links-container">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link active">الرئيسية</a></li>
+          <li><a href="about-us.html" class="nav-link">عن الشركة</a></li>
+          <li><a href="contact-us.html" class="nav-link">اتصل بنا</a></li>
+          <li>
+            <a href="golden-offers.html" class="nav-link golden-link">
+              <i class="fas fa-crown"></i> العروض الذهبية
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
   </header>
 
   <main class="main-content">
