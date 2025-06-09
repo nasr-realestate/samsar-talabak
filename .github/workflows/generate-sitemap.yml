@@ -1,0 +1,30 @@
+name: Generate Sitemap
+
+on:
+  push:
+    branches:
+      - main  # لو موقعك شغال على gh-pages غيرها لـ gh-pages
+
+jobs:
+  generate_sitemap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate sitemap.xml
+        run: |
+          echo '<?xml version="1.0" encoding="UTF-8"?>' > sitemap.xml
+          echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' >> sitemap.xml
+          echo '  <url><loc>https://nasr-realestate.github.io/samsar-talabak/</loc></url>' >> sitemap.xml
+          # لو عندك صفحات تانية، ضيفها كده:
+          # echo '  <url><loc>https://nasr-realestate.github.io/samsar-talabak/page2.html</loc></url>' >> sitemap.xml
+          echo '</urlset>' >> sitemap.xml
+
+      - name: Commit and push sitemap
+        run: |
+          git config --global user.name 'GitHub Actions Bot'
+          git config --global user.email 'actions@github.com'
+          git add sitemap.xml
+          git commit -m 'Update sitemap.xml'
+          git push
