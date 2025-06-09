@@ -1,0 +1,61 @@
+name: Generate Welcome Card
+
+on:
+  push:
+    branches:
+      - main  # أو الفرع اللي عليه الموقع لو gh-pages
+
+jobs:
+  generate_welcome_card:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate welcome.html file
+        run: |
+          echo '<!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8" />
+              <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+              <title>Welcome!</title>
+              <style>
+                  body {
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      height: 100vh;
+                      background-color: #f0f0f0;
+                      font-family: Arial, sans-serif;
+                  }
+                  .card {
+                      background-color: white;
+                      padding: 2rem;
+                      border-radius: 10px;
+                      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                      font-size: 1.5rem;
+                      color: #333;
+                      animation: fadeOut 5s forwards;
+                      animation-delay: 3s;
+                  }
+                  @keyframes fadeOut {
+                      to {
+                          opacity: 0;
+                          transform: translateY(-20px);
+                      }
+                  }
+              </style>
+          </head>
+          <body>
+              <div class="card">✨ أهلاً بك في عالمنا! ✨</div>
+          </body>
+          </html>' > welcome.html
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'GitHub Actions Bot'
+          git config --global user.email 'actions@github.com'
+          git add welcome.html
+          git commit -m 'Add welcome card'
+          git push
