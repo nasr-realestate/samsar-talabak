@@ -1,0 +1,66 @@
+name: Generate Visitor Guide Page
+
+on:
+  push:
+    branches:
+      - main  # لو gh-pages اكتب gh-pages
+
+jobs:
+  generate_visitor_guide:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate index.html
+        run: |
+          echo '<!DOCTYPE html>
+          <html lang="ar">
+          <head>
+              <meta charset="UTF-8" />
+              <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+              <title>دليل الزائر</title>
+              <style>
+                  body {
+                      display: flex;
+                      flex-direction: column;
+                      justify-content: center;
+                      align-items: center;
+                      height: 100vh;
+                      background-color: #f5f5f5;
+                      color: #333;
+                      font-family: Arial, sans-serif;
+                      padding: 20px;
+                      text-align: center;
+                  }
+                  .button {
+                      display: inline-block;
+                      padding: 10px 20px;
+                      margin-top: 20px;
+                      background-color: #4CAF50;
+                      color: white;
+                      text-decoration: none;
+                      border-radius: 5px;
+                      transition: background-color 0.3s ease;
+                  }
+                  .button:hover {
+                      background-color: #45a049;
+                  }
+              </style>
+          </head>
+          <body>
+              <h1>✨ أهلاً بك في موقعنا ✨</h1>
+              <p>نقترح عليك زيارة الصفحات التالية:</p>
+              <a href="page1.html" class="button">صفحة 1</a>
+              <a href="page2.html" class="button">صفحة 2</a>
+              <a href="contact.html" class="button">اتصل بنا</a>
+          </body>
+          </html>' > index.html
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'GitHub Actions Bot'
+          git config --global user.email 'actions@github.com'
+          git add index.html
+          git commit -m 'Generate visitor guide page'
+          git push
