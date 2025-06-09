@@ -1,15 +1,15 @@
-name: Generate Sitemap
+name: Generate Sitemap and Robots.txt
 
 on:
   push:
     branches:
-      - main
+      - main  # غيّرها لو الفرع بتاع GitHub Pages عندك gh-pages
 
 permissions:
   contents: write
 
 jobs:
-  generate_sitemap:
+  generate_sitemap_and_robots:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -27,10 +27,17 @@ jobs:
           echo '</urlset>' >> sitemap.xml
           echo "✅ Sitemap generated successfully."
 
-      - name: Commit and push sitemap.xml
+      - name: Generate robots.txt
+        run: |
+          echo 'User-agent: *' > robots.txt
+          echo 'Allow: /' >> robots.txt
+          echo 'Sitemap: https://nasr-realestate.github.io/samsar-talabak/sitemap.xml' >> robots.txt
+          echo "✅ Robots.txt generated successfully."
+
+      - name: Commit and push sitemap.xml and robots.txt if changed
         run: |
           git config --global user.name 'GitHub Actions Bot'
           git config --global user.email 'actions@github.com'
-          git add sitemap.xml
-          git commit -m 'Update sitemap.xml' || echo "ℹ️ No changes to commit"
-          git push
+          git add sitemap.xml robots.txt
+          git diff --cached --quiet && echo "ℹ️ No changes to commit." || (git commit -m 'Update sitemap.xml and robots.txt' && git push)
+
