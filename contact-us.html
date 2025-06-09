@@ -162,60 +162,251 @@
             display: none;
             justify-content: center;
             align-items: center;
-            font-size: 1.2rem;
-            z-index: 99;
-            transition: all 0.3s;
-        }
-        
-        .back-to-top:hover {
-            background: var(--secondary);
-            transform: translateY(-3px);
-        }
-        
-        .back-to-top.show {
-            display: flex;
-        }
-        
-        @media (max-width: 768px) {
-            .contact-cards {
-                grid-template-columns: 1fr;
-            }
-            
-            .nav-bar {
-                flex-direction: column;
-                gap: 1rem;
-            }
-        }
-       .nav-bar {
-  background: #2c3e50;
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
-.nav-bar h1 {
-  color: white;
-  font-size: 1.8rem;
-  font-weight: 900;
-}
+  <style>
+    :root {
+      --primary: #2c3e50; /* لون الناف بار الأصلي */
+      --secondary: #e74c3c; /* لون التحويم الأصلي للزر */
+      --light-bg: #f8f9fa;
+      --text: #333;
+      --star-color: #f39c12;
+      --logo-span-color: #39FF14; /* <<< اللون الأخضر لكلمة "طلبك" */
+    }
 
-.nav-bar h1 span {
-  color: #39FF14;
-}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Tajawal', sans-serif;
+    }
 
-.nav-link {
-  color: white;
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  transition: all 0.3s;
-}
+    body {
+      background: var(--light-bg);
+      color: var(--text);
+      line-height: 1.8;
+    }
 
-.nav-link:hover {
-  background: #e74c3c;
-} 
-    </style>
+    .nav-bar {
+      background: var(--primary);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-bar h1 {
+      color: white; /* لون "سمسار" */
+      font-size: 1.8rem;
+      font-weight: 900; /* استخدام الخط الأعرض للشعار */
+    }
+    .nav-bar h1 span {
+      color: var(--logo-span-color); /* لون "طلبك" */
+    }
+
+    .contact-btn {
+      background: var(--primary);
+      color: white;
+      padding: 0.6rem 1rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    .contact-btn:hover {
+      background: var(--secondary);
+    }
+
+    header.page-header {
+      text-align: center;
+      padding: 2rem;
+      /* استخدام نفس لون الناف بار للهيدر أو لون متناسق */
+      background: linear-gradient(rgba(44,62,80,0.9), rgba(44,62,80,0.9)); 
+      color: white;
+    }
+     header.page-header h1 {
+        font-size: 2.2rem; /* تكبير خط عنوان الصفحة قليلاً */
+     }
+
+
+    .about-section, .testimonials-section {
+      max-width: 900px;
+      margin: 2.5rem auto; /* زيادة المسافة قليلاً */
+      padding: 0 1.5rem; /* زيادة الحشو الجانبي قليلاً */
+      background-color: #fff; /* إضافة خلفية بيضاء للأقسام لمزيد من التحديد */
+      border-radius: 8px; /* استدارة حواف الأقسام */
+      box-shadow: 0 5px 15px rgba(0,0,0,0.07); /* ظل خفيف للأقسام */
+      padding-top: 2rem; /* حشو علوي للقسم */
+      padding-bottom: 2rem; /* حشو سفلي للقسم */
+    }
+
+    .about-section h2, .testimonials-section h2 {
+      color: var(--primary); /* استخدام اللون الأساسي للعناوين الداخلية */
+      margin-bottom: 1.5rem; /* زيادة المسافة السفلية */
+      text-align: center;
+      font-size: 2rem; /* تكبير خط العناوين الداخلية */
+    }
+
+    .about-section p {
+      margin-bottom: 1.2rem;
+      color: #4a4a4a; /* تعديل لون الفقرات قليلاً */
+      font-size: 1.08rem; /* تعديل حجم خط الفقرات قليلاً */
+    }
+     .about-section p strong {
+        color: var(--secondary); /* لون النصوص الهامة */
+     }
+
+
+    .testimonials-section {
+      padding-top: 1rem; 
+    }
+    .testimonials-intro {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+      color: #555;
+    }
+    .testimonials-intro .google-rating {
+        font-weight: bold;
+        color: var(--primary);
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .testimonial-card {
+      background: #fdfdfd; /* خلفية أفتح قليلاً لبطاقات الشهادات */
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid #eee; /* حد خفيف للبطاقات */
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .testimonial-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    .testimonial-card .stars {
+      color: var(--star-color);
+      margin-bottom: 0.75rem;
+      font-size: 1.1rem;
+    }
+     .testimonial-card .stars .fa-star.empty {
+        color: #ccc; 
+    }
+
+    .testimonial-card .quote {
+      font-style: italic;
+      color: #333;
+      margin-bottom: 1rem;
+      flex-grow: 1; 
+    }
+    .testimonial-card .quote::before {
+        content: "“";
+        font-size: 1.5em;
+        color: var(--primary);
+        margin-right: 0.2em;
+        font-weight: bold;
+    }
+    .testimonial-card .quote::after {
+        content: "”";
+        font-size: 1.5em;
+        color: var(--primary);
+        margin-left: 0.2em;
+        font-weight: bold;
+    }
+
+
+    .testimonial-card .author {
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 0.25rem;
+      text-align: left;
+    }
+    html[dir="rtl"] .testimonial-card .author { text-align: right; }
+
+    .testimonial-card .source {
+        font-size: 0.9em;
+        color: #777;
+        text-align: left;
+    }
+    html[dir="rtl"] .testimonial-card .source { text-align: right; }
+
+
+    .more-reviews-link {
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+    .more-reviews-link .contact-btn { 
+        background-color: var(--secondary);
+        color: white; /* التأكد من لون النص */
+    }
+    .more-reviews-link .contact-btn:hover {
+        background-color: var(--primary);
+        color: white; /* التأكد من لون النص */
+    }
+
+
+    footer {
+      background-color: #1a1a1a; /* نفس لون الفوتر في الهوية الجديدة */
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    footer h3 {
+      color: #39FF14; /* <<< اسم الشركة في الفوتر باللون الأخضر الجديد */
+      font-weight: 700;
+      font-size: 1.6rem;
+    }
+    footer a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none; /* إزالة الخط تحت الروابط */
+    }
+    footer a:hover {
+        color: var(--secondary); /* لون التحويم القديم للروابط */
+    }
+
+
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      background: var(--primary);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2rem;
+      z-index: 99;
+      transition: all 0.3s;
+    }
+
+    .back-to-top:hover {
+      background: var(--secondary);
+      transform: translateY(-3px);
+    }
+
+    .back-to-top.show {
+      display: flex;
+    }
+
+    html[dir="rtl"] .back-to-top {
+        right: 30px;
+        left: auto;
+    }
+  </style>
 </head>
 <body>
     <!-- Google Tag Manager (noscript) -->
