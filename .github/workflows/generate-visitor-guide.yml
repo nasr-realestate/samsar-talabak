@@ -3,7 +3,7 @@ name: Generate Visitor Guide Page
 on:
   push:
     branches:
-      - main  # لو gh-pages اكتب gh-pages
+      - main  # أو gh-pages لو موقعك شغال منه
 
 jobs:
   generate_visitor_guide:
@@ -19,7 +19,7 @@ jobs:
           <head>
               <meta charset="UTF-8" />
               <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-              <title>دليل الزائر</title>
+              <title>✨ أهلاً بك في سمسار طلبك ✨</title>
               <style>
                   body {
                       display: flex;
@@ -27,33 +27,49 @@ jobs:
                       justify-content: center;
                       align-items: center;
                       height: 100vh;
-                      background-color: #f5f5f5;
-                      color: #333;
-                      font-family: Arial, sans-serif;
-                      padding: 20px;
+                      margin: 0;
+                      background: linear-gradient(135deg, #4CAF50, #81C784);
+                      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                      color: #fff;
                       text-align: center;
+                      padding: 20px;
+                  }
+                  .card {
+                      background-color: rgba(255, 255, 255, 0.15);
+                      padding: 20px 30px;
+                      border-radius: 12px;
+                      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+                      backdrop-filter: blur(10px);
+                  }
+                  h1 {
+                      font-size: 2.5rem;
+                      margin-bottom: 10px;
+                  }
+                  p {
+                      font-size: 1.2rem;
+                      margin-bottom: 20px;
                   }
                   .button {
                       display: inline-block;
-                      padding: 10px 20px;
-                      margin-top: 20px;
-                      background-color: #4CAF50;
-                      color: white;
+                      padding: 12px 24px;
+                      background-color: #fff;
+                      color: #4CAF50;
                       text-decoration: none;
-                      border-radius: 5px;
-                      transition: background-color 0.3s ease;
+                      border-radius: 8px;
+                      transition: all 0.3s ease;
+                      font-weight: bold;
                   }
                   .button:hover {
-                      background-color: #45a049;
+                      background-color: #f0f0f0;
                   }
               </style>
           </head>
           <body>
-              <h1>✨ أهلاً بك في موقعنا ✨</h1>
-              <p>نقترح عليك زيارة الصفحات التالية:</p>
-              <a href="page1.html" class="button">صفحة 1</a>
-              <a href="page2.html" class="button">صفحة 2</a>
-              <a href="contact.html" class="button">اتصل بنا</a>
+              <div class="card">
+                  <h1>✨ أهلاً بك في سمسار طلبك ✨</h1>
+                  <p>نحن هنا لمساعدتك في العثور على أفضل العقارات في مدينة نصر!</p>
+                  <a href="contact.html" class="button">اتصل بنا الآن</a>
+              </div>
           </body>
           </html>' > index.html
 
@@ -62,5 +78,5 @@ jobs:
           git config --global user.name 'GitHub Actions Bot'
           git config --global user.email 'actions@github.com'
           git add index.html
-          git commit -m 'Generate visitor guide page'
+          git commit -m 'Generate improved visitor guide page'
           git push
