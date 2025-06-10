@@ -3,17 +3,49 @@ layout: default
 title: أحدث العقارات
 ---
 
-<h1>🆕 أحدث العقارات</h1>
-<ul>
-  {% assign items = site.data.properties %}
-  {% for filename in items %}
-    {% assign property = filename[1] %}
-    <li style="margin-bottom: 20px; padding: 10px; border-bottom: 1px solid #ccc;">
-      <strong>🏠 {{ property.title }}</strong><br>
-      📍 الموقع: {{ property.location }}<br>
-      💰 السعر: {{ property.price | prepend: "جنيه " }}<br>
-      🏷️ النوع: {{ property.type }}<br>
-      📅 تاريخ الإضافة: {{ property.added_date }}
-    </li>
+<style>
+.property-card {
+  background: linear-gradient(135deg, #ffffff, #e6f7ff);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 15px rgba(0, 150, 255, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.property-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px rgba(0, 150, 255, 0.4);
+}
+.property-card h3 {
+  color: #007acc;
+}
+.property-card button {
+  background-color: #007acc;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+.property-card button:hover {
+  background-color: #005f99;
+}
+</style>
+
+<h1>🏡 أحدث العقارات</h1>
+
+<div class="property-list">
+  {% assign files = site.data.properties %}
+  {% for property in files %}
+    <div class="property-card">
+      <h3>{{ property[1].title }}</h3>
+      <p>📍 <strong>الموقع:</strong> {{ property[1].location }}</p>
+      <p>💰 <strong>السعر:</strong> {{ property[1].price | number_with_delimiter: "," }} جنيه</p>
+      <p>🏷️ <strong>النوع:</strong> {{ property[1].type }}</p>
+      <p>📅 <strong>تاريخ الإضافة:</strong> {{ property[1].added_date }}</p>
+      <button onclick="window.location.href='https://wa.me/201234567890'">تواصل الآن</button>
+    </div>
   {% endfor %}
-</ul>
+</div>
