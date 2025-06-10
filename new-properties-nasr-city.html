@@ -1,0 +1,25 @@
+---
+layout: default
+title: أحدث العقارات
+---
+
+<h1>🆕 أحدث العقارات</h1>
+
+<ul>
+  {% assign today = "now" | date: "%s" %}
+
+  {% for property in site.data.properties %}
+    {% assign added = property.added_date | date: "%s" %}
+    {% assign diff_days = today | minus: added | divided_by: 86400 %}
+
+    {% if diff_days <= 7 %}
+      <li style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+        <strong>🏠 {{ property.title }}</strong><br>
+        📍 {{ property.location }}<br>
+        💰 {{ property.price }} جنيه<br>
+        🏷️ النوع: {{ property.type }}<br>
+        📅 تاريخ الإضافة: {{ property.added_date }}
+      </li>
+    {% endif %}
+  {% endfor %}
+</ul>
