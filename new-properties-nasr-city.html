@@ -1,16 +1,17 @@
 ---
 layout: default
-title: جميع العقارات
+title: أحدث العقارات
 ---
 
-<h1>🏠 جميع العقارات</h1>
-
+<h1>🆕 أحدث العقارات</h1>
 <ul>
-  {% for property in site.data.properties %}
-    <li style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+  {% assign items = site.data.properties %}
+  {% for filename in items %}
+    {% assign property = filename[1] %}
+    <li style="margin-bottom: 20px; padding: 10px; border-bottom: 1px solid #ccc;">
       <strong>🏠 {{ property.title }}</strong><br>
-      📍 {{ property.location }}<br>
-      💰 {{ property.price }} جنيه<br>
+      📍 الموقع: {{ property.location }}<br>
+      💰 السعر: {{ property.price | prepend: "جنيه " }}<br>
       🏷️ النوع: {{ property.type }}<br>
       📅 تاريخ الإضافة: {{ property.added_date }}
     </li>
