@@ -1,79 +1,171 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>عقارات سمسار طلبك</title>
-  <link rel="stylesheet" href="styles.css">
-  <style>
-    .property-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
-      padding: 2rem;
-      max-width: 1200px;
-      margin: auto;
-    }
-    .property-card {
-      background-color: var(--surface-color);
-      border-radius: var(--border-radius-main);
-      box-shadow: var(--box-shadow-light);
-      padding: 1rem;
-      color: var(--text-color);
-      transition: transform 0.3s ease;
-    }
-    .property-card:hover {
-      transform: scale(1.03);
-    }
-    .property-card img {
-      width: 100%;
-      border-radius: var(--border-radius-main);
-      margin-bottom: 0.5rem;
-    }
-    .property-info {
-      font-size: 0.95rem;
-    }
-    .property-info strong {
-      color: var(--text-color-strong);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عروض عقارية - مدينة نصر</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .property-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .property-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .property-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .property-details {
+            padding: 20px;
+        }
+        
+        .property-title {
+            color: var(--primary-color);
+            margin-top: 0;
+            font-size: 1.2rem;
+        }
+        
+        .property-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .feature {
+            background: var(--light-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .property-price {
+            color: var(--secondary-color);
+            font-weight: bold;
+            font-size: 1.3rem;
+            margin: 10px 0;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+        }
+    </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="nav-bar">
-      <div class="logo">
-        <h1>سمسار <span>طلبك</span></h1>
-      </div>
-    </div>
-  </header>  <main>
-    <section class="hero-section">
-      <div class="hero-content">
-        <h1 class="main-title">شقق جاهزة للعرض في مدينة نصر</h1>
-        <p class="main-description">استكشف أحدث العروض العقارية المُضافة تلقائيًا من قاعدة بيانات سمسار طلبك</p>
-        <div class="cta-buttons-container">
-          <a href="https://wa.me/201147758857" class="cta-button primary-cta">تواصل معنا الآن</a>
+    <div class="container">
+        <h1>عروض عقارية مميزة في مدينة نصر</h1>
+        
+        <div class="properties-grid" id="properties-container">
+            <!-- سيتم ملؤه تلقائياً بالعقارات -->
         </div>
-      </div>
-    </section><section class="property-list" id="properties"></section>
+    </div>
 
-  </main>  <script>
-    fetch('properties.json')
-      .then(response => response.json())
-      .then(data => {
-        const container = document.getElementById('properties');
-        data.forEach(property => {
-          container.innerHTML += `
-            <div class="property-card">
-              <img src="${property.image}" alt="${property.title}" />
-              <div class="property-info">
-                <p><strong>📍 الموقع:</strong> ${property.location}</p>
-                <p><strong>📏 المساحة:</strong> ${property.area} م²</p>
-                <p><strong>🛏️ الغرف:</strong> ${property.rooms}</p>
-                <p><strong>💰 السعر:</strong> ${property.price} جنيه</p>
-                <p><strong>📞 للتواصل:</strong> <a href="https://wa.me/${property.phone}" target="_blank">واتساب</a></p>
-              </div>
-            </div>
-          `;
-        });
-      });
-  </script></body>
+    <script>
+        // دالة لجلب البيانات وعرضها
+        async function loadProperties() {
+            const container = document.getElementById('properties-container');
+            
+            try {
+                // جلب قائمة بجميع ملفات العقارات
+                const response = await fetch('properties-list.json');
+                const propertiesList = await response.json();
+                
+                // عرض كل عقار
+                propertiesList.forEach(property => {
+                    const propertyCard = `
+                        <div class="property-card">
+                            <div class="property-image" style="background-image: url('${property.image || 'default-image.jpg'}')"></div>
+                            <div class="property-details">
+                                <h3 class="property-title">${property.title}</h3>
+                                <div class="property-features">
+                                    <span class="feature">${property.area}</span>
+                                    <span class="feature">${property.rooms} غرف</span>
+                                    <span class="feature">${property.bathrooms} حمام</span>
+                                    <span class="feature">${property.location}</span>
+                                </div>
+                                <div class="property-price">${property.price.toLocaleString()} ${property.currency}</div>
+                                <div class="action-buttons">
+                                    <button class="btn btn-primary" onclick="window.location.href='${property.contact.details_link}'">عرض التفاصيل</button>
+                                    <button class="btn btn-secondary" onclick="window.open('${property.contact.whatsapp}', '_blank')">تواصل عبر واتساب</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    container.innerHTML += propertyCard;
+                });
+            } catch (error) {
+                console.error('Error loading properties:', error);
+                container.innerHTML = '<p>حدث خطأ أثناء تحميل العقارات. يرجى المحاولة لاحقاً.</p>';
+            }
+        }
+        
+        // تحميل العقارات عند فتح الصفحة
+        window.addEventListener('DOMContentLoaded', loadProperties);
+    </script>
+</body>
 </html>
