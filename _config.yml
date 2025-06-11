@@ -1,3 +1,89 @@
-title: "سمسار طلبك - أحدث العقارات"
-description: "عقارات حديثة في مدينة نصر"
+# ========================
+# ⚙️ إعدادات موقع سمسار طلبك
+# ========================
+
+# ==== المعلومات العامة ====
+title: سمسار طلبك
+description: أفضل منصة لعروض العقارات في مدينة نصر – شقق، محلات، مقرات إدارية بأسعار مميزة
+url: "https://nasr-realestate.github.io"  # رابط الموقع الأساسي (بدون slash في الآخر)
+baseurl: "/samsar-talabak"                # مجلد المشروع إن وُجد، أو "/" لو مباشر
+
+# ==== الكاتب ====
+author:
+  name: طارق طنطاوي
+  email: footcai.555@gmail.com
+
+# ==== بيانات التواصل (اختياري للعرض) ====
+contact:
+  whatsapp: "201147758857"
+  facebook: "https://facebook.com/samsar.talabak"
+  instagram: "https://instagram.com/samsar.talabak"
+
+# ==== إعدادات اللغة والاتجاه ====
+lang: ar
+direction: rtl
+timezone: Africa/Cairo
+permalink: /:title/
+
+# ==== الإضافات المطلوبة ====
 theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-paginate
+  - jekyll-include-cache
+
+# ==== إعدادات Google Analytics (اختياري) ====
+google_analytics: ""  # ضع هنا ID مثل: G-XXXXXXXXXX
+
+# ==== إعدادات البيانات الديناميكية ====
+collections:
+  properties:
+    output: true
+    permalink: /properties/:path/
+
+# ==== البيانات الخارجية (من مجلد _data) ====
+defaults:
+  - scope:
+      path: "_data/properties.json"
+    values:
+      layout: property
+      type: real_estate
+
+# ==== إعدادات Jekyll ====
+markdown: kramdown
+kramdown:
+  input: GFM
+highlighter: rouge
+
+# ==== المسارات المخصصة ====
+include:
+  - _pages
+  - _data
+  - _includes
+  - assets
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+
+# ==== SEO افتراضي ====
+seo:
+  type: website
+  name: "سمسار طلبك – عقارات مدينة نصر"
+  social:
+    name: "سمسار طلبك"
+    links:
+      - https://facebook.com/samsar.talabak
+      - https://instagram.com/samsar.talabak
+      - https://wa.me/201147758857
+
+# ==== تخصيص شكل التواريخ ====
+sass:
+  style: compressed
+
+paginate: 9
+paginate_path: "/page:num/"
