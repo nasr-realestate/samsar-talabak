@@ -1,171 +1,81 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html><html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عروض عقارية - مدينة نصر</title>
-    <style>
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #e74c3c;
-            --light-color: #ecf0f1;
-            --dark-color: #34495e;
-        }
-        
-        body {
-            font-family: 'Tajawal', sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        h1 {
-            color: var(--primary-color);
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .properties-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-        }
-        
-        .property-card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-        
-        .property-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .property-image {
-            height: 200px;
-            background-size: cover;
-            background-position: center;
-        }
-        
-        .property-details {
-            padding: 20px;
-        }
-        
-        .property-title {
-            color: var(--primary-color);
-            margin-top: 0;
-            font-size: 1.2rem;
-        }
-        
-        .property-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 15px 0;
-        }
-        
-        .feature {
-            background: var(--light-color);
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-        }
-        
-        .property-price {
-            color: var(--secondary-color);
-            font-weight: bold;
-            font-size: 1.3rem;
-            margin: 10px 0;
-        }
-        
-        .action-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-        
-        .btn {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-        
-        .btn-primary {
-            background: var(--primary-color);
-            color: white;
-        }
-        
-        .btn-secondary {
-            background: var(--secondary-color);
-            color: white;
-        }
-        
-        .btn:hover {
-            opacity: 0.9;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>سمسار طلبك – عروض عقارية</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" /> <!-- افترض أن CSS الذي كتبته محفوظ في هذا الملف -->
 </head>
 <body>
-    <div class="container">
-        <h1>عروض عقارية مميزة في مدينة نصر</h1>
-        
-        <div class="properties-grid" id="properties-container">
-            <!-- سيتم ملؤه تلقائياً بالعقارات -->
+  <header class="site-header">
+    <nav class="nav-bar">
+      <div class="logo">
+        <h1>سمسار <span>طلبك</span></h1>
+      </div>
+      <button class="nav-toggle" id="nav-toggle"><i class="fas fa-bars"></i></button>
+      <div class="nav-links-container" id="nav-menu">
+        <ul class="nav-links">
+          <li><a href="#" class="nav-link active">الرئيسية</a></li>
+          <li><a href="#about" class="nav-link">من نحن</a></li>
+          <li><a href="#contact" class="nav-link">تواصل معنا</a></li>
+          <li><a href="#" class="golden-link">ابدأ رحلتك العقارية</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>  <main>
+    <section class="hero-section">
+      <div class="hero-content">
+        <h1 class="main-title">اكتشف أحدث العروض العقارية في مدينة نصر</h1>
+        <p class="main-description">شقق، محلات، مقرات إدارية والمزيد – جميعها جاهزة للاستعراض بخطوة واحدة.</p>
+        <div class="cta-buttons-container">
+          <a href="#properties" class="cta-button primary-cta">شاهد العروض</a>
+          <a href="#contact" class="cta-button golden-cta">تواصل معنا الآن</a>
         </div>
+      </div>
+      <div class="scroll-down"><i class="fas fa-angle-down fa-2x"></i></div>
+    </section><section id="properties" class="properties-section" style="padding: 4rem 1.5rem; max-width: 1200px; margin: auto;">
+  <h2 class="main-title" style="font-size: 2rem; margin-bottom: 2rem;">📋 قائمة العقارات المتاحة</h2>
+  <div class="property-cards" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+
+    <!-- سيتم توليد هذه البطاقات ديناميكيًا من JSON، مثال ثابت أدناه -->
+    <div class="property-card" style="background-color: var(--surface-color); padding: 1.5rem; border-radius: var(--border-radius-main); box-shadow: var(--box-shadow-light);">
+      <h3 style="color: var(--primary-color); font-size: 1.25rem; margin-bottom: 0.5rem;">شقة للبيع – جرين هيلز</h3>
+      <p>📍 بجوار نادي المقاولين العرب – الأوتوستراد</p>
+      <p>📏 190م – 🛏 3 غرف – 🚿 2 حمام</p>
+      <p>🏢 الدور: الرابع – نصف تشطيب – 🛗 2 أسانسير</p>
+      <p>💰 السعر: 4,100,000 جنيه</p>
+      <a href="#" class="cta-button primary-cta" style="margin-top: 1rem; display: inline-block;">عرض التفاصيل</a>
     </div>
 
-    <script>
-        // دالة لجلب البيانات وعرضها
-        async function loadProperties() {
-            const container = document.getElementById('properties-container');
-            
-            try {
-                // جلب قائمة بجميع ملفات العقارات
-                const response = await fetch('properties-list.json');
-                const propertiesList = await response.json();
-                
-                // عرض كل عقار
-                propertiesList.forEach(property => {
-                    const propertyCard = `
-                        <div class="property-card">
-                            <div class="property-image" style="background-image: url('${property.image || 'default-image.jpg'}')"></div>
-                            <div class="property-details">
-                                <h3 class="property-title">${property.title}</h3>
-                                <div class="property-features">
-                                    <span class="feature">${property.area}</span>
-                                    <span class="feature">${property.rooms} غرف</span>
-                                    <span class="feature">${property.bathrooms} حمام</span>
-                                    <span class="feature">${property.location}</span>
-                                </div>
-                                <div class="property-price">${property.price.toLocaleString()} ${property.currency}</div>
-                                <div class="action-buttons">
-                                    <button class="btn btn-primary" onclick="window.location.href='${property.contact.details_link}'">عرض التفاصيل</button>
-                                    <button class="btn btn-secondary" onclick="window.open('${property.contact.whatsapp}', '_blank')">تواصل عبر واتساب</button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    
-                    container.innerHTML += propertyCard;
-                });
-            } catch (error) {
-                console.error('Error loading properties:', error);
-                container.innerHTML = '<p>حدث خطأ أثناء تحميل العقارات. يرجى المحاولة لاحقاً.</p>';
-            }
-        }
-        
-        // تحميل العقارات عند فتح الصفحة
-        window.addEventListener('DOMContentLoaded', loadProperties);
-    </script>
-</body>
+    <!-- يمكن تكرار النموذج أعلاه لكل عقار -->
+
+  </div>
+</section>
+
+  </main>  <footer class="site-footer-bottom">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="#">الرئيسية</a>
+        <a href="#about">عن سمسار طلبك</a>
+        <a href="#contact">الدعم</a>
+      </div>
+      <div class="copyright-text">
+        © 2025 سمسار طلبك – جميع الحقوق محفوظة
+      </div>
+    </div>
+  </footer>  <div class="overlay" id="overlay"></div>  <script>
+    const toggle = document.getElementById('nav-toggle');
+    const menu = document.getElementById('nav-menu');
+    const overlay = document.getElementById('overlay');
+
+    toggle.addEventListener('click', () => {
+      menu.classList.toggle('active');
+      overlay.classList.toggle('active');
+    });
+
+    overlay.addEventListener('click', () => {
+      menu.classList.remove('active');
+      overlay.classList.remove('active');
+    });
+  </script>  <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script></body>
 </html>
