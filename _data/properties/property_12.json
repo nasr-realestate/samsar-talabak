@@ -1,0 +1,15 @@
+{
+  "type": "شقة للبيع",
+  "title": "عنوان تجريبي 12",
+  "location": "مدينة نصر – منطقة 12",
+  "area": "160م",
+  "rooms": "2",
+  "bathrooms": "1",
+  "floor": "3",
+  "finishing": "سوبر لوكس",
+  "elevator": "يوجد",
+  "price": "3800000",
+  "currency": "جنيه",
+  "payment_method": "تقسيط",
+  "notes": "ملاحظات للعرض رقم 12"
+}

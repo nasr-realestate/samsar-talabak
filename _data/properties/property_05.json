@@ -1,0 +1,15 @@
+{
+  "type": "شقة للإيجار",
+  "title": "عنوان تجريبي 5",
+  "location": "مدينة نصر – منطقة 5",
+  "area": "125م",
+  "rooms": "4",
+  "bathrooms": "2",
+  "floor": "6",
+  "finishing": "نصف تشطيب",
+  "elevator": "غير موجود",
+  "price": "2750000",
+  "currency": "جنيه",
+  "payment_method": "كاش",
+  "notes": ""
+}

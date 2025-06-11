@@ -1,0 +1,15 @@
+{
+  "type": "شقة للإيجار",
+  "title": "عنوان تجريبي 10",
+  "location": "مدينة نصر – منطقة 10",
+  "area": "150م",
+  "rooms": "3",
+  "bathrooms": "1",
+  "floor": "1",
+  "finishing": "نصف تشطيب",
+  "elevator": "يوجد",
+  "price": "3500000",
+  "currency": "جنيه",
+  "payment_method": "كاش",
+  "notes": ""
+}

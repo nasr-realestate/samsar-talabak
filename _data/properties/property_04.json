@@ -1,0 +1,15 @@
+{
+  "type": "شقة للبيع",
+  "title": "عنوان تجريبي 4",
+  "location": "مدينة نصر – منطقة 4",
+  "area": "120م",
+  "rooms": "3",
+  "bathrooms": "1",
+  "floor": "5",
+  "finishing": "نصف تشطيب",
+  "elevator": "يوجد",
+  "price": "2600000",
+  "currency": "جنيه",
+  "payment_method": "تقسيط",
+  "notes": "ملاحظات للعرض رقم 4"
+}
