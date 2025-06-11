@@ -1,61 +1,79 @@
----
-layout: default
-title: أحدث العقارات
----
-
-<style>
-body {
-  direction: rtl;
-  font-family: "Tahoma", "Arial", sans-serif;
-  text-align: right;
-}
-
-.property-card {
-  background: linear-gradient(135deg, #ffffff, #e6f7ff);
-  border-radius: 15px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 0 15px rgba(0, 150, 255, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.property-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0 25px rgba(0, 150, 255, 0.4);
-}
-.property-card h3 {
-  color: #007acc;
-}
-.property-card p {
-  margin: 5px 0;
-  font-size: 15px;
-}
-.property-card button {
-  background-color: #007acc;
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background-color 0.3s ease;
-}
-.property-card button:hover {
-  background-color: #005f99;
-}
-</style>
-
-<h1>🏡 أحدث العقارات</h1>
-
-<div class="property-list">
-  {% assign files = site.data.properties %}
-  {% for property in files %}
-    <div class="property-card">
-      <h3>{{ property[1].title }}</h3>
-      <p>📍 <strong>الموقع:</strong> {{ property[1].location }}</p>
-      <p>💰 <strong>السعر:</strong> {{ property[1].price | number_with_delimiter: "," }} جنيه</p>
-      <p>🏷️ <strong>النوع:</strong> {{ property[1].type }}</p>
-      <p>📅 <strong>تاريخ الإضافة:</strong> {{ property[1].added_date }}</p>
-      <button onclick="window.location.href='https://wa.me/201234567890'">تواصل الآن</button>
+<!DOCTYPE html><html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عقارات سمسار طلبك</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .property-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .property-card {
+      background-color: var(--surface-color);
+      border-radius: var(--border-radius-main);
+      box-shadow: var(--box-shadow-light);
+      padding: 1rem;
+      color: var(--text-color);
+      transition: transform 0.3s ease;
+    }
+    .property-card:hover {
+      transform: scale(1.03);
+    }
+    .property-card img {
+      width: 100%;
+      border-radius: var(--border-radius-main);
+      margin-bottom: 0.5rem;
+    }
+    .property-info {
+      font-size: 0.95rem;
+    }
+    .property-info strong {
+      color: var(--text-color-strong);
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-bar">
+      <div class="logo">
+        <h1>سمسار <span>طلبك</span></h1>
+      </div>
     </div>
-  {% endfor %}
-</div>
+  </header>  <main>
+    <section class="hero-section">
+      <div class="hero-content">
+        <h1 class="main-title">شقق جاهزة للعرض في مدينة نصر</h1>
+        <p class="main-description">استكشف أحدث العروض العقارية المُضافة تلقائيًا من قاعدة بيانات سمسار طلبك</p>
+        <div class="cta-buttons-container">
+          <a href="https://wa.me/201147758857" class="cta-button primary-cta">تواصل معنا الآن</a>
+        </div>
+      </div>
+    </section><section class="property-list" id="properties"></section>
+
+  </main>  <script>
+    fetch('properties.json')
+      .then(response => response.json())
+      .then(data => {
+        const container = document.getElementById('properties');
+        data.forEach(property => {
+          container.innerHTML += `
+            <div class="property-card">
+              <img src="${property.image}" alt="${property.title}" />
+              <div class="property-info">
+                <p><strong>📍 الموقع:</strong> ${property.location}</p>
+                <p><strong>📏 المساحة:</strong> ${property.area} م²</p>
+                <p><strong>🛏️ الغرف:</strong> ${property.rooms}</p>
+                <p><strong>💰 السعر:</strong> ${property.price} جنيه</p>
+                <p><strong>📞 للتواصل:</strong> <a href="https://wa.me/${property.phone}" target="_blank">واتساب</a></p>
+              </div>
+            </div>
+          `;
+        });
+      });
+  </script></body>
+</html>
