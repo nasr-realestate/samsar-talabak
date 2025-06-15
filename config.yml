@@ -1,0 +1,62 @@
+title: "سمسار طلبك"
+description: "شقق تمليك في مدينة نصر - عروض حصرية وأسعار تنافسية"
+url: "https://nasr-realestate.github.io"
+baseurl: "/samsar-talabak"
+lang: "ar"
+email: "elraikonly@outlook.sa"
+
+theme: minima
+
+# إعدادات SEO
+google_site_verification: "ozxUgrS2657mo8HYSvgjhYSeYv1FCcc8ig_3wjmSoGA"
+
+# دعم Markdown و HTML
+markdown: kramdown
+kramdown:
+  input: GFM
+
+# إعدادات البناء
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# إعدادات الصفحات الافتراضية
+defaults:
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+      lang: "ar"
+
+# استثناءات الملفات والمجلدات التي لا تُنشر
+exclude:
+  - node_modules
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+
+# إعدادات إضافية لتحسين السيو والأداء
+# يمكنك إضافة إعدادات مخصصة هنا حسب الحاجة
+
+# إعدادات السيو الإضافية
+seo:
+  title: "سمسار طلبك - أفضل عروض العقارات في مدينة نصر"
+  description: "استكشف أفضل الشقق المعروضة للبيع والإيجار في مدينة نصر مع عروض حصرية وأسعار تنافسية."
+
+# إعدادات التصفح Pagination
+paginate: 10
+paginate_path: "/page:num/"
+
+# خيارات اللغة
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      lang: "ar"
+
+# إعدادات بناء مخصصة (اختياري)
+# يمكنك إضافة إعدادات خاصة بالبناء هنا
