@@ -1,0 +1,30 @@
+name: Generate robots.txt only
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate_robots:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate robots.txt only
+        run: |
+          echo 'User-agent: *' > robots.txt
+          echo 'Allow: /' >> robots.txt
+          echo 'Sitemap: https://nasr-realestate.github.io/samsar-talabak/sitemap.xml' >> robots.txt
+
+      - name: Commit and push if updated
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add robots.txt
+          git diff --cached --quiet || (git commit -m "تحديث تلقائي robots.txt" && git push)
