@@ -1,1 +1,35 @@
 
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>عقارات</title>
+</head>
+<body>
+  <h1>📍 عروض العقارات</h1>
+  <div id="output">جاري التحميل...</div>
+
+  <script>
+    async function load() {
+      const container = document.getElementById("output");
+      const indexRes = await fetch("../data/properties/index.json");
+      const files = await indexRes.json();
+      container.innerHTML = "";
+
+      for (const file of files) {
+        const res = await fetch(`../data/properties/${file}`);
+        const d = await res.json();
+        container.innerHTML += `
+          <div style="margin:10px;padding:10px;border:1px solid #ccc">
+            <b>${d["نوع_العقار"]}</b> – ${d["الموقع"]}<br>
+            المساحة: ${d["المساحة"]} | السعر: ${d["السعر"]} | ${d["التشطيب"]}<br>
+            <a href="${d["رابط_واتساب"]}" target="_blank">📱 واتساب</a>
+            <a href="${d["رابط_التفاصيل"]}" target="_blank">📄 التفاصيل</a>
+          </div>
+        `;
+      }
+    }
+    load();
+  </script>
+</body>
+</html>
