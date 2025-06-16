@@ -1,0 +1,36 @@
+name: Generate index.json for all property categories
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate_index:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Generate index.json for each category
+        run: |
+          for dir in data/properties/*/ ; do
+            category=$(basename "$dir")
+            mkdir -p "$dir"
+            echo "[" > "$dir/index.json"
+            find "$dir" -type f -name '*.json' ! -name 'index.json' | sed "s|$dir||" | awk '{ print "  \"" $0 "\"," }' >> "$dir/index.json"
+            sed -i '$ s/,$//' "$dir/index.json"
+            echo "]" >> "$dir/index.json"
+            echo "✅ Generated index.json in $dir"
+          done
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add data/properties/*/index.json
+          git diff --cached --quiet || (git commit -m "توليد تلقائي index.json لكل تصنيف" && git push)
