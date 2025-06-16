@@ -1,16 +1,31 @@
+---
+layout: default
+title: شقق للبيع في مدينة نصر
+description: تصفح أحدث عروض الشقق للبيع في مدينة نصر - تشطيبات متنوعة وأسعار تنافسية.
+---
+
+<section class="page-header">
+  <h1>شقق للبيع</h1>
+  <p>جميع العروض المتاحة الآن - يتم التحديث تلقائيًا</p>
+</section>
+
+<main class="properties-container" id="properties-list">
+  <p>جاري التحميل...</p>
+</main>
+
 <script>
   async function loadProperties() {
     const container = document.getElementById('properties-list');
     container.innerHTML = '';
 
     const basePath = '/samsar-talabak/data/properties/shaqat/';
-    const indexFile = `${basePath}index.json`;
+    const indexFile = basePath + 'index.json';
 
     try {
-      const indexResponse = await fetch(indexFile);
-      if (!indexResponse.ok) throw new Error("تعذر تحميل قائمة العروض");
+      const indexRes = await fetch(indexFile);
+      if (!indexRes.ok) throw new Error("فشل في تحميل index.json");
 
-      const files = await indexResponse.json();
+      const files = await indexRes.json();
 
       for (const file of files) {
         const res = await fetch(basePath + file);
@@ -37,9 +52,8 @@
               <div class="meta-item"><i class="fas fa-check-circle"></i> ${prop["التشطيب"]}</div>
             </div>
             <div class="cta-section">
-              <a href="${prop["رابط_التفاصيل"]}" class="gallery-btn">
-                <i class="fas fa-images"></i>
-                عرض التفاصيل
+              <a href="/samsar-talabak/${prop["رابط_التفاصيل"]}" class="gallery-btn">
+                <i class="fas fa-images"></i> عرض التفاصيل
               </a>
               <a href="${prop["رابط_واتساب"]}" class="whatsapp-btn" target="_blank">
                 <i class="fab fa-whatsapp"></i> واتساب مباشر
@@ -50,9 +64,9 @@
 
         container.appendChild(card);
       }
-    } catch (error) {
-      container.innerHTML = `<p>حدث خطأ أثناء تحميل العروض. حاول لاحقاً.</p>`;
-      console.error(error);
+    } catch (err) {
+      container.innerHTML = `<p>تعذر تحميل العروض الآن.</p>`;
+      console.error(err);
     }
   }
 
