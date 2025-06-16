@@ -1,0 +1,69 @@
+---
+layout: default
+title: شقق للبيع في مدينة نصر
+description: تصفح أحدث عروض الشقق للبيع في مدينة نصر بأسعار تنافسية وتفاصيل دقيقة.
+---
+
+<section class="page-header">
+  <h1>شقق للبيع في مدينة نصر</h1>
+  <p>عروض محدثة يومياً — اختر العرض المناسب لك</p>
+</section>
+
+<main class="properties-container" id="properties-list">
+  <p>جاري التحميل...</p>
+</main>
+
+<script>
+  async function loadProperties() {
+    const container = document.getElementById('properties-list');
+    container.innerHTML = '';
+
+    const basePath = '/samsar-talabak/data/properties/shaqat/';
+    
+    const response = await fetch(`${basePath}`);
+    const index = await fetch(`${basePath}`);
+    
+    // بما أننا لا نملك index.json هنا، سنقرأ ملفاً واحداً يدويًا للتجربة
+    const files = ["green-hills-001.json"]; // يمكنك لاحقاً توليد هذا تلقائيًا
+
+    for (const file of files) {
+      const res = await fetch(`${basePath}${file}`);
+      if (!res.ok) continue;
+      const prop = await res.json();
+
+      const card = document.createElement('article');
+      card.className = 'property-card';
+
+      card.innerHTML = `
+        <div class="property-image">
+          <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="${prop.property_type_ar}">
+          <span class="property-badge">${prop["السعر"]}</span>
+        </div>
+        <div class="property-content">
+          <h2 class="property-title">${prop.property_type_ar}</h2>
+          <div class="property-meta">
+            <div class="meta-item"><i class="fas fa-location-dot"></i> ${prop["location_ar"]}</div>
+            <div class="meta-item"><i class="fas fa-expand"></i> ${prop["المساحة"]}</div>
+            <div class="meta-item"><i class="fas fa-bed"></i> ${prop["الغرف"]} غرف</div>
+            <div class="meta-item"><i class="fas fa-bath"></i> ${prop["الحمامات"]} حمام</div>
+            <div class="meta-item"><i class="fas fa-layer-group"></i> ${prop["الدور"]}</div>
+            <div class="meta-item"><i class="fas fa-check-circle"></i> ${prop["التشطيب"]}</div>
+          </div>
+          <div class="cta-section">
+            <a href="${prop["رابط_التفاصيل"]}" class="gallery-btn">
+              <i class="fas fa-images"></i>
+              عرض التفاصيل
+            </a>
+            <a href="${prop["رابط_واتساب"]}" class="whatsapp-btn" target="_blank">
+              <i class="fab fa-whatsapp"></i> واتساب مباشر
+            </a>
+          </div>
+        </div>
+      `;
+
+      container.appendChild(card);
+    }
+  }
+
+  loadProperties();
+</script>
