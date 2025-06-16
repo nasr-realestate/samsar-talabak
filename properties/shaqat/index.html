@@ -26,7 +26,7 @@
 <script>
   const container = document.getElementById('offers');
 
-  fetch('/samsar-talabak/data/properties/shaqat/index.json')
+  fetch(`${window.location.origin}/samsar-talabak/data/properties/shaqat/index.json`)
     .then(res => res.json())
     .then(files => {
       if (!files.length) {
@@ -36,7 +36,7 @@
 
       Promise.all(
         files.map(file =>
-          fetch(`/samsar-talabak/data/properties/shaqat/${file}`).then(res => res.json())
+          fetch(`${window.location.origin}/samsar-talabak/data/properties/shaqat/${file}`).then(res => res.json())
         )
       ).then(offers => {
         container.innerHTML = "";
