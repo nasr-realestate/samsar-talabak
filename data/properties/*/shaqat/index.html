@@ -1,0 +1,74 @@
+---
+layout: default
+title: شقق للبيع في مدينة نصر
+description: تصفح أحدث عروض الشقق للبيع في مدينة نصر - تشطيبات متنوعة وأسعار تنافسية.
+---
+
+<section class="page-header">
+  <h1>شقق للبيع</h1>
+  <p>جميع العروض المتاحة الآن - يتم التحديث تلقائيًا</p>
+</section>
+
+<main class="properties-container" id="properties-list">
+  <p>جاري التحميل...</p>
+</main>
+
+<script>
+  async function loadProperties() {
+    const container = document.getElementById('properties-list');
+    container.innerHTML = '';
+
+    const basePath = '/samsar-talabak/data/properties/shaqat/';
+    const indexFile = basePath + 'index.json';
+
+    try {
+      const indexRes = await fetch(indexFile);
+      if (!indexRes.ok) throw new Error("فشل في تحميل index.json");
+
+      const files = await indexRes.json();
+
+      for (const file of files) {
+        const res = await fetch(basePath + file);
+        if (!res.ok) continue;
+
+        const prop = await res.json();
+
+        const card = document.createElement('article');
+        card.className = 'property-card';
+
+        card.innerHTML = `
+          <div class="property-image">
+            <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="${prop.property_type_ar}">
+            <span class="property-badge">${prop["السعر"]}</span>
+          </div>
+          <div class="property-content">
+            <h2 class="property-title">${prop.property_type_ar}</h2>
+            <div class="property-meta">
+              <div class="meta-item"><i class="fas fa-location-dot"></i> ${prop["location_ar"]}</div>
+              <div class="meta-item"><i class="fas fa-expand"></i> ${prop["المساحة"]}</div>
+              <div class="meta-item"><i class="fas fa-bed"></i> ${prop["الغرف"]} غرف</div>
+              <div class="meta-item"><i class="fas fa-bath"></i> ${prop["الحمامات"]} حمام</div>
+              <div class="meta-item"><i class="fas fa-layer-group"></i> ${prop["الدور"]}</div>
+              <div class="meta-item"><i class="fas fa-check-circle"></i> ${prop["التشطيب"]}</div>
+            </div>
+            <div class="cta-section">
+              <a href="/samsar-talabak/${prop["رابط_التفاصيل"]}" class="gallery-btn">
+                <i class="fas fa-images"></i> عرض التفاصيل
+              </a>
+              <a href="${prop["رابط_واتساب"]}" class="whatsapp-btn" target="_blank">
+                <i class="fab fa-whatsapp"></i> واتساب مباشر
+              </a>
+            </div>
+          </div>
+        `;
+
+        container.appendChild(card);
+      }
+    } catch (err) {
+      container.innerHTML = `<p>تعذر تحميل العروض الآن.</p>`;
+      console.error(err);
+    }
+  }
+
+  loadProperties();
+</script>
