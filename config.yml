@@ -4,8 +4,10 @@ url: "https://nasr-realestate.github.io"
 baseurl: "/samsar-talabak"
 lang: "ar"
 email: "elraikonly@outlook.sa"
-
 theme: minima
+
+#  هذا هو الإعداد الرئيسي للبيانات
+data_source: data
 
 # إعدادات SEO
 google_site_verification: "ozxUgrS2657mo8HYSvgjhYSeYv1FCcc8ig_3wjmSoGA"
@@ -19,7 +21,7 @@ kramdown:
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
-data_source: data
+
 # إعدادات الصفحات الافتراضية
 defaults:
   -
@@ -29,6 +31,12 @@ defaults:
     values:
       layout: "default"
       lang: "ar"
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      lang: "ar"
 
 # استثناءات الملفات والمجلدات التي لا تُنشر
 exclude:
@@ -36,9 +44,6 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - README.md
-
-# إعدادات إضافية لتحسين السيو والأداء
-# يمكنك إضافة إعدادات مخصصة هنا حسب الحاجة
 
 # إعدادات السيو الإضافية
 seo:
@@ -48,15 +53,3 @@ seo:
 # إعدادات التصفح Pagination
 paginate: 10
 paginate_path: "/page:num/"
-
-# خيارات اللغة
-defaults:
-  -
-    scope:
-      path: ""
-      type: "posts"
-    values:
-      lang: "ar"
-
-# إعدادات بناء مخصصة (اختياري)
-# يمكنك إضافة إعدادات خاصة بالبناء هنا
