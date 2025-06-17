@@ -1,7 +1,9 @@
-name: Generate index.json for all property categories
+name: Generate Category Index Files
 
 on:
   push:
+    paths:
+      - 'data/properties/**'
     branches:
       - main
   workflow_dispatch:
@@ -19,18 +21,42 @@ jobs:
       - name: Generate index.json for each category
         run: |
           for dir in data/properties/*/ ; do
-            category=$(basename "$dir")
-            mkdir -p "$dir"
-            echo "[" > "$dir/index.json"
-            find "$dir" -type f -name '*.json' ! -name 'index.json' | sed "s|$dir||" | awk '{ print "  \"" $0 "\"," }' >> "$dir/index.json"
-            sed -i '$ s/,$//' "$dir/index.json"
-            echo "]" >> "$dir/index.json"
-            echo "✅ Generated index.json in $dir"
+            if [ -d "$dir" ]; then
+              category_path="${dir%/}"
+              echo "Processing category: $category_path"
+              
+              # Start the JSON array
+              echo "[" > "$category_path/index.json"
+              
+              # Find all .json files (excluding index.json), process them, and add to the index
+              # We use a temporary file to handle the comma correctly
+              first=true
+              find "$category_path" -maxdepth 1 -type f -name '*.json' ! -name 'index.json' | while read -r file; do
+                if [ "$first" = true ]; then
+                  first=false
+                else
+                  echo "," >> "$category_path/index.json"
+                fi
+                # Read the content of the file and append it without a newline
+                jq -c . "$file" | tr -d '\n' >> "$category_path/index.json"
+              done
+              
+              # End the JSON array
+              echo "" >> "$category_path/index.json" # Add a newline for the closing bracket
+              echo "]" >> "$category_path/index.json"
+              
+              echo "✅ Generated index.json in $category_path"
+            fi
           done
 
       - name: Commit and push changes
         run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "github-actions-bot@users.noreply.github.com"
           git add data/properties/*/index.json
-          git diff --cached --quiet || (git commit -m "توليد تلقائي index.json لكل تصنيف" && git push)
+          if git diff --cached --quiet; then
+            echo "All index.json files are up-to-date."
+          else
+            git commit -m "توليد تلقائي لملفات index.json"
+            git push
+          fi
