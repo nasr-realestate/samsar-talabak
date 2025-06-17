@@ -1,12 +1,9 @@
 ---
 layout: default
 title: "شقق للبيع في مدينة نصر"
-description: "تصفح أحدث عروض الشقق المتاحة للبيع في أرقى مناطق مدينة نصر."
 ---
 
 <style>
-    /* يمكنك إضافة أي تنسيقات خاصة بهذه الصفحة فقط هنا */
-    /* أو يفضل وضعها في ملف الـ CSS الرئيسي */
     #properties-container {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -20,41 +17,15 @@ description: "تصفح أحدث عروض الشقق المتاحة للبيع ف
         border: 1px solid #e0e0e0;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-        display: flex;
-        flex-direction: column;
-        overflow: hidden; /* لإخفاء أي زوائد */
-    }
-    .property-card-content {
         padding: 20px;
-        flex-grow: 1;
     }
     .property-card h3 {
         margin-top: 0;
         color: var(--primary);
     }
-    .property-card .price {
+    .price {
         font-weight: bold;
         color: var(--secondary);
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-     .property-card .details {
-        font-size: 0.9em;
-        color: #666;
-        margin-bottom: 15px;
-    }
-    .property-card .description {
-       flex-grow: 1;
-    }
-    .whatsapp-button {
-        display: block;
-        background-color: var(--whatsapp);
-        color: white;
-        text-align: center;
-        text-decoration: none;
-        font-weight: bold;
-        padding: 12px;
-        margin-top: 15px;
     }
 </style>
 
@@ -63,30 +34,19 @@ description: "تصفح أحدث عروض الشقق المتاحة للبيع ف
     <p class="main-description">تصفح أفضل العروض المتاحة في مدينة نصر</p>
 </div>
 
-<!-- حاوية عرض العقارات -->
 <div id="properties-container">
-
-    {% raw %}{% comment %}
-      Jekyll يقرأ البيانات من `data/properties/apartments/index.json`
-      ويجعلها متاحة هنا في المتغير: site.data.properties.apartments.index
-    {% endcomment %}{% endraw %}
-
-    {% for property in site.data.properties.apartments.index %}
-        <div class="property-card">
-            <div class="property-card-content">
+    {% assign apartments = site.data.properties.apartments.index %}
+    {% if apartments.size > 0 %}
+        {% for property in apartments %}
+            <div class="property-card">
                 <h3>{{ property.location_ar }}</h3>
                 <p class="price">{{ property.السعر }}</p>
-                <p class="details">
-                    <strong>المساحة:</strong> {{ property.المساحة }} | 
-                    <strong>الغرف:</strong> {{ property.الغرف }} | 
-                    <strong>الحمامات:</strong> {{ property.الحمامات }}
-                </p>
-                <p class="description">{{ property.تفاصيل }}</p>
+                <p><strong>المساحة:</strong> {{ property.المساحة }}</p>
+                <p><strong>الغرف:</strong> {{ property.الغرف }}</p>
+                <p><strong>التفاصيل:</strong> {{ property.تفاصيل }}</p>
             </div>
-            <a href="{{ property.رابط_واتساب }}" class="whatsapp-button" target="_blank">تواصل واتساب</a>
-        </div>
+        {% endfor %}
     {% else %}
         <p>لا توجد شقق متاحة للعرض حاليًا.</p>
-    {% endfor %}
-
-  </div>
+    {% endif %}
+</div>
