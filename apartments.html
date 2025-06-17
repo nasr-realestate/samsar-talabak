@@ -5,8 +5,8 @@ title: "شقق للبيع في مدينة نصر"
 
 <!-- ==== بداية الكود التشخيصي ==== -->
 <div style="background: #ffc; border: 2px solid #f00; padding: 10px; margin: 20px; text-align: left; direction: ltr; font-family: monospace;">
-  <h3>محتويات site.data (للتشخيص):</h3>
-  <pre><code>{{ site.data | inspect }}</code></pre>
+  <h3>محتويات site.data.apartments (للتشخيص):</h3>
+  <pre><code>{{ site.data.apartments | inspect }}</code></pre>
 </div>
 <!-- ==== نهاية الكود التشخيصي ==== -->
 
@@ -16,7 +16,7 @@ title: "شقق للبيع في مدينة نصر"
 </div>
 
 <div id="properties-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; padding: 40px 20px; max-width: 1200px; margin: 0 auto;">
-    {% assign apartments = site.data.properties.apartments.index %}
+    {% assign apartments = site.data.apartments %}
     {% if apartments.size > 0 %}
         {% for property in apartments %}
             <div class="property-card" style="background-color: #fff; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); padding: 20px;">
