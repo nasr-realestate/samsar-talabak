@@ -19,7 +19,7 @@ kramdown:
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
-
+data_source: data
 # إعدادات الصفحات الافتراضية
 defaults:
   -
