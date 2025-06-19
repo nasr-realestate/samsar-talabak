@@ -1,6 +1,5 @@
 
-Trigger GitHub Action name: Generate Category Index Files
-
+  name: Generate Category Index Files
 on:
   push:
     branches:
