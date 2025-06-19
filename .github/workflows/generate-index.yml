@@ -1,0 +1,38 @@
+name: Generate Category Index Files
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'data/properties/**'
+
+permissions:
+  contents: write
+
+jobs:
+  generate-indexes:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate index.json for each category
+        run: |
+          for dir in data/properties/*/; do
+            if [ -d "$dir" ]; then
+              echo "Processing directory: $dir"
+              json_content=$(find "$dir" -maxdepth 1 -type f -name "*.json" ! -name "index.json" -exec basename {} \; | jq -R -s '. | split("\n") | map(select(. != ""))')
+              echo "$json_content" > "${dir}index.json"
+              echo "Generated index.json in $dir"
+            fi
+          done
+
+      - name: Commit and push if changes are found
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: auto-generate index.json files"
+          commit_user_name: "GitHub Actions Bot"
+          commit_user_email: "actions@github.com"
+          branch: ${{ github.ref }}
