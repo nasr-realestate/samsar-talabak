@@ -1,5 +1,5 @@
+name: Generate Category Index Files
 
-  name: Generate Category Index Files
 on:
   push:
     branches:
@@ -7,32 +7,40 @@ on:
     paths:
       - 'data/properties/**'
 
-permissions:
-  contents: write
-
 jobs:
   generate-indexes:
     runs-on: ubuntu-latest
+    
+    # هذه الصلاحيات ضرورية للسماح للإجراء بحفظ التغييرات
+    permissions:
+      contents: write
 
     steps:
+      # الخطوة 1: سحب الكود من المستودع
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # الخطوة 2: توليد ملفات index.json
       - name: Generate index.json for each category
         run: |
+          # نمر على كل مجلد داخل data/properties
           for dir in data/properties/*/; do
             if [ -d "$dir" ]; then
               echo "Processing directory: $dir"
+              
+              # استخدمنا basename للحصول على اسم الملف فقط
               json_content=$(find "$dir" -maxdepth 1 -type f -name "*.json" ! -name "index.json" -exec basename {} \; | jq -R -s '. | split("\n") | map(select(. != ""))')
+              
               echo "$json_content" > "${dir}index.json"
               echo "Generated index.json in $dir"
             fi
           done
 
+      # الخطوة 3: حفظ ودفع التغييرات إذا وجدت
       - name: Commit and push if changes are found
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: auto-generate index.json files"
+          commit_message: "chore: Auto-generate index.json files"
           commit_user_name: "GitHub Actions Bot"
           commit_user_email: "actions@github.com"
-          branch: ${{ github.ref }}
+          branch: ${{ github.ref_name }} # استخدام الصيغة الجديدة والأفضل
