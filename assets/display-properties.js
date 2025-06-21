@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const container = document.getElementById('properties-container');
   const category = 'apartments';
 
-  fetch(`/test/data/properties/${category}/index.json`)
+  fetch(`/samsar-talabak/data/properties/${category}/index.json`)
     .then(response => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       propertyFiles.forEach(fileName => {
-        fetch(`/test/data/properties/${category}/${fileName}`)
+        fetch(`/samsar-talabak/data/properties/${category}/${fileName}`)
           .then(res => {
             if (!res.ok) {
               throw new Error(`فشل في تحميل الملف: ${fileName}`);
