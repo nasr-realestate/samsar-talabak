@@ -1,14 +1,13 @@
-
 document.addEventListener("DOMContentLoaded", function () {
   const container = document.getElementById('properties-container');
   const category = 'apartments';
 
-  fetch(`/data/properties/${category}/index.json`)
+  fetch(`/samsar-talabak/data/properties/${category}/index.json`)
     .then(response => response.json())
     .then(propertyFiles => {
       container.innerHTML = '';
       propertyFiles.forEach(fileName => {
-        fetch(`/data/properties/${category}/${fileName}`)
+        fetch(`/samsar-talabak/data/properties/${category}/${fileName}`)
           .then(res => res.json())
           .then(data => {
             const card = document.createElement('div');
