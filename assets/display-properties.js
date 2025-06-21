@@ -1,23 +1,23 @@
 document.addEventListener("DOMContentLoaded", function () {
   const container = document.getElementById('properties-container');
-  const category = 'apartments';
+  const category = 'apartments'; // التصنيف الحالي
 
-  fetch(`/samsar-talabak/data/properties/${category}/index.json`)
+  fetch(`/test/properties/${category}/index.json`)  // ✅ تم تعديل المسار
     .then(response => {
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`فشل في تحميل index.json: ${response.status}`);
       }
       return response.json();
     })
     .then(propertyFiles => {
-      container.innerHTML = ''; // إزالة "جاري التحميل..."
+      container.innerHTML = '';
       if (!propertyFiles.length) {
         container.innerHTML = "<p>لا توجد بيانات حالياً.</p>";
         return;
       }
 
       propertyFiles.forEach(fileName => {
-        fetch(`/samsar-talabak/data/properties/${category}/${fileName}`)
+        fetch(`/test/properties/${category}/${fileName}`)  // ✅ تم تعديل المسار
           .then(res => {
             if (!res.ok) {
               throw new Error(`فشل في تحميل الملف: ${fileName}`);
