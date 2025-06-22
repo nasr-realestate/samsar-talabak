@@ -2,92 +2,14 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>عروض العقارات - تصنيفات ديناميكية</title>
+  <title>عروض العقارات</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Tajawal', sans-serif;
-      background: #f0f0f0;
-      padding: 2rem;
-      margin: 0;
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 1.5rem;
-      color: #2c3e50;
-    }
-
-    .filter-bar {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .filter-btn {
-      padding: 0.7rem 1.2rem;
-      background: #3498db;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .filter-btn:hover {
-      background: #2c80b4;
-    }
-
-    .property-card {
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-      padding: 1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .property-card h2 {
-      margin: 0 0 0.5rem;
-      color: #34495e;
-    }
-
-    .property-card p {
-      margin: 0.4rem 0;
-    }
-
-    .property-card a {
-      display: inline-block;
-      margin-top: 0.7rem;
-      padding: 0.5rem 1rem;
-      background: #2ecc71;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-    }
-
-    .property-card a:hover {
-      background: #27ae60;
-    }
-  </style>
+  <link rel="stylesheet" href="/samsar-talabak/assets/style.css">
+  <script src="/samsar-talabak/assets/js/filtered-display.js" defer></script>
 </head>
 <body>
-
-  <h1>عروض العقارات حسب التصنيف</h1>
-
-  <div class="filter-bar">
-    <button class="filter-btn" data-category="apartments">شقق للبيع</button>
-    <button class="filter-btn" data-category="rent">شقق للإيجار</button>
-    <button class="filter-btn" data-category="rent-furnished">شقق مفروشة</button>
-    <button class="filter-btn" data-category="shops-sale">محلات للبيع</button>
-    <button class="filter-btn" data-category="shops-rent">محلات للإيجار</button>
-    <button class="filter-btn" data-category="offices">مكاتب إدارية</button>
-  </div>
-
-  <div id="properties-container">جاري تحميل البيانات...</div>
-
-  <script src="/samsar-talabak/assets/js/filtered-display.js" defer></script>
+  <h1 style="text-align:center;">عروض العقارات</h1>
+  <div id="filter-buttons" style="text-align:center; margin-bottom: 20px;"></div>
+  <div id="properties-container" style="padding: 2rem;">جاري تحميل البيانات...</div>
 </body>
 </html>
