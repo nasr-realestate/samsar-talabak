@@ -2,64 +2,95 @@ document.addEventListener("DOMContentLoaded", async function () {
   const container = document.getElementById("properties-container");
   const filterContainer = document.getElementById("filter-buttons");
 
+  // التصنيفات المتاحة
   const categories = {
-    "apartments": { label: "شقق للبيع", color: "#3498db" },
-    "apartments-rent": { label: "شقق للإيجار", color: "#2ecc71" },
-    "shops": { label: "محلات", color: "#e67e22" },
-    "offices": { label: "مكاتب", color: "#9b59b6" },
-    "admin-hq": { label: "مقرات إدارية", color: "#16a085" }
+    "apartments": "شقق للبيع",
+    "apartments-rent": "شقق للإيجار",
+    "shops": "محلات",
+    "offices": "مكاتب",
+    "admin-hq": "مقرات إدارية"
   };
 
-  // إنشاء الأزرار
-  for (const [key, info] of Object.entries(categories)) {
+  // توليد أزرار الفلاتر
+  for (const [key, label] of Object.entries(categories)) {
     const btn = document.createElement("button");
-    btn.textContent = info.label;
+    btn.textContent = label;
     btn.dataset.category = key;
     btn.className = "filter-btn";
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      loadCategory(key, info.color);
-    });
+    btn.style = `
+      padding: 0.6rem 1.2rem;
+      border: none;
+      background: #2c3e50;
+      color: white;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+    `;
+    btn.addEventListener("click", () => loadCategory(key));
     filterContainer.appendChild(btn);
   }
 
-  // تحميل التصنيف الافتراضي
+  // تحميل التصنيف الأول تلقائيًا
   const defaultCategory = Object.keys(categories)[0];
-  document.querySelector(`.filter-btn[data-category="${defaultCategory}"]`).classList.add("active");
-  loadCategory(defaultCategory, categories[defaultCategory].color);
+  loadCategory(defaultCategory);
 
-  function loadCategory(category, color) {
-    container.innerHTML = "<p>جاري تحميل البيانات...</p>";
+  // دالة تحميل العروض من التصنيف
+  function loadCategory(category) {
+    container.innerHTML = "<p style='text-align:center'>جاري تحميل البيانات...</p>";
+
     fetch(`/samsar-talabak/data/properties/${category}/index.json`)
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) throw new Error("فشل تحميل index.json");
+        return response.json();
+      })
       .then(files => {
         container.innerHTML = '';
         if (!files.length) {
-          container.innerHTML = "<p>لا توجد بيانات حالياً.</p>";
+          container.innerHTML = "<p style='text-align:center'>لا توجد بيانات حالياً.</p>";
           return;
         }
+
         files.forEach(filename => {
           fetch(`/samsar-talabak/data/properties/${category}/${filename}`)
             .then(res => res.json())
             .then(data => {
               const card = document.createElement("div");
               card.className = "property-card";
-              card.style.borderRight = `5px solid ${color}`;
+              card.style = `
+                background: white;
+                border: 1px solid #ddd;
+                padding: 1.5rem;
+                border-radius: 10px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+                margin-bottom: 1.5rem;
+                font-family: 'Tajawal', sans-serif;
+              `;
+
               card.innerHTML = `
-                <h2>${data.title}</h2>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
+                  <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار" style="width: 40px; height: 40px; border-radius: 50%;">
+                  <strong>سمسار طلبك</strong>
+                </div>
+                <h2 style="color:#2c3e50">${data.title}</h2>
                 <p><strong>السعر:</strong> ${data.price}</p>
                 <p><strong>المساحة:</strong> ${data.area}</p>
                 <p><strong>الوصف:</strong> ${data.description}</p>
-                <a href="${data.page_url}" class="details-link" target="_blank">عرض التفاصيل</a>
+                <div style="margin-top: 1rem;">
+                  <a href="https://wa.me/201147758857?text=مرحبًا، أريد الاستفسار عن: ${encodeURIComponent(data.title)}" 
+                    target="_blank" 
+                    style="background:#25D366; color:white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none;">
+                    استفسر عبر واتساب
+                  </a>
+                </div>
               `;
+
               container.appendChild(card);
             });
         });
       })
       .catch(err => {
-        container.innerHTML = "<p>حدث خطأ أثناء تحميل البيانات.</p>";
         console.error(err);
+        container.innerHTML = "<p style='text-align:center'>حدث خطأ أثناء تحميل البيانات.</p>";
       });
   }
 });
