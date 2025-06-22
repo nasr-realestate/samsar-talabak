@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   const container = document.getElementById("properties-container");
   const filterContainer = document.getElementById("filter-buttons");
 
-  // التصنيفات التي سيتم عرضها
   const categories = {
     "apartments": "شقق للبيع",
     "apartments-rent": "شقق للإيجار",
@@ -11,7 +10,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     "admin-hq": "مقرات إدارية"
   };
 
-  // إنشاء أزرار التصنيفات
   for (const [key, label] of Object.entries(categories)) {
     const btn = document.createElement("button");
     btn.textContent = label;
@@ -21,21 +19,23 @@ document.addEventListener("DOMContentLoaded", async function () {
     filterContainer.appendChild(btn);
   }
 
-  // تحميل أول تصنيف كافتراضي
   const defaultCategory = Object.keys(categories)[0];
   loadCategory(defaultCategory);
 
-  // دالة تحميل العروض
   function loadCategory(category) {
     container.innerHTML = "<p>جاري تحميل البيانات...</p>";
     fetch(`/samsar-talabak/data/properties/${category}/index.json`)
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) throw new Error("فشل في جلب الفهرس");
+        return response.json();
+      })
       .then(files => {
         container.innerHTML = '';
         if (!files.length) {
           container.innerHTML = "<p>لا توجد بيانات حالياً.</p>";
           return;
         }
+
         files.forEach(filename => {
           fetch(`/samsar-talabak/data/properties/${category}/${filename}`)
             .then(res => res.json())
