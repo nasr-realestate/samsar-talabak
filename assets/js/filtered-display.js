@@ -1,73 +1,85 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const container = document.getElementById('offers');
-  const buttons = document.querySelectorAll(".filters button");
+document.addEventListener("DOMContentLoaded", function () {
+  const container = document.getElementById("properties-container");
+  const categoryButtons = document.querySelectorAll(".category-btn");
 
+  // التصنيفات المتاحة حالياً
   const categories = {
-    "apartments-sale": "apartments-sale",
-    "apartments-rent": "apartments-rent",
-    "shops": "shops",
-    "offices": "offices",
+    "all": ["apartments", "apartments-rent"],
+    "apartments": ["apartments"],
+    "apartments-rent": ["apartments-rent"]
   };
 
-  let currentCategory = "all";
+  function loadProperties(selectedCategories) {
+    container.innerHTML = "جارٍ التحميل...";
 
-  function fetchAndDisplay(category) {
-    container.innerHTML = "جاري تحميل البيانات...";
-    let paths = category === "all"
-      ? Object.values(categories).map(cat => `/samsar-talabak/data/properties/${cat}/index.json`)
-      : [`/samsar-talabak/data/properties/${category}/index.json`];
+    const allCards = [];
 
-    Promise.all(paths.map(path => fetch(path).then(res => res.ok ? res.json() : [])))
-      .then(results => results.flat())
-      .then(files => {
-        if (files.length === 0) {
-          container.innerHTML = "<p>لا توجد عروض حالياً.</p>";
+    Promise.all(
+      selectedCategories.map(category =>
+        fetch(`/samsar-talabak/data/properties/${category}/index.json`)
+          .then(response => {
+            if (!response.ok) throw new Error(`فشل تحميل index.json لـ ${category}`);
+            return response.json();
+          })
+          .then(files =>
+            Promise.all(
+              files.map(file =>
+                fetch(`/samsar-talabak/data/properties/${category}/${file}`)
+                  .then(res => {
+                    if (!res.ok) throw new Error(`فشل تحميل ${file}`);
+                    return res.json();
+                  })
+                  .then(data => {
+                    data._category = category;
+                    return data;
+                  })
+              )
+            )
+          )
+          .then(results => allCards.push(...results))
+      )
+    )
+      .then(() => {
+        container.innerHTML = "";
+        if (allCards.length === 0) {
+          container.innerHTML = "<p>لا توجد نتائج.</p>";
           return;
         }
-        return Promise.all(
-          files.map(fileName => {
-            const dir = category === "all" ? findCategory(fileName) : category;
-            return fetch(`/samsar-talabak/data/properties/${dir}/${fileName}`).then(r => r.json());
-          })
-        );
-      })
-      .then(properties => {
-        if (!properties) return;
-        container.innerHTML = "";
-        properties.forEach(p => {
+
+        allCards.forEach(property => {
           const card = document.createElement("div");
-          card.className = "card";
+          card.className = "property-card";
+
+          const color = property._category === "apartments" ? "#3498db" : "#27ae60"; // أزرق للبيع، أخضر للإيجار
+
           card.innerHTML = `
-            <h2>${p.title}</h2>
-            <p><strong>السعر:</strong> ${p.price}</p>
-            <p><strong>المساحة:</strong> ${p.area}</p>
-            <p>${p.description}</p>
-            <a href="${p.page_url}" target="_blank">عرض التفاصيل</a>
+            <h2>${property.title}</h2>
+            <p><strong>السعر:</strong> ${property.price}</p>
+            <p><strong>المساحة:</strong> ${property.area}</p>
+            <p>${property.description}</p>
+            <a href="${property.page_url}" style="background:${color}; color:white; padding:10px 15px; display:inline-block; border-radius:5px; text-decoration:none; margin-top:10px;">عرض التفاصيل</a>
           `;
+
           container.appendChild(card);
         });
       })
-      .catch(err => {
-        console.error(err);
+      .catch(error => {
+        console.error(error);
         container.innerHTML = "<p>حدث خطأ أثناء تحميل البيانات.</p>";
       });
   }
 
-  function findCategory(fileName) {
-    for (const cat of Object.values(categories)) {
-      // يفترض أن الملف موجود في نفس التصنيف إذا لم يتكرر الاسم
-      return cat;
-    }
-  }
+  // تحميل الكل افتراضياً
+  loadProperties(categories["all"]);
 
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      buttons.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      currentCategory = btn.dataset.cat;
-      fetchAndDisplay(currentCategory);
+  // عند الضغط على زر تصنيف
+  categoryButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      const selected = button.dataset.category;
+      categoryButtons.forEach(btn => btn.classList.remove("active"));
+      button.classList.add("active");
+
+      loadProperties(categories[selected]);
     });
   });
-
-  fetchAndDisplay("all");
 });
