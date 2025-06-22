@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   const container = document.getElementById("properties-container");
   const filterContainer = document.getElementById("filter-buttons");
 
-  // التصنيفات المتاحة
   const categories = {
     "apartments": "شقق للبيع",
     "apartments-rent": "شقق للإيجار",
@@ -11,32 +10,26 @@ document.addEventListener("DOMContentLoaded", async function () {
     "admin-hq": "مقرات إدارية"
   };
 
-  // توليد أزرار الفلاتر
   for (const [key, label] of Object.entries(categories)) {
     const btn = document.createElement("button");
     btn.textContent = label;
     btn.dataset.category = key;
     btn.className = "filter-btn";
-    btn.style = `
-      padding: 0.6rem 1.2rem;
-      border: none;
-      background: #2c3e50;
-      color: white;
-      font-weight: bold;
-      border-radius: 6px;
-      cursor: pointer;
-    `;
     btn.addEventListener("click", () => loadCategory(key));
     filterContainer.appendChild(btn);
   }
 
-  // تحميل التصنيف الأول تلقائيًا
   const defaultCategory = Object.keys(categories)[0];
   loadCategory(defaultCategory);
 
-  // دالة تحميل العروض من التصنيف
   function loadCategory(category) {
     container.innerHTML = "<p style='text-align:center'>جاري تحميل البيانات...</p>";
+
+    // تحديث شكل الأزرار
+    const allButtons = document.querySelectorAll(".filter-btn");
+    allButtons.forEach(btn => btn.classList.remove("active"));
+    const activeBtn = document.querySelector(`[data-category="${category}"]`);
+    if (activeBtn) activeBtn.classList.add("active");
 
     fetch(`/samsar-talabak/data/properties/${category}/index.json`)
       .then(response => {
@@ -55,9 +48,8 @@ document.addEventListener("DOMContentLoaded", async function () {
             .then(res => res.json())
             .then(data => {
               const card = document.createElement("div");
-              card.className = "property-card";
+              card.className = `property-card card-${category}`;
               card.style = `
-                background: white;
                 border: 1px solid #ddd;
                 padding: 1.5rem;
                 border-radius: 10px;
