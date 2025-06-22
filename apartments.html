@@ -1,13 +1,59 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>قائمة الشقق المعروضة</title>
-  <link rel="stylesheet" href="/assets/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>عروض الشقق | سمسار طلبك</title>
+
+  <!-- ربط ملف CSS الخاص بك -->
+  <link rel="stylesheet" href="/samsar-talabak/assets/style.css" />
+
+  <!-- ربط ملف JavaScript الخاص بالعرض -->
+  <script src="/samsar-talabak/assets/js/display-properties.js" defer></script>
+
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: #f7f7f7;
+      margin: 0;
+      padding: 2rem;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 2rem;
+    }
+    .property-card {
+      background: white;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      direction: rtl;
+    }
+    .property-card h2 {
+      margin: 0 0 1rem;
+      color: #34495e;
+    }
+    .property-card p {
+      margin: 0.5rem 0;
+    }
+    .property-card a {
+      display: inline-block;
+      margin-top: 1rem;
+      background: #3498db;
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-  <h1>الشقق المتاحة</h1>
-  <div id="properties-container"><p>جاري تحميل البيانات...</p></div>
-  <script src="/assets/js/display-properties.js"></script>
+
+  <h1>عروض الشقق المتاحة</h1>
+  <div id="properties-container">جاري تحميل البيانات...</div>
+
 </body>
 </html>
