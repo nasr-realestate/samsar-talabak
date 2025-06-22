@@ -1,37 +1,12 @@
 ---
 layout: default
-title: سمسار طلبك - الصفحة الرئيسية
+title: سمسار طلبك | الصفحة الرئيسية
+description: اكتشف أحدث عروض العقارات في مدينة نصر من خلال منصة سمسار طلبك.
 ---
 
-<!-- ✅ شريط الحالة -->
-<div class="business-status-bar">
-  <img src="/samsar-talabak/assets/logo.png" alt="الشعار" class="status-logo">
-  <span id="business-status-text">جاري التحقق من حالة النشاط...</span>
-</div>
+<h1 style="text-align:center; color:#2c3e50; margin-bottom: 1.5rem;">عروض العقارات - سمسار طلبك</h1>
 
-<!-- ✅ الهيرو سيكشن -->
-<section class="hero-section">
-  <div class="hero-content">
-    <h1 class="main-title">ابدأ رحلتك العقارية الآن</h1>
-    <p class="main-description">اختر من بين أفضل العروض العقارية في مدينة نصر</p>
-    <div class="cta-buttons-container">
-      <a href="/samsar-talabak/real-estate.html" class="cta-button primary-cta">تصفح العقارات</a>
-      <a href="https://wa.me/201147758857" class="cta-button golden-cta" target="_blank">تواصل عبر واتساب</a>
-    </div>
-  </div>
-</section>
+<div id="filter-buttons" style="display:flex; gap: 10px; justify-content:center; flex-wrap: wrap; margin-bottom: 2rem;"></div>
+<div id="properties-container">جاري تحميل البيانات...</div>
 
-<script>
-  // ✅ تحديث شريط الحالة حسب الوقت
-  document.addEventListener("DOMContentLoaded", function () {
-    const statusText = document.getElementById("business-status-text");
-    const now = new Date();
-    const hours = now.getHours();
-
-    if (hours >= 10 && hours < 22) {
-      statusText.innerHTML = "🟢 نحن الآن <span class='status-open'>متاحون</span> حتى 10:00 مساءً";
-    } else {
-      statusText.innerHTML = "🔴 <span class='status-closed'>سنفتح غدًا من الساعة 10 صباحًا</span>";
-    }
-  });
-</script>
+<script src="/samsar-talabak/assets/js/filtered-display.js" defer></script>
