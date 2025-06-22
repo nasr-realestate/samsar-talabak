@@ -11,25 +11,27 @@ title: سمسار طلبك - الصفحة الرئيسية
 
 <!-- ✅ الهيرو سيكشن -->
 <section class="hero-section">
-  <h1 class="main-title">ابدأ رحلتك العقارية الآن</h1>
-  <p class="main-description">اختر من بين أفضل العروض العقارية في مدينة نصر</p>
-  <div class="cta-buttons-container">
-    <a href="/samsar-talabak/real-estate.html" class="cta-button primary-cta">تصفح العقارات</a>
-    <a href="https://wa.me/201147758857" class="cta-button golden-cta" target="_blank">تواصل عبر واتساب</a>
+  <div class="hero-content">
+    <h1 class="main-title">ابدأ رحلتك العقارية الآن</h1>
+    <p class="main-description">اختر من بين أفضل العروض العقارية في مدينة نصر</p>
+    <div class="cta-buttons-container">
+      <a href="/samsar-talabak/real-estate.html" class="cta-button primary-cta">تصفح العقارات</a>
+      <a href="https://wa.me/201147758857" class="cta-button golden-cta" target="_blank">تواصل عبر واتساب</a>
+    </div>
   </div>
 </section>
 
 <script>
-// ✅ شريط الحالة الديناميكي
-document.addEventListener("DOMContentLoaded", function () {
-  const statusText = document.getElementById("business-status-text");
-  const now = new Date();
-  const hours = now.getHours();
+  // ✅ تحديث شريط الحالة حسب الوقت
+  document.addEventListener("DOMContentLoaded", function () {
+    const statusText = document.getElementById("business-status-text");
+    const now = new Date();
+    const hours = now.getHours();
 
-  if (hours >= 10 && hours < 22) {
-    statusText.innerHTML = "🟢 نحن الآن <span class='status-open'>متاحون</span> حتى 10:00 مساءً";
-  } else {
-    statusText.innerHTML = "🔴 <span class='status-closed'>سنفتح غدًا من الساعة 10 صباحًا</span>";
-  }
-});
+    if (hours >= 10 && hours < 22) {
+      statusText.innerHTML = "🟢 نحن الآن <span class='status-open'>متاحون</span> حتى 10:00 مساءً";
+    } else {
+      statusText.innerHTML = "🔴 <span class='status-closed'>سنفتح غدًا من الساعة 10 صباحًا</span>";
+    }
+  });
 </script>
