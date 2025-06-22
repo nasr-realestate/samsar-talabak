@@ -1,4 +1,3 @@
-/* ملف أنماط موقع عقارات - مع تحسين أزرار التصنيفات */
 :root {
   --primary: #2c3e50;
   --secondary: #e74c3c;
@@ -37,7 +36,6 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .logo h1 {
@@ -53,7 +51,7 @@ body {
 .nav-btn {
   color: white;
   text-decoration: none;
-  padding: 0.8rem 1.5rem;
+  padding: 0.6rem 1.2rem;
   border-radius: 5px;
   font-weight: bold;
   transition: all 0.3s;
@@ -81,66 +79,53 @@ body {
 .hero-section {
   background: linear-gradient(to bottom, #2c3e50, #34495e);
   color: white;
-  padding: 80px 20px;
+  padding: 60px 20px;
   text-align: center;
-  position: relative;
 }
 
 .main-title {
-  font-size: 2.8rem;
+  font-size: 2.5rem;
   margin-bottom: 20px;
-  letter-spacing: -0.5px;
 }
 
 .main-description {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   margin-bottom: 30px;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-  opacity: 0.9;
 }
 
 .cta-buttons-container {
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 1rem;
   flex-wrap: wrap;
-  margin-top: 2rem;
 }
 
 .cta-button {
-  padding: 14px 32px;
+  padding: 12px 24px;
   font-weight: bold;
   color: white;
   text-decoration: none;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-  font-size: 1.1rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 5px;
+  transition: 0.3s ease;
 }
 
 .primary-cta {
-  background: linear-gradient(135deg, #007bff, #0056b3);
-  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+  background: #007bff;
 }
 
 .golden-cta {
-  background: linear-gradient(135deg, #d4af37, #b8972e);
-  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+  background: var(--accent);
 }
 
 .cta-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  opacity: 0.9;
+  transform: scale(1.05);
 }
 
 /* FILTER BUTTONS - التعديلات هنا فقط */
 #filter-buttons {
   text-align: center;
-  margin: 2.5rem 0;
+  margin: 2rem 0;
   padding: 0.8rem;
   display: flex;
   justify-content: center;
@@ -149,38 +134,34 @@ body {
 }
 
 .filter-btn {
-  padding: 0.9rem 1.8rem; /* زيادة الحجم قليلاً */
+  padding: 0.9rem 1.8rem; /* زيادة الحشوة بشكل طفيف */
   border: none;
-  border-radius: 8px;
+  border-radius: 7px; /* زيادة نصف قطر الزوايا قليلاً */
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: bold;
-  font-size: 1.1rem; /* زيادة حجم الخط قليلاً */
-  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
-  position: relative;
-  overflow: hidden;
+  font-size: 1.1rem; /* زيادة حجم الخط بشكل طفيف */
+  color: white;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15); /* ظل أكثر وضوحاً */
 }
 
 /* ألوان الخلفية لكل زر تصنيف - نفس ألوان البطاقات */
 .filter-btn.apartments {
   background: var(--card-apartments);
-  color: white;
 }
 .filter-btn.apartments-rent {
   background: var(--card-apartments-rent);
-  color: white;
 }
 .filter-btn.shops {
   background: var(--card-shops);
-  color: #2c3e50;
+  color: #2c3e50; /* لون داكن لتحسين التباين مع الخلفية الفاتحة */
 }
 .filter-btn.offices {
   background: var(--card-offices);
-  color: white;
 }
 .filter-btn.admin-hq {
   background: var(--card-admin-hq);
-  color: #2c3e50;
+  color: #2c3e50; /* لون داكن لتحسين التباين مع الخلفية الفاتحة */
 }
 
 /* تأثيرات بسيطة عند التحويم والنشاط */
@@ -197,25 +178,18 @@ body {
   transform: scale(1.08);
   box-shadow: 
     0 0 0 2px white,
-    0 0 0 4px currentColor,
-    0 5px 20px rgba(0,0,0,0.25);
-  z-index: 10;
+    0 0 0 4px currentColor;
 }
 
 /* PROPERTY CARDS */
 .property-card {
-  border: 1px solid #eaeaea;
-  padding: 1.8rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-  margin-bottom: 1.8rem;
+  border: 1px solid #ddd;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  margin-bottom: 1.5rem;
+  font-family: var(--font-family);
   background: white;
-  transition: all 0.3s ease;
-}
-
-.property-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
 /* كل تصنيف بلون مختلف */
@@ -235,96 +209,33 @@ body {
   border-right: 6px solid var(--card-admin-hq);
 }
 
-.card-title {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: var(--primary);
-}
-
-.card-price {
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: var(--secondary);
-  margin-bottom: 0.8rem;
-}
-
-.card-details {
-  display: flex;
-  gap: 1.5rem;
-  margin-bottom: 1.2rem;
-  flex-wrap: wrap;
-}
-
-.card-detail {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1rem;
-}
-
-.card-description {
-  line-height: 1.7;
-  margin-bottom: 1.5rem;
-  color: #555;
-}
-
-.card-cta {
-  display: inline-block;
-  padding: 0.8rem 1.8rem;
-  background: var(--whatsapp);
-  color: white;
-  text-decoration: none;
-  border-radius: 6px;
-  font-weight: bold;
-  transition: all 0.3s;
-}
-
-.card-cta:hover {
-  background: #128C7E;
-  transform: translateY(-2px);
-}
-
 /* FOOTER */
 .site-footer-bottom {
   background-color: #1a1a1a;
   color: white;
-  padding: 50px 20px;
+  padding: 40px 20px;
   text-align: center;
-  margin-top: 4rem;
 }
 
 .site-footer-bottom a {
-  color: #d4af37;
-  margin: 0 15px;
+  color: white;
+  margin: 0 10px;
   text-decoration: none;
-  transition: all 0.3s;
 }
 
 .site-footer-bottom a:hover {
-  color: white;
   text-decoration: underline;
-}
-
-.footer-links {
-  margin-bottom: 1.5rem;
-}
-
-.copyright {
-  margin-top: 1.5rem;
-  opacity: 0.8;
 }
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
   .nav-bar {
     flex-direction: column;
-    gap: 1.2rem;
-    padding: 1.2rem;
+    gap: 1rem;
   }
   
   .cta-buttons-container {
     flex-direction: column;
-    gap: 1.2rem;
   }
   
   #filter-buttons {
@@ -334,37 +245,9 @@ body {
   }
   
   .filter-btn {
-    width: 100%;
-    max-width: 320px;
-    padding: 1rem 2rem;
-    font-size: 1.2rem;
-  }
-  
-  .main-title {
-    font-size: 2.2rem;
-  }
-  
-  .property-card {
-    padding: 1.5rem;
+    width: 90%;
+    max-width: 300px;
+    padding: 1rem 2rem; /* زيادة الحجم في الجوال بشكل مناسب */
+    font-size: 1.2rem; /* زيادة حجم الخط في الجوال */
   }
 }
-
-@media (max-width: 480px) {
-  .nav-links {
-    flex-direction: column;
-    width: 100%;
-  }
-  
-  .nav-btn {
-    width: 100%;
-    text-align: center;
-  }
-  
-  .hero-section {
-    padding: 60px 15px;
-  }
-  
-  .main-title {
-    font-size: 2rem;
-  }
-  }
