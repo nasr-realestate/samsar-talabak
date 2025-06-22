@@ -1,14 +1,44 @@
----
-layout: default
-title: عروض العقارات
-description: تصفح جميع تصنيفات العقارات من سمسار طلبك
----
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>عروض العقارات - سمسار طلبك</title>
 
-<div class="filter-section" style="text-align: center; margin: 2rem auto;">
-  <h1>عروض العقارات المتاحة</h1>
-  <div id="filter-buttons" style="margin: 1rem 0; display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem;"></div>
-</div>
+  <!-- ربط ملفات التنسيق والجافا سكريبت -->
+  <link rel="stylesheet" href="/samsar-talabak/assets/style.css" />
+  <script src="/samsar-talabak/assets/js/filtered-display.js" defer></script>
+</head>
+<body>
 
-<div id="properties-container" class="cards-container" style="padding: 2rem;"></div>
+  <!-- شريط التنقل -->
+  <nav class="nav-bar">
+    <div class="logo"><h1>سمسار طلبك</h1></div>
+    <div class="nav-links">
+      <a href="/samsar-talabak/index.html" class="nav-btn golden-btn">الصفحة الرئيسية</a>
+      <a href="/samsar-talabak/properties-filtered.html" class="nav-btn browse-btn active">عروض العقارات</a>
+    </div>
+  </nav>
 
-<script src="/samsar-talabak/assets/js/filtered-display.js" defer></script>
+  <!-- منطقة الفلاتر -->
+  <section style="padding: 2rem; text-align: center;">
+    <h2 style="margin-bottom: 1rem;">اختر نوع العرض</h2>
+    <div id="filter-buttons"></div>
+  </section>
+
+  <!-- منطقة العروض -->
+  <section style="padding: 2rem;">
+    <div id="properties-container"></div>
+  </section>
+
+  <!-- التذييل -->
+  <footer class="site-footer-bottom">
+    <p>&copy; 2025 سمسار طلبك. جميع الحقوق محفوظة.</p>
+    <p>
+      <a href="/samsar-talabak/index.html">الرئيسية</a> |
+      <a href="https://wa.me/201147758857" target="_blank">واتساب</a>
+    </p>
+  </footer>
+
+</body>
+  </html>
