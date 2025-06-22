@@ -117,11 +117,10 @@ body {
 .card-offices { background-color: #f0f5ff; }
 .card-admin-hq { background-color: #fdf2f8; }
 
-/* أزرار الفلاتر - التعديل هنا */
+/* أزرار الفلاتر - التعديل هنا فقط */
 .filter-btn {
-  /* زيادة الحجم بشكل طفيف */
-  padding: 0.8rem 1.5rem; /* من 0.6rem 1.2rem إلى 0.8rem 1.5rem */
-  font-size: 1.05rem; /* زيادة حجم الخط قليلاً */
+  /* حجم متوسط بين الحجمين السابقين */
+  padding: 0.7rem 1.35rem; /* متوسط بين 0.6-1.2 و 0.8-1.5 */
   
   border: none;
   background: var(--primary);
@@ -137,7 +136,6 @@ body {
   background-color: var(--accent);
   color: white;
   box-shadow: 0 0 0 2px white;
-  transform: scale(1.05); /* إضافة تأثير بسيط للزر النشط */
 }
 
 /* RESPONSIVE */
@@ -147,12 +145,11 @@ body {
     gap: 1rem;
   }
   
-  /* زيادة حجم الأزرار في الجوال */
+  /* حجم مناسب للجوال */
   .filter-btn {
-    padding: 0.9rem 1.6rem;
-    font-size: 1.1rem;
+    padding: 0.75rem 1.4rem;
     width: 100%;
-    max-width: 300px;
-    margin: 0.4rem auto;
+    max-width: 280px;
+    margin: 0.35rem auto;
   }
-    }
+}
