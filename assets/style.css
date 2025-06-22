@@ -6,6 +6,13 @@
   --text: #333;
   --light-bg: #f9f9f9;
   --font-family: 'Tajawal', sans-serif;
+
+  /* ألوان تصنيفات البطاقات */
+  --card-apartments: #3498db;
+  --card-apartments-rent: #27ae60;
+  --card-shops: #f39c12;
+  --card-offices: #9b59b6;
+  --card-admin-hq: #e67e22;
 }
 
 * {
@@ -135,21 +142,35 @@ body {
 
 .filter-btn.active {
   background: var(--secondary);
-}
-
-.filter-btn:hover {
-  background: #1a242f;
+  transform: scale(1.05);
 }
 
 /* PROPERTY CARDS */
 .property-card {
-  background: white;
   border: 1px solid #ddd;
   padding: 1.5rem;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   margin-bottom: 1.5rem;
   font-family: var(--font-family);
+  background: white;
+}
+
+/* كل تصنيف بلون مختلف */
+.property-card.apartments {
+  border-right: 6px solid var(--card-apartments);
+}
+.property-card.apartments-rent {
+  border-right: 6px solid var(--card-apartments-rent);
+}
+.property-card.shops {
+  border-right: 6px solid var(--card-shops);
+}
+.property-card.offices {
+  border-right: 6px solid var(--card-offices);
+}
+.property-card.admin-hq {
+  border-right: 6px solid var(--card-admin-hq);
 }
 
 /* FOOTER */
@@ -179,4 +200,4 @@ body {
   .cta-buttons-container {
     flex-direction: column;
   }
-}
+  }
