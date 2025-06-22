@@ -1,60 +1,12 @@
 ---
 layout: default
-title: "بوابة سمسار طلبك | عقارات مدينة نصر"
-description: "اكتشف أفضل العروض العقارية في مدينة نصر. بيع، شراء، إيجار بثقة واحترافية منذ 2014."
+title: سمسار طلبك | الصفحة الرئيسية
+description: اكتشف أحدث عروض العقارات في مدينة نصر من خلال منصة سمسار طلبك.
 ---
 
-<!-- شريط حالة النشاط المحسن -->
-<div class="business-status-bar">
-  <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار سمسار طلبك" class="status-logo">
-  <span id="business-status-text" aria-live="polite">جارٍ تحميل حالة النشاط...</span>
-</div>
+<h1 style="text-align:center; color:#2c3e50; margin-bottom: 1.5rem;">عروض العقارات - سمسار طلبك</h1>
 
-<main class="main-content">
-  <section class="hero-section">
-    <div class="hero-content">
-      <h1 class="main-title">اكتشف أفضل العقارات في مدينة نصر</h1>
-      <p class="main-description">
-        بوابة العثور على شقق تمليك وإيجار بأسعار تنافسية. نوفر لك أحدث العروض العقارية 
-        في أفضل مناطق مدينة نصر مع تفاصيل دقيقة ووساطة موثوقة منذ 2014.
-      </p>
-      <div class="cta-buttons-container">
-        <a href="front-page.html" class="cta-button primary-cta"> 
-          تصفح العروض الآن <i class="fas fa-arrow-left"></i>
-        </a>
-        <a href="golden-offers.html" class="cta-button golden-cta">
-          <i class="fas fa-crown"></i> العروض الذهبية
-        </a>
-      </div>
-    </div>
-  </section>
-</main>
+<div id="filter-buttons" style="display:flex; gap: 10px; justify-content:center; flex-wrap: wrap; margin-bottom: 2rem;"></div>
+<div id="properties-container">جاري تحميل البيانات...</div>
 
-<script>
-  // كود حالة النشاط
-  const statusTextElement = document.getElementById('business-status-text');
-  if (statusTextElement) {
-    const currentTime = new Date();
-    const currentHour = currentTime.getHours();
-    const openingTime = 10;
-    const closingTime = 22;
-    let statusMessage = "";
-    let statusClass = "";
-    const formatTime12Hour = (hour24) => {
-      const hour = hour24 % 12 || 12;
-      const period = hour24 < 12 || hour24 === 24 ? "ص" : "م";
-      return `${hour} ${period}`;
-    };
-    if (currentHour >= openingTime && currentHour < closingTime) {
-      statusMessage = `مفتوح الآن - متاح حتى ${formatTime12Hour(closingTime)}`;
-      statusClass = "status-open";
-    } else {
-      const opensTomorrow = currentHour >= closingTime;
-      statusMessage = `مغلق الآن - سيفتح ${opensTomorrow ? 'غداً ' : ''}${formatTime12Hour(openingTime)}`;
-      statusClass = "status-closed";
-    }
-    statusTextElement.textContent = statusMessage;
-    statusTextElement.classList.remove('status-open', 'status-closed');
-    statusTextElement.classList.add(statusClass);
-  }
-</script>
+<script src="/samsar-talabak/assets/js/filtered-display.js" defer></script>
