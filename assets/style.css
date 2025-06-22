@@ -6,13 +6,6 @@
   --text: #333;
   --light-bg: #f9f9f9;
   --font-family: 'Tajawal', sans-serif;
-
-  /* ألوان تصنيفات البطاقات */
-  --card-apartments: #3498db;
-  --card-apartments-rent: #27ae60;
-  --card-shops: #f39c12;
-  --card-offices: #9b59b6;
-  --card-admin-hq: #e67e22;
 }
 
 * {
@@ -75,140 +68,6 @@ body {
   border: 2px solid white;
 }
 
-/* HERO SECTION */
-.hero-section {
-  background: linear-gradient(to bottom, #2c3e50, #34495e);
-  color: white;
-  padding: 60px 20px;
-  text-align: center;
-}
-
-.main-title {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-}
-
-.main-description {
-  font-size: 1.2rem;
-  margin-bottom: 30px;
-}
-
-.cta-buttons-container {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.cta-button {
-  padding: 12px 24px;
-  font-weight: bold;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: 0.3s ease;
-}
-
-.primary-cta {
-  background: #007bff;
-}
-
-.golden-cta {
-  background: var(--accent);
-}
-
-.cta-button:hover {
-  opacity: 0.9;
-  transform: scale(1.05);
-}
-
-/* FILTER BUTTONS - التعديلات هنا فقط */
-#filter-buttons {
-  text-align: center;
-  margin: 2rem 0;
-  padding: 0.8rem;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.filter-btn {
-  padding: 0.9rem 1.8rem; /* زيادة الحشوة بشكل طفيف */
-  border: none;
-  border-radius: 7px; /* زيادة نصف قطر الزوايا قليلاً */
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: bold;
-  font-size: 1.1rem; /* زيادة حجم الخط بشكل طفيف */
-  color: white;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.15); /* ظل أكثر وضوحاً */
-}
-
-/* ألوان الخلفية لكل زر تصنيف - نفس ألوان البطاقات */
-.filter-btn.apartments {
-  background: var(--card-apartments);
-}
-.filter-btn.apartments-rent {
-  background: var(--card-apartments-rent);
-}
-.filter-btn.shops {
-  background: var(--card-shops);
-  color: #2c3e50; /* لون داكن لتحسين التباين مع الخلفية الفاتحة */
-}
-.filter-btn.offices {
-  background: var(--card-offices);
-}
-.filter-btn.admin-hq {
-  background: var(--card-admin-hq);
-  color: #2c3e50; /* لون داكن لتحسين التباين مع الخلفية الفاتحة */
-}
-
-/* تأثيرات بسيطة عند التحويم والنشاط */
-.filter-btn:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
-.filter-btn:active {
-  transform: translateY(1px);
-}
-
-.filter-btn.active {
-  transform: scale(1.08);
-  box-shadow: 
-    0 0 0 2px white,
-    0 0 0 4px currentColor;
-}
-
-/* PROPERTY CARDS */
-.property-card {
-  border: 1px solid #ddd;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  margin-bottom: 1.5rem;
-  font-family: var(--font-family);
-  background: white;
-}
-
-/* كل تصنيف بلون مختلف */
-.property-card.apartments {
-  border-right: 6px solid var(--card-apartments);
-}
-.property-card.apartments-rent {
-  border-right: 6px solid var(--card-apartments-rent);
-}
-.property-card.shops {
-  border-right: 6px solid var(--card-shops);
-}
-.property-card.offices {
-  border-right: 6px solid var(--card-offices);
-}
-.property-card.admin-hq {
-  border-right: 6px solid var(--card-admin-hq);
-}
-
 /* FOOTER */
 .site-footer-bottom {
   background-color: #1a1a1a;
@@ -227,27 +86,59 @@ body {
   text-decoration: underline;
 }
 
+/* الحالة */
+.business-status-bar {
+  background: #f0f0f0;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border-bottom: 1px solid #ddd;
+  font-family: var(--font-family);
+  position: relative;
+  z-index: 1000;
+  color: var(--text);
+}
+
+.status-logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+.status-open { color: green; font-weight: bold; }
+.status-closed { color: red; font-weight: bold; }
+
+/* البطاقات حسب التصنيف */
+.card-apartments { background-color: #ffffff; }
+.card-apartments-rent { background-color: #eafaf1; }
+.card-shops { background-color: #fff5e6; }
+.card-offices { background-color: #f0f5ff; }
+.card-admin-hq { background-color: #fdf2f8; }
+
+/* أزرار الفلاتر */
+.filter-btn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  background: var(--primary);
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 0.3rem;
+}
+
+.filter-btn.active {
+  background-color: var(--accent);
+  color: white;
+  box-shadow: 0 0 0 2px white;
+}
+
 /* RESPONSIVE */
 @media (max-width: 768px) {
   .nav-bar {
     flex-direction: column;
     gap: 1rem;
-  }
-  
-  .cta-buttons-container {
-    flex-direction: column;
-  }
-  
-  #filter-buttons {
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-  }
-  
-  .filter-btn {
-    width: 90%;
-    max-width: 300px;
-    padding: 1rem 2rem; /* زيادة الحجم في الجوال بشكل مناسب */
-    font-size: 1.2rem; /* زيادة حجم الخط في الجوال */
   }
 }
