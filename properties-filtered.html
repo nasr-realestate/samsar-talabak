@@ -2,54 +2,79 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>عقارات سمسار طلبك</title>
+  <title>عروض العقارات</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/samsar-talabak/assets/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Tajawal', sans-serif; padding: 2rem; background: #f8f8f8; }
-    h1 { text-align: center; margin-bottom: 2rem; color: #2c3e50; }
-    .filters { text-align: center; margin-bottom: 2rem; }
-    .filters button {
-      margin: 0.5rem;
-      padding: 0.7rem 1.5rem;
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: #f5f5f5;
+      padding: 2rem;
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 2rem;
+    }
+
+    .filter-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .category-btn {
+      padding: 0.6rem 1.2rem;
       background: #3498db;
-      color: white;
       border: none;
-      border-radius: 5px;
-      font-weight: bold;
+      border-radius: 6px;
+      color: white;
+      font-size: 1rem;
       cursor: pointer;
     }
-    .filters button.active { background: #2c3e50; }
-    .cards { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-    .card {
-      background: white; border-radius: 10px; padding: 1.2rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+    .category-btn.active {
+      background: #2c3e50;
     }
-    .card h2 { margin: 0 0 0.5rem; color: #2c3e50; }
-    .card p { margin: 0.3rem 0; }
-    .card a {
+
+    .property-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      text-align: right;
+    }
+
+    .property-card h2 {
+      margin-top: 0;
+      color: #2c3e50;
+    }
+
+    .property-card a {
+      text-decoration: none;
       display: inline-block;
       margin-top: 1rem;
-      background: #27ae60;
-      color: white;
-      padding: 0.5rem 1rem;
-      text-decoration: none;
       border-radius: 5px;
     }
   </style>
 </head>
 <body>
+
   <h1>عروض العقارات</h1>
-  <div class="filters">
-    <button data-cat="all" class="active">الكل</button>
-    <button data-cat="apartments-sale">شقق للبيع</button>
-    <button data-cat="apartments-rent">شقق للإيجار</button>
-    <button data-cat="shops">محلات</button>
-    <button data-cat="offices">مقرات إدارية</button>
+
+  <div class="filter-buttons">
+    <button class="category-btn active" data-category="all">الكل</button>
+    <button class="category-btn" data-category="apartments">شقق للبيع</button>
+    <button class="category-btn" data-category="apartments-rent">شقق للإيجار</button>
   </div>
 
-  <div id="offers" class="cards">جاري تحميل البيانات...</div>
+  <div id="properties-container">جارٍ تحميل البيانات...</div>
 
-  <script src="/samsar-talabak/assets/js/filtered-display.js" defer></script>
+  <script src="/samsar-talabak/assets/js/display-properties.js"></script>
 </body>
 </html>
