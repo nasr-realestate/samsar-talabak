@@ -1,12 +1,57 @@
----
-layout: default
-title: سمسار طلبك | الصفحة الرئيسية
-description: اكتشف أحدث عروض العقارات في مدينة نصر من خلال منصة سمسار طلبك.
----
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>سمسار طلبك | الصفحة الرئيسية</title>
+  <meta name="description" content="اكتشف أفضل العروض العقارية في مدينة نصر مع سمسار طلبك. شقق للبيع والإيجار ومحلات تجارية بأسعار مميزة.">
+  <link rel="stylesheet" href="/samsar-talabak/assets/style.css" />
+</head>
+<body>
 
-<h1 style="text-align:center; color:#2c3e50; margin-bottom: 1.5rem;">عروض العقارات - سمسار طلبك</h1>
+  <!-- ✅ شريط حالة النشاط -->
+  <div class="business-status-bar">
+    🕒 نحن <span id="status-text">نقوم بتحميل الحالة...</span>
+  </div>
 
-<div id="filter-buttons" style="display:flex; gap: 10px; justify-content:center; flex-wrap: wrap; margin-bottom: 2rem;"></div>
-<div id="properties-container">جاري تحميل البيانات...</div>
+  <!-- ✅ الهيدر / نافبار -->
+  <header class="nav-bar">
+    <div class="logo"><h1>سمسار طلبك</h1></div>
+    <nav class="nav-links">
+      <a class="nav-btn browse-btn" href="/samsar-talabak/properties-filtered.html">تصفح العقارات</a>
+      <a class="nav-btn golden-btn" href="https://wa.me/201147758857" target="_blank">تحدث معنا</a>
+    </nav>
+  </header>
 
-<script src="/samsar-talabak/assets/js/filtered-display.js" defer></script>
+  <!-- ✅ المحتوى الرئيسي -->
+  <main class="hero-section">
+    <h1 class="main-title">ابدأ رحلتك العقارية الآن</h1>
+    <p class="main-description">أقوى العروض من الشقق والمحلات والمكاتب في مدينة نصر – جاهزة للعرض الفوري</p>
+    <div class="cta-buttons-container">
+      <a class="cta-button primary-cta" href="/samsar-talabak/properties-filtered.html">عرض العقارات</a>
+      <a class="cta-button golden-cta" href="https://wa.me/201147758857" target="_blank">استشارة مجانية</a>
+    </div>
+  </main>
+
+  <!-- ✅ الفوتر -->
+  <footer class="site-footer-bottom">
+    <p>© 2025 سمسار طلبك. جميع الحقوق محفوظة.</p>
+    <p><a href="https://wa.me/201147758857">واتساب</a> | <a href="#">فيسبوك</a></p>
+  </footer>
+
+  <!-- ✅ سكربت حالة النشاط -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const statusElement = document.getElementById("status-text");
+      const now = new Date();
+      const hour = now.getHours();
+      if (hour >= 10 && hour < 22) {
+        statusElement.innerHTML = '<span class="status-open">مفتوح الآن</span> حتى 10:00 مساءً';
+      } else {
+        statusElement.innerHTML = '<span class="status-closed">مغلق حاليًا</span>، سيفتح غدًا من 10:00 صباحًا';
+      }
+    });
+  </script>
+
+</body>
+</html>
