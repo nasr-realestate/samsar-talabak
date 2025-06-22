@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>عقارات سمسار طلبك</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/samsar-talabak/assets/style.css">
+  <style>
+    body { font-family: 'Tajawal', sans-serif; padding: 2rem; background: #f8f8f8; }
+    h1 { text-align: center; margin-bottom: 2rem; color: #2c3e50; }
+    .filters { text-align: center; margin-bottom: 2rem; }
+    .filters button {
+      margin: 0.5rem;
+      padding: 0.7rem 1.5rem;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .filters button.active { background: #2c3e50; }
+    .cards { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .card {
+      background: white; border-radius: 10px; padding: 1.2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .card h2 { margin: 0 0 0.5rem; color: #2c3e50; }
+    .card p { margin: 0.3rem 0; }
+    .card a {
+      display: inline-block;
+      margin-top: 1rem;
+      background: #27ae60;
+      color: white;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>عروض العقارات</h1>
+  <div class="filters">
+    <button data-cat="all" class="active">الكل</button>
+    <button data-cat="apartments-sale">شقق للبيع</button>
+    <button data-cat="apartments-rent">شقق للإيجار</button>
+    <button data-cat="shops">محلات</button>
+    <button data-cat="offices">مقرات إدارية</button>
+  </div>
+
+  <div id="offers" class="cards">جاري تحميل البيانات...</div>
+
+  <script src="/samsar-talabak/assets/js/filtered-display.js" defer></script>
+</body>
+</html>
