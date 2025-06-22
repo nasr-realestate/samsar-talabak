@@ -166,4 +166,9 @@ body {
   .cta-buttons-container {
     flex-direction: column;
   }
+}.filter-btn.active
+{
+  background: #2c3e50;
+  color: white;
+  border: 2px solid #e74c3c;
 }
