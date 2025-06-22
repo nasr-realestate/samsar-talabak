@@ -1,57 +1,35 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>سمسار طلبك | الصفحة الرئيسية</title>
-  <meta name="description" content="اكتشف أفضل العروض العقارية في مدينة نصر مع سمسار طلبك. شقق للبيع والإيجار ومحلات تجارية بأسعار مميزة.">
-  <link rel="stylesheet" href="/samsar-talabak/assets/style.css" />
-</head>
-<body>
+---
+layout: default
+title: سمسار طلبك - الصفحة الرئيسية
+---
 
-  <!-- ✅ شريط حالة النشاط -->
-  <div class="business-status-bar">
-    🕒 نحن <span id="status-text">نقوم بتحميل الحالة...</span>
+<!-- ✅ شريط الحالة -->
+<div class="business-status-bar">
+  <img src="/samsar-talabak/assets/logo.png" alt="الشعار" class="status-logo">
+  <span id="business-status-text">جاري التحقق من حالة النشاط...</span>
+</div>
+
+<!-- ✅ الهيرو سيكشن -->
+<section class="hero-section">
+  <h1 class="main-title">ابدأ رحلتك العقارية الآن</h1>
+  <p class="main-description">اختر من بين أفضل العروض العقارية في مدينة نصر</p>
+  <div class="cta-buttons-container">
+    <a href="/samsar-talabak/real-estate.html" class="cta-button primary-cta">تصفح العقارات</a>
+    <a href="https://wa.me/201147758857" class="cta-button golden-cta" target="_blank">تواصل عبر واتساب</a>
   </div>
+</section>
 
-  <!-- ✅ الهيدر / نافبار -->
-  <header class="nav-bar">
-    <div class="logo"><h1>سمسار طلبك</h1></div>
-    <nav class="nav-links">
-      <a class="nav-btn browse-btn" href="/samsar-talabak/properties-filtered.html">تصفح العقارات</a>
-      <a class="nav-btn golden-btn" href="https://wa.me/201147758857" target="_blank">تحدث معنا</a>
-    </nav>
-  </header>
+<script>
+// ✅ شريط الحالة الديناميكي
+document.addEventListener("DOMContentLoaded", function () {
+  const statusText = document.getElementById("business-status-text");
+  const now = new Date();
+  const hours = now.getHours();
 
-  <!-- ✅ المحتوى الرئيسي -->
-  <main class="hero-section">
-    <h1 class="main-title">ابدأ رحلتك العقارية الآن</h1>
-    <p class="main-description">أقوى العروض من الشقق والمحلات والمكاتب في مدينة نصر – جاهزة للعرض الفوري</p>
-    <div class="cta-buttons-container">
-      <a class="cta-button primary-cta" href="/samsar-talabak/properties-filtered.html">عرض العقارات</a>
-      <a class="cta-button golden-cta" href="https://wa.me/201147758857" target="_blank">استشارة مجانية</a>
-    </div>
-  </main>
-
-  <!-- ✅ الفوتر -->
-  <footer class="site-footer-bottom">
-    <p>© 2025 سمسار طلبك. جميع الحقوق محفوظة.</p>
-    <p><a href="https://wa.me/201147758857">واتساب</a> | <a href="#">فيسبوك</a></p>
-  </footer>
-
-  <!-- ✅ سكربت حالة النشاط -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const statusElement = document.getElementById("status-text");
-      const now = new Date();
-      const hour = now.getHours();
-      if (hour >= 10 && hour < 22) {
-        statusElement.innerHTML = '<span class="status-open">مفتوح الآن</span> حتى 10:00 مساءً';
-      } else {
-        statusElement.innerHTML = '<span class="status-closed">مغلق حاليًا</span>، سيفتح غدًا من 10:00 صباحًا';
-      }
-    });
-  </script>
-
-</body>
-</html>
+  if (hours >= 10 && hours < 22) {
+    statusText.innerHTML = "🟢 نحن الآن <span class='status-open'>متاحون</span> حتى 10:00 مساءً";
+  } else {
+    statusText.innerHTML = "🔴 <span class='status-closed'>سنفتح غدًا من الساعة 10 صباحًا</span>";
+  }
+});
+</script>
