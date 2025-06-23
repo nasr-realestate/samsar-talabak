@@ -1,0 +1,45 @@
+---
+layout: default
+title: شقة عباس العقاد للبيع - معرض الصور
+description: معرض صور شقة عباس العقاد الفاخرة - 300م - تشطيب سوبر لوكس - مدينة نصر
+permalink: /abbas-akkad-apartment.html
+---
+
+<main class="property-details" style="max-width: 1200px; margin: 2rem auto; padding: 0 1rem;">
+
+  <div class="detail-section" style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); margin: 1.5rem 0;">
+    <h1 class="section-title" style="color: #2c3e50; border-bottom: 2px solid #d4af37; padding-bottom: 0.8rem; font-size: 1.8rem;">شقة فاخرة للبيع - شارع عباس العقاد الرئيسي</h1>
+    <div class="price-tag" style="font-size: 2rem; color: #e74c3c; font-weight: bold; margin: 1.5rem 0; text-align: center;">9,000,000 ج.م</div>
+
+    <div class="gallery-container" style="display: flex; flex-direction: column; gap: 2rem; margin: 3rem 0;">
+      <div class="main-image-container" style="width: 100%; height: 70vh; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.15); position: relative;">
+        <img id="mainImage" class="main-image" src="https://i.postimg.cc/4dth0Crj/600-x-400-20250505-022333.png" alt="صورة رئيسية للشقة" style="width: 100%; height: 100%; object-fit: cover; cursor: zoom-in;">
+      </div>
+
+      <div class="thumbnails-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;">
+        <img class="thumbnail active-thumbnail" src="https://i.postimg.cc/4dth0Crj/600-x-400-20250505-022333.png" onclick="changeImage(this.src, this)" alt="واجهة الشقة" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 3px solid #e74c3c;">
+        <img class="thumbnail" src="https://i.postimg.cc/pVCcyDn3/image.webp" onclick="changeImage(this.src, this)" alt="الصالة" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; cursor: pointer;">
+        <img class="thumbnail" src="https://i.postimg.cc/Pxz3WDVp/image.webp" onclick="changeImage(this.src, this)" alt="المطبخ" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; cursor: pointer;">
+        <img class="thumbnail" src="https://i.postimg.cc/02Ht0Pnf/image.webp" onclick="changeImage(this.src, this)" alt="غرفة النوم" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; cursor: pointer;">
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 2rem;">
+      <a href="https://wa.me/201147758857?text=أريد الاستفسار عن شقة عباس العقاد" class="whatsapp-btn" style="display: inline-block; background: #25D366; color: white; padding: 1rem 2rem; border-radius: 6px; text-decoration: none; font-weight: bold;">
+        <i class="fab fa-whatsapp"></i> تواصل عبر واتساب
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  function changeImage(src, thumb) {
+    const mainImage = document.getElementById('mainImage');
+    mainImage.src = src;
+    document.querySelectorAll('.thumbnail').forEach(el => {
+      el.style.border = '3px solid transparent';
+    });
+    thumb.style.border = '3px solid #e74c3c';
+  }
+</script>
