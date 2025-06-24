@@ -1,0 +1,72 @@
+name: Generate Property Details Pages
+
+on:
+  push:
+    paths:
+      - 'data/properties/**/*.json'
+  workflow_dispatch:
+
+jobs:
+  generate-html:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install jq
+        run: sudo apt-get install jq
+
+      - name: Generate HTML Pages
+        run: |
+          for file in data/properties/*/*.json; do
+            # استخراج البيانات من JSON
+            title=$(jq -r '.title' "$file")
+            price=$(jq -r '.price' "$file")
+            area=$(jq -r '.area' "$file")
+            description=$(jq -r '.description' "$file")
+            page_url=$(jq -r '.page_url' "$file")
+
+            # تحويل page_url إلى اسم ملف (بدون /)
+            filename=$(basename "$page_url")
+            category=$(basename $(dirname "$file"))
+            output_path="data/properties/$category/$filename"
+
+            cat <<EOF > "$output_path"
+---
+layout: default
+title: "$title"
+description: "$description"
+---
+
+<main class="property-details">
+  <div class="detail-section">
+    <h1 class="section-title">$title</h1>
+    <div class="price-tag">$price</div>
+    <p><strong>المساحة:</strong> $area</p>
+    <p><strong>الوصف:</strong> $description</p>
+
+    <div style="margin-top: 2rem;">
+      <a href="https://wa.me/201147758857?text=أريد الاستفسار عن $title"
+         class="whatsapp-btn" target="_blank">
+        <i class="fab fa-whatsapp"></i> استفسر عبر واتساب
+      </a>
+    </div>
+
+    <div style="margin-top: 2rem;">
+      <a href="/samsar-talabak/properties-filtered.html" class="back-btn">
+        ← العودة للعقارات
+      </a>
+    </div>
+  </div>
+</main>
+EOF
+          done
+
+      - name: Commit and Push Generated Pages
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add data/properties/**/*.html
+          git commit -m "🔄 توليد صفحات تفاصيل العقارات تلقائيًا"
+          git push
