@@ -25,17 +25,13 @@ document.addEventListener("DOMContentLoaded", async function () {
   function loadCategory(category) {
     container.innerHTML = "<p style='text-align:center'>جاري تحميل البيانات...</p>";
 
-    // تحديث شكل الأزرار
     const allButtons = document.querySelectorAll(".filter-btn");
     allButtons.forEach(btn => btn.classList.remove("active"));
     const activeBtn = document.querySelector(`[data-category="${category}"]`);
     if (activeBtn) activeBtn.classList.add("active");
 
     fetch(`/samsar-talabak/data/properties/${category}/index.json`)
-      .then(response => {
-        if (!response.ok) throw new Error("فشل تحميل index.json");
-        return response.json();
-      })
+      .then(response => response.json())
       .then(files => {
         container.innerHTML = '';
         if (!files.length) {
@@ -58,6 +54,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                 font-family: 'Tajawal', sans-serif;
               `;
 
+              const detailPage = data.page_url || `/samsar-talabak/properties/${category}/${filename.replace('.json', '.html')}`;
+
               card.innerHTML = `
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
                   <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار" style="width: 40px; height: 40px; border-radius: 50%;">
@@ -68,10 +66,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <p><strong>المساحة:</strong> ${data.area}</p>
                 <p><strong>الوصف:</strong> ${data.description}</p>
                 <div style="margin-top: 1rem;">
-                  <a href="https://wa.me/201147758857?text=مرحبًا، أريد الاستفسار عن: ${encodeURIComponent(data.title)}" 
-                    target="_blank" 
-                    style="background:#25D366; color:white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none;">
-                    استفسر عبر واتساب
+                  <a href="${detailPage}" 
+                    style="background:#3498db; color:white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none;">
+                    عرض التفاصيل
                   </a>
                 </div>
               `;
