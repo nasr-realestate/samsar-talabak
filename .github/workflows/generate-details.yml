@@ -14,11 +14,10 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install jq
-        run: sudo apt-get install jq -y
+        run: sudo apt-get update && sudo apt-get install -y jq
 
       - name: Generate HTML from JSON
         run: |
-          mkdir -p generated
           for file in data/properties/*/*.json; do
             title=$(jq -r '.title' "$file")
             price=$(jq -r '.price' "$file")
@@ -29,7 +28,7 @@ jobs:
 
             output_path="data/properties/$category/$filename.html"
 
-            cat <<EOF > $output_path
+cat << 'EOF' > "$output_path"
 ---
 layout: default
 title: $title
@@ -58,6 +57,7 @@ description: $description
   </div>
 </main>
 EOF
+
           done
 
       - name: Commit and Push Generated Pages
