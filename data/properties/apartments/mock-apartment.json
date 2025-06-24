@@ -1,8 +1,16 @@
 {
-  "title": "شقة تجريبية فاخرة في شارع التسعين",
-  "price": "3,750,000 جنيه",
-  "area": "190 متر",
-  "description": "هذه شقة تجريبية لأغراض الاختبار. تطل على موقع استراتيجي في التجمع الخامس وتشطيب فاخر.",
-  "images": [],
-  "page_url": "/pages/mock-apartment.html"
+  "title": "شقة فاخرة في عباس العقاد",
+  "price": "2,500,000 جنيه",
+  "area": "180 متر",
+  "description": "شقة رائعة بموقع ممتاز.",
+  "full_description": "شقة فاخرة تطل على شارع عباس العقاد الرئيسي. 3 غرف + 2 حمام. تشطيب سوبر لوكس. تطل على شارع رئيسي وهادئ.",
+  "rooms": "3 غرف",
+  "bathrooms": "2 حمام",
+  "floor": "الدور الرابع",
+  "location": "شارع عباس العقاد - مدينة نصر",
+  "images": [
+    "https://i.postimg.cc/4dth0Crj/600-x-400-20250505-022333.png",
+    "https://i.postimg.cc/pVCcyDn3/image.webp"
+  ],
+  "page_url": "/pages/abbas-akkad-apartment.html"
 }
