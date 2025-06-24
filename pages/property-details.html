@@ -1,112 +1,60 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <title>تفاصيل العقار | سمسار طلبك</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="تفاصيل كاملة للعقار المعروض من سمسار طلبك بمدينة نصر.">
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Tajawal', sans-serif;
-      background: #f8f8f8;
-      color: #333;
-      padding: 2rem;
-    }
+---
+layout: default
+title: تفاصيل العقار
+permalink: /property-details/
+---
 
-    .property-container {
-      max-width: 800px;
-      margin: auto;
-      background: white;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-
-    h1 {
-      color: #2c3e50;
-      margin-bottom: 1rem;
-    }
-
-    .details p {
-      margin: 0.5rem 0;
-    }
-
-    .gallery img {
-      width: 100%;
-      max-height: 400px;
-      object-fit: cover;
-      border-radius: 10px;
-      margin-bottom: 1rem;
-    }
-
-    .whatsapp-btn {
-      display: inline-block;
-      background: #25D366;
-      color: white;
-      text-decoration: none;
-      padding: 0.8rem 1.5rem;
-      border-radius: 6px;
-      font-weight: bold;
-      margin-top: 2rem;
-      display: block;
-      text-align: center;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="property-container" id="property-container">
-    <p>جاري تحميل البيانات...</p>
+<div class="property-details" style="max-width: 800px; margin: auto; padding: 2rem;">
+  <div id="property-container">
+    <p style="text-align:center;">جاري تحميل بيانات العقار...</p>
   </div>
+</div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const container = document.getElementById('property-container');
+<script>
+document.addEventListener("DOMContentLoaded", async function () {
+  const container = document.getElementById("property-container");
 
-      // 1. استخراج اسم الملف من الرابط
-      const urlParams = new URLSearchParams(window.location.search);
-      const category = urlParams.get("cat"); // التصنيف مثل apartments
-      const file = urlParams.get("id");      // اسم الملف مثل abbas-akkad-v2.json
+  const urlParams = new URLSearchParams(window.location.search);
+  const category = urlParams.get("cat");
+  const filename = urlParams.get("id");
 
-      if (!category || !file) {
-        container.innerHTML = "<p>تعذر تحميل البيانات. الرابط غير مكتمل.</p>";
-        return;
-      }
+  if (!category || !filename) {
+    container.innerHTML = "<p style='text-align:center;'>رابط الصفحة غير مكتمل أو به خطأ.</p>";
+    return;
+  }
 
-      const jsonPath = `/samsar-talabak/data/properties/${category}/${file}`;
+  const jsonURL = `/samsar-talabak/data/properties/${category}/${filename}`;
 
-      fetch(jsonPath)
-        .then(res => {
-          if (!res.ok) throw new Error("فشل تحميل الملف");
-          return res.json();
-        })
-        .then(data => {
-          container.innerHTML = `
-            <div class="gallery">
-              ${data.images && data.images.length ? `<img src="${data.images[0]}" alt="صورة العقار">` : ''}
-            </div>
-            <h1>${data.title}</h1>
-            <div class="details">
-              <p><strong>السعر:</strong> ${data.price}</p>
-              <p><strong>المساحة:</strong> ${data.area}</p>
-              <p><strong>الموقع:</strong> ${data.location || 'غير محدد'}</p>
-              <p><strong>الغرف:</strong> ${data.rooms || 'غير محدد'}</p>
-              <p><strong>الحمامات:</strong> ${data.bathrooms || 'غير محدد'}</p>
-              <p><strong>الوصف الكامل:</strong> ${data.full_description || data.description}</p>
-            </div>
-            <a class="whatsapp-btn" target="_blank" 
-              href="https://wa.me/201147758857?text=مرحبًا، أريد الاستفسار عن: ${encodeURIComponent(data.title)}">
-              تواصل عبر واتساب
-            </a>
-          `;
-        })
-        .catch(err => {
-          console.error(err);
-          container.innerHTML = "<p>حدث خطأ أثناء تحميل بيانات العقار.</p>";
-        });
-    });
-  </script>
+  try {
+    const res = await fetch(jsonURL);
+    if (!res.ok) throw new Error("فشل في تحميل بيانات العقار");
 
-</body>
-</html>
+    const data = await res.json();
+
+    container.innerHTML = `
+      <div style="background:#fff; padding:2rem; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+        <h1 style="color:#2c3e50; margin-bottom:1rem;">${data.title}</h1>
+        <p><strong>السعر:</strong> ${data.price}</p>
+        <p><strong>المساحة:</strong> ${data.area}</p>
+        <p><strong>الوصف:</strong> ${data.description}</p>
+
+        <div style="margin-top: 2rem;">
+          <a href="https://wa.me/201147758857?text=مرحبًا، أريد الاستفسار عن: ${encodeURIComponent(data.title)}"
+            target="_blank"
+            style="display:inline-block; background:#25D366; color:white; padding:0.7rem 1.5rem; border-radius:6px; text-decoration:none; font-weight:bold;">
+            استفسر عبر واتساب
+          </a>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <a href="/samsar-talabak/properties-filtered.html"
+            style="color: #3498db; font-weight: bold; text-decoration: none;">← العودة لصفحة العروض</a>
+        </div>
+      </div>
+    `;
+  } catch (error) {
+    console.error(error);
+    container.innerHTML = "<p style='text-align:center;'>حدث خطأ أثناء تحميل تفاصيل العقار.</p>";
+  }
+});
+</script>
