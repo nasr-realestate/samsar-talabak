@@ -32,7 +32,7 @@ jobs:
 
             output_path="data/properties/$category/$filename.html"
 
-            cat <<EOF > $output_path
+            cat > $output_path <<EOF
 ---
 layout: default
 title: $title
