@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     "admin-hq": "مقرات إدارية"
   };
 
-  // إنشاء أزرار التصنيفات
   for (const [key, label] of Object.entries(categories)) {
     const btn = document.createElement("button");
     btn.textContent = label;
@@ -26,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   function loadCategory(category) {
     container.innerHTML = "<p style='text-align:center'>جاري تحميل البيانات...</p>";
 
-    // تمييز الزر النشط
+    // تحديث شكل الأزرار
     const allButtons = document.querySelectorAll(".filter-btn");
     allButtons.forEach(btn => btn.classList.remove("active"));
     const activeBtn = document.querySelector(`[data-category="${category}"]`);
@@ -68,16 +67,11 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <p><strong>السعر:</strong> ${data.price}</p>
                 <p><strong>المساحة:</strong> ${data.area}</p>
                 <p><strong>الوصف:</strong> ${data.description}</p>
-                <div style="margin-top: 1rem; display: flex; gap: 10px; flex-wrap: wrap;">
+                <div style="margin-top: 1rem;">
                   <a href="https://wa.me/201147758857?text=مرحبًا، أريد الاستفسار عن: ${encodeURIComponent(data.title)}" 
                     target="_blank" 
                     style="background:#25D366; color:white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none;">
                     استفسر عبر واتساب
-                  </a>
-                  <a href="${data.page_url}" 
-                    target="_blank"
-                    style="background:#3498db; color:white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none;">
-                    عرض التفاصيل
                   </a>
                 </div>
               `;
