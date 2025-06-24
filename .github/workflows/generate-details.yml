@@ -1,0 +1,66 @@
+name: Generate Property Details Pages
+
+on:
+  push:
+    paths:
+      - 'data/properties/**/*.json'
+  workflow_dispatch:
+
+jobs:
+  generate-html:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Generate HTML from JSON
+        run: |
+          mkdir -p generated
+          for file in data/properties/*/*.json; do
+            title=$(jq -r '.title' "$file")
+            price=$(jq -r '.price' "$file")
+            area=$(jq -r '.area' "$file")
+            description=$(jq -r '.description' "$file")
+            filename=$(basename "$file" .json)
+            category=$(basename $(dirname "$file"))
+
+            output_path="data/properties/$category/$filename.html"
+
+            cat <<EOF > $output_path
+---
+layout: default
+title: $title
+description: $description
+---
+
+<main class="property-details">
+  <div class="detail-section">
+    <h1 class="section-title">$title</h1>
+    <div class="price-tag">$price</div>
+    <p><strong>المساحة:</strong> $area</p>
+    <p><strong>الوصف:</strong> $description</p>
+
+    <div style="margin-top: 2rem;">
+      <a href="https://wa.me/201147758857?text=أريد الاستفسار عن $title" 
+         class="whatsapp-btn" target="_blank">
+        <i class="fab fa-whatsapp"></i> استفسر عبر واتساب
+      </a>
+    </div>
+
+    <div style="margin-top: 2rem;">
+      <a href="/samsar-talabak/properties-filtered.html" class="back-btn">
+        ← العودة للعقارات
+      </a>
+    </div>
+  </div>
+</main>
+EOF
+          done
+
+      - name: Commit and Push Generated Pages
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add data/properties/**/*.html
+          git commit -m "Generated property detail pages"
+          git push
