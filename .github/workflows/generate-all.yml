@@ -28,15 +28,17 @@ jobs:
       - name: Install jq
         run: sudo apt-get update && sudo apt-get install -y jq
 
-      # 3. تجميع كل ملفات العقارات في ملف بيانات واحد رئيسي
+      # 3. تجميع كل ملفات العقارات في ملف بيانات واحد رئيسي (تم الإصلاح هنا)
       - name: Generate master data file (_data/apartments.json)
         run: |
           echo "📦 Aggregating all source JSON files into one master file..."
+          # *** الإصلاح: إنشاء مجلد البيانات إذا لم يكن موجودًا ***
+          mkdir -p _data
           # الأمر jq -s يجمع كل ملفات الـ JSON في مصفوفة واحدة
           jq -s '.' _data/apartments-source/*.json > _data/apartments.json
           echo "✅ Master data file _data/apartments.json created successfully."
 
-      # 4. إنشاء صفحة HTML لكل عقار على حدة (اختياري، يمكنك حذفه إذا لم تكن بحاجته)
+      # 4. إنشاء صفحة HTML لكل عقار على حدة
       - name: Generate individual HTML detail pages
         run: |
           echo "🏠 Generating individual HTML pages for each property..."
@@ -60,7 +62,6 @@ jobs:
             echo "  - Creating page: ${html_file}"
             
             # كتابة محتوى الـ HTML باستخدام here-document
-            # هذا هو الجزء الذي كان يسبب الخطأ، وقد تم تصحيحه الآن
             cat << EOF > "$html_file"
 ---
 layout: default
@@ -92,8 +93,7 @@ description: "تفاصيل العقار: $title بسعر $price"
   </div>
 </main>
 EOF
-          # السطر التالي يغلق الـ here-document، ويجب أن يكون في بداية السطر بدون أي مسافات
-done
+          done
           echo "✅ All detail pages generated."
 
       # 5. عمل Commit و Push للتغييرات تلقائيًا
