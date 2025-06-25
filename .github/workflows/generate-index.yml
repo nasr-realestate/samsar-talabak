@@ -1,0 +1,40 @@
+name: Generate index.json for each property category
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'data/properties/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate_index:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate index.json in each category
+        run: |
+          for dir in data/properties/*/; do
+            if [ -d "$dir" ]; then
+              echo "⏳ Generating index.json in $dir"
+              echo "[" > "$dir/index.json"
+              find "$dir" -maxdepth 1 -type f -name '*.json' ! -name 'index.json' | sed "s|$dir||" | awk '{ print "  \"" $0 "\"," }' >> "$dir/index.json"
+              sed -i '$ s/,$//' "$dir/index.json"
+              echo "]" >> "$dir/index.json"
+              echo "✅ Done: $dir/index.json"
+            fi
+          done
+
+      - name: Commit and push if changed
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "تحديث تلقائي لـ index.json من ملفات JSON"
+          commit_user_name: GitHub Actions
+          commit_user_email: actions@github.com
