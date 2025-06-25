@@ -1,72 +1,57 @@
-name: Generate Property Pages
+name: Generate HTML from JSON
 
 on:
   push:
     paths:
-      - 'data/properties/**/*.json'
+      - 'data/properties/*.json'
 
 jobs:
   generate-html:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Setup jq
-        run: sudo apt-get install -y jq
+    - name: Install jq
+      run: sudo apt-get install jq
 
-      - name: Generate HTML files
-        run: |
-          for json_file in data/properties/**/*.json; do
-            # استخراج اسم الملف بدون امتداد
-            filename=$(basename "$json_file" .json)
-            dir_path=$(dirname "$json_file")
-            html_file="${dir_path}/${filename}.html"
-            
-            # استخراج البيانات من JSON (يدعم المصفوفات والكائنات)
-            title=$(jq -r 'if type == "array" then .[0].title else .title end' "$json_file")
-            price=$(jq -r 'if type == "array" then .[0].price else .price end' "$json_file")
-            area=$(jq -r 'if type == "array" then .[0].area else .area end' "$json_file")
-            description=$(jq -r 'if type == "array" then .[0].description else .description end' "$json_file")
-            
-            # إنشاء محتوى الملف مع الرأس YAML
-            {
-              echo "---"
-              echo "layout: default"
-              echo "title: \"$title\""
-              echo "description: \"$description\""
-              echo "---"
-              echo ""
-              echo "<div class=\"property-details container\">"
-              echo "  <h1>$title</h1>"
-              echo "  <div class=\"property-meta\">"
-              echo "    <p><strong>السعر:</strong> $price</p>"
-              echo "    <p><strong>المساحة:</strong> $area</p>"
-              echo "  </div>"
-              echo "  <div class=\"property-description\">"
-              echo "    <p>$description</p>"
-              echo "  </div>"
-              echo "  <div class=\"property-actions\">"
-              echo "    <a href=\"https://wa.me/?text=أهلاً، أنا مهتم بالعقار: $title\" class=\"btn whatsapp-btn\">"
-              echo "      تواصل عبر واتساب"
-              echo "    </a>"
-              echo "    <a href=\"/properties\" class=\"btn back-btn\">العودة إلى العروض</a>"
-              echo "  </div>"
-              echo "</div>"
-            } > "$html_file"
-            
-            # إضافة الملفات الجديدة للمرحلة
-            git add "$html_file"
-          done
+    - name: Generate HTML files
+      run: |
+        for json_file in data/properties/*.json; do
+          # Extract the filename without extension
+          filename=$(basename "$json_file" .json)
 
-      - name: Commit changes
-        run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          git diff --quiet && git diff --staged --quiet || git commit -m "توليد صفحات عقارات جديدة [skip ci]"
-          
-      - name: Push changes
-        run: git push
+          # Extract fields using jq
+          title=$(jq -r '.title' "$json_file")
+          price=$(jq -r '.price' "$json_file")
+          area=$(jq -r '.area' "$json_file")
+          description=$(jq -r '.description' "$json_file")
+
+          # Create HTML file with YAML front matter
+          html_file="data/properties/${filename}.html"
+          echo "---" > "$html_file"
+          echo "layout: default" >> "$html_file"
+          echo "title: $title" >> "$html_file"
+          echo "description: $description" >> "$html_file"
+          echo "---" >> "$html_file"
+          echo "<!DOCTYPE html>" >> "$html_file"
+          echo "<html>" >> "$html_file"
+          echo "<head><title>$title</title></head>" >> "$html_file"
+          echo "<body>" >> "$html_file"
+          echo "<h1>$title</h1>" >> "$html_file"
+          echo "<p><strong>Price:</strong> $price</p>" >> "$html_file"
+          echo "<p><strong>Area:</strong> $area</p>" >> "$html_file"
+          echo "<p><strong>Description:</strong> $description</p>" >> "$html_file"
+          echo "<a href=\"https://wa.me/?text=${title}\" target=\"_blank\">Contact via WhatsApp</a>" >> "$html_file"
+          echo "<a href=\"/offers/\" target=\"_blank\">Back to Offers</a>" >> "$html_file"
+          echo "</body>" >> "$html_file"
+          echo "</html>" >> "$html_file"
+        done
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name 'GitHub Actions'
+        git config --global user.email 'actions@github.com'
+        git add .
+        git commit -m "Generated HTML files from JSON"
+        git push
