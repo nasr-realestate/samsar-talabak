@@ -1,0 +1,86 @@
+name: Generate Index and Property Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'data/properties/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
+      - name: Generate index.json and HTML pages
+        run: |
+          for dir in data/properties/*/; do
+            if [ -d "$dir" ]; then
+              echo "⏳ Generating index.json in $dir"
+              echo "[" > "$dir/index.json"
+              find "$dir" -maxdepth 1 -type f -name '*.json' ! -name 'index.json' | sed "s|$dir||" | awk '{ print "  \"" $0 "\"," }' >> "$dir/index.json"
+              sed -i '$ s/,$//' "$dir/index.json"
+              echo "]" >> "$dir/index.json"
+              echo "✅ Done: $dir/index.json"
+
+              # Generate HTML files from JSON
+              for json_file in "$dir"*.json; do
+                [ "$(basename "$json_file")" = "index.json" ] && continue
+
+                title=$(jq -r '.title' "$json_file")
+                price=$(jq -r '.price' "$json_file")
+                area=$(jq -r '.area' "$json_file")
+                description=$(jq -r '.description' "$json_file")
+
+                filename=$(basename "$json_file" .json)
+                html_file="$dir/$filename.html"
+
+                cat <<EOF > "$html_file"
+---
+layout: default
+title: "$title"
+description: "$description"
+---
+
+<main class="property-details">
+  <div class="detail-section">
+    <h1 class="section-title">$title</h1>
+    <div class="price-tag">$price</div>
+    <p><strong>المساحة:</strong> $area</p>
+    <p><strong>الوصف:</strong> $description</p>
+
+    <div style="margin-top: 2rem;">
+      <a href="https://wa.me/201147758857?text=أريد الاستفسار عن $title" 
+         class="whatsapp-btn" target="_blank">
+        <i class="fab fa-whatsapp"></i> استفسر عبر واتساب
+      </a>
+    </div>
+
+    <div style="margin-top: 2rem;">
+      <a href="/samsar-talabak/properties-filtered.html" class="back-btn">
+        ← العودة للعقارات
+      </a>
+    </div>
+  </div>
+</main>
+EOF
+              done
+            fi
+          done
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "🔁 تحديث تلقائي: index.json + صفحات التفاصيل"
+          commit_user_name: GitHub Actions
+          commit_user_email: actions@github.com
