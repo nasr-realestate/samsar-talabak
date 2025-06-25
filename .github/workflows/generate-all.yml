@@ -28,7 +28,6 @@ jobs:
               find "$dir" -maxdepth 1 -type f -name '*.json' ! -name 'index.json' | sed "s|$dir||" | awk '{ print "  \"" $0 "\"," }' >> "$dir/index.json"
               sed -i '$ s/,$//' "$dir/index.json"
               echo "]" >> "$dir/index.json"
-
               echo "✅ Done: $dir/index.json"
             fi
 
@@ -43,7 +42,7 @@ jobs:
 
               html_path="$dir/${filename}.html"
 
-cat <<EOF > "$html_path"
+              cat <<EOF > "$html_path"
 ---
 layout: default
 title: "$title"
