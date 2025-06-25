@@ -1,11 +1,9 @@
-name: Generate Index and Property Pages
+name: Generate index.json and HTML pages
 
 on:
   push:
-    branches:
-      - main
     paths:
-      - 'data/properties/**'
+      - 'data/properties/**/*.json'
   workflow_dispatch:
 
 permissions:
@@ -14,13 +12,12 @@ permissions:
 jobs:
   generate:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Install jq
-        run: sudo apt-get install -y jq
+        run: sudo apt-get install jq
 
       - name: Generate index.json and HTML pages
         run: |
@@ -31,21 +28,22 @@ jobs:
               find "$dir" -maxdepth 1 -type f -name '*.json' ! -name 'index.json' | sed "s|$dir||" | awk '{ print "  \"" $0 "\"," }' >> "$dir/index.json"
               sed -i '$ s/,$//' "$dir/index.json"
               echo "]" >> "$dir/index.json"
+
               echo "✅ Done: $dir/index.json"
+            fi
 
-              # Generate HTML files from JSON
-              for json_file in "$dir"*.json; do
-                [ "$(basename "$json_file")" = "index.json" ] && continue
+            for json_file in "$dir"*.json; do
+              [ -f "$json_file" ] || continue
+              filename=$(basename "$json_file" .json)
 
-                title=$(jq -r '.title' "$json_file")
-                price=$(jq -r '.price' "$json_file")
-                area=$(jq -r '.area' "$json_file")
-                description=$(jq -r '.description' "$json_file")
+              title=$(jq -r '.title' "$json_file")
+              price=$(jq -r '.price' "$json_file")
+              area=$(jq -r '.area' "$json_file")
+              description=$(jq -r '.description' "$json_file")
 
-                filename=$(basename "$json_file" .json)
-                html_file="$dir/$filename.html"
+              html_path="$dir/${filename}.html"
 
-                cat <<EOF > "$html_file"
+cat <<EOF > "$html_path"
 ---
 layout: default
 title: "$title"
@@ -74,13 +72,13 @@ description: "$description"
   </div>
 </main>
 EOF
-              done
-            fi
+
+            done
           done
 
-      - name: Commit and push changes
+      - name: Commit and push if changed
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "🔁 تحديث تلقائي: index.json + صفحات التفاصيل"
+          commit_message: "🔄 إنشاء صفحات التفاصيل وملفات index.json تلقائيًا"
           commit_user_name: GitHub Actions
           commit_user_email: actions@github.com
