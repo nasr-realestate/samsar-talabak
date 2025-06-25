@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install jq
         run: sudo apt-get install jq
@@ -20,19 +20,16 @@ jobs:
       - name: Generate HTML Pages
         run: |
           for file in data/properties/*/*.json; do
-            # استخراج البيانات من JSON
             title=$(jq -r '.title' "$file")
             price=$(jq -r '.price' "$file")
             area=$(jq -r '.area' "$file")
             description=$(jq -r '.description' "$file")
-            page_url=$(jq -r '.page_url' "$file")
-
-            # تحويل page_url إلى اسم ملف (بدون /)
-            filename=$(basename "$page_url")
+            filename=$(basename "$file" .json)
             category=$(basename $(dirname "$file"))
-            output_path="data/properties/$category/$filename"
 
-            cat <<EOF > "$output_path"
+            output_path="data/properties/$category/$filename.html"
+
+cat <<EOF > "$output_path"
 ---
 layout: default
 title: "$title"
@@ -61,12 +58,13 @@ description: "$description"
   </div>
 </main>
 EOF
+
           done
 
-      - name: Commit and Push Generated Pages
+      - name: Commit and Push
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add data/properties/**/*.html
-          git commit -m "🔄 توليد صفحات تفاصيل العقارات تلقائيًا"
+          git commit -m "Generated property detail pages"
           git push
