@@ -54,7 +54,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                 font-family: 'Tajawal', sans-serif;
               `;
 
-              const detailPage = data.page_url || `/samsar-talabak/properties/${category}/${filename.replace('.json', '.html')}`;
+              const encodedFilename = encodeURIComponent(filename);
+
+              const detailPage = `/samsar-talabak/details.html?category=${category}&file=${encodedFilename}`;
 
               card.innerHTML = `
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
