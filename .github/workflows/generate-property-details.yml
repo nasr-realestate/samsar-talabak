@@ -10,67 +10,49 @@ jobs:
   generate-html:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout Repo
         uses: actions/checkout@v3
 
       - name: Install jq
-        run: sudo apt-get install -y jq
+        run: sudo apt-get install jq
 
-      - name: Generate HTML from JSON
+      - name: Generate HTML Pages
         run: |
-          for file in data/properties/*/*.json; do
-            # تخطى ملفات index.json
-            if [[ "$file" == *"index.json" ]]; then
-              continue
-            fi
+          for json_file in data/properties/*/*.json; do
+            # Extract the filename without extension
+            filename=$(basename "$json_file" .json)
 
-            title=$(jq -r '.title' "$file")
-            price=$(jq -r '.price' "$file")
-            area=$(jq -r '.area' "$file")
-            description=$(jq -r '.description' "$file")
-            page_url=$(jq -r '.page_url' "$file")
+            # Extract fields using jq
+            title=$(jq -r '.title' "$json_file")
+            price=$(jq -r '.price' "$json_file")
+            area=$(jq -r '.area' "$json_file")
+            description=$(jq -r '.description' "$json_file")
 
-            filename=$(basename "$page_url")
-            folder=$(dirname "$file")
-
-            output_path="$folder/$filename"
-
-            cat <<EOF > "$output_path"
----
-layout: default
-title: "$title"
-description: "$description"
----
-
-<main class="property-details">
-  <div class="detail-section">
-    <h1 class="section-title">$title</h1>
-    <div class="price-tag">$price</div>
-    <p><strong>المساحة:</strong> $area</p>
-    <p><strong>الوصف:</strong> $description</p>
-
-    <div style="margin-top: 2rem;">
-      <a href="https://wa.me/201147758857?text=أريد الاستفسار عن $title" 
-         class="whatsapp-btn" target="_blank">
-        <i class="fab fa-whatsapp"></i> استفسر عبر واتساب
-      </a>
-    </div>
-
-    <div style="margin-top: 2rem;">
-      <a href="/samsar-talabak/properties-filtered.html" class="back-btn">
-        ← العودة للعقارات
-      </a>
-    </div>
-  </div>
-</main>
-EOF
-
+            # Create HTML file with YAML front matter
+            html_file="data/properties/${filename}.html"
+            echo "---" > "$html_file"
+            echo "layout: default" >> "$html_file"
+            echo "title: $title" >> "$html_file"
+            echo "description: $description" >> "$html_file"
+            echo "---" >> "$html_file"
+            echo "<!DOCTYPE html>" >> "$html_file"
+            echo "<html>" >> "$html_file"
+            echo "<head><title>$title</title></head>" >> "$html_file"
+            echo "<body>" >> "$html_file"
+            echo "<h1>$title</h1>" >> "$html_file"
+            echo "<p><strong>Price:</strong> $price</p>" >> "$html_file"
+            echo "<p><strong>Area:</strong> $area</p>" >> "$html_file"
+            echo "<p><strong>Description:</strong> $description</p>" >> "$html_file"
+            echo "<a href=\"https://wa.me/?text=${title}\" target=\"_blank\">Contact via WhatsApp</a>" >> "$html_file"
+            echo "<a href=\"/offers/\" target=\"_blank\">Back to Offers</a>" >> "$html_file"
+            echo "</body>" >> "$html_file"
+            echo "</html>" >> "$html_file"
           done
 
-      - name: Commit and Push Generated Pages
+      - name: Commit and push changes
         run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git add data/properties/**/*.html
-          git commit -m "Generated property detail pages"
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add .
+          git commit -m "Generated HTML files from JSON"
           git push
