@@ -6,6 +6,9 @@ on:
       - 'data/properties/**/*.json'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   generate-html:
     runs-on: ubuntu-latest
@@ -15,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install jq
-        run: sudo apt-get install jq
+        run: sudo apt-get install -y jq
 
       - name: Generate HTML Pages
         run: |
@@ -29,36 +32,31 @@ jobs:
 
             output_path="data/properties/$category/$filename.html"
 
-cat <<EOF > "$output_path"
----
-layout: default
-title: "$title"
-description: "$description"
----
-
-<main class="property-details">
-  <div class="detail-section">
-    <h1 class="section-title">$title</h1>
-    <div class="price-tag">$price</div>
-    <p><strong>المساحة:</strong> $area</p>
-    <p><strong>الوصف:</strong> $description</p>
-
-    <div style="margin-top: 2rem;">
-      <a href="https://wa.me/201147758857?text=أريد الاستفسار عن $title"
-         class="whatsapp-btn" target="_blank">
-        <i class="fab fa-whatsapp"></i> استفسر عبر واتساب
-      </a>
-    </div>
-
-    <div style="margin-top: 2rem;">
-      <a href="/samsar-talabak/properties-filtered.html" class="back-btn">
-        ← العودة للعقارات
-      </a>
-    </div>
-  </div>
-</main>
-EOF
-
+            echo "---" > "$output_path"
+            echo "layout: default" >> "$output_path"
+            echo "title: \"$title\"" >> "$output_path"
+            echo "description: \"$description\"" >> "$output_path"
+            echo "---" >> "$output_path"
+            echo "" >> "$output_path"
+            echo "<main class=\"property-details\">" >> "$output_path"
+            echo "  <div class=\"detail-section\">" >> "$output_path"
+            echo "    <h1 class=\"section-title\">$title</h1>" >> "$output_path"
+            echo "    <div class=\"price-tag\">$price</div>" >> "$output_path"
+            echo "    <p><strong>المساحة:</strong> $area</p>" >> "$output_path"
+            echo "    <p><strong>الوصف:</strong> $description</p>" >> "$output_path"
+            echo "    <div style=\"margin-top: 2rem;\">" >> "$output_path"
+            echo "      <a href=\"https://wa.me/201147758857?text=أريد الاستفسار عن $title\"" >> "$output_path"
+            echo "         class=\"whatsapp-btn\" target=\"_blank\">" >> "$output_path"
+            echo "        <i class=\"fab fa-whatsapp\"></i> استفسر عبر واتساب" >> "$output_path"
+            echo "      </a>" >> "$output_path"
+            echo "    </div>" >> "$output_path"
+            echo "    <div style=\"margin-top: 2rem;\">" >> "$output_path"
+            echo "      <a href=\"/samsar-talabak/properties-filtered.html\" class=\"back-btn\">" >> "$output_path"
+            echo "        ← العودة للعقارات" >> "$output_path"
+            echo "      </a>" >> "$output_path"
+            echo "    </div>" >> "$output_path"
+            echo "  </div>" >> "$output_path"
+            echo "</main>" >> "$output_path"
           done
 
       - name: Commit and Push
@@ -66,5 +64,5 @@ EOF
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add data/properties/**/*.html
-          git commit -m "Generated property detail pages"
+          git commit -m "✅ Generated HTML detail pages"
           git push
