@@ -1,83 +1,105 @@
-name: Generate index.json and HTML pages
+# اسم واضح لسير العمل
+name: Build and Deploy Property Data and Pages
 
 on:
+  # يتم التشغيل عند أي تغيير في ملفات العقارات المصدر
   push:
     paths:
-      - 'data/properties/**/*.json'
+      - '_data/apartments-source/**'
+    branches:
+      - main
+  # يسمح بالتشغيل اليدوي من تبويب Actions
   workflow_dispatch:
 
+# صلاحيات للكتابة في المستودع
 permissions:
   contents: write
 
 jobs:
-  generate:
+  # اسم المهمة
+  build:
     runs-on: ubuntu-latest
     steps:
+      # 1. جلب نسخة من المستودع
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 2. تثبيت أداة jq لمعالجة JSON
       - name: Install jq
-        run: sudo apt-get install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
 
-      - name: Generate index.json and HTML pages
+      # 3. تجميع كل ملفات العقارات في ملف بيانات واحد رئيسي
+      - name: Generate master data file (_data/apartments.json)
         run: |
-          for dir in data/properties/*/; do
-            if [ -d "$dir" ]; then
-              echo "⏳ Generating index.json in $dir"
-              echo "[" > "$dir/index.json"
-              find "$dir" -maxdepth 1 -type f -name '*.json' ! -name 'index.json' | sed "s|$dir||" | awk '{ print "  \"" $0 "\"," }' >> "$dir/index.json"
-              sed -i '$ s/,$//' "$dir/index.json"
-              echo "]" >> "$dir/index.json"
-              echo "✅ Done: $dir/index.json"
-            fi
+          echo "📦 Aggregating all source JSON files into one master file..."
+          # الأمر jq -s يجمع كل ملفات الـ JSON في مصفوفة واحدة
+          jq -s '.' _data/apartments-source/*.json > _data/apartments.json
+          echo "✅ Master data file _data/apartments.json created successfully."
 
-            for json_file in "$dir"*.json; do
-              [ -f "$json_file" ] || continue
-              filename=$(basename "$json_file" .json)
-
-              title=$(jq -r '.title' "$json_file")
-              price=$(jq -r '.price' "$json_file")
-              area=$(jq -r '.area' "$json_file")
-              description=$(jq -r '.description' "$json_file")
-
-              html_path="$dir/${filename}.html"
-
-              cat <<EOF > "$html_path"
+      # 4. إنشاء صفحة HTML لكل عقار على حدة (اختياري، يمكنك حذفه إذا لم تكن بحاجته)
+      - name: Generate individual HTML detail pages
+        run: |
+          echo "🏠 Generating individual HTML pages for each property..."
+          # إنشاء مجلد للصفحات إذا لم يكن موجودًا
+          mkdir -p properties 
+          
+          # المرور على كل ملف مصدر
+          for source_file in _data/apartments-source/*.json; do
+            # استخراج اسم الملف بدون الامتداد
+            filename=$(basename "$source_file" .json)
+            
+            # استخراج البيانات من الملف باستخدام jq
+            title=$(jq -r '.location_ar // "عقار غير محدد"' "$source_file")
+            price=$(jq -r '.السعر // "عند الطلب"' "$source_file")
+            area=$(jq -r '.المساحة // "-"' "$source_file")
+            description=$(jq -r '.تفاصيل // "لا توجد تفاصيل إضافية."' "$source_file")
+            
+            # تحديد مسار ملف الـ HTML الجديد
+            html_file="properties/${filename}.html"
+            
+            echo "  - Creating page: ${html_file}"
+            
+            # كتابة محتوى الـ HTML باستخدام here-document
+            # هذا هو الجزء الذي كان يسبب الخطأ، وقد تم تصحيحه الآن
+            cat << EOF > "$html_file"
 ---
 layout: default
 title: "$title"
-description: "$description"
+description: "تفاصيل العقار: $title بسعر $price"
 ---
 
+<style>
+  .property-details { max-width: 800px; margin: 40px auto; padding: 20px; background: #fff; border-radius: 8px; }
+  .whatsapp-btn { display: inline-block; background: #25D366; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; }
+  .back-btn { display: inline-block; margin-top: 20px; color: var(--primary); }
+</style>
+
 <main class="property-details">
-  <div class="detail-section">
-    <h1 class="section-title">$title</h1>
-    <div class="price-tag">$price</div>
-    <p><strong>المساحة:</strong> $area</p>
-    <p><strong>الوصف:</strong> $description</p>
-
-    <div style="margin-top: 2rem;">
-      <a href="https://wa.me/201147758857?text=أريد الاستفسار عن $title" 
-         class="whatsapp-btn" target="_blank">
-        <i class="fab fa-whatsapp"></i> استفسر عبر واتساب
-      </a>
-    </div>
-
-    <div style="margin-top: 2rem;">
-      <a href="/samsar-talabak/properties-filtered.html" class="back-btn">
-        ← العودة للعقارات
-      </a>
-    </div>
+  <h1>$title</h1>
+  <p style="font-size: 1.5rem; color: var(--secondary); font-weight: bold;">$price</p>
+  <hr style="margin: 20px 0;">
+  <p><strong>المساحة:</strong> $area</p>
+  <p><strong>الوصف:</strong> $description</p>
+  <div style="margin-top: 2rem;">
+    <a href="https://wa.me/201147758857?text=أريد الاستفسار عن $title" class="whatsapp-btn" target="_blank">
+      استفسر عبر واتساب
+    </a>
+  </div>
+  <div style="margin-top: 1rem;">
+    <a href="{{ '/apartments.html' | relative_url }}" class="back-btn">
+      ← العودة لكل الشقق
+    </a>
   </div>
 </main>
 EOF
+          # السطر التالي يغلق الـ here-document، ويجب أن يكون في بداية السطر بدون أي مسافات
+done
+          echo "✅ All detail pages generated."
 
-            done
-          done
-
-      - name: Commit and push if changed
+      # 5. عمل Commit و Push للتغييرات تلقائيًا
+      - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "🔄 إنشاء صفحات التفاصيل وملفات index.json تلقائيًا"
-          commit_user_name: GitHub Actions
-          commit_user_email: actions@github.com
+          commit_message: "🔄 تحديث تلقائي لبيانات وصفحات العقارات"
+          # إضافة كل الملفات الجديدة أو التي تم تعديلها
+          file_pattern: "_data/apartments.json properties/*.html"
