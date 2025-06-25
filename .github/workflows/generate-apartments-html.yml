@@ -43,10 +43,10 @@ jobs:
 
             echo "  - Creating page: ${html_file}"
 
-            cat <<EOF > "$html_file"
+            cat <<'EOF' > "$html_file"
 ---
 layout: default
-title: "$title"
+title: "'$title'"
 description: "تفاصيل العقار: $title بسعر $price"
 ---
 
@@ -68,8 +68,8 @@ description: "تفاصيل العقار: $title بسعر $price"
     </a>
   </div>
   <div style="margin-top: 1rem;">
-    <a href="{{ '/apartments.html' | relative_url }}" class="back-btn">
-      ← العودة لكل الشقق
+    <a href="/samsar-talabak/properties-filtered.html" class="back-btn">
+      ← العودة للعقارات
     </a>
   </div>
 </main>
