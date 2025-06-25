@@ -1,68 +1,67 @@
-name: Generate Property Details Pages
+name: Generate Property Pages
 
 on:
   push:
     paths:
-      - 'data/properties/**/*.json'
-  workflow_dispatch:
-
-permissions:
-  contents: write
+      - 'data/properties/*.json'
 
 jobs:
   generate-html:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
-      - name: Install jq
+      - name: Setup jq
         run: sudo apt-get install -y jq
 
-      - name: Generate HTML Pages
+      - name: Generate HTML files
         run: |
-          for file in data/properties/*/*.json; do
-            title=$(jq -r '.title' "$file")
-            price=$(jq -r '.price' "$file")
-            area=$(jq -r '.area' "$file")
-            description=$(jq -r '.description' "$file")
-            filename=$(basename "$file" .json)
-            category=$(basename $(dirname "$file"))
-
-            output_path="data/properties/$category/$filename.html"
-
-            echo "---" > "$output_path"
-            echo "layout: default" >> "$output_path"
-            echo "title: \"$title\"" >> "$output_path"
-            echo "description: \"$description\"" >> "$output_path"
-            echo "---" >> "$output_path"
-            echo "" >> "$output_path"
-            echo "<main class=\"property-details\">" >> "$output_path"
-            echo "  <div class=\"detail-section\">" >> "$output_path"
-            echo "    <h1 class=\"section-title\">$title</h1>" >> "$output_path"
-            echo "    <div class=\"price-tag\">$price</div>" >> "$output_path"
-            echo "    <p><strong>المساحة:</strong> $area</p>" >> "$output_path"
-            echo "    <p><strong>الوصف:</strong> $description</p>" >> "$output_path"
-            echo "    <div style=\"margin-top: 2rem;\">" >> "$output_path"
-            echo "      <a href=\"https://wa.me/201147758857?text=أريد الاستفسار عن $title\"" >> "$output_path"
-            echo "         class=\"whatsapp-btn\" target=\"_blank\">" >> "$output_path"
-            echo "        <i class=\"fab fa-whatsapp\"></i> استفسر عبر واتساب" >> "$output_path"
-            echo "      </a>" >> "$output_path"
-            echo "    </div>" >> "$output_path"
-            echo "    <div style=\"margin-top: 2rem;\">" >> "$output_path"
-            echo "      <a href=\"/samsar-talabak/properties-filtered.html\" class=\"back-btn\">" >> "$output_path"
-            echo "        ← العودة للعقارات" >> "$output_path"
-            echo "      </a>" >> "$output_path"
-            echo "    </div>" >> "$output_path"
-            echo "  </div>" >> "$output_path"
-            echo "</main>" >> "$output_path"
+          for json_file in data/properties/*.json; do
+            # استخراج اسم الملف بدون امتداد
+            filename=$(basename "$json_file" .json)
+            dir_path=$(dirname "$json_file")
+            html_file="${dir_path}/${filename}.html"
+            
+            # استخراج البيانات باستخدام jq
+            title=$(jq -r '.title' "$json_file")
+            price=$(jq -r '.price' "$json_file")
+            area=$(jq -r '.area' "$json_file")
+            description=$(jq -r '.description' "$json_file")
+            
+            # إنشاء محتوى الملف مع الرأس YAML
+            {
+              echo "---"
+              echo "layout: default"
+              echo "title: \"$title\""
+              echo "description: \"$description\""
+              echo "---"
+              echo ""
+              echo "<div class=\"property-details\">"
+              echo "  <h1>$title</h1>"
+              echo "  <p><strong>السعر:</strong> $price</p>"
+              echo "  <p><strong>المساحة:</strong> $area</p>"
+              echo "  <p><strong>الوصف:</strong> $description</p>"
+              echo "  <a href=\"https://wa.me/?text=أهلاً، أنا مهتم بالعقار: $title\" class=\"btn whatsapp-btn\">"
+              echo "    تواصل عبر واتساب"
+              echo "  </a>"
+              echo "  <br>"
+              echo "  <a href=\"/properties\" class=\"btn back-btn\">العودة إلى العروض</a>"
+              echo "</div>"
+            } > "$html_file"
+            
+            # إضافة الملفات الجديدة للمرحلة
+            git add "$html_file"
           done
 
-      - name: Commit and Push
+      - name: Commit changes
         run: |
-          git config user.name "github-actions"
+          git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git add data/properties/**/*.html
-          git commit -m "✅ Generated HTML detail pages"
-          git push
+          git diff --quiet && git diff --staged --quiet || git commit -m "توليد صفحات عقارات جديدة [skip ci]"
+          
+      - name: Push changes
+        run: git push
