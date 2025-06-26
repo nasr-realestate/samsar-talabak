@@ -22,7 +22,7 @@ body {
   direction: rtl;
 }
 
-/* NAV BAR */
+/* === NAV BAR === */
 .nav-bar {
   background: var(--primary);
   padding: 1rem 2rem;
@@ -68,7 +68,7 @@ body {
   border: 2px solid white;
 }
 
-/* FOOTER */
+/* === FOOTER === */
 .site-footer-bottom {
   background-color: #1a1a1a;
   color: white;
@@ -86,7 +86,7 @@ body {
   text-decoration: underline;
 }
 
-/* الحالة */
+/* === الحالة (Online/Offline) === */
 .business-status-bar {
   background: #f0f0f0;
   padding: 10px 15px;
@@ -110,14 +110,14 @@ body {
 .status-open { color: green; font-weight: bold; }
 .status-closed { color: red; font-weight: bold; }
 
-/* البطاقات حسب التصنيف */
+/* === البطاقات حسب التصنيف === */
 .card-apartments { background-color: #ffffff; }
 .card-apartments-rent { background-color: #eafaf1; }
 .card-shops { background-color: #fff5e6; }
 .card-offices { background-color: #f0f5ff; }
 .card-admin-hq { background-color: #fdf2f8; }
 
-/* أزرار الفلاتر */
+/* === أزرار الفلاتر === */
 .filter-btn {
   padding: 0.7rem 1.35rem;
   border: none;
@@ -136,7 +136,7 @@ body {
   box-shadow: 0 0 0 2px white;
 }
 
-/* RESPONSIVE */
+/* === RESPONSIVE === */
 @media (max-width: 768px) {
   .nav-bar {
     flex-direction: column;
@@ -151,9 +151,7 @@ body {
   }
 }
 
-/* ========================= */
-/* ✅ تنسيقات صفحة التفاصيل */
-/* ========================= */
+/* === صفحة التفاصيل === */
 .property-details {
   max-width: 800px;
   margin: 40px auto;
@@ -161,7 +159,6 @@ body {
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-  font-family: var(--font-family);
 }
 
 .property-details h1 {
@@ -197,7 +194,6 @@ body {
   background: var(--whatsapp);
   color: white;
 }
-
 .whatsapp-btn:hover {
   background: #1ebe5d;
 }
@@ -207,7 +203,83 @@ body {
   color: white;
   margin-right: 1rem;
 }
-
 .back-btn:hover {
   background: var(--secondary);
-  }
+}
+
+/* === تواصل معنا (Contact Us Page) === */
+.contact-container {
+  max-width: 1200px;
+  margin: 2.5rem auto;
+  padding: 0 1.5rem;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.contact-card {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.contact-card h3 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+.contact-card p {
+  color: #555;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.contact-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.contact-buttons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.phone-btn {
+  background: var(--primary);
+  color: white;
+}
+
+.whatsapp-btn {
+  background: var(--whatsapp);
+  color: white;
+}
+
+.contact-buttons a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
