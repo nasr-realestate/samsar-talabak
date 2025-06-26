@@ -1,60 +1,31 @@
 ---
 layout: default
 title: "تواصل معنا"
-description: "تواصل مع فريق سمسار طلبك - بيع وشراء وتأجير العقارات في مدينة نصر"
-permalink: /contact-us.html
+description: "تواصل مع فريق سمسار طلبك المتخصص في عقارات مدينة نصر. بيع، إيجار، شقق مفروشة، محلات تجارية."
 ---
 
-<header class="page-header">
-  <h1>تواصل مع فريق سمسار طلبك</h1>
-  <p>نحن هنا لمساعدتك في جميع استفساراتك العقارية</p>
-</header>
-
 <main class="contact-container">
+  <header class="page-header">
+    <h1 style="font-size: 2rem;">تواصل مع فريق سمسار طلبك</h1>
+    <p>نحن هنا لمساعدتك في جميع استفساراتك العقارية بمدينة نصر</p>
+  </header>
+
   <section class="contact-section">
     <h2>فريق العمل</h2>
+
     <div class="contact-grid">
-      
-      <!-- محمد عادل -->
+      {% assign team = site.data.team %}
+      {% for member in team %}
       <div class="contact-card">
-        <h3>محمد عادل</h3>
-        <p>متخصص في تقييم العقارات ومعرفة اتجاهات السوق</p>
+        <div class="status-badge open">متاح الآن</div>
+        <h3>{{ member.name }}</h3>
+        <p>{{ member.role }}</p>
         <div class="contact-buttons">
-          <a href="tel:+201006430028" class="phone-btn"><i class="fas fa-phone"></i> اتصل</a>
-          <a href="https://wa.me/201006430028" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> واتساب</a>
+          <a href="tel:{{ member.phone }}" class="back-btn"><i class="fas fa-phone"></i> اتصال</a>
+          <a href="https://wa.me/{{ member.phone | remove: '+' }}" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> واتساب</a>
         </div>
       </div>
-
-      <!-- أميرة وليد -->
-      <div class="contact-card">
-        <h3>أميرة وليد</h3>
-        <p>متخصصة في إيجار المحلات التجارية والمقرات الإدارية</p>
-        <div class="contact-buttons">
-          <a href="tel:+201099148872" class="phone-btn"><i class="fas fa-phone"></i> اتصل</a>
-          <a href="https://wa.me/201099148872" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> واتساب</a>
-        </div>
-      </div>
-
-      <!-- وليد فيصل -->
-      <div class="contact-card">
-        <h3>وليد فيصل</h3>
-        <p>متخصص في بيع الشقق والعقارات السكنية</p>
-        <div class="contact-buttons">
-          <a href="tel:+201006207878" class="phone-btn"><i class="fas fa-phone"></i> اتصل</a>
-          <a href="https://wa.me/201006207878" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> واتساب</a>
-        </div>
-      </div>
-
-      <!-- طارق طنطاوي -->
-      <div class="contact-card">
-        <h3>طارق طنطاوي</h3>
-        <p>متخصص في الشقق المفروشة للإيجار</p>
-        <div class="contact-buttons">
-          <a href="tel:+201147758857" class="phone-btn"><i class="fas fa-phone"></i> اتصل</a>
-          <a href="https://wa.me/201147758857" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> واتساب</a>
-        </div>
-      </div>
-
+      {% endfor %}
     </div>
   </section>
-  </main>
+</main>
