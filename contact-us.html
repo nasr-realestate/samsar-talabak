@@ -1,0 +1,37 @@
+---
+layout: default
+title: تواصل معنا
+description: تواصل مع فريق سمسار طلبك في مدينة نصر.
+---
+
+<div class="contact-us-page" style="max-width: 1000px; margin: 0 auto; padding: 2rem;">
+
+  <h1 style="text-align: center; color: var(--primary); margin-bottom: 2rem;">تواصل مع فريق سمسار طلبك</h1>
+
+  <div class="team-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+
+    {% assign team = site.data.team %}
+    {% for member in team %}
+      <div class="contact-card" style="background: white; border: 1px solid #ddd; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); text-align: center;">
+        <h3 style="color: var(--primary); margin-bottom: 0.5rem;">{{ member.name }}</h3>
+        <p style="margin-bottom: 1rem; color: #555;">{{ member.role }}</p>
+        <div class="contact-icons" style="display: flex; justify-content: center; gap: 1rem;">
+          <a href="tel:{{ member.phone }}" class="contact-icon phone-icon" title="اتصال" style="font-size: 1.4rem; color: var(--primary);">
+            <i class="fas fa-phone"></i>
+          </a>
+          <a href="https://wa.me/{{ member.phone | remove: '+' }}" class="contact-icon whatsapp-icon" title="واتساب" style="font-size: 1.4rem; color: var(--whatsapp);" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+        </div>
+      </div>
+    {% endfor %}
+
+  </div>
+
+  <div style="text-align: center; margin-top: 2rem;">
+    <a href="/samsar-talabak/properties-filtered.html" class="back-btn" style="background: var(--primary); color: white; padding: 0.6rem 1.2rem; border-radius: 6px; text-decoration: none; font-weight: bold;">
+      ← العودة للعقارات
+    </a>
+  </div>
+
+</div>
