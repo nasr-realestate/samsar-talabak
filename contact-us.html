@@ -11,24 +11,100 @@ permalink: /contact-us.html
 </header>
 
 <main class="contact-container">
-  <!-- نفس البطاقات الخاصة بالفريق هنا -->
+  <section class="contact-section">
+    <h2>فريق العمل</h2>
+    <div class="contact-grid">
+      <!-- بطاقة محمد عادل -->
+      <div class="contact-card">
+        <div id="mohamed-status" class="status-badge"></div>
+        <h3>محمد عادل</h3>
+        <p>متخصص في تقييم العقارات ومعرفة اتجاهات السوق</p>
+        <div class="contact-buttons">
+          <a href="tel:+201006430028" class="phone-btn">
+            <i class="fas fa-phone"></i> اتصل
+          </a>
+          <a href="https://wa.me/201006430028" class="whatsapp-btn">
+            <i class="fab fa-whatsapp"></i> واتساب
+          </a>
+        </div>
+      </div>
+
+      <!-- بطاقة أميرة وليد -->
+      <div class="contact-card">
+        <div id="amira-status" class="status-badge"></div>
+        <h3>أميرة وليد</h3>
+        <p>متخصصة في إيجار المحلات التجارية والمقرات الإدارية</p>
+        <div class="contact-buttons">
+          <a href="tel:+201099148872" class="phone-btn">
+            <i class="fas fa-phone"></i> اتصل
+          </a>
+          <a href="https://wa.me/201099148872" class="whatsapp-btn">
+            <i class="fab fa-whatsapp"></i> واتساب
+          </a>
+        </div>
+      </div>
+
+      <!-- بطاقة وليد فيصل -->
+      <div class="contact-card">
+        <div id="waleed-status" class="status-badge"></div>
+        <h3>وليد فيصل</h3>
+        <p>متخصص في بيع الشقق والعقارات السكنية</p>
+        <div class="contact-buttons">
+          <a href="tel:+201006207878" class="phone-btn">
+            <i class="fas fa-phone"></i> اتصل
+          </a>
+          <a href="https://wa.me/201006207878" class="whatsapp-btn">
+            <i class="fab fa-whatsapp"></i> واتساب
+          </a>
+        </div>
+      </div>
+
+      <!-- بطاقة طارق طنطاوي -->
+      <div class="contact-card">
+        <div id="tarek-status" class="status-badge"></div>
+        <h3>طارق طنطاوي</h3>
+        <p>متخصص في الشقق المفروشة للإيجار</p>
+        <div class="contact-buttons">
+          <a href="tel:+201147758857" class="phone-btn">
+            <i class="fas fa-phone"></i> اتصل
+          </a>
+          <a href="https://wa.me/201147758857" class="whatsapp-btn">
+            <i class="fab fa-whatsapp"></i> واتساب
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 
 <script>
-  // تحديث الحالة بناء على الوقت
-  function updateStatus() {
-    const hour = new Date().getHours();
-    const open = hour >= 9 && hour < 21;
-    const text = open ? "متاح الآن حتى 9 مساءً" : "سيتوفر غداً 9 صباحاً";
-    const className = open ? "status-badge open" : "status-badge closed";
+// تحديد حالة العمل
+function updateStatus() {
+  const currentTime = new Date().getHours();
+  const openingTime = 9;
+  const closingTime = 21;
 
-    ["amira", "waleed", "tarek", "mohamed"].forEach(id => {
-      const el = document.getElementById(`${id}-status`);
-      if (el) {
-        el.textContent = text;
-        el.className = className;
-      }
-    });
-  }
-  updateStatus();
-</script>
+  const statusList = [
+    { id: 'amira-status', name: 'أميرة' },
+    { id: 'waleed-status', name: 'وليد' },
+    { id: 'tarek-status', name: 'طارق' },
+    { id: 'mohamed-status', name: 'محمد' }
+  ];
+
+  statusList.forEach(member => {
+    const el = document.getElementById(member.id);
+    if (!el) return;
+
+    if (currentTime >= openingTime && currentTime < closingTime) {
+      el.textContent = `متاح الآن حتى 9 مساءً`;
+      el.className = "status-badge open";
+    } else {
+      el.textContent = `سيتوفر غداً 9 صباحاً`;
+      el.className = "status-badge closed";
+    }
+  });
+}
+
+// تحديث الحالة عند تحميل الصفحة
+window.addEventListener("DOMContentLoaded", updateStatus);
+     </script>
