@@ -310,3 +310,83 @@ footer a:hover {
 .icon-btn:hover {
   transform: translateY(-3px) scale(1.1);
   }
+/* =========================================================
+   تنسيق قسم فريق العمل - تصميم احترافي
+   ========================================================= */
+
+.team-section {
+  padding: 40px 20px;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.contact-card {
+  background: var(--color-surface-2);
+  padding: 2rem; /* زيادة المساحة الداخلية */
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* لتوزيع المسافات بشكل أفضل */
+}
+
+.contact-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--color-secondary);
+  box-shadow: 0 6px 20px rgba(255, 193, 7, 0.15);
+}
+
+.contact-card h3 {
+  color: var(--color-text-primary);
+  font-size: 1.5rem; /* حجم أكبر للاسم */
+  margin-bottom: 0.5rem;
+}
+
+.contact-card p.role {
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  min-height: 60px; /* لضمان أن البطاقات بنفس الطول حتى لو كان النص قصيراً */
+  margin-bottom: 1.5rem;
+}
+
+.contact-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem; /* زيادة المسافة بين الأزرار */
+  flex-wrap: wrap;
+  margin-top: auto; /* يدفع الأزرار للأسفل */
+}
+
+.icon-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px; /* حجم أكبر للزر */
+  height: 50px;
+  border-radius: 50%;
+  text-decoration: none;
+  font-size: 1.5rem; /* حجم أكبر للأيقونة */
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.icon-btn.phone {
+  background: var(--color-primary); /* الأخضر المميز للهوية */
+}
+
+.icon-btn.whatsapp {
+  background: var(--color-whatsapp); /* الأخضر الخاص بواتساب */
+}
+
+.icon-btn:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
