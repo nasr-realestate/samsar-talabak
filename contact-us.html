@@ -1,28 +1,30 @@
 ---
 layout: default
-title: "تواصل معنا"
-description: "تواصل مع فريق سمسار طلبك المتخصص في عقارات مدينة نصر. بيع، إيجار، شقق مفروشة، محلات تجارية."
+title: تواصل معنا
+description: تواصل مع فريق سمسار طلبك المتخصص في عقارات مدينة نصر.
 ---
 
-<main class="contact-container">
-  <header class="page-header">
-    <h1 style="font-size: 2rem;">تواصل مع فريق سمسار طلبك</h1>
-    <p>نحن هنا لمساعدتك في جميع استفساراتك العقارية بمدينة نصر</p>
-  </header>
+<header class="page-header">
+  <h1>تواصل مع فريق سمسار طلبك</h1>
+  <p>نحن هنا لمساعدتك في جميع استفساراتك العقارية بمدينة نصر</p>
+</header>
 
+<main class="contact-container">
   <section class="contact-section">
     <h2>فريق العمل</h2>
-
     <div class="contact-grid">
-      {% assign team = site.data.team %}
-      {% for member in team %}
+      {% for person in site.data.team %}
       <div class="contact-card">
-        <div class="status-badge open">متاح الآن</div>
-        <h3>{{ member.name }}</h3>
-        <p>{{ member.role }}</p>
+        <div class="status-badge open">متاح الآن حتى 9 مساءً</div>
+        <h3>{{ person.name }}</h3>
+        <p>{{ person.role }}</p>
         <div class="contact-buttons">
-          <a href="tel:{{ member.phone }}" class="back-btn"><i class="fas fa-phone"></i> اتصال</a>
-          <a href="https://wa.me/{{ member.phone | remove: '+' }}" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> واتساب</a>
+          <a href="tel:{{ person.phone | replace: ' ', '' }}" class="phone-btn">
+            <i class="fas fa-phone"></i> اتصل
+          </a>
+          <a href="https://wa.me/{{ person.whatsapp | replace: '+', '' }}" class="whatsapp-btn">
+            <i class="fab fa-whatsapp"></i> واتساب
+          </a>
         </div>
       </div>
       {% endfor %}
