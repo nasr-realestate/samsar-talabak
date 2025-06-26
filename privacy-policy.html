@@ -1,65 +1,70 @@
 ---
 layout: default
 title: سياسة الخصوصية
-permalink: /privacy-policy.html
-description: سياسة الخصوصية لموقع سمسار طلبك - شقق للبيع في مدينة نصر
+description: سياسة الخصوصية لموقع سمسار طلبك في مدينة نصر.
 ---
 
-<nav class="nav-bar">
-  <h1>سمسار <span>طلبك</span></h1>
-  <a href="index.html" class="contact-btn"><i class="fas fa-home"></i> الرئيسية</a>
-</nav>
-
-<header class="page-header">
+<section class="page-header">
   <h1>سياسة الخصوصية</h1>
   <p>حماية بياناتك الشخصية أولوية لدينا</p>
-</header>
+</section>
 
-<main class="privacy-container">
+<main class="privacy-container" style="max-width: 900px; margin: 2rem auto; padding: 1rem;">
   <section class="privacy-section">
-    <h2 class="section-title">سياسة الخصوصية</h2>
-
-    <div class="property-description">
-      <h3>مقدمة:</h3>
-      <p>نحن في "سمسار طلبك" نقدّر خصوصيتك ونلتزم بحماية بياناتك...</p>
-    </div>
-
-    <!-- باقي الفقرات بنفس التنسيق -->
-    
-    <div class="property-description">
-      <h3>اتصل بنا:</h3>
-      <p>إذا كانت لديك أي أسئلة حول سياسة الخصوصية هذه، يرجى الاتصال بنا عبر:</p>
-      <ul>
-        <li>البريد الإلكتروني: elraikonly@outlook.sa</li>
-        <li>الهاتف: +201147758857</li>
-        <li>الصفحة: <a href="contact-us.html" style="color: var(--secondary);">اتصل بنا</a></li>
-      </ul>
-    </div>
+    <h2 class="section-title">مقدمة</h2>
+    <p>نحن في <strong>سمسار طلبك</strong> نُولي خصوصيتك أهمية قصوى. توضح سياسة الخصوصية هذه كيف نجمع ونستخدم ونحمي بياناتك عند استخدامك لموقعنا الإلكتروني.</p>
   </section>
+
+  <section class="privacy-section">
+    <h2 class="section-title">المعلومات التي نجمعها</h2>
+    <ul>
+      <li>الاسم، رقم الهاتف، البريد الإلكتروني</li>
+      <li>تفاصيل العقار المطلوب أو المعروض</li>
+      <li>معلومات المتصفح ونوع الجهاز</li>
+      <li>الصفحات التي تزورها ومدة الزيارة</li>
+    </ul>
+  </section>
+
+  <section class="privacy-section">
+    <h2 class="section-title">كيف نستخدم المعلومات</h2>
+    <ul>
+      <li>لتقديم خدماتنا العقارية وتحسين تجربة الاستخدام</li>
+      <li>للرد على استفساراتك أو تواصلك معنا</li>
+      <li>لتحليل استخدام الموقع وتحسينه</li>
+    </ul>
+  </section>
+
+  <section class="privacy-section">
+    <h2 class="section-title">حماية بياناتك</h2>
+    <p>نستخدم تدابير تقنية وإدارية لحماية بياناتك من الوصول غير المصرح به أو الاستخدام الخاطئ أو التعديل أو الحذف.</p>
+  </section>
+
+  <section class="privacy-section">
+    <h2 class="section-title">ملفات تعريف الارتباط (Cookies)</h2>
+    <p>يستخدم موقعنا ملفات تعريف الارتباط لتحسين تجربتك. باستخدام الموقع، فإنك توافق على استخدامنا لها.</p>
+  </section>
+
+  <section class="privacy-section">
+    <h2 class="section-title">حقوق المستخدم</h2>
+    <ul>
+      <li>الاطلاع على بياناتك</li>
+      <li>طلب تعديل أو حذف بياناتك</li>
+      <li>سحب الموافقة على الاستخدام</li>
+    </ul>
+  </section>
+
+  <section class="privacy-section">
+    <h2 class="section-title">التواصل معنا</h2>
+    <p>للاستفسارات أو الطلبات المتعلقة بسياسة الخصوصية، يمكنك التواصل معنا عبر:</p>
+    <ul>
+      <li>📧 elraikonly@outlook.sa</li>
+      <li>📞 <a href="tel:+201147758857">+20 114 775 8857</a></li>
+      <li>📄 <a href="/samsar-talabak/contact-us.html" class="back-btn">نموذج التواصل</a></li>
+    </ul>
+  </section>
+
+  <div class="button-group" style="text-align:center; margin-top:2rem;">
+    <a href="/samsar-talabak/properties-filtered.html" class="back-btn">← العودة للعقارات</a>
+    <a href="/samsar-talabak/index.html" class="back-btn" style="background: var(--color-secondary); color: #121212;">🏠 الرئيسية</a>
+  </div>
 </main>
-
-<button id="backToTopBtn" class="back-to-top" aria-label="العودة إلى الأعلى">
-  <i class="fas fa-arrow-up"></i>
-</button>
-
-<script>
-  document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-  const backToTopBtn = document.getElementById('backToTopBtn');
-  if (backToTopBtn) {
-      window.addEventListener('scroll', function () {
-          if (window.pageYOffset > 300) {
-              backToTopBtn.classList.add('show');
-          } else {
-              backToTopBtn.classList.remove('show');
-          }
-      });
-
-      backToTopBtn.addEventListener('click', function () {
-          window.scrollTo({
-              top: 0,
-              behavior: 'smooth',
-          });
-      });
-  }
-</script>
