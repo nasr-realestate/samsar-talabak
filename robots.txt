@@ -1,3 +1,25 @@
+# robots.txt لموقع سمسار طلبك
+# إعدادات احترافية لأرشفة ذكية وفعالة
+
 User-agent: *
 Allow: /
+
+# منع الزحف إلى مجلدات تقنية أو غير مفيدة في GitHub Pages
+Disallow: /assets/
+Disallow: /scripts/
+Disallow: /styles/
+Disallow: /node_modules/
+Disallow: /workglow/
+Disallow: /.github/
+
+# حظر بعض أنواع الملفات التي لا تحتاج فهرستها
+Disallow: /*.json$
+Disallow: /*.yml$
+Disallow: /*.txt$
+Disallow: /*.xml$  # باستثناء sitemap
+
+# استثناء خريطة الموقع (مسموح بها)
+Allow: /sitemap.xml
+
+# توجيه محركات البحث إلى خريطة الموقع
 Sitemap: https://nasr-realestate.github.io/samsar-talabak/sitemap.xml
