@@ -258,3 +258,29 @@ footer a:hover,
   flex-wrap: wrap;
   margin-top: 1rem;
 }
+.icon-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  text-decoration: none;
+  font-size: 1.2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.icon-btn.phone {
+  background: var(--primary);
+  color: white;
+}
+
+.icon-btn.whatsapp {
+  background: var(--whatsapp);
+  color: white;
+}
+
+.icon-btn:hover {
+  transform: translateY(-3px);
+}
