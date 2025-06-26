@@ -1,10 +1,31 @@
+/* =========================================================
+   نظام الألوان الاحترافي الجديد - هوية "سمسار طلبك"
+   مستوحى من الشعار | تصميم: مساعد الذكاء الاصطناعي
+   ========================================================= */
+
 :root {
-  --primary: #2c3e50;
-  --secondary: #e74c3c;
-  --accent: #d4af37;
-  --whatsapp: #25D366;
-  --text: #333;
-  --light-bg: #f9f9f9;
+  /* --- ألوان الهوية الأساسية (من الشعار) --- */
+  --color-primary: #04E762;      /* الأخضر الساطع للنمو والطاقة */
+  --color-secondary: #FFC107;   /* الأصفر الذهبي للثقة والجودة (لون المفتاح) */
+  --color-whatsapp: #25D366;     /* لون واتساب الرسمي */
+  
+  /* --- نظام الوضع الداكن (Dark Mode) --- */
+  --color-background: #121212;   /* خلفية داكنة جداً (أفضل من الأسود الصريح) */
+  --color-surface-1: #1E1E1E;    /* لون الأسطح الرئيسية (مثل الشريط العلوي والفوتر) */
+  --color-surface-2: #2A2A2A;    /* لون الأسطح الثانوية (مثل البطاقات) */
+
+  /* --- نظام النصوص والحدود --- */
+  --color-text-primary: #E0E0E0;   /* أبيض فاتح للنصوص الرئيسية (أريح للعين من الأبيض النقي) */
+  --color-text-secondary: #A0A0A0; /* رمادي فاتح للنصوص الفرعية والأوصاف */
+  --color-border: #383838;         /* لون خافت للحدود والفواصل */
+
+  /* --- ألوان الحالات والإشعارات --- */
+  --color-success: #2E7D32;        /* أخضر داكن للنجاح (مثل حالة 'متوفر') */
+  --color-success-bg: rgba(4, 231, 98, 0.1); /* خلفية شفافة للنجاح */
+  --color-error: #C62828;          /* أحمر داكن للخطأ (مثل حالة 'غير متوفر') */
+  --color-error-bg: rgba(231, 4, 4, 0.1); /* خلفية شفافة للخطأ */
+
+  /* --- الخطوط --- */
   --font-family: 'Tajawal', sans-serif;
 }
 
@@ -16,29 +37,30 @@
 }
 
 body {
-  background: var(--light-bg);
-  color: var(--text);
+  background: var(--color-background);
+  color: var(--color-text-primary);
   line-height: 1.6;
   direction: rtl;
 }
 
-/* === NAV BAR === */
+/* === NAV BAR (الشريط العلوي) === */
 .nav-bar {
-  background: var(--primary);
+  background: var(--color-surface-1);
   padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .logo h1,
 .nav-bar h1 {
-  color: white;
+  color: var(--color-primary); /* العنوان الرئيسي باللون الأخضر */
   font-size: 1.8rem;
 }
 
 .nav-bar h1 span {
-  color: var(--accent);
+  color: var(--color-secondary); /* الكلمة المميزة باللون الذهبي */
 }
 
 .nav-links {
@@ -47,27 +69,29 @@ body {
 }
 
 .nav-btn {
-  color: white;
+  color: var(--color-text-primary);
   text-decoration: none;
   padding: 0.6rem 1.2rem;
   border-radius: 5px;
   font-weight: bold;
   transition: all 0.3s;
+  border: 2px solid transparent;
 }
 
 .nav-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  background-color: var(--color-primary);
+  color: var(--color-background); /* نص داكن على خلفية خضراء */
 }
 
-.active {
-  border: 2px solid white;
+.nav-btn.active {
+  border: 2px solid var(--color-primary);
 }
 
-/* === HEADER === */
+/* === HEADER (رأس الصفحة) === */
 .page-header {
-  background: linear-gradient(rgba(44,62,80,0.9), rgba(44,62,80,0.9));
-  color: white;
+  background: linear-gradient(rgba(30, 30, 30, 0.9), rgba(30, 30, 30, 0.9)), url('path/to/your/background-image.jpg');
+  background-size: cover;
+  color: var(--color-text-primary);
   text-align: center;
   padding: 2rem;
 }
@@ -92,48 +116,55 @@ body {
 }
 
 .open {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+  border: 1px solid var(--color-success);
 }
 
 .closed {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
+  background-color: var(--color-error-bg);
+  color: var(--color-error);
+  border: 1px solid var(--color-error);
 }
 
-/* === FOOTER === */
+/* === FOOTER (الفوتر) === */
 footer {
-  background-color: #1a1a1a;
-  color: white;
+  background-color: var(--color-surface-1);
+  color: var(--color-text-secondary);
   padding: 40px 20px;
   text-align: center;
+  border-top: 1px solid var(--color-border);
 }
 
 footer a {
-  color: white;
+  color: var(--color-text-primary);
   margin: 0 10px;
   text-decoration: none;
 }
 
 footer a:hover {
+  color: var(--color-primary);
   text-decoration: underline;
 }
 
-/* === بطاقات التصنيفات === */
-.card-apartments { background-color: #ffffff; }
-.card-apartments-rent { background-color: #eafaf1; }
-.card-shops { background-color: #fff5e6; }
-.card-offices { background-color: #f0f5ff; }
-.card-admin-hq { background-color: #fdf2f8; }
+/* === بطاقات التصنيفات (موحدة واحترافية) === */
+.card { /* استخدم هذا الكلاس العام لكل البطاقات */
+  background-color: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  transition: all 0.3s ease;
+}
+.card:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(4, 231, 98, 0.1);
+}
 
 /* === فلاتر التصنيفات === */
 .filter-btn {
   padding: 0.7rem 1.35rem;
-  border: none;
-  background: var(--primary);
-  color: white;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+  color: var(--color-text-primary);
   font-weight: bold;
   border-radius: 6px;
   cursor: pointer;
@@ -141,9 +172,15 @@ footer a:hover {
   transition: all 0.3s ease;
 }
 
+.filter-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
 .filter-btn.active {
-  background-color: var(--accent);
-  box-shadow: 0 0 0 2px white;
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  border-color: var(--color-primary);
 }
 
 /* === RESPONSIVE === */
@@ -166,25 +203,26 @@ footer a:hover {
   max-width: 800px;
   margin: 40px auto;
   padding: 20px;
-  background: white;
+  background: var(--color-surface-1);
   border-radius: 8px;
-  box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+  border: 1px solid var(--color-border);
 }
 
 .property-details h1 {
   font-size: 1.8rem;
   margin-bottom: 1rem;
-  color: var(--primary);
+  color: var(--color-primary); /* العنوان الرئيسي بالأخضر */
 }
 
 .property-details p {
   margin-bottom: 0.8rem;
   font-size: 1.1rem;
+  color: var(--color-text-secondary);
 }
 
 .price-tag {
   font-size: 1.6rem;
-  color: var(--secondary);
+  color: var(--color-secondary); /* السعر باللون الذهبي المميز */
   font-weight: bold;
   margin-bottom: 1rem;
 }
@@ -193,47 +231,51 @@ footer a:hover {
 .back-btn {
   display: inline-block;
   margin-top: 1rem;
-  padding: 0.6rem 1.2rem;
+  padding: 0.8rem 1.5rem;
   border-radius: 6px;
   font-weight: bold;
   text-decoration: none;
   font-size: 0.95rem;
   text-align: center;
+  transition: all 0.3s ease;
+  border: none;
 }
 
 .whatsapp-btn {
-  background: var(--whatsapp);
+  background: var(--color-whatsapp);
   color: white;
 }
 
 .whatsapp-btn:hover {
-  background: #1ebe5d;
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
 }
 
 .back-btn {
-  background: var(--primary);
-  color: white;
+  background: var(--color-surface-2);
+  color: var(--color-text-primary);
   margin-right: 1rem;
 }
 
 .back-btn:hover {
-  background: var(--secondary);
+  background: var(--color-border);
 }
 
 /* === تواصل معنا - البطاقات === */
 .contact-card {
-  background: #fff;
+  background: var(--color-surface-2);
   padding: 1.5rem;
   border-radius: 8px;
-  border: 1px solid #eee;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   text-align: center;
   transition: 0.3s ease;
 }
 
 .contact-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  border-color: var(--color-secondary);
+  box-shadow: 0 6px 20px rgba(255, 193, 7, 0.1);
 }
 
 .contact-buttons {
@@ -253,20 +295,18 @@ footer a:hover {
   border-radius: 50%;
   text-decoration: none;
   font-size: 1.2rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  color: white;
   transition: all 0.3s ease;
 }
 
 .icon-btn.phone {
-  background: var(--primary);
-  color: white;
+  background: var(--color-primary);
 }
 
 .icon-btn.whatsapp {
-  background: var(--whatsapp);
-  color: white;
+  background: var(--color-whatsapp);
 }
 
 .icon-btn:hover {
-  transform: translateY(-3px);
-}
+  transform: translateY(-3px) scale(1.1);
+  }
