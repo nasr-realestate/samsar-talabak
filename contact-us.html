@@ -1,54 +1,37 @@
 ---
 layout: default
-title: تواصل معنا
-description: تواصل مع فريق سمسار طلبك لخدمة بيع وتأجير العقارات في مدينة نصر.
+title: "تواصل معنا - سمسار طلبك"
+description: "تواصل مع فريق سمسار طلبك المتخصص في عقارات مدينة نصر. بيع، إيجار، شقق مفروشة، محلات تجارية."
 ---
 
-<main class="contact-container">
+<header class="page-header" style="text-align: center; padding: 2rem; background: linear-gradient(rgba(44,62,80,0.9), rgba(44,62,80,0.9)); color: white;">
+  <h1 style="font-size: 2.2rem;">تواصل مع فريق سمسار طلبك</h1>
+  <p>نحن هنا لمساعدتك في جميع استفساراتك العقارية بمدينة نصر</p>
+</header>
+
+<main class="contact-container" style="max-width: 1200px; margin: 2.5rem auto; padding: 0 1.5rem;">
   <section class="contact-section">
-    <h2 class="section-title">تواصل مع فريق سمسار طلبك</h2>
-    <p style="text-align: center; margin-bottom: 2rem;">نحن هنا لمساعدتك في جميع استفساراتك العقارية</p>
-    
-    <div class="contact-grid">
-      <!-- محمد عادل -->
-      <div class="contact-card">
-        <h3>محمد عادل</h3>
-        <p>متخصص في تقييم العقارات ومعرفة اتجاهات السوق</p>
-        <div class="contact-buttons">
-          <a href="tel:+201006430028" class="phone-btn"><i class="fas fa-phone"></i> اتصال</a>
-          <a href="https://wa.me/201006430028" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> واتساب</a>
+    <h2 style="text-align: center; color: var(--primary); margin-bottom: 2rem;">فريق العمل</h2>
+    <div class="contact-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+      
+      {% assign team = site.data.team %}
+      {% for person in team %}
+      <div class="contact-card" style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center;">
+        <h3 style="color: var(--primary); margin-bottom: 1rem;">{{ person.name }}</h3>
+        <p style="margin-bottom: 1.5rem;">{{ person.role }}</p>
+        <div class="contact-buttons" style="display: flex; justify-content: center; gap: 1rem;">
+          <a href="tel:{{ person.phone }}" class="icon-btn phone"><i class="fas fa-phone"></i></a>
+          <a href="https://wa.me/{{ person.phone | remove: '+' }}" class="icon-btn whatsapp"><i class="fab fa-whatsapp"></i></a>
         </div>
       </div>
+      {% endfor %}
 
-      <!-- أميرة وليد -->
-      <div class="contact-card">
-        <h3>أميرة وليد</h3>
-        <p>متخصصة في إيجار المحلات التجارية والمقرات الإدارية</p>
-        <div class="contact-buttons">
-          <a href="tel:+201099148872" class="phone-btn"><i class="fas fa-phone"></i> اتصال</a>
-          <a href="https://wa.me/201099148872" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> واتساب</a>
-        </div>
-      </div>
-
-      <!-- وليد فيصل -->
-      <div class="contact-card">
-        <h3>وليد فيصل</h3>
-        <p>متخصص في بيع الشقق والعقارات السكنية</p>
-        <div class="contact-buttons">
-          <a href="tel:+201006207878" class="phone-btn"><i class="fas fa-phone"></i> اتصال</a>
-          <a href="https://wa.me/201006207878" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> واتساب</a>
-        </div>
-      </div>
-
-      <!-- طارق طنطاوي -->
-      <div class="contact-card">
-        <h3>طارق طنطاوي</h3>
-        <p>متخصص في الشقق المفروشة للإيجار</p>
-        <div class="contact-buttons">
-          <a href="tel:+201147758857" class="phone-btn"><i class="fas fa-phone"></i> اتصال</a>
-          <a href="https://wa.me/201147758857" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> واتساب</a>
-        </div>
-      </div>
     </div>
   </section>
+
+  <div style="text-align:center; margin-top: 2.5rem;">
+    <a href="/samsar-talabak/properties-filtered.html" class="back-btn" style="background: var(--primary); color: white; padding: 0.6rem 1.2rem; border-radius: 6px; text-decoration: none;">
+      ← العودة للعقارات
+    </a>
+  </div>
 </main>
