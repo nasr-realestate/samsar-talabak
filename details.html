@@ -1,73 +1,11 @@
 ---
 layout: default
 title: "تفاصيل العقار"
-description: "صفحة تعرض تفاصيل العقار المختار تلقائيًا."
+description: "صفحة عرض تفاصيل العقار من سمسار طلبك."
 ---
 
-<style>
-  .property-details {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    font-family: 'Tajawal', sans-serif;
-    line-height: 1.8;
-    color: #333;
-  }
-
-  .property-details h1.section-title {
-    font-size: 1.8rem;
-    color: #2c3e50;
-    margin-bottom: 1rem;
-  }
-
-  .price-tag {
-    font-size: 1.5rem;
-    color: #e74c3c;
-    font-weight: bold;
-    margin-bottom: 1.5rem;
-  }
-
-  .whatsapp-btn {
-    display: inline-block;
-    background-color: #25D366;
-    color: white;
-    padding: 12px 24px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1.1rem;
-    margin-top: 1.5rem;
-    transition: all 0.3s ease;
-  }
-
-  .whatsapp-btn:hover {
-    background-color: #1ebd5b;
-    transform: scale(1.05);
-  }
-
-  .back-btn {
-    display: inline-block;
-    margin-top: 1.5rem;
-    background-color: #2c3e50;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1rem;
-  }
-
-  .back-btn:hover {
-    background-color: #1a242f;
-    transform: translateX(-4px);
-  }
-</style>
-
-<main id="property-details">
-  <p style="text-align:center;">🔄 جاري تحميل بيانات العقار...</p>
+<main class="property-details">
+  <div id="property-details">⏳ جاري تحميل بيانات العقار...</div>
 </main>
 
-<script src="/samsar-talabak/assets/js/details-loader.js" defer></script>
+<script src="/samsar-talabak/assets/js/details-loader.js"></script>
