@@ -1,87 +1,73 @@
 ---
 layout: default
-title: "شقة للبيع - الحي الثامن، مدينة نصر"
-description: "شقة متشطبة بالكامل بمساحة 175م في موقع متميز بمدينة نصر."
+title: "تفاصيل العقار"
+description: "صفحة تعرض تفاصيل العقار المختار تلقائيًا."
 ---
 
 <style>
-.property-details {
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 20px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  font-family: 'Tajawal', sans-serif;
-  line-height: 1.8;
-}
+  .property-details {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    font-family: 'Tajawal', sans-serif;
+    line-height: 1.8;
+    color: #333;
+  }
 
-.property-details h1.section-title {
-  font-size: 1.8rem;
-  color: #2c3e50;
-  margin-bottom: 1rem;
-}
+  .property-details h1.section-title {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+  }
 
-.price-tag {
-  font-size: 1.5rem;
-  color: #e74c3c;
-  font-weight: bold;
-  margin-bottom: 1.5rem;
-}
+  .price-tag {
+    font-size: 1.5rem;
+    color: #e74c3c;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+  }
 
-.whatsapp-btn {
-  display: inline-block;
-  background-color: #25D366;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 1.1rem;
-  margin-top: 1.5rem;
-  transition: all 0.3s ease;
-}
+  .whatsapp-btn {
+    display: inline-block;
+    background-color: #25D366;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-top: 1.5rem;
+    transition: all 0.3s ease;
+  }
 
-.whatsapp-btn:hover {
-  background-color: #1ebd5b;
-  transform: scale(1.05);
-}
+  .whatsapp-btn:hover {
+    background-color: #1ebd5b;
+    transform: scale(1.05);
+  }
 
-.back-btn {
-  display: inline-block;
-  margin-top: 1.5rem;
-  background-color: #2c3e50;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 1rem;
-}
+  .back-btn {
+    display: inline-block;
+    margin-top: 1.5rem;
+    background-color: #2c3e50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+  }
 
-.back-btn:hover {
-  background-color: #1a242f;
-  transform: translateX(-4px);
-}
+  .back-btn:hover {
+    background-color: #1a242f;
+    transform: translateX(-4px);
+  }
 </style>
 
-<main class="property-details">
-  <h1 class="section-title">شقة للبيع - الحي الثامن، مدينة نصر</h1>
-  <div class="price-tag">4,500,000 جنيه</div>
-
-  <p><strong>المساحة:</strong> 175 متر صافي</p>
-  <p><strong>الوصف:</strong> شقة متشطبة بالكامل في موقع متميز بين شارع حسن المأمون ومصطفى النحاس، الدور السادس، 3 غرف نوم، حمام، مطبخ، ليفينج روم، ريسبشن كبير، وبلكونة كبيرة على الواجهة. يوجد أسانسير.</p>
-
-  <div>
-    <a href="https://wa.me/201147758857?text=أريد الاستفسار عن شقة الحي الثامن بمدينة نصر" 
-       class="whatsapp-btn" target="_blank">
-      <i class="fab fa-whatsapp"></i> استفسر عبر واتساب
-    </a>
-  </div>
-
-  <div>
-    <a href="/samsar-talabak/properties-filtered.html" class="back-btn">
-      ← العودة لكل العقارات
-    </a>
-  </div>
+<main id="property-details">
+  <p style="text-align:center;">🔄 جاري تحميل بيانات العقار...</p>
 </main>
+
+<script src="/samsar-talabak/assets/js/details-loader.js" defer></script>
