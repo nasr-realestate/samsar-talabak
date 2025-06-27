@@ -2,88 +2,56 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>بوابة إدخال العقارات</title>
+  <title>إضافة عقار جديد</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       background-color: #121212;
-      font-family: 'Tajawal', sans-serif;
       color: #E0E0E0;
-      margin: 0;
-      padding: 0;
+      font-family: 'Tajawal', sans-serif;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
-    }
-
-    header {
-      background-color: #1E1E1E;
-      padding: 1rem 2rem;
-      text-align: center;
-      border-bottom: 1px solid #383838;
-    }
-
-    header h1 {
-      color: #04E762;
-      font-size: 2rem;
-      margin: 0;
-    }
-
-    main {
-      flex: 1;
+      align-items: center;
       padding: 2rem;
-      max-width: 1000px;
-      margin: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
+    }
+
+    h1 {
+      color: #04E762;
+      margin-bottom: 1.5rem;
     }
 
     .link-btn {
-      background-color: #2A2A2A;
-      color: #E0E0E0;
-      padding: 1rem 1.5rem;
-      font-size: 1.1rem;
-      font-weight: bold;
-      border: 1px solid #383838;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: all 0.3s ease;
       display: block;
+      width: 100%;
+      max-width: 450px;
       text-align: center;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      background-color: #2A2A2A;
+      border: 1px solid #383838;
+      border-radius: 10px;
+      color: #E0E0E0;
+      text-decoration: none;
+      font-size: 1.15rem;
+      font-weight: bold;
+      transition: all 0.3s ease;
     }
 
     .link-btn:hover {
-      border-color: #04E762;
-      background-color: #1E1E1E;
-      color: #04E762;
-    }
-
-    footer {
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-      color: #A0A0A0;
-      border-top: 1px solid #383838;
-      background-color: #1E1E1E;
+      background-color: #04E762;
+      color: #121212;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>🛠️ بوابة الإدخال - سمسار طلبك</h1>
-  </header>
 
-  <main>
-    <a class="link-btn" href="data/properties/apartments/" target="_blank">🏢 شقق للبيع</a>
-    <a class="link-btn" href="data/properties/apartments-rent/" target="_blank">🛋️ شقق للإيجار</a>
-    <a class="link-btn" href="data/properties/shops/" target="_blank">🏪 محلات</a>
-    <a class="link-btn" href="data/properties/offices/" target="_blank">💼 مكاتب</a>
-    <a class="link-btn" href="data/properties/admin-hq/" target="_blank">🏛️ مقرات إدارية</a>
-  </main>
+  <h1>➕ أضف عقارًا جديدًا</h1>
 
-  <footer>
-    سمسار طلبك © 2025 – إدارة طارق طنطاوي
-  </footer>
+  <a class="link-btn" href="https://github.com/nasr-realestate/samsar-talabak/new/main/data/properties/apartments" target="_blank">🏢 شقق للبيع</a>
+  <a class="link-btn" href="https://github.com/nasr-realestate/samsar-talabak/new/main/data/properties/apartments-rent" target="_blank">🛋️ شقق للإيجار</a>
+  <a class="link-btn" href="https://github.com/nasr-realestate/samsar-talabak/new/main/data/properties/shops" target="_blank">🏪 محلات</a>
+  <a class="link-btn" href="https://github.com/nasr-realestate/samsar-talabak/new/main/data/properties/offices" target="_blank">💼 مكاتب</a>
+  <a class="link-btn" href="https://github.com/nasr-realestate/samsar-talabak/new/main/data/properties/admin-hq" target="_blank">🏛️ مقرات إدارية</a>
+
 </body>
 </html>
