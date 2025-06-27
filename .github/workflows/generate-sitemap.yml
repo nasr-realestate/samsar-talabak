@@ -1,0 +1,52 @@
+name: Generate sitemap.xml
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'data/properties/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate_sitemap:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Generate sitemap.xml
+        run: |
+          BASE_URL="https://nasr-realestate.github.io/samsar-talabak"
+          DATE=$(date +%Y-%m-%dT%H:%M:%S+00:00)
+          
+          echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" > sitemap.xml
+          echo "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">" >> sitemap.xml
+
+          # أضف الصفحة الرئيسية وبعض الصفحات الثابتة
+          echo "<url><loc>$BASE_URL/</loc><lastmod>$DATE</lastmod></url>" >> sitemap.xml
+          echo "<url><loc>$BASE_URL/properties-filtered.html</loc><lastmod>$DATE</lastmod></url>" >> sitemap.xml
+
+          # أضف روابط صفحات التفاصيل
+          for category in data/properties/*; do
+            [ -d "$category" ] || continue
+            cname=$(basename "$category")
+            for file in "$category"/*.json; do
+              fname=$(basename "$file")
+              [ "$fname" != "index.json" ] || continue
+              url="$BASE_URL/details.html?category=$cname&file=$fname"
+              echo "<url><loc>$url</loc><lastmod>$DATE</lastmod></url>" >> sitemap.xml
+            done
+          done
+
+          echo "</urlset>" >> sitemap.xml
+          mv sitemap.xml ./samsar-talabak/sitemap.xml
+
+      - name: Commit and push sitemap
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "🔄 تحديث تلقائي لخريطة الموقع sitemap.xml"
