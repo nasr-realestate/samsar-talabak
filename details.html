@@ -1,118 +1,87 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>تفاصيل العقار</title>
-  <style>
-    body {
-      font-family: 'Tajawal', sans-serif;
-      background: #f9f9f9;
-      margin: 0;
-      padding: 2rem;
-    }
+---
+layout: default
+title: "شقة للبيع - الحي الثامن، مدينة نصر"
+description: "شقة متشطبة بالكامل بمساحة 175م في موقع متميز بمدينة نصر."
+---
 
-    .property-details {
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 20px;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-      line-height: 1.8;
-    }
+<style>
+.property-details {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  font-family: 'Tajawal', sans-serif;
+  line-height: 1.8;
+}
 
-    .property-details h1 {
-      font-size: 1.8rem;
-      color: #2c3e50;
-      margin-bottom: 1rem;
-    }
+.property-details h1.section-title {
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
 
-    .price-tag {
-      font-size: 1.5rem;
-      color: #e74c3c;
-      font-weight: bold;
-      margin-bottom: 1.5rem;
-    }
+.price-tag {
+  font-size: 1.5rem;
+  color: #e74c3c;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
 
-    .whatsapp-btn, .back-btn {
-      display: inline-block;
-      margin-top: 1.5rem;
-      padding: 12px 24px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1.1rem;
-      transition: all 0.3s ease;
-    }
+.whatsapp-btn {
+  display: inline-block;
+  background-color: #25D366;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-top: 1.5rem;
+  transition: all 0.3s ease;
+}
 
-    .whatsapp-btn {
-      background-color: #25D366;
-      color: white;
-    }
+.whatsapp-btn:hover {
+  background-color: #1ebd5b;
+  transform: scale(1.05);
+}
 
-    .whatsapp-btn:hover {
-      background-color: #1ebd5b;
-      transform: scale(1.05);
-    }
+.back-btn {
+  display: inline-block;
+  margin-top: 1.5rem;
+  background-color: #2c3e50;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+}
 
-    .back-btn {
-      background-color: #2c3e50;
-      color: white;
-      margin-right: 1rem;
-    }
+.back-btn:hover {
+  background-color: #1a242f;
+  transform: translateX(-4px);
+}
+</style>
 
-    .back-btn:hover {
-      background-color: #1a242f;
-      transform: translateX(-4px);
-    }
-  </style>
-</head>
-<body>
+<main class="property-details">
+  <h1 class="section-title">شقة للبيع - الحي الثامن، مدينة نصر</h1>
+  <div class="price-tag">4,500,000 جنيه</div>
 
-  <main class="property-details" id="details">جارٍ تحميل البيانات...</main>
+  <p><strong>المساحة:</strong> 175 متر صافي</p>
+  <p><strong>الوصف:</strong> شقة متشطبة بالكامل في موقع متميز بين شارع حسن المأمون ومصطفى النحاس، الدور السادس، 3 غرف نوم، حمام، مطبخ، ليفينج روم، ريسبشن كبير، وبلكونة كبيرة على الواجهة. يوجد أسانسير.</p>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const file = params.get('id');
+  <div>
+    <a href="https://wa.me/201147758857?text=أريد الاستفسار عن شقة الحي الثامن بمدينة نصر" 
+       class="whatsapp-btn" target="_blank">
+      <i class="fab fa-whatsapp"></i> استفسر عبر واتساب
+    </a>
+  </div>
 
-    async function loadDetails() {
-      const target = document.getElementById('details');
-      if (!file) return target.innerHTML = '❌ لم يتم تحديد العقار.';
-
-      try {
-        const res = await fetch(`data/properties/${file}`);
-        if (!res.ok) throw new Error("ملف غير موجود");
-        const prop = await res.json();
-
-        target.innerHTML = `
-          <h1>${prop.title}</h1>
-          <div class="price-tag">${prop.price.toLocaleString()} جنيه</div>
-          <p><strong>الموقع:</strong> ${prop.location}</p>
-          <p><strong>المساحة:</strong> ${prop.area}</p>
-          <p><strong>عدد الغرف:</strong> ${prop.rooms}</p>
-          <p><strong>عدد الحمامات:</strong> ${prop.bathrooms}</p>
-          <p><strong>الدور:</strong> ${prop.floor || 'غير محدد'}</p>
-          <p><strong>التشطيب:</strong> ${prop.finishing}</p>
-          <p><strong>الواجهة:</strong> ${prop.view || 'غير محددة'}</p>
-          <p><strong>أسانسير:</strong> ${prop.hasElevator ? '✔️ يوجد' : '❌ لا يوجد'}</p>
-          <p><strong>جراج:</strong> ${prop.hasGarage ? '✔️ يوجد' : '❌ لا يوجد'}</p>
-
-          <a class="whatsapp-btn" target="_blank" 
-             href="https://wa.me/${prop.whatsapp}?text=أريد الاستفسار عن ${prop.title}">
-             استفسر عبر واتساب
-          </a>
-          <a class="back-btn" href="index.html">← العودة للرئيسية</a>
-        `;
-      } catch (e) {
-        target.innerHTML = '❌ خطأ أثناء تحميل تفاصيل العقار.';
-        console.error(e);
-      }
-    }
-
-    loadDetails();
-  </script>
-  <script src="scripts/details-loader.js"></script>
-
-</body>
-</html>
+  <div>
+    <a href="/samsar-talabak/properties-filtered.html" class="back-btn">
+      ← العودة لكل العقارات
+    </a>
+  </div>
+</main>
