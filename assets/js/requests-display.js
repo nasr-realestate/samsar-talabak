@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function () {
-  const container = document.getElementById("properties-container");
+  const container = document.getElementById("requests-container"); // ✅ تم التعديل هنا
   const filterContainer = document.getElementById("filter-buttons");
 
   const categories = {
