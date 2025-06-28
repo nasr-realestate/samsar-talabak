@@ -1,0 +1,31 @@
+name: Generate Requests Index
+
+on:
+  push:
+    paths:
+      - "data/requests/**"
+  workflow_dispatch:
+
+jobs:
+  generate-index:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Generate index.json for each category
+        run: |
+          for dir in data/requests/*/
+          do
+            files=$(find "$dir" -maxdepth 1 -type f -name '*.json' ! -name 'index.json' -exec basename {} \;)
+            echo "$files" | jq -R -s -c 'split("\n") | map(select(. != ""))' > "$dir/index.json"
+            echo "Generated index.json for $dir"
+          done
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "samsar-bot"
+          git config --global user.email "samsar@example.com"
+          git add data/requests/*/index.json
+          git commit -m "Auto-generate index.json for requests"
+          git push
