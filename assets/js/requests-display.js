@@ -3,11 +3,11 @@ document.addEventListener("DOMContentLoaded", async function () {
   const filterContainer = document.getElementById("filter-buttons");
 
   const categories = {
-    "requests-apartments": "طلبات شقق للبيع",
-    "requests-apartments-rent": "طلبات شقق للإيجار",
-    "requests-shops": "طلبات محلات",
-    "requests-offices": "طلبات مكاتب",
-    "requests-admin-hq": "طلبات مقرات إدارية"
+    "apartments": "طلبات شقق للشراء",
+    "apartments-rent": "طلبات شقق للإيجار",
+    "shops": "طلبات محلات",
+    "offices": "طلبات مكاتب",
+    "admin-hq": "طلبات مقرات إدارية"
   };
 
   for (const [key, label] of Object.entries(categories)) {
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   loadCategory(defaultCategory);
 
   function loadCategory(category) {
-    container.innerHTML = "<p style='text-align:center'>جاري تحميل البيانات...</p>";
+    container.innerHTML = "<p style='text-align:center'>جاري تحميل الطلبات...</p>";
 
     const allButtons = document.querySelectorAll(".filter-btn");
     allButtons.forEach(btn => btn.classList.remove("active"));
@@ -57,11 +57,17 @@ document.addEventListener("DOMContentLoaded", async function () {
               `;
 
               card.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
+                  <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار" style="width: 40px; height: 40px; border-radius: 50%;">
+                  <strong style="color:#00ff88;">طلب جديد</strong>
+                </div>
                 <h2 style="color:#00ff88; font-size: 1.4rem; font-weight: bold; margin-bottom: 0.5rem;">
                   ${data.title}
                 </h2>
-                <p><strong>📌 الميزانية:</strong> ${data.budget || 'غير محددة'}</p>
-                <p style="color:#ccc;"><strong>📋 تفاصيل الطلب:</strong> ${data.description}</p>
+                <p style="margin: 0.2rem 0;"><strong>🔍 نوع الطلب:</strong> ${categories[category]}</p>
+                <p style="margin: 0.2rem 0;"><strong>📏 المساحة المطلوبة:</strong> ${data.area}</p>
+                <p style="margin: 0.2rem 0;"><strong>💰 الميزانية:</strong> ${data.budget}</p>
+                <p style="margin: 0.5rem 0; color:#ccc;"><strong>📝 التفاصيل:</strong> ${data.description}</p>
               `;
 
               container.appendChild(card);
