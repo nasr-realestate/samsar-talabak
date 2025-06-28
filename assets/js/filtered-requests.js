@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", async function () {
-  const container = document.getElementById("requests-container");
+  const container = document.getElementById("properties-container");
   const filterContainer = document.getElementById("filter-buttons");
 
   const categories = {
-    "request-apartments": "طلبات شقق للبيع",
-    "request-apartments-rent": "طلبات شقق للإيجار",
-    "request-shops": "طلبات محلات",
-    "request-offices": "طلبات مكاتب",
-    "request-admin-hq": "طلبات مقرات إدارية"
+    "requests-apartments": "طلبات شقق للبيع",
+    "requests-apartments-rent": "طلبات شقق للإيجار",
+    "requests-shops": "طلبات محلات",
+    "requests-offices": "طلبات مكاتب",
+    "requests-admin-hq": "طلبات مقرات إدارية"
   };
 
   for (const [key, label] of Object.entries(categories)) {
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   loadCategory(defaultCategory);
 
   function loadCategory(category) {
-    container.innerHTML = "<p style='text-align:center'>جاري تحميل الطلبات...</p>";
+    container.innerHTML = "<p style='text-align:center'>جاري تحميل البيانات...</p>";
 
     const allButtons = document.querySelectorAll(".filter-btn");
     allButtons.forEach(btn => btn.classList.remove("active"));
@@ -46,19 +46,22 @@ document.addEventListener("DOMContentLoaded", async function () {
               const card = document.createElement("div");
               card.className = `property-card card-${category}`;
               card.style = `
-                border: 1px solid #ddd;
+                background-color: #1e1e1e;
+                border: 1px solid #333;
                 padding: 1.5rem;
-                border-radius: 10px;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+                border-radius: 12px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.3);
                 margin-bottom: 1.5rem;
                 font-family: 'Tajawal', sans-serif;
+                color: #f1f1f1;
               `;
 
               card.innerHTML = `
-                <h2 style="color:#2c3e50">${data.title}</h2>
-                <p><strong>الميزانية:</strong> ${data.price}</p>
-                <p><strong>المساحة المطلوبة:</strong> ${data.area}</p>
-                <p><strong>تفاصيل إضافية:</strong> ${data.description}</p>
+                <h2 style="color:#00ff88; font-size: 1.4rem; font-weight: bold; margin-bottom: 0.5rem;">
+                  ${data.title}
+                </h2>
+                <p><strong>📌 الميزانية:</strong> ${data.budget || 'غير محددة'}</p>
+                <p style="color:#ccc;"><strong>📋 تفاصيل الطلب:</strong> ${data.description}</p>
               `;
 
               container.appendChild(card);
@@ -67,7 +70,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       })
       .catch(err => {
         console.error(err);
-        container.innerHTML = "<p style='text-align:center'>حدث خطأ أثناء تحميل الطلبات.</p>";
+        container.innerHTML = "<p style='text-align:center'>❌ حدث خطأ أثناء تحميل الطلبات.</p>";
       });
   }
 });
