@@ -56,6 +56,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                 color: #f1f1f1;
               `;
 
+              const whatsappMessage = encodeURIComponent(`مرحبًا، لدي عرض مناسب لهذا الطلب: ${data.title}`);
+
               card.innerHTML = `
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
                   <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار" style="width: 40px; height: 40px; border-radius: 50%;">
@@ -68,6 +70,14 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <p style="margin: 0.2rem 0;"><strong>📏 المساحة المطلوبة:</strong> ${data.area}</p>
                 <p style="margin: 0.2rem 0;"><strong>💰 الميزانية:</strong> ${data.budget}</p>
                 <p style="margin: 0.5rem 0; color:#ccc;"><strong>📝 التفاصيل:</strong> ${data.description}</p>
+
+                <div style="margin-top: 1rem;">
+                  <a href="https://wa.me/201147758857?text=${whatsappMessage}"
+                    target="_blank"
+                    style="background:#00ff88; color:#000; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: bold;">
+                    📩 لدي عرض يناسب هذا الطلب
+                  </a>
+                </div>
               `;
 
               container.appendChild(card);
