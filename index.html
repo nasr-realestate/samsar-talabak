@@ -1,22 +1,66 @@
 ---
 layout: default
 title: "سمسار طلبك | الصفحة الرئيسية"
-description: "ابدأ رحلتك العقارية الذكية في مدينة نصر مع سمسار طلبك – عروض وطلبات لحظية ومحدثة."
+description: "ابدأ رحلتك العقارية الآن - تصفح العروض أو استعرض طلبات العملاء في مدينة نصر."
 ---
 
-<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4rem 1rem; min-height: 80vh; background-color: #f8f9fa; font-family: 'Tajawal', sans-serif;">
-  <h1 style="font-size: 2.5rem; color: #2c3e50; margin-bottom: 2rem;">مرحباً بك في <span style="color:#00b894;">سمسار طلبك</span>!</h1>
-  <p style="font-size: 1.2rem; color: #555; margin-bottom: 3rem; text-align: center;">
-    اختر ما تريد تصفحه الآن:
-  </p>
-  <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
-    <a href="properties-filtered.html" 
-       style="background-color: #00b894; color: white; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; font-size: 1.2rem; font-weight: bold;">
-      🏘️ تصفح العروض الذكية
-    </a>
-    <a href="requests-filtered.html" 
-       style="background-color: #0984e3; color: white; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; font-size: 1.2rem; font-weight: bold;">
-      🧑‍💼 تصفح الطلبات الذكية
-    </a>
+<style>
+  .home-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    background-color: #121212;
+    color: #f1f1f1;
+    text-align: center;
+    padding: 2rem;
+    font-family: 'Tajawal', sans-serif;
+  }
+
+  .home-hero h1 {
+    font-size: 2.5rem;
+    color: #00ff88;
+    margin-bottom: 1rem;
+  }
+
+  .home-hero p {
+    font-size: 1.2rem;
+    color: #ccc;
+    margin-bottom: 2rem;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero-buttons a {
+    background-color: #00ff88;
+    color: #000;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+  }
+
+  .hero-buttons a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+  }
+</style>
+
+<section class="home-hero">
+  <h1>مرحبًا بك في سمسار طلبك</h1>
+  <p>ابدأ رحلتك العقارية الآن — سواء كنت تبحث عن شقة أو لديك عرض مميز!</p>
+
+  <div class="hero-buttons">
+    <a href="/samsar-talabak/properties-filtered.html">🏠 عروض العقارات</a>
+    <a href="/samsar-talabak/requests-filtered.html">📩 طلبات العملاء</a>
   </div>
-</div>
+</section>
