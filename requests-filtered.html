@@ -1,54 +1,41 @@
 ---
 layout: default
-title: "طلبات العملاء"
-description: "اكتشف طلبات العملاء وابحث إذا كان لديك ما يناسبهم."
+title: طلبات العملاء
+description: استعرض أحدث طلبات العقارات في مدينة نصر واعرض ما يناسبها.
 ---
 
-<div id="intro-popup" style="
-  display: none;
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #1e1e1e;
-  color: white;
-  padding: 20px 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-  z-index: 9999;
-  max-width: 90%;
+<!-- ✅ تنبيه ترحيبي خفيف -->
+<div id="welcome-hint" style="
+  background-color: #fff8c4;
+  color: #333;
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin: 20px auto;
+  max-width: 900px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   font-family: 'Tajawal', sans-serif;
+  font-size: 1rem;
+  position: relative;
   text-align: center;
 ">
-  👋 أهلاً بك في صفحة <strong>طلبات العملاء</strong>!  
-  شوف مين بيدور على حاجة زي اللي معاك، واعرض عليه بكل سهولة.
-  <br><br>
-  <button onclick="document.getElementById('intro-popup').remove()" style="
-    background: #00cc66;
-    color: white;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 6px;
+  👋 أهلاً بك! يمكنك تصفح الطلبات ومعرفة هل لديك عرض يناسبهم؟
+  <span onclick="document.getElementById('welcome-hint').remove()" style="
+    position: absolute;
+    right: 12px;
+    top: 8px;
     cursor: pointer;
     font-weight: bold;
-  ">تمام ✅</button>
+    color: #a00;
+    font-size: 1.2rem;">×</span>
 </div>
 
-<div id="filter-buttons" style="margin-bottom: 2rem; text-align:center;"></div>
-<div id="requests-container">⏳ جاري تحميل الطلبات...</div>
+<!-- ✅ أزرار التصنيفات -->
+<div id="filter-buttons" style="display:flex; gap: 10px; justify-content:center; flex-wrap: wrap; margin-bottom: 2rem;"></div>
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  if (!localStorage.getItem("introRequestsShown")) {
-    const popup = document.getElementById("intro-popup");
-    popup.style.display = "block";
-    localStorage.setItem("introRequestsShown", "true");
+<!-- ✅ الحاوية الرئيسية للبطاقات -->
+<div id="requests-container" style="max-width: 1100px; margin: auto; padding: 0 15px;">
+  جاري تحميل الطلبات...
+</div>
 
-    setTimeout(() => {
-      if (popup) popup.remove();
-    }, 8000);
-  }
-});
-</script>
-
+<!-- ✅ تحميل السكريبت الذكي -->
 <script src="/samsar-talabak/assets/js/requests-filtered-script.js" defer></script>
