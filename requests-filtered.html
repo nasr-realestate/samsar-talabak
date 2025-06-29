@@ -10,4 +10,46 @@ description: "شاهد أحدث طلبات الشراء والإيجار في م
 
 <div id="requests-container" style="max-width: 900px; margin: auto; padding: 0 1rem;"></div>
 
+<!-- 👋 واجهة ترحيبية أول مرة -->
+<div id="welcome-popup" style="
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  color: #222;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 0 30px rgba(0,0,0,0.3);
+  max-width: 90%;
+  width: 360px;
+  z-index: 9999;
+  text-align: center;
+  font-family: 'Tajawal', sans-serif;
+">
+  <div style="font-size: 3rem;">📩</div>
+  <h2 style="margin: 0.5rem 0; color: #00aa66;">مرحبًا بك!</h2>
+  <p>في هذه الصفحة يمكنك استعراض طلبات العملاء الباحثين عن شقق أو محلات أو مكاتب. إذا كان لديك عرض يناسب أحد هذه الطلبات، يمكنك التواصل مباشرة.</p>
+  <button onclick="document.getElementById('welcome-popup').style.display='none'" style="
+    margin-top: 1rem;
+    background: #00cc66;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+  ">فهمت ✅</button>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    if (!localStorage.getItem("seen_welcome_requests")) {
+      document.getElementById("welcome-popup").style.display = "block";
+      localStorage.setItem("seen_welcome_requests", "true");
+    }
+  });
+</script>
+
 <script src="/samsar-talabak/assets/js/requests-display.js"></script>
