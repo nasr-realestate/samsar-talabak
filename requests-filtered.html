@@ -1,13 +1,54 @@
 ---
 layout: default
-title: "طلبات العملاء - سمسار طلبك"
-description: "شاهد أحدث طلبات الشراء والإيجار في مدينة نصر، شقق، محلات، مكاتب، وأكثر من سمسار طلبك."
+title: "طلبات العملاء"
+description: "اكتشف طلبات العملاء وابحث إذا كان لديك ما يناسبهم."
 ---
 
-<h1 style="text-align: center; margin: 2rem 0; color: #04E762;">طلبات العملاء</h1>
+<div id="intro-popup" style="
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1e1e1e;
+  color: white;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  z-index: 9999;
+  max-width: 90%;
+  font-family: 'Tajawal', sans-serif;
+  text-align: center;
+">
+  👋 أهلاً بك في صفحة <strong>طلبات العملاء</strong>!  
+  شوف مين بيدور على حاجة زي اللي معاك، واعرض عليه بكل سهولة.
+  <br><br>
+  <button onclick="document.getElementById('intro-popup').remove()" style="
+    background: #00cc66;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+  ">تمام ✅</button>
+</div>
 
-<div id="filter-buttons" style="text-align: center; margin-bottom: 2rem;"></div>
+<div id="filter-buttons" style="margin-bottom: 2rem; text-align:center;"></div>
+<div id="requests-container">⏳ جاري تحميل الطلبات...</div>
 
-<div id="requests-container" style="max-width: 900px; margin: auto; padding: 0 1rem;"></div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  if (!localStorage.getItem("introRequestsShown")) {
+    const popup = document.getElementById("intro-popup");
+    popup.style.display = "block";
+    localStorage.setItem("introRequestsShown", "true");
 
-<script src="/samsar-talabak/assets/js/requests-display.js"></script>
+    setTimeout(() => {
+      if (popup) popup.remove();
+    }, 8000);
+  }
+});
+</script>
+
+<script src="/samsar-talabak/assets/js/requests-filtered-script.js" defer></script>
