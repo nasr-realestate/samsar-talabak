@@ -30,6 +30,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     const activeBtn = document.querySelector(`[data-category="${category}"]`);
     if (activeBtn) activeBtn.classList.add("active");
 
+    const highlighted = localStorage.getItem("highlightedRequest");
+
     fetch(`/samsar-talabak/data/requests/${category}/index.json`)
       .then(response => response.json())
       .then(files => {
@@ -46,7 +48,7 @@ document.addEventListener("DOMContentLoaded", async function () {
               const encodedFilename = encodeURIComponent(filename);
               const detailPage = `/samsar-talabak/request-details.html?category=${category}&file=${encodedFilename}`;
 
-              const isHighlighted = localStorage.getItem("highlightedRequest") === filename;
+              const isHighlighted = highlighted === filename;
 
               const card = document.createElement("div");
               card.className = `property-card card-${category}`;
