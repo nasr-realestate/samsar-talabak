@@ -1,54 +1,114 @@
 ---
 layout: default
 title: "تفاصيل الطلب - سمسار طلبك"
-description: "شاهد تفاصيل طلب العملاء وشاركنا إذا كان لديك عرض يناسبه."
+description: "تعرف على تفاصيل طلب العميل من حيث الموقع، الميزانية، المساحة، والاحتياجات الأخرى."
 ---
 
-<div id="request-details" style="max-width: 800px; margin: 40px auto; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); font-family: 'Tajawal', sans-serif;">
-  <p style="text-align:center; color:#555;">⏳ جاري تحميل تفاصيل الطلب...</p>
+<!-- ✅ Google Tag Manager -->
+<script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MHPZ8NP');
+</script>
+
+<!-- ✅ Meta Tags -->
+<meta name="robots" content="index, follow">
+<meta name="author" content="سمسار طلبك">
+<meta property="og:title" content="تفاصيل الطلب - سمسار طلبك">
+<meta property="og:description" content="تعرف على تفاصيل الطلب العقاري لعميل مهتم بعقار في مدينة نصر.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak/details-requests.html">
+<meta property="og:image" content="https://nasr-realestate.github.io/samsar-talabak/assets/img/logo.png">
+
+<!-- ✅ تصميم -->
+<style>
+  body {
+    background-color: #121212;
+    color: #f1f1f1;
+    font-family: 'Tajawal', sans-serif;
+    padding: 2rem;
+  }
+
+  .request-details {
+    max-width: 800px;
+    margin: auto;
+    background-color: #1e1e1e;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,255,136,0.1);
+  }
+
+  .request-details h1 {
+    color: #00ff88;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .request-details ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .request-details li {
+    margin: 0.6rem 0;
+    font-size: 1.1rem;
+    border-bottom: 1px dashed #333;
+    padding-bottom: 0.5rem;
+  }
+
+  .back-link {
+    display: block;
+    margin-top: 2rem;
+    text-align: center;
+    text-decoration: none;
+    color: #00ff88;
+    font-weight: bold;
+  }
+</style>
+
+<div class="request-details" id="request-container">
+  جارٍ تحميل تفاصيل الطلب...
 </div>
 
+<a href="/samsar-talabak/requests-filtered.html" class="back-link">← عودة إلى الطلبات</a>
+
 <script>
-document.addEventListener("DOMContentLoaded", async function () {
-  const params = new URLSearchParams(window.location.search);
-  const category = params.get("category");
-  const file = params.get("file");
-  const container = document.getElementById("request-details");
+  async function loadRequest() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get('category');
+    const file = urlParams.get('file');
 
-  if (!category || !file) {
-    container.innerHTML = "<p style='color:#c00;'>❌ لم يتم تحديد الطلب.</p>";
-    return;
+    if (!category || !file) {
+      document.getElementById('request-container').innerHTML = '<p>⚠️ لم يتم تحديد الطلب بشكل صحيح.</p>';
+      return;
+    }
+
+    try {
+      const res = await fetch(`/samsar-talabak/data/requests/${category}/${file}`);
+      const data = await res.json();
+
+      let html = `<h1>${data.title || 'تفاصيل الطلب'}</h1><ul>`;
+
+      for (const [key, value] of Object.entries(data)) {
+        if (key !== 'title' && key !== 'image') {
+          html += `<li><strong>${key}:</strong> ${value}</li>`;
+        }
+      }
+
+      html += `</ul>`;
+
+      if (data.image) {
+        html += `<div style="text-align:center; margin-top:2rem;"><img src="${data.image}" alt="صورة مرفقة" style="max-width:100%; border-radius:10px;"></div>`;
+      }
+
+      document.getElementById('request-container').innerHTML = html;
+    } catch (err) {
+      document.getElementById('request-container').innerHTML = '<p>❌ حدث خطأ أثناء تحميل البيانات.</p>';
+    }
   }
 
-  try {
-    const res = await fetch(`/samsar-talabak/data/requests/${category}/${file}`);
-    const req = await res.json();
-
-    container.innerHTML = `
-      <div style="background: #fff; color: #222; border-radius: 12px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-        <h1 style="font-size: 1.8rem; color: #1a1a1a; margin-bottom: 1rem;">${req.title}</h1>
-        <p style="margin: 0.5rem 0;"><strong>📌 نوع الطلب:</strong> ${category}</p>
-        <p style="margin: 0.5rem 0;"><strong>📏 المساحة المطلوبة:</strong> ${req.area}</p>
-        <p style="margin: 0.5rem 0;"><strong>💰 الميزانية:</strong> ${req.budget}</p>
-        <p style="margin: 0.5rem 0;"><strong>📝 تفاصيل إضافية:</strong> ${req.description}</p>
-
-        <a href="https://wa.me/201147758857?text=مرحبًا، لدي عرض مناسب للطلب التالي: ${encodeURIComponent(req.title)}"
-           target="_blank"
-           style="display:inline-block; background-color:#25D366; color:#fff; padding:12px 24px; border-radius:6px; text-decoration:none; font-weight:bold; font-size:1rem; margin-top:1.5rem;">
-          ✅ لدي عرض كهذا – تواصل عبر واتساب
-        </a>
-
-        <br><br>
-
-        <a href="requests-filtered.html" 
-           style="display:inline-block; margin-top:1rem; background-color:#2c3e50; color:white; padding:10px 20px; border-radius:6px; text-decoration:none;">
-           ← العودة لكل الطلبات
-        </a>
-      </div>
-    `;
-  } catch (err) {
-    console.error("فشل في تحميل بيانات الطلب:", err);
-    container.innerHTML = "<p style='color:#c00;'>❌ حدث خطأ أثناء تحميل بيانات الطلب.</p>";
-  }
-});
+  loadRequest();
 </script>
