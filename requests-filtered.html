@@ -1,28 +1,18 @@
 ---
 layout: default
-title: "طلبات العملاء العقارية في مدينة نصر"
-description: "اطّلع على أحدث طلبات شراء أو إيجار العقارات في مدينة نصر، واعرض عقارك إن كان مناسبًا!"
+title: "طلبات العقارات في مدينة نصر"
+description: "اعرض طلبك العقاري أو ابحث عن عملاء جادين لشراء أو استئجار العقارات في مدينة نصر."
 ---
-
-<!-- ✅ Google Tag Manager -->
-<script>
-(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-MHPZ8NP');
-</script>
 
 <!-- ✅ Meta Tags -->
 <meta name="robots" content="index, follow">
 <meta name="author" content="سمسار طلبك">
-<meta property="og:title" content="طلبات العملاء - سمسار طلبك">
-<meta property="og:description" content="تصفح طلبات العملاء المهتمين بعقارات مدينة نصر واعرض عقارك المناسب الآن.">
+<meta property="og:title" content="طلبات العقارات - سمسار طلبك">
+<meta property="og:description" content="طلبات حقيقية للشقق والمحلات والمكاتب من عملاء يبحثون في مدينة نصر.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak/requests-filtered.html">
 <meta property="og:image" content="https://i.postimg.cc/Vk8Nn1xZ/me.jpg">
 
-<!-- ✅ تصميم -->
 <style>
   body {
     background-color: #121212;
@@ -55,9 +45,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     transition: 0.3s;
   }
 
-  .filter-btn:hover, .filter-btn.active {
+  .filter-btn:hover {
     background-color: #00ff88;
     color: #121212;
+  }
+
+  .welcome-message {
+    background-color: #1e1e1e;
+    border: 1px solid #00ff88;
+    color: #f1f1f1;
+    padding: 1rem;
+    margin: 2rem auto;
+    border-radius: 10px;
+    max-width: 700px;
+    text-align: center;
+    line-height: 1.8;
   }
 
   #requests-container {
@@ -70,34 +72,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
 </style>
 
-<h1>📥 طلبات العملاء</h1>
+<h1>📬 طلبات العقارات</h1>
 <div id="filter-buttons"></div>
+
+<div id="welcome-box"></div>
 <div id="requests-container">⏳ جاري تحميل الطلبات...</div>
 
-<!-- ✅ رسالة ترحيب تظهر مرة واحدة فقط -->
-<div id="first-visit-tip" style="display: none; background: #222; color: #fff; padding: 1rem; border-radius: 8px; position: fixed; bottom: 20px; right: 20px; max-width: 300px; z-index: 9999; box-shadow: 0 0 10px rgba(0,0,0,0.5); font-family: 'Tajawal', sans-serif;">
-  <strong style="color: #00ff88;">📌 أول زيارة؟</strong>
-  <p id="tip-text" style="font-size: 0.9rem; margin: 0.5rem 0;">تصفح الطلبات العقارية، ولو عندك عرض مناسب اضغط على ✅ لدي عرض كهذا.</p>
-  <button onclick="hideFirstVisitTip()" style="background: #00ff88; color: #000; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer;">فهمت</button>
-</div>
-
 <script>
-function hideFirstVisitTip() {
-  document.getElementById("first-visit-tip").style.display = "none";
-  localStorage.setItem("seenTipRequests", "yes");
-}
 document.addEventListener("DOMContentLoaded", function () {
-  if (!localStorage.getItem("seenTipRequests")) {
-    document.getElementById("first-visit-tip").style.display = "block";
-  }
-});
-</script>
-
-<!-- ✅ سكربت عرض الطلبات -->
-<script>
-document.addEventListener("DOMContentLoaded", async function () {
   const container = document.getElementById("requests-container");
   const filterContainer = document.getElementById("filter-buttons");
+  const welcomeBox = document.getElementById("welcome-box");
 
   const categories = {
     "apartments": "طلبات شقق للشراء",
@@ -107,6 +92,20 @@ document.addEventListener("DOMContentLoaded", async function () {
     "admin-hq": "طلبات مقرات إدارية"
   };
 
+  // ✅ رسالة ترحيبية تظهر مرة واحدة
+  if (!sessionStorage.getItem("seenRequestsWelcome")) {
+    const welcome = document.createElement("div");
+    welcome.className = "welcome-message";
+    welcome.innerHTML = `
+      🧐 أهلاً بك في قسم <strong>طلبات العقارات</strong>!  
+      استعرض الطلبات حسب النوع، وإذا كان لديك عرض مطابق، يمكنك التواصل مباشرة.  
+      نحن نعرض فقط الطلبات الجادة من عملاء حقيقيين.
+    `;
+    welcomeBox.appendChild(welcome);
+    sessionStorage.setItem("seenRequestsWelcome", "true");
+  }
+
+  // ✅ أزرار الفلترة
   for (const [key, label] of Object.entries(categories)) {
     const btn = document.createElement("button");
     btn.textContent = label;
@@ -131,7 +130,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       .then(files => {
         container.innerHTML = '';
         if (!files.length) {
-          container.innerHTML = "<p style='text-align:center'>❌ لا توجد طلبات حالياً.</p>";
+          container.innerHTML = "<p style='text-align:center'>🚫 لا توجد طلبات حالياً.</p>";
           return;
         }
 
@@ -150,23 +149,25 @@ document.addEventListener("DOMContentLoaded", async function () {
                 padding: 1.5rem;
                 border-radius: 12px;
                 box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+                margin-bottom: 1.5rem;
                 font-family: 'Tajawal', sans-serif;
+                color: #f1f1f1;
               `;
 
-              const dateText = data.date ? `<p style="font-size: 0.9rem; color: #bbb; margin-bottom: 0.6rem;">📅 أُضيف بتاريخ: ${data.date}</p>` : `<p style="font-size: 0.9rem; color: #999;">📅 تاريخ الإضافة: غير متوفر</p>`;
+              const dateAdded = data.date ? `<p style="font-size: 0.9rem; color: #ccc;">📅 أضيف في: ${data.date}</p>` : `<p style="font-size: 0.9rem; color: #ccc;">📅 أضيف في: غير متوفر</p>`;
 
               card.innerHTML = `
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
                   <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار" style="width: 40px; height: 40px; border-radius: 50%;">
                   <strong style="color:#00ff88;">طلب جديد</strong>
                 </div>
-                ${dateText}
                 <h2 style="color:#00ff88; font-size: 1.4rem; font-weight: bold; margin-bottom: 0.5rem;">
                   ${data.title}
                 </h2>
+                ${dateAdded}
                 <p><strong>🔍 نوع الطلب:</strong> ${categories[category]}</p>
-                <p><strong>📏 المساحة المطلوبة:</strong> ${data.area}</p>
-                <p><strong>💰 الميزانية:</strong> ${data.budget}</p>
+                <p><strong>📏 المساحة المطلوبة:</strong> ${data.area || 'غير محددة'}</p>
+                <p><strong>💰 الميزانية:</strong> ${data.budget || 'غير محددة'}</p>
                 <p style="margin: 0.5rem 0; color:#ccc;"><strong>📝 التفاصيل:</strong> ${data.description}</p>
                 <div style="margin-top: 1rem;">
                   <a href="${detailPage}" 
@@ -186,4 +187,4 @@ document.addEventListener("DOMContentLoaded", async function () {
       });
   }
 });
-      </script>
+    </script>
