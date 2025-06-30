@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "تفاصيل العرض - سمسار طلبك"
-description: "شاهد تفاصيل هذا العرض المميز من شقق ومحلات ومكاتب للبيع أو الإيجار في مدينة نصر."
+description: "شاهد كل التفاصيل الخاصة بهذا العرض العقاري في مدينة نصر مع صور ومواصفات دقيقة."
 ---
 
 <!-- ✅ Google Tag Manager -->
@@ -16,84 +16,87 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- ✅ Meta Tags -->
 <meta name="robots" content="index, follow">
 <meta name="author" content="سمسار طلبك">
-<meta property="og:title" content="تفاصيل العرض - سمسار طلبك">
-<meta property="og:description" content="شاهد تفاصيل هذا العرض المميز من شقق ومحلات ومكاتب للبيع أو الإيجار في مدينة نصر.">
+<meta property="og:title" content="تفاصيل العرض العقاري - سمسار طلبك">
+<meta property="og:description" content="تعرف على كامل مواصفات العرض العقاري في مدينة نصر، شقة أو محل أو مكتب بموقع وسعر مناسب.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak/details.html">
 <meta property="og:image" content="https://nasr-realestate.github.io/samsar-talabak/assets/img/logo.png">
 
-<!-- ✅ تصميم الصفحة -->
+<!-- ✅ CSS -->
 <style>
   body {
-    background-color: #121212;
-    color: #f1f1f1;
+    background-color: #f9f9f9;
     font-family: 'Tajawal', sans-serif;
+    color: #222;
     padding: 2rem;
   }
 
-  .property-details {
+  .property-card {
+    background-color: #fff;
     max-width: 800px;
     margin: auto;
-    background-color: #1e1e1e;
     padding: 2rem;
     border-radius: 12px;
-    box-shadow: 0 0 20px rgba(0,255,136,0.1);
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
   }
 
-  .property-details h1 {
-    color: #00ff88;
+  .property-card h1 {
+    color: #04E762;
+    margin-bottom: 1.2rem;
     font-size: 1.8rem;
-    margin-bottom: 1rem;
-    text-align: center;
   }
 
-  .property-details ul {
+  .property-card ul {
     list-style: none;
     padding: 0;
   }
 
-  .property-details li {
-    margin: 0.6rem 0;
+  .property-card li {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid #eee;
     font-size: 1.1rem;
-    border-bottom: 1px dashed #333;
-    padding-bottom: 0.5rem;
+  }
+
+  .property-card img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-top: 1.5rem;
   }
 
   .back-link {
     display: block;
-    margin-top: 2rem;
+    margin: 2rem auto 0;
     text-align: center;
-    text-decoration: none;
-    color: #00ff88;
     font-weight: bold;
+    text-decoration: none;
+    color: #04E762;
   }
 </style>
 
-<div class="property-details" id="details-container">
-  جارٍ تحميل التفاصيل...
+<div class="property-card" id="property-container">
+  <p>جاري تحميل تفاصيل العرض...</p>
 </div>
 
-<a href="/samsar-talabak/properties-filtered.html" class="back-link">← عودة إلى العروض</a>
+<a href="/samsar-talabak/properties-filtered.html" class="back-link">← العودة إلى جميع العروض</a>
 
 <script>
-  async function loadDetails() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const category = urlParams.get('category');
-    const file = urlParams.get('file');
+  async function loadProperty() {
+    const params = new URLSearchParams(location.search);
+    const category = params.get("category");
+    const file = params.get("file");
 
     if (!category || !file) {
-      document.getElementById('details-container').innerHTML = '<p>⚠️ لم يتم تحديد العرض بشكل صحيح.</p>';
+      document.getElementById("property-container").innerHTML = "<p>⚠️ لم يتم تحديد العرض بشكل صحيح.</p>";
       return;
     }
 
     try {
       const res = await fetch(`/samsar-talabak/data/properties/${category}/${file}`);
       const data = await res.json();
-
       let html = `<h1>${data.title || 'تفاصيل العرض'}</h1><ul>`;
 
       for (const [key, value] of Object.entries(data)) {
-        if (key !== 'title' && key !== 'image') {
+        if (key !== 'image' && key !== 'title') {
           html += `<li><strong>${key}:</strong> ${value}</li>`;
         }
       }
@@ -101,14 +104,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       html += `</ul>`;
 
       if (data.image) {
-        html += `<div style="text-align:center; margin-top:2rem;"><img src="${data.image}" alt="صورة العقار" style="max-width:100%; border-radius:10px;"></div>`;
+        html += `<img src="${data.image}" alt="صورة العرض">`;
       }
 
-      document.getElementById('details-container').innerHTML = html;
-    } catch (err) {
-      document.getElementById('details-container').innerHTML = '<p>❌ حدث خطأ أثناء تحميل البيانات.</p>';
+      document.getElementById("property-container").innerHTML = html;
+    } catch (error) {
+      document.getElementById("property-container").innerHTML = "<p>❌ فشل تحميل البيانات.</p>";
     }
   }
 
-  loadDetails();
-    </script>
+  loadProperty();
+</script>
