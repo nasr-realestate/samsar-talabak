@@ -1,7 +1,7 @@
 ---
 layout: default
-title: "طلبات العملاء - سمسار طلبك"
-description: "شاهد أحدث طلبات الشراء والإيجار في مدينة نصر، شقق، محلات، مكاتب، وأكثر من سمسار طلبك."
+title: "طلبات العملاء العقارية في مدينة نصر"
+description: "اطّلع على أحدث طلبات شراء أو إيجار العقارات في مدينة نصر، واعرض عقارك إن كان مناسبًا!"
 ---
 
 <!-- ✅ Google Tag Manager -->
@@ -13,14 +13,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-MHPZ8NP');
 </script>
 
-<!-- ✅ Meta Tags إضافية -->
+<!-- ✅ Meta Tags -->
 <meta name="robots" content="index, follow">
 <meta name="author" content="سمسار طلبك">
 <meta property="og:title" content="طلبات العملاء - سمسار طلبك">
-<meta property="og:description" content="شاهد أحدث طلبات الشراء والإيجار في مدينة نصر، شقق، محلات، مكاتب، وأكثر من سمسار طلبك.">
+<meta property="og:description" content="تصفح طلبات العملاء المهتمين بعقارات مدينة نصر واعرض عقارك المناسب الآن.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak/requests-filtered.html">
-<meta property="og:image" content="https://nasr-realestate.github.io/samsar-talabak/assets/img/logo.png">
+<meta property="og:image" content="https://i.postimg.cc/Vk8Nn1xZ/me.jpg">
 
 <!-- ✅ تصميم -->
 <style>
@@ -55,7 +55,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     transition: 0.3s;
   }
 
-  .filter-btn:hover {
+  .filter-btn:hover, .filter-btn.active {
     background-color: #00ff88;
     color: #121212;
   }
@@ -70,8 +70,120 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
 </style>
 
-<h1>📩 طلبات العملاء</h1>
+<h1>📥 طلبات العملاء</h1>
 <div id="filter-buttons"></div>
-<div id="requests-container">جارٍ تحميل الطلبات...</div>
+<div id="requests-container">⏳ جاري تحميل الطلبات...</div>
 
-<script src="/samsar-talabak/assets/js/requests-display.js" defer></script>
+<!-- ✅ رسالة ترحيب تظهر مرة واحدة فقط -->
+<div id="first-visit-tip" style="display: none; background: #222; color: #fff; padding: 1rem; border-radius: 8px; position: fixed; bottom: 20px; right: 20px; max-width: 300px; z-index: 9999; box-shadow: 0 0 10px rgba(0,0,0,0.5); font-family: 'Tajawal', sans-serif;">
+  <strong style="color: #00ff88;">📌 أول زيارة؟</strong>
+  <p id="tip-text" style="font-size: 0.9rem; margin: 0.5rem 0;">تصفح الطلبات العقارية، ولو عندك عرض مناسب اضغط على ✅ لدي عرض كهذا.</p>
+  <button onclick="hideFirstVisitTip()" style="background: #00ff88; color: #000; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer;">فهمت</button>
+</div>
+
+<script>
+function hideFirstVisitTip() {
+  document.getElementById("first-visit-tip").style.display = "none";
+  localStorage.setItem("seenTipRequests", "yes");
+}
+document.addEventListener("DOMContentLoaded", function () {
+  if (!localStorage.getItem("seenTipRequests")) {
+    document.getElementById("first-visit-tip").style.display = "block";
+  }
+});
+</script>
+
+<!-- ✅ سكربت عرض الطلبات -->
+<script>
+document.addEventListener("DOMContentLoaded", async function () {
+  const container = document.getElementById("requests-container");
+  const filterContainer = document.getElementById("filter-buttons");
+
+  const categories = {
+    "apartments": "طلبات شقق للشراء",
+    "apartments-rent": "طلبات شقق للإيجار",
+    "shops": "طلبات محلات",
+    "offices": "طلبات مكاتب",
+    "admin-hq": "طلبات مقرات إدارية"
+  };
+
+  for (const [key, label] of Object.entries(categories)) {
+    const btn = document.createElement("button");
+    btn.textContent = label;
+    btn.dataset.category = key;
+    btn.className = "filter-btn";
+    btn.addEventListener("click", () => loadCategory(key));
+    filterContainer.appendChild(btn);
+  }
+
+  const defaultCategory = Object.keys(categories)[0];
+  loadCategory(defaultCategory);
+
+  function loadCategory(category) {
+    container.innerHTML = "<p style='text-align:center'>⏳ جاري تحميل الطلبات...</p>";
+
+    document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
+    const activeBtn = document.querySelector(`[data-category="${category}"]`);
+    if (activeBtn) activeBtn.classList.add("active");
+
+    fetch(`/samsar-talabak/data/requests/${category}/index.json`)
+      .then(response => response.json())
+      .then(files => {
+        container.innerHTML = '';
+        if (!files.length) {
+          container.innerHTML = "<p style='text-align:center'>❌ لا توجد طلبات حالياً.</p>";
+          return;
+        }
+
+        files.forEach(filename => {
+          fetch(`/samsar-talabak/data/requests/${category}/${filename}`)
+            .then(res => res.json())
+            .then(data => {
+              const encodedFilename = encodeURIComponent(filename);
+              const detailPage = `/samsar-talabak/request-details.html?category=${category}&file=${encodedFilename}`;
+
+              const card = document.createElement("div");
+              card.className = `property-card card-${category}`;
+              card.style = `
+                background-color: #1e1e1e;
+                border: 1px solid #333;
+                padding: 1.5rem;
+                border-radius: 12px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+                font-family: 'Tajawal', sans-serif;
+              `;
+
+              const dateText = data.date ? `<p style="font-size: 0.9rem; color: #bbb; margin-bottom: 0.6rem;">📅 أُضيف بتاريخ: ${data.date}</p>` : `<p style="font-size: 0.9rem; color: #999;">📅 تاريخ الإضافة: غير متوفر</p>`;
+
+              card.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
+                  <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار" style="width: 40px; height: 40px; border-radius: 50%;">
+                  <strong style="color:#00ff88;">طلب جديد</strong>
+                </div>
+                ${dateText}
+                <h2 style="color:#00ff88; font-size: 1.4rem; font-weight: bold; margin-bottom: 0.5rem;">
+                  ${data.title}
+                </h2>
+                <p><strong>🔍 نوع الطلب:</strong> ${categories[category]}</p>
+                <p><strong>📏 المساحة المطلوبة:</strong> ${data.area}</p>
+                <p><strong>💰 الميزانية:</strong> ${data.budget}</p>
+                <p style="margin: 0.5rem 0; color:#ccc;"><strong>📝 التفاصيل:</strong> ${data.description}</p>
+                <div style="margin-top: 1rem;">
+                  <a href="${detailPage}" 
+                    style="background:#00ff88; color:#000; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: bold;">
+                    ✅ لدي عرض كهذا
+                  </a>
+                </div>
+              `;
+
+              container.appendChild(card);
+            });
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        container.innerHTML = "<p style='text-align:center'>❌ حدث خطأ أثناء تحميل الطلبات.</p>";
+      });
+  }
+});
+      </script>
