@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     "admin-hq": "مقرات إدارية"
   };
 
+  // إنشاء أزرار الفلترة
   for (const [key, label] of Object.entries(categories)) {
     const btn = document.createElement("button");
     btn.textContent = label;
@@ -19,27 +20,15 @@ document.addEventListener("DOMContentLoaded", async function () {
     filterContainer.appendChild(btn);
   }
 
+  // تحميل التصنيف الأول تلقائيًا
   const defaultCategory = Object.keys(categories)[0];
   loadCategory(defaultCategory);
 
-  function formatDate(dateStr) {
-    const months = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
-                    "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
-    try {
-      const date = new Date(dateStr);
-      const day = date.getDate();
-      const month = months[date.getMonth()];
-      const year = date.getFullYear();
-      return `${day} ${month} ${year}`;
-    } catch (e) {
-      return "تاريخ غير معروف";
-    }
-  }
-
   function loadCategory(category) {
-    container.innerHTML = "<p style='text-align:center'>⏳ جاري تحميل البيانات...</p>";
+    container.innerHTML = "<p style='text-align:center'>جارٍ تحميل العروض...</p>";
 
-    document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
+    const allButtons = document.querySelectorAll(".filter-btn");
+    allButtons.forEach(btn => btn.classList.remove("active"));
     const activeBtn = document.querySelector(`[data-category="${category}"]`);
     if (activeBtn) activeBtn.classList.add("active");
 
@@ -48,7 +37,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       .then(files => {
         container.innerHTML = '';
         if (!files.length) {
-          container.innerHTML = "<p style='text-align:center'>🚫 لا توجد بيانات حالياً.</p>";
+          container.innerHTML = "<p style='text-align:center'>لا توجد بيانات حالياً.</p>";
           return;
         }
 
@@ -56,6 +45,9 @@ document.addEventListener("DOMContentLoaded", async function () {
           fetch(`/samsar-talabak/data/properties/${category}/${filename}`)
             .then(res => res.json())
             .then(data => {
+              const encodedFilename = encodeURIComponent(filename);
+              const detailPage = `/samsar-talabak/details.html?category=${category}&file=${encodedFilename}`;
+
               const card = document.createElement("div");
               card.className = `property-card card-${category}`;
               card.style = `
@@ -69,11 +61,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 color: #f1f1f1;
               `;
 
-              const encodedFilename = encodeURIComponent(filename);
-              const detailPage = `/samsar-talabak/details.html?category=${category}&file=${encodedFilename}`;
-
-              const addDate = data.created_at ? formatDate(data.created_at) : "غير متوفر";
-
               card.innerHTML = `
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
                   <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار" style="width: 40px; height: 40px; border-radius: 50%;">
@@ -82,9 +69,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <h2 style="color:#00ff88; font-size: 1.4rem; font-weight: bold; margin-bottom: 0.5rem;">
                   ${data.title}
                 </h2>
-                <p style="margin: 0.2rem 0;"><strong>💰 السعر:</strong> ${data.price}</p>
-                <p style="margin: 0.2rem 0;"><strong>📏 المساحة:</strong> ${data.area}</p>
-                <p style="margin: 0.2rem 0; color:#ccc;"><strong>📅 تاريخ الإضافة:</strong> ${addDate}</p>
+                <p><strong>💰 السعر:</strong> ${data.price}</p>
+                <p><strong>📏 المساحة:</strong> ${data.area}</p>
+                <p><strong>📅 تاريخ الإضافة:</strong> ${data.date || 'غير متوفر'}</p>
                 <p style="margin: 0.5rem 0; color:#ccc;"><strong>📝 نبذة:</strong> ${data.description}</p>
                 <div style="margin-top: 1rem;">
                   <a href="${detailPage}" 
@@ -100,7 +87,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       })
       .catch(err => {
         console.error(err);
-        container.innerHTML = "<p style='text-align:center'>❌ حدث خطأ أثناء تحميل البيانات.</p>";
+        container.innerHTML = "<p style='text-align:center'>حدث خطأ أثناء تحميل البيانات.</p>";
       });
   }
 });
