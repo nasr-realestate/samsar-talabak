@@ -1,103 +1,77 @@
 ---
 layout: default
 title: "طلبات العملاء - سمسار طلبك"
-description: "استعرض أحدث طلبات الشراء والإيجار من عملائنا في مدينة نصر - شقق، محلات، مكاتب والمزيد."
+description: "شاهد أحدث طلبات الشراء والإيجار في مدينة نصر، شقق، محلات، مكاتب، وأكثر من سمسار طلبك."
 ---
 
-<!-- ✅ SEO & Structured Data -->
+<!-- ✅ Google Tag Manager -->
+<script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MHPZ8NP');
+</script>
+
+<!-- ✅ Meta Tags إضافية -->
 <meta name="robots" content="index, follow">
 <meta name="author" content="سمسار طلبك">
 <meta property="og:title" content="طلبات العملاء - سمسار طلبك">
-<meta property="og:description" content="استعرض أحدث طلبات الشراء والإيجار من عملائنا في مدينة نصر - شقق، محلات، مكاتب والمزيد.">
+<meta property="og:description" content="شاهد أحدث طلبات الشراء والإيجار في مدينة نصر، شقق، محلات، مكاتب، وأكثر من سمسار طلبك.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak/requests-filtered.html">
 <meta property="og:image" content="https://nasr-realestate.github.io/samsar-talabak/assets/img/logo.png">
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "RealEstateAgent",
-  "name": "سمسار طلبك",
-  "url": "https://nasr-realestate.github.io/samsar-talabak/requests-filtered.html",
-  "areaServed": "مدينة نصر",
-  "availableLanguage": "Arabic",
-  "description": "طلبات شراء وإيجار مقدمة من عملاء جادين يبحثون عن عقارات في مدينة نصر."
-}
-</script>
-
-<!-- ✅ تصميم الصفحة -->
+<!-- ✅ تصميم -->
 <style>
-  .filter-header {
-    text-align: center;
-    padding: 2rem 1rem;
-    color: #00ff88;
+  body {
+    background-color: #121212;
+    color: #f1f1f1;
     font-family: 'Tajawal', sans-serif;
   }
 
-  #filter-buttons {
+  h1 {
     text-align: center;
-    margin: 1rem auto 2rem;
+    color: #00ff88;
+    margin-top: 2rem;
+  }
+
+  #filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 2rem 0;
+    gap: 10px;
+  }
+
+  .filter-btn {
+    background-color: #1f1f1f;
+    color: #00ff88;
+    border: 1px solid #00ff88;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .filter-btn:hover {
+    background-color: #00ff88;
+    color: #121212;
   }
 
   #requests-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.5rem;
-    padding: 0 1rem 2rem;
-    max-width: 1200px;
+    max-width: 1100px;
     margin: auto;
-  }
-
-  .request-card {
-    background-color: #1e1e1e;
-    border-radius: 12px;
     padding: 1rem;
-    color: #fff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    transition: transform 0.3s;
-  }
-
-  .request-card:hover {
-    transform: translateY(-5px);
-  }
-
-  .request-card h3 {
-    color: #00ff88;
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .request-card p {
-    font-size: 0.95rem;
-    color: #ccc;
-    margin: 0.2rem 0;
-  }
-
-  .request-card a {
-    display: inline-block;
-    margin-top: 0.5rem;
-    background: #00ff88;
-    color: #000;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: bold;
-  }
-
-  .request-card a:hover {
-    background: #00e673;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
   }
 </style>
 
-<!-- ✅ المحتوى الرئيسي -->
-<h1 class="filter-header">طلبات العملاء في مدينة نصر</h1>
-
-<div id="filter-buttons">
-  <!-- أزرار التصنيف تُنشأ تلقائيًا -->
-</div>
-
-<div id="requests-container">
-  <!-- الطلبات تظهر ديناميكيًا -->
-</div>
+<h1>📩 طلبات العملاء</h1>
+<div id="filter-buttons"></div>
+<div id="requests-container">جارٍ تحميل الطلبات...</div>
 
 <script src="/samsar-talabak/assets/js/requests-display.js" defer></script>
