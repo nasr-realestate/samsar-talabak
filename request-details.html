@@ -1,44 +1,11 @@
 ---
 layout: default
-title: "تفاصيل طلب العميل - سمسار طلبك"
-description: "شاهد تفاصيل طلب الشراء أو الإيجار المقدم من عميل في مدينة نصر عبر سمسار طلبك، شاملاً الوصف والموقع ونوع العقار."
+title: "تفاصيل الطلب"
+description: "تفاصيل طلب عقاري مقدم في مدينة نصر عبر سمسار طلبك"
 ---
 
-<!-- ✅ Google Tag Manager -->
-<script>
-(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-MHPZ8NP');
-</script>
-
-<!-- ✅ Meta Tags -->
-<meta name="robots" content="index, follow">
-<meta name="author" content="سمسار طلبك">
-<meta property="og:title" content="تفاصيل طلب العميل - سمسار طلبك">
-<meta property="og:description" content="شاهد تفاصيل الطلب العقاري في مدينة نصر المقدم من أحد العملاء مع بيانات التواصل والتفاصيل الكاملة.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak/details-request.html">
-<meta property="og:image" content="https://nasr-realestate.github.io/samsar-talabak/assets/img/logo.png">
-
-<!-- ✅ Structured Data -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "serviceType": "طلب عقار",
-  "provider": {
-    "@type": "Organization",
-    "name": "سمسار طلبك"
-  },
-  "areaServed": "Nasr City, Cairo, Egypt"
-}
-</script>
-
-<!-- ✅ تصميم الصفحة -->
 <main id="request-details" style="max-width: 800px; margin: 40px auto; padding: 20px; background: #ffffff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); font-family: 'Tajawal', sans-serif; color: #222;">
-  <p style="text-align:center;">⏳ جاري تحميل بيانات الطلب...</p>
+  <p style="text-align:center;">⏳ جاري تحميل تفاصيل الطلب...</p>
 </main>
 
 <script>
@@ -55,37 +22,32 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   try {
     const res = await fetch(`/samsar-talabak/data/requests/${category}/${file}`);
-    const request = await res.json();
+    const req = await res.json();
 
     container.innerHTML = `
       <div>
         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 1.2rem;">
-          <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="سمسار طلبك" style="width: 48px; height: 48px; border-radius: 50%;">
-          <h1 style="font-size: 1.8rem; color: #004d40; margin: 0;">${request.title}</h1>
+          <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار سمسار طلبك" style="width: 48px; height: 48px; border-radius: 50%;">
+          <h1 style="font-size: 1.8rem; color: #00aa66; margin: 0;">${req.title}</h1>
         </div>
 
-        <p style="font-size: 1.1rem;"><strong>📍 الموقع:</strong> ${request.location || 'غير محدد'}</p>
-        <p style="font-size: 1.1rem;"><strong>📏 المساحة المطلوبة:</strong> ${request.area || 'غير محددة'}</p>
-        <p style="font-size: 1.1rem;"><strong>💰 الميزانية:</strong> ${request.budget || 'غير محددة'}</p>
-        <p style="font-size: 1.1rem;"><strong>📋 الوصف:</strong> ${request.description || 'لا يوجد وصف مضاف'}</p>
+        <p style="font-size: 1.1rem;"><strong>🔍 نوع الطلب:</strong> ${category || 'غير محدد'}</p>
+        <p style="font-size: 1.1rem;"><strong>📏 المساحة المطلوبة:</strong> ${req.area || 'غير محددة'}</p>
+        <p style="font-size: 1.1rem;"><strong>💰 الميزانية:</strong> ${req.budget || 'غير محددة'}</p>
+        <p style="font-size: 1.1rem;"><strong>📝 التفاصيل:</strong> ${req.description}</p>
+        <p style="font-size: 1rem; color: #666; margin-top: 1rem;">📅 <strong>تاريخ الإضافة:</strong> ${req.date || 'غير متوفر'}</p>
 
         <div style="display: flex; gap: 12px; margin-top: 2rem; flex-wrap: wrap;">
-          <a href="https://wa.me/${request.whatsapp}?text=مرحبًا، لدي عرض قد يناسب طلبك: ${encodeURIComponent(request.title)}"
-             target="_blank"
-             style="flex: 1; text-align: center; background-color: #25D366; color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold;">
-            💬 تواصل مع العميل
-          </a>
-
           <a href="/samsar-talabak/requests-filtered.html"
              style="flex: 1; text-align: center; background-color: #444; color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold;">
-            ← العودة لكل الطلبات
+            ← العودة للطلبات
           </a>
         </div>
       </div>
     `;
   } catch (err) {
-    console.error("فشل في تحميل الطلب:", err);
+    console.error("فشل في جلب تفاصيل الطلب:", err);
     container.innerHTML = "❌ حدث خطأ أثناء تحميل بيانات الطلب.";
   }
 });
-    </script>
+</script>
