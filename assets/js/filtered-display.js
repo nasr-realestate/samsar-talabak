@@ -1,4 +1,3 @@
-<script>
 document.addEventListener("DOMContentLoaded", async function () {
   const container = document.getElementById("properties-container");
   const filterContainer = document.getElementById("filter-buttons");
@@ -23,21 +22,24 @@ document.addEventListener("DOMContentLoaded", async function () {
   const defaultCategory = Object.keys(categories)[0];
   loadCategory(defaultCategory);
 
-  function formatArabicDate(dateString) {
+  function formatDate(dateStr) {
+    const months = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
+                    "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
     try {
-      const date = new Date(dateString);
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      return date.toLocaleDateString('ar-EG', options);
-    } catch {
-      return "تاريخ غير متاح";
+      const date = new Date(dateStr);
+      const day = date.getDate();
+      const month = months[date.getMonth()];
+      const year = date.getFullYear();
+      return `${day} ${month} ${year}`;
+    } catch (e) {
+      return "تاريخ غير معروف";
     }
   }
 
   function loadCategory(category) {
-    container.innerHTML = "<p style='text-align:center'>جاري تحميل البيانات...</p>";
+    container.innerHTML = "<p style='text-align:center'>⏳ جاري تحميل البيانات...</p>";
 
-    const allButtons = document.querySelectorAll(".filter-btn");
-    allButtons.forEach(btn => btn.classList.remove("active"));
+    document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
     const activeBtn = document.querySelector(`[data-category="${category}"]`);
     if (activeBtn) activeBtn.classList.add("active");
 
@@ -46,7 +48,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       .then(files => {
         container.innerHTML = '';
         if (!files.length) {
-          container.innerHTML = "<p style='text-align:center'>لا توجد بيانات حالياً.</p>";
+          container.innerHTML = "<p style='text-align:center'>🚫 لا توجد بيانات حالياً.</p>";
           return;
         }
 
@@ -70,7 +72,7 @@ document.addEventListener("DOMContentLoaded", async function () {
               const encodedFilename = encodeURIComponent(filename);
               const detailPage = `/samsar-talabak/details.html?category=${category}&file=${encodedFilename}`;
 
-              const addedDate = data.created_at ? `📅 أضيف بتاريخ: ${formatArabicDate(data.created_at)}` : "";
+              const addDate = data.created_at ? formatDate(data.created_at) : "غير متوفر";
 
               card.innerHTML = `
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
@@ -82,8 +84,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                 </h2>
                 <p style="margin: 0.2rem 0;"><strong>💰 السعر:</strong> ${data.price}</p>
                 <p style="margin: 0.2rem 0;"><strong>📏 المساحة:</strong> ${data.area}</p>
-                <p style="margin: 0.2rem 0;"><strong>📝 نبذة:</strong> ${data.description}</p>
-                <p style="margin: 0.5rem 0; font-size: 0.95rem; color: #aaa;">${addedDate}</p>
+                <p style="margin: 0.2rem 0; color:#ccc;"><strong>📅 تاريخ الإضافة:</strong> ${addDate}</p>
+                <p style="margin: 0.5rem 0; color:#ccc;"><strong>📝 نبذة:</strong> ${data.description}</p>
                 <div style="margin-top: 1rem;">
                   <a href="${detailPage}" 
                     style="background:#00ff88; color:#000; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: bold;">
@@ -98,8 +100,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       })
       .catch(err => {
         console.error(err);
-        container.innerHTML = "<p style='text-align:center'>حدث خطأ أثناء تحميل البيانات.</p>";
+        container.innerHTML = "<p style='text-align:center'>❌ حدث خطأ أثناء تحميل البيانات.</p>";
       });
   }
 });
-</script>
