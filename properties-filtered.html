@@ -1,59 +1,52 @@
----
-layout: default
-title: عروض العقارات
-description: اكتشف أفضل عروض العقارات من سمسار طلبك
+
 ---
 
-<section style="padding: 2rem; text-align: center;">
-  <h2 style="margin-bottom: 1rem;">اختر نوع العرض</h2>
-  <div id="filter-buttons"></div>
-</section>
+layout: default title: "عروض العقارات - سمسار طلبك" description: "استعرض أحدث عروض الشقق والمحلات والمكاتب في مدينة نصر مع سمسار طلبك."
 
-<section style="padding: 2rem;">
-  <div id="properties-container"></div>
-</section>
-
-<!-- 👋 واجهة ترحيبية أول مرة -->
-<div id="welcome-popup" style="
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  color: #222;
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: 0 0 30px rgba(0,0,0,0.3);
-  max-width: 90%;
-  width: 360px;
-  z-index: 9999;
-  text-align: center;
-  font-family: 'Tajawal', sans-serif;
-">
-  <div style="font-size: 3rem;">👋</div>
-  <h2 style="margin: 0.5rem 0; color: #00aa66;">أهلًا بك!</h2>
-  <p>في هذه الصفحة يمكنك تصفح أحدث عروض العقارات المتاحة لدينا. اختر العرض الذي يناسبك وتواصل معنا مباشرةً.</p>
-  <button onclick="document.getElementById('welcome-popup').style.display='none'" style="
-    margin-top: 1rem;
-    background: #00cc66;
-    color: white;
-    border: none;
-    padding: 10px 20px;
+<!-- ✅ تحسينات SEO --><meta name="robots" content="index, follow">
+<meta property="og:title" content="عروض العقارات - سمسار طلبك">
+<meta property="og:description" content="استعرض أحدث عروض الشقق والمحلات والمكاتب في مدينة نصر مع سمسار طلبك.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://nasr-realestate.github.io/samsar-talabak/assets/img/logo.png"><!-- ✅ تصميم ذكي لواجهة عرض العروض --><style>
+  .page-intro {
+    background-color: #1a1a1a;
+    color: #eee;
+    padding: 2rem;
+    text-align: center;
+  }
+  .page-intro h1 {
+    color: #04E762;
+    font-size: 2rem;
+  }
+  .filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0 2rem;
+  }
+  .filter-buttons button {
+    background-color: #2a2a2a;
+    color: #eee;
+    border: 1px solid #555;
+    padding: 0.8rem 1.5rem;
     border-radius: 8px;
     cursor: pointer;
-    font-weight: bold;
-  ">فهمت ✨</button>
-</div>
-
-<script>
-  // عرض الرسالة مرة واحدة فقط لكل جهاز
-  document.addEventListener("DOMContentLoaded", function () {
-    if (!localStorage.getItem("seen_welcome_properties")) {
-      document.getElementById("welcome-popup").style.display = "block";
-      localStorage.setItem("seen_welcome_properties", "true");
-    }
-  });
-</script>
-
-<script src="/samsar-talabak/assets/js/filtered-display.js" defer></script>
+    transition: 0.3s;
+  }
+  .filter-buttons button:hover {
+    background-color: #04E762;
+    color: #000;
+  }
+  .cards-container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 1.5rem;
+  }
+</style><div class="page-intro">
+  <h1>📦 عروض العقارات المتاحة</h1>
+  <p>اختر نوع العقار لعرض التفاصيل</p>
+</div><div class="filter-buttons" id="filter-buttons"></div><div class="cards-container" id="properties-container"></div><script src="/samsar-talabak/assets/js/filtered-display.js" defer></script>
