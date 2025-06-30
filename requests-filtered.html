@@ -1,68 +1,103 @@
 ---
 layout: default
 title: "طلبات العملاء - سمسار طلبك"
-description: "استعرض أحدث طلبات الشراء أو الإيجار في مدينة نصر، واختر العرض المناسب لمتطلبات عملائك أو عقارك."
+description: "استعرض أحدث طلبات الشراء والإيجار من عملائنا في مدينة نصر - شقق، محلات، مكاتب والمزيد."
 ---
 
-<!-- ✅ Google Tag Manager -->
-<script>
-(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-MHPZ8NP');
-</script>
-<!-- ✅ End Google Tag Manager -->
-
-<!-- ✅ Meta Tags -->
+<!-- ✅ SEO & Structured Data -->
 <meta name="robots" content="index, follow">
 <meta name="author" content="سمسار طلبك">
 <meta property="og:title" content="طلبات العملاء - سمسار طلبك">
-<meta property="og:description" content="استعرض أحدث طلبات العملاء في مدينة نصر، شقق ومحلات ومكاتب للإيجار والبيع.">
+<meta property="og:description" content="استعرض أحدث طلبات الشراء والإيجار من عملائنا في مدينة نصر - شقق، محلات، مكاتب والمزيد.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak/requests-filtered.html">
 <meta property="og:image" content="https://nasr-realestate.github.io/samsar-talabak/assets/img/logo.png">
 
-<!-- ✅ Structured Data -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  "name": "طلبات العملاء - سمسار طلبك",
-  "description": "صفحة تحتوي على طلبات العقارات الواردة من عملاء يبحثون عن شقق ومحلات ومكاتب في مدينة نصر.",
-  "url": "https://nasr-realestate.github.io/samsar-talabak/requests-filtered.html"
+  "@type": "RealEstateAgent",
+  "name": "سمسار طلبك",
+  "url": "https://nasr-realestate.github.io/samsar-talabak/requests-filtered.html",
+  "areaServed": "مدينة نصر",
+  "availableLanguage": "Arabic",
+  "description": "طلبات شراء وإيجار مقدمة من عملاء جادين يبحثون عن عقارات في مدينة نصر."
 }
 </script>
 
 <!-- ✅ تصميم الصفحة -->
 <style>
-  body {
-    background-color: #121212;
-    color: #e0e0e0;
-    font-family: 'Tajawal', sans-serif;
-  }
-
-  h1 {
+  .filter-header {
     text-align: center;
-    margin: 2rem 0 1rem;
-    color: #04E762;
+    padding: 2rem 1rem;
+    color: #00ff88;
+    font-family: 'Tajawal', sans-serif;
   }
 
   #filter-buttons {
     text-align: center;
-    margin-bottom: 2rem;
+    margin: 1rem auto 2rem;
   }
 
   #requests-container {
-    max-width: 900px;
-    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
     padding: 0 1rem 2rem;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .request-card {
+    background-color: #1e1e1e;
+    border-radius: 12px;
+    padding: 1rem;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    transition: transform 0.3s;
+  }
+
+  .request-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .request-card h3 {
+    color: #00ff88;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .request-card p {
+    font-size: 0.95rem;
+    color: #ccc;
+    margin: 0.2rem 0;
+  }
+
+  .request-card a {
+    display: inline-block;
+    margin-top: 0.5rem;
+    background: #00ff88;
+    color: #000;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .request-card a:hover {
+    background: #00e673;
   }
 </style>
 
-<h1>طلبات العملاء</h1>
+<!-- ✅ المحتوى الرئيسي -->
+<h1 class="filter-header">طلبات العملاء في مدينة نصر</h1>
 
-<div id="filter-buttons"></div>
-<div id="requests-container"></div>
+<div id="filter-buttons">
+  <!-- أزرار التصنيف تُنشأ تلقائيًا -->
+</div>
 
-<script src="/samsar-talabak/assets/js/requests-display.js"></script>
+<div id="requests-container">
+  <!-- الطلبات تظهر ديناميكيًا -->
+</div>
+
+<script src="/samsar-talabak/assets/js/requests-display.js" defer></script>
