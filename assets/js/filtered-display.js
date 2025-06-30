@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     "admin-hq": "مقرات إدارية"
   };
 
-  // إنشاء أزرار الفلترة
+  // إنشاء أزرار الفلاتر
   for (const [key, label] of Object.entries(categories)) {
     const btn = document.createElement("button");
     btn.textContent = label;
@@ -20,24 +20,24 @@ document.addEventListener("DOMContentLoaded", async function () {
     filterContainer.appendChild(btn);
   }
 
-  // تحميل التصنيف الأول تلقائيًا
+  // تحميل أول فئة بشكل افتراضي
   const defaultCategory = Object.keys(categories)[0];
   loadCategory(defaultCategory);
 
   function loadCategory(category) {
-    container.innerHTML = "<p style='text-align:center'>جارٍ تحميل العروض...</p>";
+    container.innerHTML = "<p style='text-align:center'>⏳ جاري تحميل البيانات...</p>";
 
-    const allButtons = document.querySelectorAll(".filter-btn");
-    allButtons.forEach(btn => btn.classList.remove("active"));
+    // تفعيل الزر المختار
+    document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
     const activeBtn = document.querySelector(`[data-category="${category}"]`);
     if (activeBtn) activeBtn.classList.add("active");
 
     fetch(`/samsar-talabak/data/properties/${category}/index.json`)
-      .then(response => response.json())
+      .then(res => res.json())
       .then(files => {
-        container.innerHTML = '';
+        container.innerHTML = "";
         if (!files.length) {
-          container.innerHTML = "<p style='text-align:center'>لا توجد بيانات حالياً.</p>";
+          container.innerHTML = "<p style='text-align:center'>❌ لا توجد عروض حالياً.</p>";
           return;
         }
 
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", async function () {
               const detailPage = `/samsar-talabak/details.html?category=${category}&file=${encodedFilename}`;
 
               const card = document.createElement("div");
-              card.className = `property-card card-${category}`;
+              card.className = "property-card";
               card.style = `
                 background-color: #1e1e1e;
                 border: 1px solid #333;
@@ -61,6 +61,20 @@ document.addEventListener("DOMContentLoaded", async function () {
                 color: #f1f1f1;
               `;
 
+              // صيغة التاريخ إذا كانت متوفرة
+              let addedDate = "غير متوفر";
+              if (data.date) {
+                try {
+                  const d = new Date(data.date);
+                  const formatted = d.toLocaleDateString("ar-EG", {
+                    year: "numeric", month: "long", day: "numeric"
+                  });
+                  addedDate = formatted;
+                } catch {
+                  addedDate = "غير متوفر";
+                }
+              }
+
               card.innerHTML = `
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
                   <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار" style="width: 40px; height: 40px; border-radius: 50%;">
@@ -69,10 +83,10 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <h2 style="color:#00ff88; font-size: 1.4rem; font-weight: bold; margin-bottom: 0.5rem;">
                   ${data.title}
                 </h2>
-                <p><strong>💰 السعر:</strong> ${data.price}</p>
-                <p><strong>📏 المساحة:</strong> ${data.area}</p>
-                <p><strong>📅 تاريخ الإضافة:</strong> ${data.date || 'غير متوفر'}</p>
+                <p><strong>💰 السعر:</strong> ${data.price || "غير محدد"}</p>
+                <p><strong>📏 المساحة:</strong> ${data.area || "غير محددة"}</p>
                 <p style="margin: 0.5rem 0; color:#ccc;"><strong>📝 نبذة:</strong> ${data.description}</p>
+                <p style="margin: 0.5rem 0;"><strong>📅 تاريخ الإضافة:</strong> ${addedDate}</p>
                 <div style="margin-top: 1rem;">
                   <a href="${detailPage}" 
                     style="background:#00ff88; color:#000; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: bold;">
@@ -86,8 +100,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
       })
       .catch(err => {
-        console.error(err);
-        container.innerHTML = "<p style='text-align:center'>حدث خطأ أثناء تحميل البيانات.</p>";
+        console.error("خطأ في تحميل العروض:", err);
+        container.innerHTML = "<p style='text-align:center'>❌ حدث خطأ أثناء تحميل العروض.</p>";
       });
   }
 });
