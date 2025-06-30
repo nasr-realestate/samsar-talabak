@@ -48,6 +48,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             .then(data => {
               const encodedFilename = encodeURIComponent(filename);
               const detailPage = `/samsar-talabak/request-details.html?category=${category}&file=${encodedFilename}`;
+              const displayDate = data.date || "غير متوفر";
 
               const card = document.createElement("div");
               card.className = `property-card card-${category}`;
@@ -74,6 +75,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <p><strong>📏 المساحة المطلوبة:</strong> ${data.area}</p>
                 <p><strong>💰 الميزانية:</strong> ${data.budget}</p>
                 <p style="margin: 0.5rem 0; color:#ccc;"><strong>📝 التفاصيل:</strong> ${data.description}</p>
+                <p style="margin: 0.5rem 0;"><strong>🕒 تاريخ الإضافة:</strong> ${displayDate}</p>
                 <div style="margin-top: 1rem;">
                   <a href="${detailPage}" 
                     style="background:#00ff88; color:#000; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: bold;">
