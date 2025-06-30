@@ -1,3 +1,4 @@
+<script>
 document.addEventListener("DOMContentLoaded", async function () {
   const container = document.getElementById("properties-container");
   const filterContainer = document.getElementById("filter-buttons");
@@ -21,6 +22,16 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   const defaultCategory = Object.keys(categories)[0];
   loadCategory(defaultCategory);
+
+  function formatArabicDate(dateString) {
+    try {
+      const date = new Date(dateString);
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      return date.toLocaleDateString('ar-EG', options);
+    } catch {
+      return "تاريخ غير متاح";
+    }
+  }
 
   function loadCategory(category) {
     container.innerHTML = "<p style='text-align:center'>جاري تحميل البيانات...</p>";
@@ -59,6 +70,8 @@ document.addEventListener("DOMContentLoaded", async function () {
               const encodedFilename = encodeURIComponent(filename);
               const detailPage = `/samsar-talabak/details.html?category=${category}&file=${encodedFilename}`;
 
+              const addedDate = data.created_at ? `📅 أضيف بتاريخ: ${formatArabicDate(data.created_at)}` : "";
+
               card.innerHTML = `
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
                   <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار" style="width: 40px; height: 40px; border-radius: 50%;">
@@ -69,7 +82,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                 </h2>
                 <p style="margin: 0.2rem 0;"><strong>💰 السعر:</strong> ${data.price}</p>
                 <p style="margin: 0.2rem 0;"><strong>📏 المساحة:</strong> ${data.area}</p>
-                <p style="margin: 0.5rem 0; color:#ccc;"><strong>📝 نبذة:</strong> ${data.description}</p>
+                <p style="margin: 0.2rem 0;"><strong>📝 نبذة:</strong> ${data.description}</p>
+                <p style="margin: 0.5rem 0; font-size: 0.95rem; color: #aaa;">${addedDate}</p>
                 <div style="margin-top: 1rem;">
                   <a href="${detailPage}" 
                     style="background:#00ff88; color:#000; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: bold;">
@@ -88,3 +102,4 @@ document.addEventListener("DOMContentLoaded", async function () {
       });
   }
 });
+</script>
