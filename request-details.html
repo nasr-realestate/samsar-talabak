@@ -1,7 +1,7 @@
 ---
 layout: default
-title: "تفاصيل الطلب - سمسار طلبك"
-description: "تعرف على تفاصيل طلب العميل من حيث الموقع، الميزانية، المساحة، والاحتياجات الأخرى."
+title: "تفاصيل طلب العميل - سمسار طلبك"
+description: "شاهد تفاصيل طلب الشراء أو الإيجار المقدم من عميل في مدينة نصر عبر سمسار طلبك، شاملاً الوصف والموقع ونوع العقار."
 ---
 
 <!-- ✅ Google Tag Manager -->
@@ -16,99 +16,76 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- ✅ Meta Tags -->
 <meta name="robots" content="index, follow">
 <meta name="author" content="سمسار طلبك">
-<meta property="og:title" content="تفاصيل الطلب - سمسار طلبك">
-<meta property="og:description" content="تعرف على تفاصيل الطلب العقاري لعميل مهتم بعقار في مدينة نصر.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak/details-requests.html">
+<meta property="og:title" content="تفاصيل طلب العميل - سمسار طلبك">
+<meta property="og:description" content="شاهد تفاصيل الطلب العقاري في مدينة نصر المقدم من أحد العملاء مع بيانات التواصل والتفاصيل الكاملة.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak/details-request.html">
 <meta property="og:image" content="https://nasr-realestate.github.io/samsar-talabak/assets/img/logo.png">
 
-<!-- ✅ تصميم -->
-<style>
-  body {
-    background-color: #121212;
-    color: #f1f1f1;
-    font-family: 'Tajawal', sans-serif;
-    padding: 2rem;
-  }
+<!-- ✅ Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "طلب عقار",
+  "provider": {
+    "@type": "Organization",
+    "name": "سمسار طلبك"
+  },
+  "areaServed": "Nasr City, Cairo, Egypt"
+}
+</script>
 
-  .request-details {
-    max-width: 800px;
-    margin: auto;
-    background-color: #1e1e1e;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(0,255,136,0.1);
-  }
-
-  .request-details h1 {
-    color: #00ff88;
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-
-  .request-details ul {
-    list-style: none;
-    padding: 0;
-  }
-
-  .request-details li {
-    margin: 0.6rem 0;
-    font-size: 1.1rem;
-    border-bottom: 1px dashed #333;
-    padding-bottom: 0.5rem;
-  }
-
-  .back-link {
-    display: block;
-    margin-top: 2rem;
-    text-align: center;
-    text-decoration: none;
-    color: #00ff88;
-    font-weight: bold;
-  }
-</style>
-
-<div class="request-details" id="request-container">
-  جارٍ تحميل تفاصيل الطلب...
-</div>
-
-<a href="/samsar-talabak/requests-filtered.html" class="back-link">← عودة إلى الطلبات</a>
+<!-- ✅ تصميم الصفحة -->
+<main id="request-details" style="max-width: 800px; margin: 40px auto; padding: 20px; background: #ffffff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); font-family: 'Tajawal', sans-serif; color: #222;">
+  <p style="text-align:center;">⏳ جاري تحميل بيانات الطلب...</p>
+</main>
 
 <script>
-  async function loadRequest() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const category = urlParams.get('category');
-    const file = urlParams.get('file');
+document.addEventListener("DOMContentLoaded", async function () {
+  const params = new URLSearchParams(window.location.search);
+  const category = params.get("category");
+  const file = params.get("file");
+  const container = document.getElementById("request-details");
 
-    if (!category || !file) {
-      document.getElementById('request-container').innerHTML = '<p>⚠️ لم يتم تحديد الطلب بشكل صحيح.</p>';
-      return;
-    }
-
-    try {
-      const res = await fetch(`/samsar-talabak/data/requests/${category}/${file}`);
-      const data = await res.json();
-
-      let html = `<h1>${data.title || 'تفاصيل الطلب'}</h1><ul>`;
-
-      for (const [key, value] of Object.entries(data)) {
-        if (key !== 'title' && key !== 'image') {
-          html += `<li><strong>${key}:</strong> ${value}</li>`;
-        }
-      }
-
-      html += `</ul>`;
-
-      if (data.image) {
-        html += `<div style="text-align:center; margin-top:2rem;"><img src="${data.image}" alt="صورة مرفقة" style="max-width:100%; border-radius:10px;"></div>`;
-      }
-
-      document.getElementById('request-container').innerHTML = html;
-    } catch (err) {
-      document.getElementById('request-container').innerHTML = '<p>❌ حدث خطأ أثناء تحميل البيانات.</p>';
-    }
+  if (!category || !file) {
+    container.innerHTML = "❌ لم يتم تحديد الطلب.";
+    return;
   }
 
-  loadRequest();
-</script>
+  try {
+    const res = await fetch(`/samsar-talabak/data/requests/${category}/${file}`);
+    const request = await res.json();
+
+    container.innerHTML = `
+      <div>
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 1.2rem;">
+          <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="سمسار طلبك" style="width: 48px; height: 48px; border-radius: 50%;">
+          <h1 style="font-size: 1.8rem; color: #004d40; margin: 0;">${request.title}</h1>
+        </div>
+
+        <p style="font-size: 1.1rem;"><strong>📍 الموقع:</strong> ${request.location || 'غير محدد'}</p>
+        <p style="font-size: 1.1rem;"><strong>📏 المساحة المطلوبة:</strong> ${request.area || 'غير محددة'}</p>
+        <p style="font-size: 1.1rem;"><strong>💰 الميزانية:</strong> ${request.budget || 'غير محددة'}</p>
+        <p style="font-size: 1.1rem;"><strong>📋 الوصف:</strong> ${request.description || 'لا يوجد وصف مضاف'}</p>
+
+        <div style="display: flex; gap: 12px; margin-top: 2rem; flex-wrap: wrap;">
+          <a href="https://wa.me/${request.whatsapp}?text=مرحبًا، لدي عرض قد يناسب طلبك: ${encodeURIComponent(request.title)}"
+             target="_blank"
+             style="flex: 1; text-align: center; background-color: #25D366; color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold;">
+            💬 تواصل مع العميل
+          </a>
+
+          <a href="/samsar-talabak/requests-filtered.html"
+             style="flex: 1; text-align: center; background-color: #444; color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold;">
+            ← العودة لكل الطلبات
+          </a>
+        </div>
+      </div>
+    `;
+  } catch (err) {
+    console.error("فشل في تحميل الطلب:", err);
+    container.innerHTML = "❌ حدث خطأ أثناء تحميل بيانات الطلب.";
+  }
+});
+    </script>
