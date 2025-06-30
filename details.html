@@ -1,47 +1,9 @@
 ---
 layout: default
-title: "تفاصيل العرض - سمسار طلبك"
-description: "عرض تفاصيل العقار المختار من سمسار طلبك في مدينة نصر، شامل السعر، المساحة، والوصف الكامل."
+title: "تفاصيل العقار"
+description: "شاهد معلومات تفصيلية عن هذا العرض العقاري في مدينة نصر"
 ---
 
-<!-- ✅ Google Tag Manager -->
-<script>
-(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-MHPZ8NP');
-</script>
-
-<!-- ✅ Meta Tags -->
-<meta name="robots" content="index, follow">
-<meta name="author" content="سمسار طلبك">
-<meta property="og:title" content="تفاصيل عرض عقاري - سمسار طلبك">
-<meta property="og:description" content="اكتشف سعر، مساحة، ووصف العقار في مدينة نصر المعروض من سمسار طلبك.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak/details.html">
-<meta property="og:image" content="https://nasr-realestate.github.io/samsar-talabak/assets/img/logo.png">
-
-<!-- ✅ Structured Data -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Product",
-  "name": "تفاصيل عرض عقاري - سمسار طلبك",
-  "description": "تفاصيل عرض عقار بمدينة نصر مقدم من سمسار طلبك، يشمل السعر، المساحة، والمواصفات الكاملة.",
-  "brand": {
-    "@type": "Organization",
-    "name": "سمسار طلبك"
-  },
-  "offers": {
-    "@type": "Offer",
-    "availability": "https://schema.org/InStock",
-    "priceCurrency": "EGP"
-  }
-}
-</script>
-
-<!-- ✅ التصميم والصفحة -->
 <main id="property-details" style="max-width: 800px; margin: 40px auto; padding: 20px; background: #ffffff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); font-family: 'Tajawal', sans-serif; color: #222;">
   <p style="text-align:center;">⏳ جاري تحميل بيانات العقار...</p>
 </main>
@@ -69,9 +31,10 @@ document.addEventListener("DOMContentLoaded", async function () {
           <h1 style="font-size: 1.8rem; color: #00aa66; margin: 0;">${prop.title}</h1>
         </div>
 
-        <p style="font-size: 1.1rem;"><strong>💰 السعر:</strong> ${prop.price || (prop.price_monthly + " جنيه/شهر أو " + prop.price_daily + " جنيه/يوم")}</p>
+        <p style="font-size: 1.1rem;"><strong>💰 السعر:</strong> ${prop.price || 'غير محدد'}</p>
         <p style="font-size: 1.1rem;"><strong>📏 المساحة:</strong> ${prop.area || 'غير محددة'}</p>
         <p style="font-size: 1.1rem;"><strong>📝 الوصف:</strong> ${prop.description}</p>
+        <p style="font-size: 1rem; color: #666; margin-top: 1rem;">📅 <strong>تاريخ الإضافة:</strong> ${prop.date || 'غير متوفر'}</p>
 
         <div style="display: flex; gap: 12px; margin-top: 2rem; flex-wrap: wrap;">
           <a href="https://wa.me/${prop.whatsapp}?text=أريد الاستفسار عن ${encodeURIComponent(prop.title)}"
@@ -82,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
           <a href="/samsar-talabak/properties-filtered.html"
              style="flex: 1; text-align: center; background-color: #444; color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold;">
-            ← العودة لكل العروض
+            ← العودة للعروض
           </a>
         </div>
       </div>
@@ -92,4 +55,4 @@ document.addEventListener("DOMContentLoaded", async function () {
     container.innerHTML = "❌ حدث خطأ أثناء تحميل بيانات العقار.";
   }
 });
-          </script>
+</script>
