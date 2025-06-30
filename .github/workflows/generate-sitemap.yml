@@ -23,30 +23,45 @@ jobs:
         run: |
           BASE_URL="https://nasr-realestate.github.io/samsar-talabak"
           DATE=$(date +%Y-%m-%dT%H:%M:%S+00:00)
-          
-          echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" > sitemap.xml
-          echo "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">" >> sitemap.xml
 
-          # أضف الصفحة الرئيسية وبعض الصفحات الثابتة
-          echo "<url><loc>$BASE_URL/</loc><lastmod>$DATE</lastmod></url>" >> sitemap.xml
-          echo "<url><loc>$BASE_URL/properties-filtered.html</loc><lastmod>$DATE</lastmod></url>" >> sitemap.xml
+          mkdir -p samsar-talabak
 
-          # أضف روابط صفحات التفاصيل
+          echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" > samsar-talabak/sitemap.xml
+          echo "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">" >> samsar-talabak/sitemap.xml
+
+          echo "<url><loc>$BASE_URL/</loc><lastmod>$DATE</lastmod></url>" >> samsar-talabak/sitemap.xml
+          echo "<url><loc>$BASE_URL/properties-filtered.html</loc><lastmod>$DATE</lastmod></url>" >> samsar-talabak/sitemap.xml
+          echo "<url><loc>$BASE_URL/requests-filtered.html</loc><lastmod>$DATE</lastmod></url>" >> samsar-talabak/sitemap.xml
+          echo "<url><loc>$BASE_URL/about-us.html</loc><lastmod>$DATE</lastmod></url>" >> samsar-talabak/sitemap.xml
+          echo "<url><loc>$BASE_URL/contact-us.html</loc><lastmod>$DATE</lastmod></url>" >> samsar-talabak/sitemap.xml
+          echo "<url><loc>$BASE_URL/privacy-policy.html</loc><lastmod>$DATE</lastmod></url>" >> samsar-talabak/sitemap.xml
+
+          # تفاصيل العروض
           for category in data/properties/*; do
             [ -d "$category" ] || continue
             cname=$(basename "$category")
             for file in "$category"/*.json; do
               fname=$(basename "$file")
               [ "$fname" != "index.json" ] || continue
-              url="$BASE_URL/details.html?category=$cname&file=$fname"
-              echo "<url><loc>$url</loc><lastmod>$DATE</lastmod></url>" >> sitemap.xml
+              echo "<url><loc>$BASE_URL/property-details.html?category=$cname&file=$fname</loc><lastmod>$DATE</lastmod></url>" >> samsar-talabak/sitemap.xml
             done
           done
 
-          echo "</urlset>" >> sitemap.xml
-          mv sitemap.xml ./samsar-talabak/sitemap.xml
+          # تفاصيل الطلبات
+          for category in data/requests/*; do
+            [ -d "$category" ] || continue
+            cname=$(basename "$category")
+            for file in "$category"/*.json; do
+              fname=$(basename "$file")
+              [ "$fname" != "index.json" ] || continue
+              echo "<url><loc>$BASE_URL/request-details.html?category=$cname&file=$fname</loc><lastmod>$DATE</lastmod></url>" >> samsar-talabak/sitemap.xml
+            done
+          done
 
-      - name: Commit and push sitemap
+          echo "</urlset>" >> samsar-talabak/sitemap.xml
+
+      - name: Commit and push sitemap.xml
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "🔄 تحديث تلقائي لخريطة الموقع sitemap.xml"
+          file_pattern: "samsar-talabak/sitemap.xml"
