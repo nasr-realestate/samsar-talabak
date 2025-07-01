@@ -188,3 +188,26 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
     </script>
+<script>
+  // حفظ اسم البطاقة التي تم الضغط عليها
+  document.addEventListener("click", function (e) {
+    const card = e.target.closest(".property-card");
+    if (card) {
+      localStorage.setItem("highlightCard", card.dataset.filename || "");
+    }
+  });
+
+  // تمييز البطاقة عند الرجوع إليها
+  function highlightSelectedCard() {
+    const highlighted = localStorage.getItem("highlightCard");
+    if (!highlighted) return;
+
+    const cards = document.querySelectorAll(".property-card");
+    cards.forEach(card => {
+      if (card.dataset.filename === highlighted) {
+        card.style.outline = "3px solid #00aa66";
+        card.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    });
+  }
+</script>
