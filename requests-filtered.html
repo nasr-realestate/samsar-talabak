@@ -1,14 +1,14 @@
 ---
 layout: default
 title: "طلبات العقارات في مدينة نصر"
-description: "شاهد أحدث طلبات الشقق والمحلات والمكاتب في مدينة نصر من عملاء سمسار طلبك."
+description: "استعرض أحدث طلبات الشراء والإيجار للعقارات بمدينة نصر وساعد عملاء سمسار طلبك في إيجاد عروض مناسبة."
 ---
 
-<!-- ✅ Meta Tags لمحركات البحث -->
+<!-- ✅ Meta Tags -->
 <meta name="robots" content="index, follow">
 <meta name="author" content="سمسار طلبك">
 <meta property="og:title" content="طلبات العقارات - سمسار طلبك">
-<meta property="og:description" content="تعرف على طلبات العملاء الباحثين عن شقق ومحلات في مدينة نصر.">
+<meta property="og:description" content="اطّلع على طلبات العقارات المقدمة من العملاء في مدينة نصر وابحث عن الفرص المناسبة."
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak/requests-filtered.html">
 <meta property="og:image" content="https://i.postimg.cc/Vk8Nn1xZ/me.jpg">
@@ -72,14 +72,16 @@ description: "شاهد أحدث طلبات الشقق والمحلات والم�
   }
 </style>
 
-<h1>📨 طلبات العملاء</h1>
+<h1>📨 طلبات العقارات</h1>
 <div id="filter-buttons"></div>
+
 <div id="welcome-box"></div>
 <div id="requests-container">⏳ جاري تحميل الطلبات...</div>
 
 <script src="/samsar-talabak/assets/js/filtered-requests.js"></script>
+
 <script>
-  // حفظ اسم البطاقة التي تم الضغط عليها
+  // ✅ عند الضغط على البطاقة نحفظ اسم الملف
   document.addEventListener("click", function (e) {
     const card = e.target.closest(".property-card");
     if (card) {
@@ -87,7 +89,7 @@ description: "شاهد أحدث طلبات الشقق والمحلات والم�
     }
   });
 
-  // تمييز البطاقة عند الرجوع إليها
+  // ✅ تمييز البطاقة المختارة عند الرجوع
   function highlightSelectedCard() {
     const highlighted = localStorage.getItem("highlightCard");
     if (!highlighted) return;
