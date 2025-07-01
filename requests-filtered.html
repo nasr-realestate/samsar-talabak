@@ -1,15 +1,19 @@
-
+---
+layout: default
+title: "طلبات العقارات في مدينة نصر"
+description: "استعرض أحدث طلبات الشراء أو الإيجار من العملاء في مدينة نصر، وساعدهم في إيجاد العقار المناسب عبر سمسار طلبك."
 ---
 
-layout: default title: "طلبات العقارات في مدينة نصر" description: "استعرض أحدث طلبات الشراء أو الإيجار من العملاء في مدينة نصر، وساعدهم في إيجاد العقار المناسب عبر سمسار طلبك."
-
-<!-- ✅ Meta Tags إضافية --><meta name="robots" content="index, follow">
+<!-- ✅ Meta Tags إضافية -->
+<meta name="robots" content="index, follow">
 <meta name="author" content="سمسار طلبك">
 <meta property="og:title" content="طلبات العقارات - سمسار طلبك">
 <meta property="og:description" content="طلبات حقيقية من عملاء يبحثون عن شقق ومحلات ومكاتب في مدينة نصر – ساعدهم في العثور على ما يناسبهم.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak/requests-filtered.html">
-<meta property="og:image" content="https://i.postimg.cc/Vk8Nn1xZ/me.jpg"><style>
+<meta property="og:image" content="https://i.postimg.cc/Vk8Nn1xZ/me.jpg">
+
+<style>
   body {
     background-color: #121212;
     color: #f1f1f1;
@@ -67,10 +71,16 @@ layout: default title: "طلبات العقارات في مدينة نصر" desc
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
   }
-</style><h1>📨 طلبات العقارات</h1>
+</style>
+
+<h1>📨 طلبات العقارات</h1>
 <div id="filter-buttons"></div>
 <div id="welcome-box"></div>
-<div id="requests-container">⏳ جاري تحميل الطلبات...</div><script src="/samsar-talabak/assets/js/filtered-requests.js"></script><script>
+<div id="requests-container">⏳ جاري تحميل الطلبات...</div>
+
+<script src="/samsar-talabak/assets/js/filtered-requests.js"></script>
+
+<script>
   document.addEventListener("click", function (e) {
     const card = e.target.closest(".property-card");
     if (card) {
