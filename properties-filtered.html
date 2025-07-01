@@ -1,49 +1,111 @@
 ---
 layout: default
-title: عروض عقارية مميزة في مدينة نصر | سمسار طلبك
-description: استعرض أفضل العروض العقارية في مدينة نصر – شقق ومحلات ومكاتب للبيع أو الإيجار مع تفاصيل دقيقة وصور وأسعار تنافسية.
-permalink: /properties-filtered.html
-image: https://i.postimg.cc/Vk8Nn1xZ/me.jpg
+title: "عروض العقارات في مدينة نصر"
+description: "اكتشف أحدث الشقق والمحلات والمكاتب المعروضة للبيع أو الإيجار في مدينة نصر مع سمسار طلبك."
 ---
 
-<!-- SEO Meta Tags -->
+<!-- ✅ Meta Tags إضافية -->
 <meta name="robots" content="index, follow">
-<meta name="keywords" content="عقارات مدينة نصر, شقق للبيع مدينة نصر, محلات, مكاتب, سمسار طلبك">
 <meta name="author" content="سمسار طلبك">
-
-<!-- Open Graph Meta Tags -->
-<meta property="og:title" content="عروض عقارية مميزة في مدينة نصر | سمسار طلبك">
-<meta property="og:description" content="شقق، محلات، مكاتب – أسعار منافسة وخدمة احترافية من فريق سمسار طلبك في مدينة نصر.">
-<meta property="og:image" content="https://i.postimg.cc/Vk8Nn1xZ/me.jpg">
+<meta property="og:title" content="عروض العقارات - سمسار طلبك">
+<meta property="og:description" content="شقق ومحلات ومكاتب للبيع والإيجار في مدينة نصر مع شفافية كاملة وأسعار منافسة.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak/properties-filtered.html">
+<meta property="og:image" content="https://i.postimg.cc/Vk8Nn1xZ/me.jpg">
 
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="عروض عقارية في مدينة نصر | سمسار طلبك">
-<meta name="twitter:description" content="اكتشف أحدث عروض الشقق والمكاتب والمحلات بمدينة نصر.">
-<meta name="twitter:image" content="https://i.postimg.cc/Vk8Nn1xZ/me.jpg">
+<style>
+  body {
+    background-color: #121212;
+    color: #f1f1f1;
+    font-family: 'Tajawal', sans-serif;
+  }
 
-<section class="page-header">
-  <h1>📢 عروض مميزة للبيع والإيجار</h1>
-  <p>اختر نوع العقار من الأزرار أدناه للتصفية 👇</p>
-</section>
+  h1 {
+    text-align: center;
+    color: #00ff88;
+    margin-top: 2rem;
+  }
 
-<section id="intro-message" style="background: #222; color: #eee; padding: 1rem 1.5rem; border-radius: 12px; margin: 1rem auto; max-width: 700px; text-align: center; display: none;">
-  👋 مرحبًا بك في صفحة العروض!  
-  يمكنك تصفح أحدث العروض حسب النوع من الأزرار أعلاه.  
-  عند الضغط على أي بطاقة، سيتم تمييزها لتسهيل الرجوع إليها لاحقًا.
-</section>
+  #filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 2rem 0;
+    gap: 10px;
+  }
 
-<div id="filter-buttons" style="text-align:center; margin-bottom: 1.5rem;"></div>
-<div id="properties-container"></div>
+  .filter-btn {
+    background-color: #1f1f1f;
+    color: #00ff88;
+    border: 1px solid #00ff88;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .filter-btn:hover,
+  .filter-btn.active {
+    background-color: #00ff88;
+    color: #121212;
+  }
+
+  .welcome-message {
+    background-color: #1e1e1e;
+    border: 1px solid #00ff88;
+    color: #f1f1f1;
+    padding: 1rem;
+    margin: 2rem auto;
+    border-radius: 10px;
+    max-width: 700px;
+    text-align: center;
+    line-height: 1.8;
+  }
+
+  #properties-container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+</style>
+
+<h1>📢 عروض العقارات</h1>
+<div id="filter-buttons"></div>
+<div id="welcome-box"></div>
+<div id="properties-container">⏳ جاري تحميل العروض...</div>
+
+<script src="/samsar-talabak/assets/js/filtered-display.js"></script>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    if (!localStorage.getItem("seenOffersMessage")) {
-      document.getElementById("intro-message").style.display = "block";
-      localStorage.setItem("seenOffersMessage", "true");
+  // حفظ اسم البطاقة التي تم الضغط عليها
+  document.addEventListener("click", function (e) {
+    const card = e.target.closest(".property-card");
+    if (card) {
+      localStorage.setItem("highlightCard", card.dataset.filename || "");
     }
   });
+
+  // تمييز البطاقة عند الرجوع إليها
+  function highlightSelectedCard() {
+    const highlighted = localStorage.getItem("highlightCard");
+    if (!highlighted) return;
+
+    const cards = document.querySelectorAll(".property-card");
+    cards.forEach(card => {
+      if (card.dataset.filename === highlighted) {
+        card.style.outline = "3px solid #00aa66";
+        card.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    });
+  }
+
+  // تأخير التنفيذ حتى يتم تحميل العناصر
+  window.addEventListener("load", () => {
+    setTimeout(highlightSelectedCard, 1000);
+  });
 </script>
-<script src="/samsar-talabak/assets/js/filtered-display.js" defer></script>
+
