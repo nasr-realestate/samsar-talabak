@@ -1,49 +1,105 @@
 ---
 layout: default
-title: طلبات العقارات في مدينة نصر | سمسار طلبك
-description: تصفح أحدث طلبات الباحثين عن عقارات في مدينة نصر. شقق ومحلات ومكاتب مطلوبة للشراء أو الإيجار من عملاء جادين.
-permalink: /requests-filtered.html
-image: https://i.postimg.cc/Vk8Nn1xZ/me.jpg
+title: "طلبات العقارات في مدينة نصر"
+description: "شاهد أحدث طلبات الشقق والمحلات والمكاتب في مدينة نصر من عملاء سمسار طلبك."
 ---
 
-<!-- SEO Meta Tags -->
+<!-- ✅ Meta Tags لمحركات البحث -->
 <meta name="robots" content="index, follow">
-<meta name="keywords" content="طلبات عقارية مدينة نصر, طلبات شقق للإيجار, طلبات شراء عقار, سمسار طلبك">
 <meta name="author" content="سمسار طلبك">
-
-<!-- Open Graph Meta Tags -->
-<meta property="og:title" content="طلبات عقارات في مدينة نصر | سمسار طلبك">
-<meta property="og:description" content="اعرف احتياجات السوق الآن – طلبات عقارية جادة من عملائنا في مدينة نصر.">
-<meta property="og:image" content="https://i.postimg.cc/Vk8Nn1xZ/me.jpg">
+<meta property="og:title" content="طلبات العقارات - سمسار طلبك">
+<meta property="og:description" content="تعرف على طلبات العملاء الباحثين عن شقق ومحلات في مدينة نصر.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak/requests-filtered.html">
+<meta property="og:image" content="https://i.postimg.cc/Vk8Nn1xZ/me.jpg">
 
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="طلبات شراء وتأجير عقارات | سمسار طلبك">
-<meta name="twitter:description" content="اكتشف ما يبحث عنه العملاء الآن في مدينة نصر.">
-<meta name="twitter:image" content="https://i.postimg.cc/Vk8Nn1xZ/me.jpg">
+<style>
+  body {
+    background-color: #121212;
+    color: #f1f1f1;
+    font-family: 'Tajawal', sans-serif;
+  }
 
-<section class="page-header">
-  <h1>📝 طلبات العقارات</h1>
-  <p>اختر نوع الطلب لعرض التفاصيل 👇</p>
-</section>
+  h1 {
+    text-align: center;
+    color: #00ff88;
+    margin-top: 2rem;
+  }
 
-<section id="intro-message" style="background: #222; color: #eee; padding: 1rem 1.5rem; border-radius: 12px; margin: 1rem auto; max-width: 700px; text-align: center; display: none;">
-  👋 مرحبًا بك في صفحة الطلبات!  
-  يمكنك تصفح طلبات العملاء المهتمين حسب النوع من الأزرار أعلاه.  
-  عند الضغط على أي بطاقة، سيتم تمييزها لتسهيل الرجوع إليها لاحقًا.
-</section>
+  #filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 2rem 0;
+    gap: 10px;
+  }
 
-<div id="filter-buttons" style="text-align:center; margin-bottom: 1.5rem;"></div>
-<div id="requests-container"></div>
+  .filter-btn {
+    background-color: #1f1f1f;
+    color: #00ff88;
+    border: 1px solid #00ff88;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+  }
 
+  .filter-btn:hover {
+    background-color: #00ff88;
+    color: #121212;
+  }
+
+  .welcome-message {
+    background-color: #1e1e1e;
+    border: 1px solid #00ff88;
+    color: #f1f1f1;
+    padding: 1rem;
+    margin: 2rem auto;
+    border-radius: 10px;
+    max-width: 700px;
+    text-align: center;
+    line-height: 1.8;
+  }
+
+  #requests-container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+</style>
+
+<h1>📨 طلبات العملاء</h1>
+<div id="filter-buttons"></div>
+<div id="welcome-box"></div>
+<div id="requests-container">⏳ جاري تحميل الطلبات...</div>
+
+<script src="/samsar-talabak/assets/js/filtered-requests.js"></script>
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    if (!localStorage.getItem("seenRequestsMessage")) {
-      document.getElementById("intro-message").style.display = "block";
-      localStorage.setItem("seenRequestsMessage", "true");
+  // حفظ اسم البطاقة التي تم الضغط عليها
+  document.addEventListener("click", function (e) {
+    const card = e.target.closest(".property-card");
+    if (card) {
+      localStorage.setItem("highlightCard", card.dataset.filename || "");
     }
   });
+
+  // تمييز البطاقة عند الرجوع إليها
+  function highlightSelectedCard() {
+    const highlighted = localStorage.getItem("highlightCard");
+    if (!highlighted) return;
+
+    const cards = document.querySelectorAll(".property-card");
+    cards.forEach(card => {
+      if (card.dataset.filename === highlighted) {
+        card.style.outline = "3px solid #00aa66";
+        card.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", highlightSelectedCard);
 </script>
-<script src="/samsar-talabak/assets/js/requests-display.js" defer></script>
