@@ -45,8 +45,8 @@ document.addEventListener("DOMContentLoaded", async function () {
             .then(data => {
               const encodedFilename = encodeURIComponent(filename);
               const detailPage = `/samsar-talabak/request-details.html?category=${category}&file=${encodedFilename}`;
-
               const card = document.createElement("div");
+
               card.className = `property-card card-${category}`;
               card.dataset.filename = filename;
               card.style = `
@@ -59,6 +59,10 @@ document.addEventListener("DOMContentLoaded", async function () {
                 font-family: 'Tajawal', sans-serif;
                 color: #f1f1f1;
               `;
+
+              card.addEventListener("click", () => {
+                localStorage.setItem("highlightCard", filename);
+              });
 
               card.innerHTML = `
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
@@ -81,14 +85,19 @@ document.addEventListener("DOMContentLoaded", async function () {
                 </div>
               `;
 
+              const highlighted = localStorage.getItem("highlightCard");
+              if (highlighted === filename) {
+                card.style.outline = "3px solid #00ff88";
+                card.scrollIntoView({ behavior: "smooth", block: "center" });
+              }
+
               container.appendChild(card);
             });
         });
-
-        setTimeout(highlightSelectedCard, 300);
       })
       .catch(err => {
         console.error(err);
         container.innerHTML = "<p style='text-align:center'>❌ حدث خطأ أثناء تحميل الطلبات.</p>";
       });
+  }
 });
