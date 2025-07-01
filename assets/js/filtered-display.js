@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   loadCategory(defaultCategory);
 
   function loadCategory(category) {
-    container.innerHTML = "<p style='text-align:center'>جاري تحميل البيانات...</p>";
+    container.innerHTML = "<p style='text-align:center'>جاري تحميل العروض...</p>";
 
     const allButtons = document.querySelectorAll(".filter-btn");
     allButtons.forEach(btn => btn.classList.remove("active"));
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       .then(files => {
         container.innerHTML = '';
         if (!files.length) {
-          container.innerHTML = "<p style='text-align:center'>لا توجد بيانات حالياً.</p>";
+          container.innerHTML = "<p style='text-align:center'>لا توجد عروض حالياً.</p>";
           return;
         }
 
@@ -45,8 +45,8 @@ document.addEventListener("DOMContentLoaded", async function () {
             .then(data => {
               const encodedFilename = encodeURIComponent(filename);
               const detailPage = `/samsar-talabak/details.html?category=${category}&file=${encodedFilename}`;
-
               const card = document.createElement("div");
+
               card.className = `property-card card-${category}`;
               card.dataset.filename = filename;
               card.style = `
@@ -58,7 +58,12 @@ document.addEventListener("DOMContentLoaded", async function () {
                 margin-bottom: 1.5rem;
                 font-family: 'Tajawal', sans-serif;
                 color: #f1f1f1;
+                transition: 0.3s;
               `;
+
+              card.addEventListener("click", () => {
+                localStorage.setItem("highlightCard", filename);
+              });
 
               card.innerHTML = `
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
@@ -71,7 +76,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <p><strong>💰 السعر:</strong> ${data.price}</p>
                 <p><strong>📏 المساحة:</strong> ${data.area}</p>
                 <p><strong>📅 تاريخ الإضافة:</strong> ${data.date || "غير متوفر"}</p>
-                <p style="margin: 0.5rem 0; color:#ccc;"><strong>📝 نبذة:</strong> ${data.description}</p>
+                <p style="margin: 0.5rem 0; color:#ccc;"><strong>📝 التفاصيل:</strong> ${data.description}</p>
                 <div style="margin-top: 1rem;">
                   <a href="${detailPage}" 
                     style="background:#00ff88; color:#000; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: bold;">
@@ -80,15 +85,20 @@ document.addEventListener("DOMContentLoaded", async function () {
                 </div>
               `;
 
+              // ✅ تلوين البطاقة إذا كانت هي المختارة سابقًا
+              const highlighted = localStorage.getItem("highlightCard");
+              if (highlighted === filename) {
+                card.style.outline = "3px solid #00ff88";
+                card.scrollIntoView({ behavior: "smooth", block: "center" });
+              }
+
               container.appendChild(card);
             });
         });
-
-        setTimeout(highlightSelectedCard, 300);
       })
       .catch(err => {
         console.error(err);
-        container.innerHTML = "<p style='text-align:center'>حدث خطأ أثناء تحميل البيانات.</p>";
+        container.innerHTML = "<p style='text-align:center'>❌ حدث خطأ أثناء تحميل العروض.</p>";
       });
   }
 });
