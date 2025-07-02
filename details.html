@@ -1,58 +1,12 @@
 ---
 layout: default
 title: "تفاصيل العقار"
-description: "شاهد معلومات تفصيلية عن هذا العرض العقاري في مدينة نصر"
+description: "عرض تفصيلي لعقار بمدينة نصر من سمسار طلبك"
 ---
 
 <main id="property-details" style="max-width: 800px; margin: 40px auto; padding: 20px; background: #ffffff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); font-family: 'Tajawal', sans-serif; color: #222;">
-  <p style="text-align:center;">⏳ جاري تحميل بيانات العقار...</p>
+  <p style="text-align:center;">⏳ جاري تحميل تفاصيل العقار...</p>
 </main>
 
-<script>
-document.addEventListener("DOMContentLoaded", async function () {
-  const params = new URLSearchParams(window.location.search);
-  const category = params.get("category");
-  const file = params.get("file");
-  const container = document.getElementById("property-details");
-
-  if (!category || !file) {
-    container.innerHTML = "❌ لم يتم تحديد العقار.";
-    return;
-  }
-
-  try {
-    const res = await fetch(`/samsar-talabak/data/properties/${category}/${file}`);
-    const prop = await res.json();
-
-    container.innerHTML = `
-      <div>
-        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 1.2rem;">
-          <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار سمسار طلبك" style="width: 48px; height: 48px; border-radius: 50%;">
-          <h1 style="font-size: 1.8rem; color: #00aa66; margin: 0;">${prop.title}</h1>
-        </div>
-
-        <p style="font-size: 1.1rem;"><strong>💰 السعر:</strong> ${prop.price || 'غير محدد'}</p>
-        <p style="font-size: 1.1rem;"><strong>📏 المساحة:</strong> ${prop.area || 'غير محددة'}</p>
-        <p style="font-size: 1.1rem;"><strong>📝 الوصف:</strong> ${prop.description}</p>
-        <p style="font-size: 1rem; color: #666; margin-top: 1rem;">📅 <strong>تاريخ الإضافة:</strong> ${prop.date || 'غير متوفر'}</p>
-
-        <div style="display: flex; gap: 12px; margin-top: 2rem; flex-wrap: wrap;">
-          <a href="https://wa.me/${prop.whatsapp}?text=أريد الاستفسار عن ${encodeURIComponent(prop.title)}"
-             target="_blank"
-             style="flex: 1; text-align: center; background-color: #25D366; color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold;">
-            💬 تواصل عبر واتساب
-          </a>
-
-          <a href="/samsar-talabak/properties-filtered.html"
-             style="flex: 1; text-align: center; background-color: #444; color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold;">
-            ← العودة للعروض
-          </a>
-        </div>
-      </div>
-    `;
-  } catch (err) {
-    console.error("فشل في جلب بيانات العقار:", err);
-    container.innerHTML = "❌ حدث خطأ أثناء تحميل بيانات العقار.";
-  }
-});
-</script>
+<!-- ✅ كود الجافا سكريبت لتحميل وعرض التفاصيل مع زر المشاركة -->
+<script src="/samsar-talabak/assets/js/property-details-loader.js"></script>
