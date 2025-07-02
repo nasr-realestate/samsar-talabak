@@ -8,6 +8,14 @@ description: "تفاصيل طلب عقاري مقدم في مدينة نصر ع�
   <p style="text-align:center;">⏳ جاري تحميل تفاصيل الطلب...</p>
 </main>
 
+<!-- 🔁 زر العودة خارج الكارت -->
+<div style="text-align: center; margin-top: 30px;">
+  <a href="/samsar-talabak/requests-filtered.html"
+     style="display: inline-block; background-color: #444; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold;">
+    ← العودة للطلبات
+  </a>
+</div>
+
 <script>
 document.addEventListener("DOMContentLoaded", async function () {
   const params = new URLSearchParams(window.location.search);
@@ -23,8 +31,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   try {
     const res = await fetch(`/samsar-talabak/data/requests/${category}/${file}`);
     const req = await res.json();
-
-    const shareURL = window.location.href;
 
     container.innerHTML = `
       <div>
@@ -50,33 +56,28 @@ document.addEventListener("DOMContentLoaded", async function () {
              style="flex: 0 0 60px; text-align: center; background-color:#eeeeee; color:#222; padding: 12px 0; border-radius: 8px; border: none; font-weight: bold; font-size: 1.4rem; cursor: pointer;">
             📤
           </button>
-
-          <a href="/samsar-talabak/requests-filtered.html"
-             style="flex: 1; text-align: center; background-color: #444; color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold;">
-            ← العودة للطلبات
-          </a>
         </div>
       </div>
     `;
 
-    // زر المشاركة يتغير عند الضغط ✅
-    setTimeout(() => {
-      const shareBtn = document.getElementById("share-btn");
-      if (shareBtn) {
-        shareBtn.addEventListener("click", () => {
-          navigator.clipboard.writeText(shareURL).then(() => {
-            shareBtn.textContent = "✅";
-            setTimeout(() => {
-              shareBtn.textContent = "📤";
-            }, 2000);
-          });
-        });
-      }
-    }, 100);
-
+    // 💡 كود المشاركة: نسخ رابط الصفحة وتغيير الرمز
+    const shareBtn = document.getElementById("share-btn");
+    if (shareBtn) {
+      shareBtn.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+          shareBtn.textContent = "✅";
+          setTimeout(() => {
+            shareBtn.textContent = "📤";
+          }, 2000);
+        } catch (err) {
+          console.error("فشل في نسخ الرابط:", err);
+        }
+      });
+    }
   } catch (err) {
     console.error("فشل في جلب تفاصيل الطلب:", err);
     container.innerHTML = "❌ حدث خطأ أثناء تحميل بيانات الطلب.";
   }
 });
-  </script>
+                                                                                                       </script>
