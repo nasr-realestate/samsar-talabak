@@ -6,27 +6,23 @@ lang: "ar"
 email: "elraikonly@outlook.sa"
 theme: minima
 
-# بيانات وسائط
-timezone: Asia/Riyadh
-
-# بيانات المشروع
-data_dir: data
+#  هذا هو الإعداد الرئيسي للبيانات
 data_source: data
 
-# SEO
+# إعدادات SEO
 google_site_verification: "ozxUgrS2657mo8HYSvgjhYSeYv1FCcc8ig_3wjmSoGA"
-seo:
-  title: "سمسار طلبك - أفضل عروض العقارات في مدينة نصر"
-  description: "استكشف أفضل الشقق المعروضة للبيع والإيجار في مدينة نصر مع عروض حصرية وأسعار تنافسية."
-  twitter:
-    username: "yourhandle"
 
-# Markdown
+# دعم Markdown و HTML
 markdown: kramdown
 kramdown:
   input: GFM
 
-# صفحات
+# إعدادات البناء
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# إعدادات الصفحات الافتراضية
 defaults:
   -
     scope:
@@ -42,21 +38,18 @@ defaults:
     values:
       lang: "ar"
 
-# Pagination
-paginate: 10
-paginate_path: "/page:num/"
-
-# إستثناء ملفات التطوير
+# استثناءات الملفات والمجلدات التي لا تُنشر
 exclude:
   - node_modules
-  - .sass-cache
-  - _site
-  - vendor
   - Gemfile
   - Gemfile.lock
   - README.md
 
-# Plugins
-plugins:
-  - jekyll-seo-tag
-  - jekyll-sitemap
+# إعدادات السيو الإضافية
+seo:
+  title: "سمسار طلبك - أفضل عروض العقارات في مدينة نصر"
+  description: "استكشف أفضل الشقق المعروضة للبيع والإيجار في مدينة نصر مع عروض حصرية وأسعار تنافسية."
+
+# إعدادات التصفح Pagination
+paginate: 10
+paginate_path: "/page:num/"
