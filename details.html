@@ -1,13 +1,19 @@
-
 ---
-
-layout: default title: "تفاصيل العرض" description: "عرض عقاري في مدينة نصر مقدم عبر سمسار طلبك"
+layout: default
+title: "تفاصيل العرض"
+description: "عرض عقاري في مدينة نصر مقدم عبر سمسار طلبك"
+---
 
 <main id="property-details" style="max-width: 800px; margin: 40px auto; padding: 20px; background: #ffffff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); font-family: 'Tajawal', sans-serif; color: #222;">
   <p style="text-align:center;">⏳ جاري تحميل تفاصيل العقار...</p>
-</main><!-- ✅ إشعار نسخ --><div id="copy-toast" style="position: fixed; bottom: 30px; right: 30px; background-color: #00aa66; color: white; padding: 10px 16px; border-radius: 8px; font-weight: bold; display: none; z-index: 999;">
+</main>
+
+<!-- ✅ إشعار نسخ -->
+<div id="copy-toast" style="position: fixed; bottom: 30px; right: 30px; background-color: #00aa66; color: white; padding: 10px 16px; border-radius: 8px; font-weight: bold; display: none; z-index: 999;">
   ✅ تم نسخ الرابط!
-</div><script>
+</div>
+
+<script>
 document.addEventListener("DOMContentLoaded", async function () {
   const params = new URLSearchParams(window.location.search);
   const category = params.get("category");
@@ -52,6 +58,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       </div>
     `;
 
+    // إضافة زر العودة تحت البطاقة
     const backBtn = document.createElement("a");
     backBtn.href = "/samsar-talabak/properties-filtered.html";
     backBtn.textContent = "← العودة لكل العروض";
@@ -71,4 +78,4 @@ function copyToClipboard(text) {
     setTimeout(() => { toast.style.display = "none"; }, 2000);
   });
 }
-                                                                             </script>
+</script>
