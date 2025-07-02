@@ -12,8 +12,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   try {
     const res = await fetch(`/samsar-talabak/data/requests/${category}/${file}`);
     const req = await res.json();
-
-    const pageUrl = window.location.href;
+    const currentURL = window.location.href;
 
     container.innerHTML = `
       <div>
@@ -29,9 +28,15 @@ document.addEventListener("DOMContentLoaded", async function () {
         <p style="font-size: 1rem; color: #666; margin-top: 1rem;">📅 <strong>تاريخ الإضافة:</strong> ${req.date || 'غير متوفر'}</p>
 
         <div style="display: flex; gap: 12px; margin-top: 2rem; flex-wrap: wrap;">
-          <button onclick="shareRequest('${pageUrl}')" 
-            style="flex: 1; background-color: #00ff88; color: #000; padding: 12px 20px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer;">
-            🔗 مشاركة الطلب
+          <a href="https://wa.me/201147758857?text=أرى طلبك بعنوان: ${encodeURIComponent(req.title)}"
+             target="_blank"
+             style="flex: 1; text-align: center; background-color:#25D366; color:white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold;">
+            لدي عرض كهذا – تواصل عبر واتساب
+          </a>
+
+          <button onclick="copyToClipboard('${currentURL}')"
+            style="flex: 1; background-color:#00aa66; color:white; border:none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer;">
+            📤 مشاركة الطلب
           </button>
 
           <a href="/samsar-talabak/requests-filtered.html"
@@ -47,19 +52,32 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 });
 
-// ✅ دالة المشاركة
-function shareRequest(link) {
-  if (navigator.share) {
-    navigator.share({
-      title: "طلب عقاري في مدينة نصر",
-      text: "اطّلع على هذا الطلب العقاري من سمسار طلبك 👇",
-      url: link
-    }).then(() => {
-      console.log("✅ تمت المشاركة بنجاح");
-    }).catch((error) => {
-      console.error("❌ فشل المشاركة:", error);
-    });
-  } else {
-    prompt("انسخ الرابط وشاركه يدويًا:", link);
-  }
-}
+// ✅ نسخ رابط الصفحة إلى الحافظة
+function copyToClipboard(link) {
+  navigator.clipboard.writeText(link).then(() => {
+    const existingAlert = document.getElementById("copy-alert");
+    if (existingAlert) existingAlert.remove();
+
+    const alertBox = document.createElement("div");
+    alertBox.id = "copy-alert";
+    alertBox.textContent = "✅ تم نسخ رابط الصفحة";
+    alertBox.style.cssText = `
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #00aa66;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: bold;
+      z-index: 999;
+      box-shadow: 0 0 8px rgba(0,0,0,0.2);
+    `;
+    document.body.appendChild(alertBox);
+    setTimeout(() => alertBox.remove(), 2000);
+  }).catch(err => {
+    alert("❌ حدث خطأ أثناء نسخ الرابط");
+    console.error(err);
+  });
+          }
