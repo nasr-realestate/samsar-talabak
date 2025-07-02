@@ -4,13 +4,12 @@ title: "تفاصيل العرض"
 description: "عرض عقاري في مدينة نصر مقدم عبر سمسار طلبك"
 ---
 
-<main id="property-details" style="max-width: 800px; margin: 40px auto; padding: 20px; background: #ffffff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); font-family: 'Tajawal', sans-serif; color: #222;">
-  <p style="text-align:center;">⏳ جاري تحميل تفاصيل العقار...</p>
+<main id="property-details" style="max-width: 800px; margin: 40px auto; padding: 24px; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); font-family: 'Tajawal', sans-serif; color: #333;">
+  <p style="text-align:center; font-size: 1.2rem; color: #888;">⏳ جاري تحميل تفاصيل العقار...</p>
 </main>
 
-<!-- ✅ إشعار نسخ -->
 <div id="copy-toast" style="position: fixed; bottom: 30px; right: 30px; background-color: #00aa66; color: white; padding: 10px 16px; border-radius: 8px; font-weight: bold; display: none; z-index: 999;">
-  ✅ تم نسخ الرابط!
+  ✅ تم نسخ الرابط
 </div>
 
 <script>
@@ -21,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   const container = document.getElementById("property-details");
 
   if (!category || !file) {
-    container.innerHTML = "❌ لم يتم تحديد العقار.";
+    container.innerHTML = "<div style='text-align:center; color:#e74c3c;'>❌ لم يتم تحديد العقار</div>";
     return;
   }
 
@@ -35,39 +34,40 @@ document.addEventListener("DOMContentLoaded", async function () {
     const pageURL = window.location.href;
 
     container.innerHTML = `
-      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 1.2rem;">
-        <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار سمسار طلبك" style="width: 48px; height: 48px; border-radius: 50%;">
-        <h1 style="font-size: 1.8rem; color: #00aa66; margin: 0;">${title}</h1>
+      <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 1.5rem;">
+        <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار سمسار طلبك" style="width: 52px; height: 52px; border-radius: 50%; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+        <h1 style="font-size: 1.9rem; color: #00aa66; margin: 0;">${title}</h1>
       </div>
 
-      <p style="font-size: 1.3rem; color: #e74c3c; font-weight: bold;">${price}</p>
-      <p><strong>📏 المساحة:</strong> ${prop.area || 'غير محددة'}</p>
-      <p><strong>📝 الوصف:</strong> ${prop.description || 'لا يوجد وصف'}</p>
+      <p style="font-size: 1.4rem; color: #e74c3c; font-weight: bold; margin: 0 0 1rem;">${price}</p>
 
-      <div style="display: flex; gap: 12px; margin-top: 2rem; flex-wrap: wrap;">
+      <div style="line-height: 1.8;">
+        <p><strong>📏 المساحة:</strong> ${prop.area || 'غير محددة'}</p>
+        <p><strong>📝 الوصف:</strong> ${prop.description || 'لا يوجد وصف متاح حاليًا'}</p>
+      </div>
+
+      <div style="display: flex; gap: 14px; margin-top: 2rem; flex-wrap: wrap;">
         <a href="https://wa.me/${whatsapp}?text=أريد الاستفسار عن ${encodeURIComponent(title)}"
            target="_blank"
-           style="flex: 1; text-align: center; background-color:#25D366; color:white; padding:12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold;">
+           style="flex: 1; text-align: center; background-color: #25D366; color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
           تواصل عبر واتساب
         </a>
 
         <button onclick="copyToClipboard('${pageURL}')" title="انسخ رابط العرض"
-          style="flex: 0; background-color: #eee; border: none; padding: 12px; border-radius: 8px; cursor: pointer;">
+          style="flex: 0; background-color: #f1f1f1; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 1.2rem; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
           📤
         </button>
       </div>
-    `;
 
-    // إضافة زر العودة تحت البطاقة
-    const backBtn = document.createElement("a");
-    backBtn.href = "/samsar-talabak/properties-filtered.html";
-    backBtn.textContent = "← العودة لكل العروض";
-    backBtn.style = "display:block; margin-top:2rem; text-align:center; background-color:#2c3e50; color:white; padding:10px 20px; border-radius:8px; text-decoration:none; font-weight:bold;";
-    container.appendChild(backBtn);
+      <a href="/samsar-talabak/properties-filtered.html"
+         style="display: block; margin-top: 2.5rem; text-align: center; background-color: #2c3e50; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
+        ← العودة لكل العروض
+      </a>
+    `;
 
   } catch (err) {
     console.error("فشل في جلب تفاصيل العقار:", err);
-    container.innerHTML = "❌ حدث خطأ أثناء تحميل بيانات العقار.";
+    container.innerHTML = "<div style='text-align:center; color:#e74c3c;'>❌ حدث خطأ أثناء تحميل بيانات العقار</div>";
   }
 });
 
