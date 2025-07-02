@@ -11,37 +11,55 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   try {
     const res = await fetch(`/samsar-talabak/data/requests/${category}/${file}`);
-    const data = await res.json();
+    const req = await res.json();
+
+    const pageUrl = window.location.href;
 
     container.innerHTML = `
-      <div style="max-width: 800px; margin: 40px auto; padding: 24px; background: #fff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); font-family: 'Tajawal', sans-serif; color: #2c3e50;">
-        <h1 style="font-size: 1.8rem; color: #00b894; margin-bottom: 1rem;">${data.title}</h1>
+      <div>
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 1.2rem;">
+          <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار سمسار طلبك" style="width: 48px; height: 48px; border-radius: 50%;">
+          <h1 style="font-size: 1.8rem; color: #00aa66; margin: 0;">${req.title}</h1>
+        </div>
 
-        <p><strong>🔍 نوع الطلب:</strong> ${category}</p>
-        <p><strong>📏 المساحة المطلوبة:</strong> ${data.area || 'غير محددة'}</p>
-        <p><strong>💰 الميزانية:</strong> ${data.budget || 'غير محددة'}</p>
+        <p style="font-size: 1.1rem;"><strong>🔍 نوع الطلب:</strong> ${category || 'غير محدد'}</p>
+        <p style="font-size: 1.1rem;"><strong>📏 المساحة المطلوبة:</strong> ${req.area || 'غير محددة'}</p>
+        <p style="font-size: 1.1rem;"><strong>💰 الميزانية:</strong> ${req.budget || 'غير محددة'}</p>
+        <p style="font-size: 1.1rem;"><strong>📝 التفاصيل:</strong> ${req.description}</p>
+        <p style="font-size: 1rem; color: #666; margin-top: 1rem;">📅 <strong>تاريخ الإضافة:</strong> ${req.date || 'غير متوفر'}</p>
 
-        ${data.floor ? `<p><strong>🏢 الدور المطلوب:</strong> ${data.floor}</p>` : ''}
-        ${data.direction ? `<p><strong>🧭 الاتجاه:</strong> ${data.direction}</p>` : ''}
-        ${data.date_added ? `<p><strong>📅 تاريخ الإضافة:</strong> ${data.date_added}</p>` : ''}
-        ${data.contact ? `<p><strong>📞 وسيلة تواصل:</strong> ${data.contact}</p>` : ''}
+        <div style="display: flex; gap: 12px; margin-top: 2rem; flex-wrap: wrap;">
+          <button onclick="shareRequest('${pageUrl}')" 
+            style="flex: 1; background-color: #00ff88; color: #000; padding: 12px 20px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer;">
+            🔗 مشاركة الطلب
+          </button>
 
-        <p style="margin-top: 1rem;"><strong>📝 تفاصيل إضافية:</strong> ${data.description || 'لا يوجد'}</p>
-        ${data.notes ? `<p><strong>📌 ملاحظات:</strong> ${data.notes}</p>` : ''}
-
-        <a href="https://wa.me/201147758857?text=أرى طلبك بعنوان: ${encodeURIComponent(data.title)}"
-           target="_blank"
-           style="display:inline-block; background-color:#25D366; color:white; padding:12px 24px; border-radius:6px; text-decoration:none; font-weight:bold; font-size:1.1rem; margin-top:1.5rem;">
-          لدي عرض كهذا – تواصل عبر واتساب
-        </a>
-        <br><br>
-        <a href="requests-filtered.html" style="display:inline-block; margin-top:1rem; background-color:#2c3e50; color:white; padding:10px 20px; border-radius:6px; text-decoration:none;">
-          ← العودة لكل الطلبات
-        </a>
+          <a href="/samsar-talabak/requests-filtered.html"
+             style="flex: 1; text-align: center; background-color: #444; color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold;">
+            ← العودة للطلبات
+          </a>
+        </div>
       </div>
     `;
   } catch (err) {
     console.error("فشل في جلب تفاصيل الطلب:", err);
-    container.innerHTML = "❌ حدث خطأ أثناء تحميل تفاصيل الطلب.";
+    container.innerHTML = "❌ حدث خطأ أثناء تحميل بيانات الطلب.";
   }
 });
+
+// ✅ دالة المشاركة
+function shareRequest(link) {
+  if (navigator.share) {
+    navigator.share({
+      title: "طلب عقاري في مدينة نصر",
+      text: "اطّلع على هذا الطلب العقاري من سمسار طلبك 👇",
+      url: link
+    }).then(() => {
+      console.log("✅ تمت المشاركة بنجاح");
+    }).catch((error) => {
+      console.error("❌ فشل المشاركة:", error);
+    });
+  } else {
+    prompt("انسخ الرابط وشاركه يدويًا:", link);
+  }
+}
