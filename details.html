@@ -8,6 +8,14 @@ description: "عرض عقاري في مدينة نصر مقدم عبر سمسا�
   <p style="text-align:center; font-size: 1.2rem; color: #888;">⏳ جاري تحميل تفاصيل العقار...</p>
 </main>
 
+<!-- زر العودة خارج البطاقة -->
+<div style="max-width: 800px; margin: 30px auto; text-align: center;">
+  <a href="/samsar-talabak/properties-filtered.html"
+     style="display: inline-block; background-color: #2c3e50; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
+    ← العودة لكل العروض
+  </a>
+</div>
+
 <div id="copy-toast" style="position: fixed; bottom: 30px; right: 30px; background-color: #00aa66; color: white; padding: 10px 16px; border-radius: 8px; font-weight: bold; display: none; z-index: 999;">
   ✅ تم نسخ الرابط
 </div>
@@ -58,11 +66,6 @@ document.addEventListener("DOMContentLoaded", async function () {
           📤
         </button>
       </div>
-
-      <a href="/samsar-talabak/properties-filtered.html"
-         style="display: block; margin-top: 2.5rem; text-align: center; background-color: #2c3e50; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
-        ← العودة لكل العروض
-      </a>
     `;
 
   } catch (err) {
