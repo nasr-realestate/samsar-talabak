@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const BASE_DIR = 'data'; // أو 'data/requests' لو عايز تشتغل على الطلبات فقط
+const BASE_DIR = 'data'; // يمكنك تغييره إلى 'data/requests' لو شئت
+
 const TARGET_FIELDS = {
   whatsapp: "201147758857",
   direction: "غير محدد",
@@ -9,7 +10,7 @@ const TARGET_FIELDS = {
   date_added: new Date().toISOString().split('T')[0]
 };
 
-function enrichFile(filePath) {
+function processFile(filePath) {
   try {
     const content = fs.readFileSync(filePath, 'utf8');
     const data = JSON.parse(content);
@@ -24,22 +25,21 @@ function enrichFile(filePath) {
 
     if (updated) {
       fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
-      console.log(`✅ تم تحديث: ${filePath}`);
     }
   } catch (err) {
-    console.error(`❌ خطأ في الملف ${filePath}:`, err.message);
+    console.error(`❌ مشكلة في الملف: ${filePath}\n${err.message}`);
   }
 }
 
-function walkDir(dir) {
-  fs.readdirSync(dir, { withFileTypes: true }).forEach(entry => {
+function scanDirectory(dir) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory()) {
-      walkDir(fullPath);
+      scanDirectory(fullPath);
     } else if (entry.isFile() && entry.name.endsWith('.json') && entry.name !== 'index.json') {
-      enrichFile(fullPath);
+      processFile(fullPath);
     }
-  });
+  }
 }
 
-walkDir(BASE_DIR);
+scanDirectory(BASE_DIR);
