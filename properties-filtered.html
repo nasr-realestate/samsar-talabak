@@ -18,51 +18,31 @@ description: "اكتشف أحدث الشقق والمحلات والمكاتب �
     background-color: #121212;
     color: #f1f1f1;
     font-family: 'Tajawal', sans-serif;
-    margin: 0;
-    padding: 0;
   }
 
   h1 {
     text-align: center;
     color: #00ff88;
     margin-top: 2rem;
-    font-size: 2rem;
-  }
-
-  .cta-button {
-    display: inline-block;
-    background-color: #25D366;
-    color: #fff;
-    padding: 0.8rem 1.5rem;
-    border-radius: 10px;
-    font-weight: bold;
-    font-size: 1.1rem;
-    text-decoration: none;
-    transition: background 0.3s ease;
-  }
-
-  .cta-button:hover {
-    background-color: #1ebc57;
   }
 
   #filter-buttons {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin: 2rem 0;
     gap: 10px;
-    margin: 2rem auto;
-    max-width: 900px;
   }
 
   .filter-btn {
     background-color: #1f1f1f;
     color: #00ff88;
     border: 1px solid #00ff88;
-    padding: 0.7rem 1.2rem;
+    padding: 0.7rem 1.5rem;
     border-radius: 8px;
     font-size: 1rem;
     cursor: pointer;
-    transition: background 0.3s, color 0.3s;
+    transition: 0.3s;
   }
 
   .filter-btn:hover,
@@ -75,72 +55,54 @@ description: "اكتشف أحدث الشقق والمحلات والمكاتب �
     background-color: #1e1e1e;
     border: 1px solid #00ff88;
     color: #f1f1f1;
-    padding: 1.2rem;
+    padding: 1rem;
     margin: 2rem auto;
     border-radius: 10px;
     max-width: 700px;
     text-align: center;
     line-height: 1.8;
-    font-size: 1.05rem;
   }
 
   #properties-container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 1rem;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
-    max-width: 1100px;
-    margin: 0 auto 3rem;
-    padding: 1rem;
-  }
-
-  .property-card {
-    background-color: #1a1a1a;
-    border: 1px solid #333;
-    border-radius: 10px;
-    padding: 1rem;
-    transition: transform 0.2s ease;
-  }
-
-  .property-card:hover {
-    transform: scale(1.02);
   }
 </style>
 
 <h1>📢 عروض العقارات</h1>
 
-<!-- ✅ زر إضافة عرض -->
+<!-- ✅ زر إضافة عقار -->
 <div style="text-align:center; margin-top: 1rem;">
-  <a href="/samsar-talabak/add-your-property.html" class="cta-button">➕ أضف عقارك الآن</a>
+  <a href="/samsar-talabak/add-your-property.html" 
+     style="background:#25D366; color:#fff; padding: 0.8rem 1.5rem; border-radius: 10px; font-weight: bold; text-decoration: none; font-size: 1.1rem;">
+    ➕ أضف عقارك الآن
+  </a>
 </div>
 
-<!-- ✅ أزرار الفلترة -->
 <div id="filter-buttons"></div>
-
-<!-- ✅ رسالة ترحيبية أو معلومة -->
-<div id="welcome-box" class="welcome-message"></div>
-
-<!-- ✅ عرض العروض -->
+<div id="welcome-box"></div>
 <div id="properties-container">⏳ جاري تحميل العروض...</div>
 
-<!-- ✅ تحميل العروض -->
-<script src="/samsar-talabak/assets/js/filtered-display.js" defer></script>
+<script src="/samsar-talabak/assets/js/filtered-display.js"></script>
 
-<!-- ✅ تمييز بطاقة تم الضغط عليها سابقاً -->
 <script>
-  document.addEventListener("click", (e) => {
+  document.addEventListener("click", function (e) {
     const card = e.target.closest(".property-card");
-    if (card?.dataset.filename) {
-      localStorage.setItem("highlightCard", card.dataset.filename);
+    if (card) {
+      localStorage.setItem("highlightCard", card.dataset.filename || "");
     }
   });
 
   function highlightSelectedCard() {
-    const target = localStorage.getItem("highlightCard");
-    if (!target) return;
-
+    const highlighted = localStorage.getItem("highlightCard");
+    if (!highlighted) return;
     const cards = document.querySelectorAll(".property-card");
     cards.forEach(card => {
-      if (card.dataset.filename === target) {
+      if (card.dataset.filename === highlighted) {
         card.style.outline = "3px solid #00aa66";
         card.scrollIntoView({ behavior: "smooth", block: "center" });
       }
@@ -148,6 +110,6 @@ description: "اكتشف أحدث الشقق والمحلات والمكاتب �
   }
 
   window.addEventListener("load", () => {
-    setTimeout(highlightSelectedCard, 800);
+    setTimeout(highlightSelectedCard, 1000);
   });
 </script>
