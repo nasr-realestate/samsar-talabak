@@ -13,29 +13,27 @@ description: "اعرض طلبك العقاري أو ابحث عن عملاء ج�
 <meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak/requests-filtered.html">
 <meta property="og:image" content="https://i.postimg.cc/Vk8Nn1xZ/me.jpg">
 
-<!-- ✅ Styling -->
+<!-- 🎵 صوت ترحيبي -->
+<audio id="welcomeSound" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
+
 <style>
   body {
     background-color: #121212;
     color: #f1f1f1;
     font-family: 'Tajawal', sans-serif;
-    margin: 0;
-    padding: 0;
   }
 
   h1 {
     text-align: center;
     color: #00ff88;
     margin-top: 2rem;
-    font-size: 2rem;
-    text-shadow: 0 0 5px #00ff88;
   }
 
   #filter-buttons {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 2rem 0 1rem;
+    margin: 2rem 0;
     gap: 10px;
   }
 
@@ -43,7 +41,7 @@ description: "اعرض طلبك العقاري أو ابحث عن عملاء ج�
     background-color: #1f1f1f;
     color: #00ff88;
     border: 1px solid #00ff88;
-    padding: 0.6rem 1.2rem;
+    padding: 0.7rem 1.5rem;
     border-radius: 8px;
     font-size: 1rem;
     cursor: pointer;
@@ -65,105 +63,119 @@ description: "اعرض طلبك العقاري أو ابحث عن عملاء ج�
     gap: 1.5rem;
   }
 
-  .loading-spinner {
-    text-align: center;
-    padding: 2rem;
-    font-size: 1.2rem;
-    color: #ccc;
-    animation: pulse 1.5s infinite;
-  }
-
-  @keyframes pulse {
-    0% { opacity: 0.4; }
-    50% { opacity: 1; }
-    100% { opacity: 0.4; }
-  }
-
-  .add-request-btn {
-    background: #25D366;
-    color: #fff;
-    padding: 0.8rem 1.5rem;
-    border-radius: 10px;
-    font-weight: bold;
-    text-decoration: none;
-    font-size: 1.1rem;
-    display: inline-block;
-    margin-top: 1rem;
-    transition: 0.3s;
-  }
-
-  .add-request-btn:hover {
-    background: #1ca64c;
-  }
-
-  /* ✅ رسالة الترحيب */
-  .welcome-overlay {
+  /* 🎉 رسالة الترحيب */
+  #welcomeOverlay {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.9);
+    background: rgba(0,0,0,0.9);
     display: none;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     z-index: 9999;
   }
 
   .welcome-box {
-    background: #1f1f1f;
-    padding: 2rem;
+    background: #1e1e1e;
     border: 2px solid #00ff88;
+    padding: 2rem;
     border-radius: 20px;
     max-width: 500px;
+    width: 90%;
     text-align: center;
-    box-shadow: 0 10px 40px rgba(0,255,136,0.2);
+    animation: fadeZoomIn 0.8s ease;
+    position: relative;
   }
 
   .welcome-box h2 {
+    font-size: 1.8rem;
     color: #00ff88;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
 
   .welcome-box p {
-    color: #ccc;
-    line-height: 1.6;
+    font-size: 1.1rem;
+    color: #ddd;
     margin-bottom: 1.5rem;
+    line-height: 1.6;
   }
 
   .welcome-box button {
-    background: #00ff88;
+    background-color: #00ff88;
     color: #121212;
     border: none;
-    padding: 0.7rem 1.5rem;
+    padding: 0.8rem 1.5rem;
     border-radius: 25px;
     font-weight: bold;
+    font-size: 1rem;
     cursor: pointer;
     transition: 0.3s;
   }
 
   .welcome-box button:hover {
-    background: #00cc77;
+    background-color: #00cc6a;
+  }
+
+  .welcome-emoji {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    animation: bounce 1.5s infinite;
+    display: block;
+  }
+
+  @keyframes fadeZoomIn {
+    0% { opacity: 0; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
   }
 </style>
 
-<!-- ✅ المحتوى -->
+<!-- ✅ رسالة الترحيب -->
+<div id="welcomeOverlay">
+  <div class="welcome-box">
+    <span class="welcome-emoji">📬</span>
+    <h2>مرحباً بك في صفحة الطلبات!</h2>
+    <p>اطّلع على طلبات حقيقية من عملاء يبحثون عن عقارات في مدينة نصر – هل لديك ما يناسبهم؟</p>
+    <button onclick="closeWelcome()">ابدأ الآن</button>
+  </div>
+</div>
+
 <h1>📬 طلبات العقارات</h1>
 
-<div style="text-align:center;">
-  <a href="/samsar-talabak/add-your-property.html" class="add-request-btn">
+<!-- ✅ زر إضافة طلب -->
+<div style="text-align:center; margin-top: 1rem;">
+  <a href="/samsar-talabak/add-your-property.html" 
+     style="background:#25D366; color:#fff; padding: 0.8rem 1.5rem; border-radius: 10px; font-weight: bold; text-decoration: none; font-size: 1.1rem;">
     ➕ أضف طلبك الآن
   </a>
 </div>
 
 <div id="filter-buttons"></div>
-<div id="requests-container">
-  <div class="loading-spinner">⏳ جاري تحميل الطلبات...</div>
-</div>
+<div id="requests-container">⏳ جاري تحميل الطلبات...</div>
 
-<!-- ✅ سكربت تحميل الطلبات -->
 <script src="/samsar-talabak/assets/js/requests-display.js"></script>
 
-<!-- ✅ تمييز البطاقات المختارة -->
 <script>
+  // 🎉 منطق الترحيب مرة واحدة فقط
+  window.addEventListener("load", () => {
+    const visited = localStorage.getItem("visitedRequestsPage");
+    if (!visited) {
+      document.getElementById("welcomeOverlay").style.display = "flex";
+      const audio = document.getElementById("welcomeSound");
+      if (audio) audio.play();
+    }
+  });
+
+  function closeWelcome() {
+    document.getElementById("welcomeOverlay").style.display = "none";
+    localStorage.setItem("visitedRequestsPage", "true");
+  }
+
+  // 🎯 تمييز الكروت بعد النقر
   document.addEventListener("click", function (e) {
     const card = e.target.closest(".property-card");
     if (card) {
@@ -185,32 +197,5 @@ description: "اعرض طلبك العقاري أو ابحث عن عملاء ج�
 
   window.addEventListener("load", () => {
     setTimeout(highlightSelectedCard, 1000);
-  });
-</script>
-
-<!-- ✅ رسالة الترحيب عند أول زيارة -->
-<div class="welcome-overlay" id="welcomeOverlay">
-  <div class="welcome-box">
-    <h2>👋 مرحباً بك!</h2>
-    <p>
-      في هذه الصفحة، يمكنك تصفح طلبات العقارات الحقيقية في مدينة نصر.<br>
-      استخدم أزرار التصنيف بالأعلى لتصفية الطلبات حسب النوع،<br>
-      وإذا كنت تبحث عن عقار معين، اضغط على زر <strong>"أضف طلبك"</strong> لرفع طلبك الآن.
-    </p>
-    <button onclick="closeWelcome()">ابدأ التصفح</button>
-  </div>
-</div>
-
-<script>
-  function closeWelcome() {
-    document.getElementById("welcomeOverlay").style.display = "none";
-    localStorage.setItem("visitedRequestsPage", "yes");
-  }
-
-  window.addEventListener("load", () => {
-    const visited = localStorage.getItem("visitedRequestsPage");
-    if (!visited) {
-      document.getElementById("welcomeOverlay").style.display = "flex";
-    }
   });
 </script>
