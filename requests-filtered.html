@@ -79,7 +79,6 @@ description: "اعرض طلبك العقاري أو ابحث عن عملاء ج�
     100% { opacity: 0.4; }
   }
 
-  /* زر إضافة الطلب */
   .add-request-btn {
     background: #25D366;
     color: #fff;
@@ -97,18 +96,52 @@ description: "اعرض طلبك العقاري أو ابحث عن عملاء ج�
     background: #1ca64c;
   }
 
-  .chat-button {
+  /* ✅ رسالة الترحيب */
+  .welcome-overlay {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.9);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  .welcome-box {
+    background: #1f1f1f;
+    padding: 2rem;
+    border: 2px solid #00ff88;
+    border-radius: 20px;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0,255,136,0.2);
+  }
+
+  .welcome-box h2 {
+    color: #00ff88;
+    margin-bottom: 1rem;
+  }
+
+  .welcome-box p {
+    color: #ccc;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .welcome-box button {
     background: #00ff88;
     color: #121212;
-    padding: 12px 18px;
-    border-radius: 30px;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 25px;
     font-weight: bold;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     cursor: pointer;
-    z-index: 999;
+    transition: 0.3s;
+  }
+
+  .welcome-box button:hover {
+    background: #00cc77;
   }
 </style>
 
@@ -155,7 +188,29 @@ description: "اعرض طلبك العقاري أو ابحث عن عملاء ج�
   });
 </script>
 
-<!-- ✅ زر دردشة وهمي -->
-<div class="chat-button" onclick="alert('مرحباً! كيف يمكننا مساعدتك اليوم؟ 🤝')">
-  💬 دردش معنا
+<!-- ✅ رسالة الترحيب عند أول زيارة -->
+<div class="welcome-overlay" id="welcomeOverlay">
+  <div class="welcome-box">
+    <h2>👋 مرحباً بك!</h2>
+    <p>
+      في هذه الصفحة، يمكنك تصفح طلبات العقارات الحقيقية في مدينة نصر.<br>
+      استخدم أزرار التصنيف بالأعلى لتصفية الطلبات حسب النوع،<br>
+      وإذا كنت تبحث عن عقار معين، اضغط على زر <strong>"أضف طلبك"</strong> لرفع طلبك الآن.
+    </p>
+    <button onclick="closeWelcome()">ابدأ التصفح</button>
+  </div>
 </div>
+
+<script>
+  function closeWelcome() {
+    document.getElementById("welcomeOverlay").style.display = "none";
+    localStorage.setItem("visitedRequestsPage", "yes");
+  }
+
+  window.addEventListener("load", () => {
+    const visited = localStorage.getItem("visitedRequestsPage");
+    if (!visited) {
+      document.getElementById("welcomeOverlay").style.display = "flex";
+    }
+  });
+</script>
