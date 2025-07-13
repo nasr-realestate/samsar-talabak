@@ -8,7 +8,7 @@ description: "عرض عقاري في مدينة نصر مقدم عبر سمسا�
   <p style="text-align:center; font-size: 1.2rem; color: #888;">⏳ جاري تحميل تفاصيل العقار...</p>
 </main>
 
-<!-- زر العودة خارج البطاقة -->
+<!-- زر العودة -->
 <div style="max-width: 800px; margin: 30px auto; text-align: center;">
   <a href="/samsar-talabak/properties-filtered.html"
      style="display: inline-block; background-color: #2c3e50; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
@@ -16,6 +16,7 @@ description: "عرض عقاري في مدينة نصر مقدم عبر سمسا�
   </a>
 </div>
 
+<!-- إشعار النسخ -->
 <div id="copy-toast" style="position: fixed; bottom: 30px; right: 30px; background-color: #00aa66; color: white; padding: 10px 16px; border-radius: 8px; font-weight: bold; display: none; z-index: 999;">
   ✅ تم نسخ الرابط
 </div>
@@ -36,23 +37,50 @@ document.addEventListener("DOMContentLoaded", async function () {
     const res = await fetch(`/samsar-talabak/data/properties/${category}/${file}`);
     const prop = await res.json();
 
-    const title = prop.title || "تفاصيل العرض";
-    const price = prop.price || `${prop.price_monthly || "؟"} جنيه شهريًا / ${prop.price_daily || "؟"} جنيه يوميًا`;
+    const title = prop.title || "عرض عقاري";
+    const price = prop.price || `${prop.price_monthly || "؟"} شهريًا / ${prop.price_daily || "؟"} يوميًا`;
     const whatsapp = prop.whatsapp || "201147758857";
     const pageURL = window.location.href;
 
     container.innerHTML = `
-      <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 1.5rem;">
-        <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار سمسار طلبك" style="width: 52px; height: 52px; border-radius: 50%; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
-        <h1 style="font-size: 1.9rem; color: #00aa66; margin: 0;">${title}</h1>
+      <h1 style="font-size: 2rem; color: #00aa66; margin-bottom: 0.5rem;">${title}</h1>
+      <p style="font-size: 1.4rem; color: #e74c3c; font-weight: bold;">💰 ${price}</p>
+
+      <ul style="line-height: 2; padding: 0; list-style: none;">
+        ${prop.area ? `<li>📏 <strong>المساحة:</strong> ${prop.area}</li>` : ""}
+        ${prop.rooms ? `<li>🛏️ <strong>عدد الغرف:</strong> ${prop.rooms}</li>` : ""}
+        ${prop.bathrooms ? `<li>🚿 <strong>عدد الحمامات:</strong> ${prop.bathrooms}</li>` : ""}
+        ${prop.floor ? `<li>🏢 <strong>الدور:</strong> ${prop.floor}</li>` : ""}
+        ${prop.elevator !== undefined ? `<li>🛗 <strong>مصعد:</strong> ${prop.elevator ? "متوفر" : "غير متوفر"}</li>` : ""}
+        ${prop.garage !== undefined ? `<li>🚗 <strong>جراج:</strong> ${prop.garage ? "متوفر" : "غير متوفر"}</li>` : ""}
+        ${prop.finish ? `<li>🎨 <strong>التشطيب:</strong> ${prop.finish}</li>` : ""}
+        ${prop.direction ? `<li>🧭 <strong>الاتجاه:</strong> ${prop.direction}</li>` : ""}
+        ${prop.date ? `<li>📅 <strong>تاريخ الإضافة:</strong> ${prop.date}</li>` : ""}
+      </ul>
+
+      <div style="margin-top: 1rem;">
+        <p><strong>📝 الوصف:</strong></p>
+        <p>${prop.description || "لا يوجد وصف متاح حاليًا"}</p>
       </div>
 
-      <p style="font-size: 1.4rem; color: #e74c3c; font-weight: bold; margin: 0 0 1rem;">${price}</p>
+      ${prop.more_details ? `
+        <div style="margin-top: 1rem;">
+          <p><strong>📌 تفاصيل إضافية:</strong></p>
+          <p>${prop.more_details}</p>
+        </div>
+      ` : ""}
 
-      <div style="line-height: 1.8;">
-        <p><strong>📏 المساحة:</strong> ${prop.area || 'غير محددة'}</p>
-        <p><strong>📝 الوصف:</strong> ${prop.description || 'لا يوجد وصف متاح حاليًا'}</p>
-      </div>
+      ${prop.map_url ? `
+        <div style="margin-top: 1rem;">
+          <a href="${prop.map_url}" target="_blank" style="color:#2980b9;">📍 عرض الموقع على الخريطة</a>
+        </div>
+      ` : ""}
+
+      ${prop.form_url ? `
+        <div style="margin-top: 1rem;">
+          <a href="${prop.form_url}" target="_blank" style="color:#8e44ad;">📝 نموذج الطلب</a>
+        </div>
+      ` : ""}
 
       <div style="display: flex; gap: 14px; margin-top: 2rem; flex-wrap: wrap;">
         <a href="https://wa.me/${whatsapp}?text=أريد الاستفسار عن ${encodeURIComponent(title)}"
