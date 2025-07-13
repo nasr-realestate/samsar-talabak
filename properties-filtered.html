@@ -56,20 +56,9 @@ description: "اكتشف أحدث الشقق والمحلات والمكاتب �
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
   }
-  #search-input {
-    width: 80%;
-    max-width: 500px;
-    padding: 0.8rem 1rem;
-    border-radius: 8px;
-    border: none;
-    font-size: 1rem;
-    background-color: #f1f1f1;
-    color: #333;
-    margin-bottom: 1rem;
-  }
 </style>
 
-<!-- ✅ رسالة الترحيب -->
+<!-- ✅ رسالة ترحيب -->
 <div id="welcomeOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); z-index:9999; justify-content: center; align-items: center;">
   <div class="welcome-box" style="background: #1e1e1e; border: 2px solid #00ff88; padding: 2rem; border-radius: 20px; max-width: 500px; text-align: center;">
     <span class="welcome-emoji" style="font-size: 2.5rem; display:block; animation: bounce 1.5s infinite;">🏡</span>
@@ -90,9 +79,14 @@ description: "اكتشف أحدث الشقق والمحلات والمكاتب �
   </a>
 </div>
 
-<!-- ✅ إدخال البحث -->
+<!-- ✅ مربع البحث الأنيق -->
 <div style="text-align: center; margin-top: 1.5rem;">
-  <input id="search-input" type="text" placeholder="🔍 ابحث عن عرض معين...">
+  <div style="position: relative; display: inline-block; width: 80%; max-width: 500px;">
+    <input id="search-input" type="text" placeholder="ابحث مثلاً: شقة ٣ غرف أو تشطيب لوكس"
+           style="width: 100%; padding: 0.8rem 2.5rem 0.8rem 1rem; border-radius: 8px; border: none;
+                  font-size: 1rem; background-color: #f1f1f1; color: #333;">
+    <span style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #888; font-size: 1.2rem;">🔍</span>
+  </div>
 </div>
 
 <!-- ✅ أزرار الفلاتر -->
@@ -101,7 +95,7 @@ description: "اكتشف أحدث الشقق والمحلات والمكاتب �
 <!-- ✅ مكان عرض البطاقات -->
 <div id="properties-container">⏳ جاري تحميل العروض...</div>
 
-<!-- ✅ ربط سكربت عرض العروض -->
+<!-- ✅ سكربت عرض البطاقات -->
 <script src="/samsar-talabak/assets/js/filtered-display.js"></script>
 
 <!-- ✅ سكربت الترحيب -->
@@ -118,4 +112,29 @@ description: "اكتشف أحدث الشقق والمحلات والمكاتب �
     document.getElementById("welcomeOverlay").style.display = "none";
     localStorage.setItem("visitedOffersPage", "true");
   }
+</script>
+
+<!-- ✅ سكربت البحث الفوري -->
+<script>
+  function debounce(func, delay) {
+    let timeout;
+    return function (...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), delay);
+    };
+  }
+
+  const searchInput = document.getElementById("search-input");
+
+  const handleSearch = debounce(() => {
+    const keyword = searchInput.value.toLowerCase().trim();
+    const cards = document.querySelectorAll(".property-card"); // تأكد من وجود هذا الكلاس في كل بطاقة
+
+    cards.forEach(card => {
+      const text = card.innerText.toLowerCase();
+      card.style.display = text.includes(keyword) ? "block" : "none";
+    });
+  }, 300);
+
+  searchInput.addEventListener("input", handleSearch);
 </script>
