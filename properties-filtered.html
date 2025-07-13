@@ -1,14 +1,19 @@
 ---
+layout: default
+title: "عروض العقارات في مدينة نصر"
+description: "اكتشف أحدث الشقق والمحلات والمكاتب المعروضة للبيع أو الإيجار في مدينة نصر مع سمسار طلبك."
+---
 
-layout: default title: "عروض العقارات في مدينة نصر" description: "اكتشف أحدث الشقق والمحلات والمكاتب المعروضة للبيع أو الإيجار في مدينة نصر مع سمسار طلبك."
-
-<!-- ✅ Meta Tags --><meta name="robots" content="index, follow">
+<!-- ✅ Meta Tags -->
+<meta name="robots" content="index, follow">
 <meta name="author" content="سمسار طلبك">
 <meta property="og:title" content="عروض العقارات - سمسار طلبك">
 <meta property="og:description" content="شقق ومحلات ومكاتب للبيع والإيجار في مدينة نصر مع شفافية كاملة وأسعار منافسة.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak/properties-filtered.html">
-<meta property="og:image" content="https://i.postimg.cc/Vk8Nn1xZ/me.jpg"><audio id="welcomeSound" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
+<meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak/offers.html">
+<meta property="og:image" content="https://i.postimg.cc/Vk8Nn1xZ/me.jpg">
+
+<audio id="welcomeSound" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
 
 <style>
   body {
@@ -62,22 +67,45 @@ layout: default title: "عروض العقارات في مدينة نصر" descri
     color: #333;
     margin-bottom: 1rem;
   }
-</style><!-- ✅ رسالة الترحيب --><div id="welcomeOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); z-index:9999; justify-content: center; align-items: center;">
+</style>
+
+<!-- ✅ رسالة الترحيب -->
+<div id="welcomeOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); z-index:9999; justify-content: center; align-items: center;">
   <div class="welcome-box" style="background: #1e1e1e; border: 2px solid #00ff88; padding: 2rem; border-radius: 20px; max-width: 500px; text-align: center;">
     <span class="welcome-emoji" style="font-size: 2.5rem; display:block; animation: bounce 1.5s infinite;">🏡</span>
     <h2 style="font-size: 1.8rem; color: #00ff88;">مرحباً بك في سمسار طلبك!</h2>
     <p style="font-size: 1.1rem; color: #ddd; line-height: 1.6;">هنا تقدر تستعرض أحدث العروض العقارية في مدينة نصر بكل شفافية وسهولة.</p>
     <button onclick="closeWelcome()" style="background-color: #00ff88; color: #121212; padding: 0.8rem 1.5rem; border-radius: 25px; font-weight: bold; font-size: 1rem; border:none; cursor:pointer;">ابدأ التصفح الآن</button>
   </div>
-</div><h1>📢 عروض العقارات</h1><!-- ✅ زر إضافة عقار --><div style="text-align:center; margin-top: 1rem;">
+</div>
+
+<!-- ✅ العنوان -->
+<h1>📢 عروض العقارات</h1>
+
+<!-- ✅ زر إضافة عقار -->
+<div style="text-align:center; margin-top: 1rem;">
   <a href="/samsar-talabak/add-your-property.html" 
      style="background:#25D366; color:#fff; padding: 0.8rem 1.5rem; border-radius: 10px; font-weight: bold; text-decoration: none; font-size: 1.1rem;">
     ➕ أضف عقارك الآن
   </a>
-</div><!-- ✅ إدخال البحث --><div style="text-align: center; margin-top: 1.5rem;">
+</div>
+
+<!-- ✅ إدخال البحث -->
+<div style="text-align: center; margin-top: 1.5rem;">
   <input id="search-input" type="text" placeholder="🔍 ابحث عن عرض معين...">
-</div><div id="filter-buttons"></div>
-<div id="properties-container">⏳ جاري تحميل العروض...</div><script src="/samsar-talabak/assets/js/filtered-display.js"></script><script>
+</div>
+
+<!-- ✅ أزرار الفلاتر -->
+<div id="filter-buttons"></div>
+
+<!-- ✅ مكان عرض البطاقات -->
+<div id="properties-container">⏳ جاري تحميل العروض...</div>
+
+<!-- ✅ ربط سكربت عرض العروض -->
+<script src="/samsar-talabak/assets/js/filtered-display.js"></script>
+
+<!-- ✅ سكربت الترحيب -->
+<script>
   window.addEventListener("load", () => {
     const visited = localStorage.getItem("visitedOffersPage");
     if (!visited) {
