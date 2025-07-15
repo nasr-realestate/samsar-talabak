@@ -15,6 +15,15 @@ document.addEventListener("DOMContentLoaded", async function () {
     btn.textContent = label;
     btn.dataset.category = key;
     btn.className = "filter-btn";
+    btn.style = `
+      background: #1f1f1f;
+      color: #00ff88;
+      border: 1px solid #00ff88;
+      padding: 0.7rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    `;
     btn.addEventListener("click", () => loadCategory(key));
     filterContainer.appendChild(btn);
   }
@@ -23,10 +32,9 @@ document.addEventListener("DOMContentLoaded", async function () {
   loadCategory(defaultCategory);
 
   function loadCategory(category) {
-    container.innerHTML = "<p style='text-align:center'>جاري تحميل الطلبات...</p>";
+    container.innerHTML = "<p style='text-align:center'>⏳ جاري تحميل الطلبات...</p>";
 
-    const allButtons = document.querySelectorAll(".filter-btn");
-    allButtons.forEach(btn => btn.classList.remove("active"));
+    document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
     const activeBtn = document.querySelector(`[data-category="${category}"]`);
     if (activeBtn) activeBtn.classList.add("active");
 
@@ -35,7 +43,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       .then(files => {
         container.innerHTML = '';
         if (!files.length) {
-          container.innerHTML = "<p style='text-align:center'>لا توجد طلبات حالياً.</p>";
+          container.innerHTML = "<p style='text-align:center'>🚫 لا توجد طلبات حالياً.</p>";
           return;
         }
 
@@ -43,53 +51,45 @@ document.addEventListener("DOMContentLoaded", async function () {
           fetch(`/samsar-talabak/data/requests/${category}/${filename}`)
             .then(res => res.json())
             .then(data => {
-              const encodedFilename = encodeURIComponent(filename);
-              const detailPage = `/samsar-talabak/request-details.html?category=${category}&file=${encodedFilename}`;
+              const detailURL = `/samsar-talabak/request-details.html?category=${category}&file=${encodeURIComponent(filename)}`;
               const card = document.createElement("div");
-
-              card.className = `property-card card-${category}`;
+              card.className = "property-card";
               card.dataset.filename = filename;
               card.style = `
-                background-color: #1e1e1e;
+                background: #1e1e1e;
                 border: 1px solid #333;
                 padding: 1.5rem;
                 border-radius: 12px;
                 box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-                margin-bottom: 1.5rem;
-                font-family: 'Tajawal', sans-serif;
                 color: #f1f1f1;
               `;
-
-              card.addEventListener("click", () => {
-                localStorage.setItem("highlightCard", filename);
-              });
 
               card.innerHTML = `
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
                   <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار" style="width: 40px; height: 40px; border-radius: 50%;">
                   <strong style="color:#00ff88;">طلب جديد</strong>
                 </div>
-                <h2 style="color:#00ff88; font-size: 1.4rem; font-weight: bold; margin-bottom: 0.5rem;">
-                  ${data.title}
-                </h2>
+                <h2 style="color:#00ff88; font-size: 1.4rem;">${data.title}</h2>
                 <p><strong>🔍 نوع الطلب:</strong> ${categories[category]}</p>
                 <p><strong>📏 المساحة المطلوبة:</strong> ${data.area}</p>
                 <p><strong>💰 الميزانية:</strong> ${data.budget}</p>
-                <p><strong>📅 تاريخ الإضافة:</strong> ${data.date || "غير متوفر"}</p>
-                <p style="margin: 0.5rem 0; color:#ccc;"><strong>📝 التفاصيل:</strong> ${data.description}</p>
-                <div style="margin-top: 1rem;">
-                  <a href="${detailPage}" 
-                    style="background:#00ff88; color:#000; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: bold;">
-                    ✅ لدي عرض كهذا
-                  </a>
-                </div>
+                <p><strong>📅 التاريخ:</strong> ${data.date || "غير محدد"}</p>
+                <p style="margin: 0.5rem 0;"><strong>📝 التفاصيل:</strong> ${data.description}</p>
+                <a href="${detailURL}" 
+                   style="display:inline-block; margin-top:0.8rem; background:#00ff88; color:#000; padding: 0.6rem 1.2rem; border-radius: 8px; font-weight:bold; text-decoration:none;">
+                   ✅ لدي عرض مشابه
+                </a>
               `;
 
               const highlighted = localStorage.getItem("highlightCard");
               if (highlighted === filename) {
                 card.style.outline = "3px solid #00ff88";
-                card.scrollIntoView({ behavior: "smooth", block: "center" });
+                card.style.backgroundColor = "#002f1f";
               }
+
+              card.addEventListener("click", () => {
+                localStorage.setItem("highlightCard", filename);
+              });
 
               container.appendChild(card);
             });
