@@ -37,15 +37,85 @@ description: "اكتشف أحدث الشقق والمحلات والمكاتب �
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
   }
+
+  /* 🎉 رسالة الترحيب */
+  #welcomeOverlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  .welcome-box {
+    background: #1e1e1e;
+    border: 2px solid #00ff88;
+    padding: 2rem;
+    border-radius: 20px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    animation: fadeZoomIn 0.8s ease;
+    position: relative;
+  }
+
+  .welcome-box h2 {
+    font-size: 1.8rem;
+    color: #00ff88;
+    margin-bottom: 0.5rem;
+  }
+
+  .welcome-box p {
+    font-size: 1.1rem;
+    color: #ddd;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+
+  .welcome-box button {
+    background-color: #00ff88;
+    color: #121212;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .welcome-box button:hover {
+    background-color: #00cc6a;
+  }
+
+  .welcome-emoji {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    animation: bounce 1.5s infinite;
+    display: block;
+  }
+
+  @keyframes fadeZoomIn {
+    0% { opacity: 0; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
 </style>
 
 <!-- ✅ رسالة الترحيب -->
-<div id="welcomeOverlay" style="display: none; justify-content: center; align-items: center; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 9999;">
-  <div class="welcome-box" style="background: #1e1e1e; border: 2px solid #00ff88; padding: 2rem; border-radius: 20px; max-width: 500px; width: 90%; text-align: center;">
-    <span style="font-size: 2.5rem; display: block; margin-bottom: 1rem;">🏡</span>
-    <h2 style="font-size: 1.8rem; color: #00ff88; margin-bottom: 0.5rem;">مرحباً بك في سمسار طلبك!</h2>
-    <p style="font-size: 1.1rem; color: #ddd; margin-bottom: 1.5rem; line-height: 1.6;">هنا تقدر تستعرض أحدث العروض العقارية في مدينة نصر بكل شفافية وسهولة.</p>
-    <button onclick="closeWelcome()" style="background-color: #00ff88; color: #121212; border: none; padding: 0.8rem 1.5rem; border-radius: 25px; font-weight: bold; font-size: 1rem; cursor: pointer;">ابدأ التصفح الآن</button>
+<div id="welcomeOverlay">
+  <div class="welcome-box">
+    <span class="welcome-emoji">🏡</span>
+    <h2>مرحباً بك في سمسار طلبك!</h2>
+    <p>هنا تقدر تستعرض أحدث العروض العقارية في مدينة نصر بكل شفافية وسهولة.</p>
+    <button onclick="closeWelcome()">ابدأ التصفح الآن</button>
   </div>
 </div>
 
@@ -61,6 +131,7 @@ description: "اكتشف أحدث الشقق والمحلات والمكاتب �
 
 <div id="properties-container">⏳ جاري تحميل العروض...</div>
 
+<!-- ✅ تحميل السكربت -->
 <script src="/samsar-talabak/assets/js/properties-display.js"></script>
 
 <script>
@@ -78,4 +149,28 @@ description: "اكتشف أحدث الشقق والمحلات والمكاتب �
     document.getElementById("welcomeOverlay").style.display = "none";
     localStorage.setItem("visitedOffersPage", "true");
   }
+
+  // 🎯 تمييز البطاقة عند النقر
+  document.addEventListener("click", function (e) {
+    const card = e.target.closest(".property-card");
+    if (card) {
+      localStorage.setItem("highlightCard", card.dataset.filename || "");
+    }
+  });
+
+  function highlightSelectedCard() {
+    const highlighted = localStorage.getItem("highlightCard");
+    if (!highlighted) return;
+    const cards = document.querySelectorAll(".property-card");
+    cards.forEach(card => {
+      if (card.dataset.filename === highlighted) {
+        card.style.outline = "3px solid #00aa66";
+        card.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    });
+  }
+
+  window.addEventListener("load", () => {
+    setTimeout(highlightSelectedCard, 1000);
+  });
 </script>
