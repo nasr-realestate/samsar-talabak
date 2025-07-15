@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "عروض العقارات في مدينة نصر"
-description: "اكتشف أحدث العروض العقارية في مدينة نصر للبيع أو الإيجار مع سمسار طلبك."
+description: "اكتشف أحدث الشقق والمحلات والمكاتب المعروضة للبيع أو الإيجار في مدينة نصر مع سمسار طلبك."
 ---
 
 <!-- ✅ Meta Tags -->
@@ -10,10 +10,9 @@ description: "اكتشف أحدث العروض العقارية في مدينة 
 <meta property="og:title" content="عروض العقارات - سمسار طلبك">
 <meta property="og:description" content="شقق ومحلات ومكاتب للبيع والإيجار في مدينة نصر مع شفافية كاملة وأسعار منافسة.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak/offers-filtered.html">
+<meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak/properties-filtered.html">
 <meta property="og:image" content="https://i.postimg.cc/Vk8Nn1xZ/me.jpg">
 
-<!-- 🎵 صوت ترحيبي -->
 <audio id="welcomeSound" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
 
 <style>
@@ -54,7 +53,7 @@ description: "اكتشف أحدث العروض العقارية في مدينة 
     color: #121212;
   }
 
-  #offers-container {
+  #properties-container {
     max-width: 1100px;
     margin: auto;
     padding: 1rem;
@@ -82,12 +81,49 @@ description: "اكتشف أحدث العروض العقارية في مدينة 
     max-width: 500px;
     width: 90%;
     text-align: center;
+    animation: fadeZoomIn 0.8s ease;
+    position: relative;
+  }
+
+  .welcome-box h2 {
+    font-size: 1.8rem;
+    color: #00ff88;
+    margin-bottom: 0.5rem;
+  }
+
+  .welcome-box p {
+    font-size: 1.1rem;
+    color: #ddd;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+
+  .welcome-box button {
+    background-color: #00ff88;
+    color: #121212;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .welcome-box button:hover {
+    background-color: #00cc6a;
   }
 
   .welcome-emoji {
     font-size: 2.5rem;
     margin-bottom: 1rem;
     animation: bounce 1.5s infinite;
+    display: block;
+  }
+
+  @keyframes fadeZoomIn {
+    0% { opacity: 0; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
   }
 
   @keyframes bounce {
@@ -99,14 +135,14 @@ description: "اكتشف أحدث العروض العقارية في مدينة 
 <!-- ✅ رسالة الترحيب -->
 <div id="welcomeOverlay">
   <div class="welcome-box">
-    <span class="welcome-emoji">🏠</span>
+    <span class="welcome-emoji">🏡</span>
     <h2>مرحباً بك في صفحة العروض!</h2>
-    <p>اطّلع على العروض العقارية المتوفرة للبيع أو الإيجار في مدينة نصر</p>
+    <p>اكتشف أحدث العقارات المعروضة للبيع والإيجار في مدينة نصر – اختر العرض المناسب لك!</p>
     <button onclick="closeWelcome()">ابدأ الآن</button>
   </div>
 </div>
 
-<h1>📢 عروض العقارات</h1>
+<h1>🏡 عروض العقارات</h1>
 
 <div style="text-align:center; margin-top: 1rem;">
   <a href="/samsar-talabak/add-your-property.html" 
@@ -116,13 +152,13 @@ description: "اكتشف أحدث العروض العقارية في مدينة 
 </div>
 
 <div id="filter-buttons"></div>
-<div id="offers-container">⏳ جاري تحميل العروض...</div>
+<div id="properties-container">⏳ جاري تحميل العروض...</div>
 
-<script src="/samsar-talabak/assets/js/offers-display.js"></script>
+<script src="/samsar-talabak/assets/js/properties-display.js"></script>
 
 <script>
   window.addEventListener("load", () => {
-    const visited = localStorage.getItem("visitedOffersPage");
+    const visited = localStorage.getItem("visitedPropertiesPage");
     if (!visited) {
       document.getElementById("welcomeOverlay").style.display = "flex";
       const audio = document.getElementById("welcomeSound");
@@ -132,25 +168,24 @@ description: "اكتشف أحدث العروض العقارية في مدينة 
 
   function closeWelcome() {
     document.getElementById("welcomeOverlay").style.display = "none";
-    localStorage.setItem("visitedOffersPage", "true");
+    localStorage.setItem("visitedPropertiesPage", "true");
   }
 
-  // تمييز الكارت عند النقر
   document.addEventListener("click", function (e) {
     const card = e.target.closest(".property-card");
     if (card) {
-      localStorage.setItem("highlightOfferCard", card.dataset.filename || "");
+      localStorage.setItem("highlightCard", card.dataset.filename || "");
     }
   });
 
   function highlightSelectedCard() {
-    const highlighted = localStorage.getItem("highlightOfferCard");
+    const highlighted = localStorage.getItem("highlightCard");
     if (!highlighted) return;
     const cards = document.querySelectorAll(".property-card");
     cards.forEach(card => {
       if (card.dataset.filename === highlighted) {
         card.style.outline = "3px solid #00ff88";
-        card.style.backgroundColor = "#1a1a1a";
+        card.style.backgroundColor = "#1b3a2f";
         card.scrollIntoView({ behavior: "smooth", block: "center" });
       }
     });
