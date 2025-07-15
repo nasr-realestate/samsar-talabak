@@ -1,7 +1,34 @@
 document.addEventListener("DOMContentLoaded", async function () {
   const container = document.getElementById("properties-container");
   const filterContainer = document.getElementById("filter-buttons");
+  const welcomeBox = document.getElementById("welcome-message");
+  const audio = document.getElementById("welcome-audio");
 
+  // ✅ عرض رسالة الترحيب مرة واحدة مع الصوت
+  if (welcomeBox && audio && !localStorage.getItem("welcomeShown")) {
+    welcomeBox.style.display = "block";
+    try {
+      audio.play().catch(() => {
+        const btn = document.createElement("button");
+        btn.textContent = "🔊 اضغط لتشغيل الترحيب";
+        btn.style = "margin-top:10px; padding: 0.5rem 1rem; background: #00ff88; color: #000; border: none; border-radius: 6px; cursor: pointer;";
+        btn.onclick = () => {
+          audio.play();
+          btn.remove();
+        };
+        welcomeBox.appendChild(btn);
+      });
+    } catch (e) {
+      console.log("خطأ في تشغيل الصوت:", e);
+    }
+
+    setTimeout(() => {
+      welcomeBox.style.display = "none";
+      localStorage.setItem("welcomeShown", "true");
+    }, 6000);
+  }
+
+  // ✅ أزرار التصنيفات
   const categories = {
     "apartments": "شقق للبيع",
     "apartments-rent": "شقق للإيجار",
@@ -25,8 +52,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   function loadCategory(category) {
     container.innerHTML = "<p style='text-align:center'>جاري تحميل العروض...</p>";
 
-    const allButtons = document.querySelectorAll(".filter-btn");
-    allButtons.forEach(btn => btn.classList.remove("active"));
+    document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
     const activeBtn = document.querySelector(`[data-category="${category}"]`);
     if (activeBtn) activeBtn.classList.add("active");
 
@@ -59,11 +85,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                 font-family: 'Tajawal', sans-serif;
                 color: #f1f1f1;
                 transition: 0.3s;
+                cursor: pointer;
               `;
-
-              card.addEventListener("click", () => {
-                localStorage.setItem("highlightCard", filename);
-              });
 
               card.innerHTML = `
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
@@ -85,12 +108,18 @@ document.addEventListener("DOMContentLoaded", async function () {
                 </div>
               `;
 
-              // ✅ تلوين البطاقة إذا كانت هي المختارة سابقًا
+              // ✅ تمييز البطاقة المختارة
               const highlighted = localStorage.getItem("highlightCard");
               if (highlighted === filename) {
                 card.style.outline = "3px solid #00ff88";
                 card.scrollIntoView({ behavior: "smooth", block: "center" });
               }
+
+              card.addEventListener("click", () => {
+                localStorage.setItem("highlightCard", filename);
+                document.querySelectorAll(".property-card").forEach(c => c.classList.remove("highlighted"));
+                card.classList.add("highlighted");
+              });
 
               container.appendChild(card);
             });
