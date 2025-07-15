@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", async function () {
-  const container = document.getElementById("offers-container");
+  const container = document.getElementById("properties-container");
   const filterContainer = document.getElementById("filter-buttons");
 
   const categories = {
-    "apartments": "شقق",
+    "apartments": "شقق للبيع",
     "apartments-rent": "شقق للإيجار",
     "shops": "محلات",
     "offices": "مكاتب",
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   loadCategory(defaultCategory);
 
   function loadCategory(category) {
-    container.innerHTML = "<p style='text-align:center'>⏳ جاري تحميل العروض...</p>";
+    container.innerHTML = "<p style='text-align:center'>جاري تحميل العروض...</p>";
 
     const allButtons = document.querySelectorAll(".filter-btn");
     allButtons.forEach(btn => btn.classList.remove("active"));
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       .then(files => {
         container.innerHTML = '';
         if (!files.length) {
-          container.innerHTML = "<p style='text-align:center'>❌ لا توجد عروض حالياً.</p>";
+          container.innerHTML = "<p style='text-align:center'>لا توجد عروض حالياً.</p>";
           return;
         }
 
@@ -45,9 +45,9 @@ document.addEventListener("DOMContentLoaded", async function () {
             .then(data => {
               const encodedFilename = encodeURIComponent(filename);
               const detailPage = `/samsar-talabak/property-details.html?category=${category}&file=${encodedFilename}`;
-
               const card = document.createElement("div");
-              card.className = "property-card";
+
+              card.className = `property-card card-${category}`;
               card.dataset.filename = filename;
               card.style = `
                 background-color: #1e1e1e;
@@ -75,15 +75,15 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <div style="margin-top: 1rem;">
                   <a href="${detailPage}" 
                     style="background:#00ff88; color:#000; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: bold;">
-                    👀 عرض التفاصيل
+                    👁️ شاهد التفاصيل
                   </a>
                 </div>
               `;
 
-              const highlighted = localStorage.getItem("highlightOfferCard");
+              const highlighted = localStorage.getItem("highlightCard");
               if (highlighted === filename) {
                 card.style.outline = "3px solid #00ff88";
-                card.style.backgroundColor = "#1a1a1a";
+                card.style.backgroundColor = "#1b3a2f";
               }
 
               container.appendChild(card);
