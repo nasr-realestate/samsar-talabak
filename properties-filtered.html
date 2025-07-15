@@ -1,25 +1,180 @@
----
-layout: default
-title: "عروض العقارات في مدينة نصر"
-description: "اكتشف أحدث الشقق والمحلات والمكاتب المعروضة للبيع أو الإيجار في مدينة نصر."
+
 ---
 
-<meta name="robots" content="index, follow">
+layout: default title: "عروض العقارات في مدينة نصر" description: "اكتشف أحدث الشقق والمحلات والمكاتب المعروضة للبيع أو الإيجار في مدينة نصر مع سمسار طلبك."
+
+<!-- ✅ Meta Tags --><meta name="robots" content="index, follow">
 <meta name="author" content="سمسار طلبك">
+<meta property="og:title" content="عروض العقارات - سمسار طلبك">
+<meta property="og:description" content="شقق ومحلات ومكاتب للبيع والإيجار في مدينة نصر مع شفافية كاملة وأسعار منافسة.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak/properties-filtered.html">
+<meta property="og:image" content="https://i.postimg.cc/Vk8Nn1xZ/me.jpg"><!-- 🎵 صوت ترحيبي --><audio id="welcomeSound" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
 
-<h1 style="text-align:center; margin-top:2rem; color:#00ff88;">📢 عروض العقارات</h1>
+<style>
+  body {
+    background-color: #121212;
+    color: #f1f1f1;
+    font-family: 'Tajawal', sans-serif;
+  }
 
-<div style="text-align:center; margin: 1rem 0;">
+  h1 {
+    text-align: center;
+    color: #00ff88;
+    margin-top: 2rem;
+  }
+
+  #filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 2rem 0;
+    gap: 10px;
+  }
+
+  .filter-btn {
+    background-color: #1f1f1f;
+    color: #00ff88;
+    border: 1px solid #00ff88;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .filter-btn:hover,
+  .filter-btn.active {
+    background-color: #00ff88;
+    color: #121212;
+  }
+
+  #properties-container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  #welcomeOverlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  .welcome-box {
+    background: #1e1e1e;
+    border: 2px solid #00ff88;
+    padding: 2rem;
+    border-radius: 20px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    animation: fadeZoomIn 0.8s ease;
+    position: relative;
+  }
+
+  .welcome-box h2 {
+    font-size: 1.8rem;
+    color: #00ff88;
+    margin-bottom: 0.5rem;
+  }
+
+  .welcome-box p {
+    font-size: 1.1rem;
+    color: #ddd;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+
+  .welcome-box button {
+    background-color: #00ff88;
+    color: #121212;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .welcome-box button:hover {
+    background-color: #00cc6a;
+  }
+
+  .welcome-emoji {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    animation: bounce 1.5s infinite;
+    display: block;
+  }
+
+  @keyframes fadeZoomIn {
+    0% { opacity: 0; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+</style><!-- ✅ رسالة الترحيب --><div id="welcomeOverlay">
+  <div class="welcome-box">
+    <span class="welcome-emoji">🏡</span>
+    <h2>مرحباً بك في صفحة العروض!</h2>
+    <p>استعرض أحدث الشقق والمحلات والمكاتب المعروضة للبيع أو الإيجار في مدينة نصر بكل سهولة.</p>
+    <button onclick="closeWelcome()">ابدأ الآن</button>
+  </div>
+</div><h1>📢 عروض العقارات</h1><!-- ✅ زر إضافة عرض --><div style="text-align:center; margin-top: 1rem;">
   <a href="/samsar-talabak/add-your-property.html" 
      style="background:#25D366; color:#fff; padding: 0.8rem 1.5rem; border-radius: 10px; font-weight: bold; text-decoration: none; font-size: 1.1rem;">
-    ➕ أضف عرضك الآن
+    ➕ أضف عقارك الآن
   </a>
-</div>
+</div><div id="filter-buttons"></div>
+<div id="properties-container">⏳ جاري تحميل العروض...</div><script src="/samsar-talabak/assets/js/properties-display.js"></script><script>
+  window.addEventListener("load", () => {
+    const visited = localStorage.getItem("visitedOffersPage");
+    if (!visited) {
+      document.getElementById("welcomeOverlay").style.display = "flex";
+      const audio = document.getElementById("welcomeSound");
+      if (audio) audio.play();
+    }
+  });
 
-<div id="filter-buttons" style="display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin:2rem 0;"></div>
+  function closeWelcome() {
+    document.getElementById("welcomeOverlay").style.display = "none";
+    localStorage.setItem("visitedOffersPage", "true");
+  }
 
-<div id="offers-container" style="max-width:1100px; margin:auto; padding:1rem; display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.5rem;">
-  ⏳ جاري تحميل العروض...
-</div>
+  document.addEventListener("click", function (e) {
+    const card = e.target.closest(".property-card");
+    if (card) {
+      localStorage.setItem("highlightCard", card.dataset.filename || "");
+    }
+  });
 
-<script src="/samsar-talabak/assets/js/offers-display.js"></script>
+  function highlightSelectedCard() {
+    const highlighted = localStorage.getItem("highlightCard");
+    if (!highlighted) return;
+    const cards = document.querySelectorAll(".property-card");
+    cards.forEach(card => {
+      if (card.dataset.filename === highlighted) {
+        card.style.outline = "3px solid #00ff88";
+        card.style.backgroundColor = "#002f1f";
+        card.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    });
+  }
+
+  window.addEventListener("load", () => {
+    setTimeout(highlightSelectedCard, 1000);
+  });
+</script>
