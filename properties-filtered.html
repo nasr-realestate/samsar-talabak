@@ -1,47 +1,143 @@
----
-layout: default
-title: "عروض العقارات في مدينة نصر"
-description: "اكتشف أحدث الشقق والمحلات والمكاتب المعروضة للبيع أو الإيجار في مدينة نصر مع سمسار طلبك."
----
-
-<section class="page-header">
-  <h1>📢 عروض العقارات</h1>
-</section>
-
-<section style="text-align:center; margin: 1rem 0;">
-  <a href="/samsar-talabak/add-your-property.html" class="nav-btn" style="background: var(--color-whatsapp); color:#fff;">
-    ➕ أضف عقارك الآن
-  </a>
-</section>
-
-<!-- ✅ رسالة ترحيب احترافية -->
-<div id="welcome-message" class="welcome-message" style="display:none; max-width: 700px; margin: 2rem auto; text-align:center; background-color: var(--color-surface-2); border: 2px solid var(--color-primary); padding: 2rem; border-radius: 12px;">
-  <h2 style="color: var(--color-primary); font-size: 2rem; margin-bottom: 1rem;">👋 أهلاً بك في سمسار طلبك</h2>
-  <p style="font-size: 1.2rem; color: var(--color-text-secondary);">
-    استعرض الآن أحدث العروض العقارية في مدينة نصر – كل شيء بين يديك: الشقق، المحلات، المكاتب، وأكثر!
-  </p>
-</div>
-
-<!-- ✅ فلاتر التصنيفات -->
-<div id="filter-buttons" style="text-align:center;"></div>
-
-<!-- ✅ مكان البطاقات -->
-<div id="properties-container" style="max-width:1100px; margin:auto; padding:1rem;">⏳ جاري تحميل العروض...</div>
-
-<!-- ✅ ملف الجافاسكربت -->
-<script src="/samsar-talabak/assets/js/filtered-display.js"></script>
-
-<!-- ✅ تشغيل الترحيب الذكي مرة واحدة -->
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const welcomeBox = document.getElementById("welcome-message");
-
-    if (!localStorage.getItem("welcomeShown")) {
-      welcomeBox.style.display = "block";
-      setTimeout(() => {
-        welcomeBox.style.display = "none";
-        localStorage.setItem("welcomeShown", "true");
-      }, 6000);
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عروض عقارية حصرية في مدينة نصر | سمسار طلبك</title>
+  <meta name="description" content="تصفح أفضل عروض الشقق، المحلات، والمكاتب للبيع أو الإيجار في قلب مدينة نصر. سمسار طلبك دليلك الأول للعقار المثالي.">
+  
+  <!-- يمكنك إضافة ملفات الأنماط (CSS) هنا -->
+  <style>
+    :root {
+      --color-primary: #00ff88;
+      --color-background: #121212;
+      --color-surface: #1e1e1e;
+      --color-text: #f1f1f1;
+      --color-text-secondary: #b3b3b3;
+      --color-whatsapp: #25D366;
     }
-  });
-</script>
+    body {
+      font-family: 'Tajawal', sans-serif; /* يفضل إضافة هذا الخط من جوجل */
+      background-color: var(--color-background);
+      color: var(--color-text);
+      margin: 0;
+    }
+    .page-header {
+      text-align: center;
+      padding: 2rem 1rem;
+      border-bottom: 1px solid #333;
+    }
+    .page-header h1 {
+      font-size: 2.5rem;
+      color: var(--color-primary);
+      margin: 0;
+    }
+    .nav-btn {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: transform 0.2s;
+    }
+    .nav-btn:hover {
+      transform: scale(1.05);
+    }
+    .welcome-message {
+      display: none;
+      max-width: 700px;
+      margin: 2rem auto;
+      text-align: center;
+      background-color: var(--color-surface);
+      border: 2px solid var(--color-primary);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 255, 136, 0.1);
+    }
+    #filter-buttons {
+      text-align: center;
+      margin: 2rem 0;
+      padding: 0 1rem;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .filter-btn {
+      background: transparent;
+      border: 2px solid #444;
+      color: var(--color-text-secondary);
+      padding: 0.6rem 1.2rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+    .filter-btn:hover {
+      background-color: #333;
+      color: var(--color-text);
+    }
+    .filter-btn.active {
+      background-color: var(--color-primary);
+      color: #000;
+      border-color: var(--color-primary);
+      font-weight: bold;
+    }
+    #properties-container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="page-header">
+    <h1>📢 عروض عقارية حصرية</h1>
+    <p style="color: var(--color-text-secondary); font-size: 1.2rem; margin-top: 0.5rem;">دليلك الأول لأفضل الفرص في مدينة نصر</p>
+  </header>
+
+  <section style="text-align:center; margin: 2rem 0;">
+    <a href="/samsar-talabak/add-your-property.html" class="nav-btn" style="background: var(--color-whatsapp); color:#fff;">
+      ➕ أضف عقارك مجاناً
+    </a>
+  </section>
+
+  <!-- رسالة ترحيب ذكية للزائر الجديد -->
+  <div id="welcome-message" class="welcome-message">
+    <h2 style="color: var(--color-primary); font-size: 2rem; margin-bottom: 1rem;">👋 أهلاً بك في سمسار طلبك</h2>
+    <p style="font-size: 1.2rem; color: var(--color-text-secondary);">
+      استعرض الآن أحدث العروض العقارية في مدينة نصر. كل شيء بين يديك: شقق، محلات، مكاتب، وأكثر!
+    </p>
+  </div>
+
+  <!-- فلاتر التصنيفات -->
+  <div id="filter-buttons"></div>
+
+  <!-- حاوية عرض العقارات -->
+  <div id="properties-container">
+    <!-- سيتم ملء البطاقات هنا عبر JavaScript -->
+  </div>
+
+  <!-- ملف الجافاسكربت الخارجي -->
+  <script src="/samsar-talabak/assets/js/filtered-display.js"></script>
+
+  <!-- تشغيل رسالة الترحيب الذكية -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const welcomeBox = document.getElementById("welcome-message");
+      if (welcomeBox && !localStorage.getItem("welcomeShown")) {
+        welcomeBox.style.display = "block";
+        setTimeout(() => {
+          welcomeBox.style.display = "none";
+          localStorage.setItem("welcomeShown", "true");
+        }, 6000); // 6 ثوانٍ
+      }
+    });
+  </script>
+
+</body>
+</html>
