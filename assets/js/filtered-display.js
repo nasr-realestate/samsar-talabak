@@ -1,13 +1,11 @@
 /**
- * 🏢 سمسار طلبك - نظام عرض العقارات المحسن (يعتمد على index.json و Jekyll baseurl)
- * Enhanced Property Display System - Jekyll-aware index.json version
+ * نظام عرض العقارات المحسن - سمسار طلبك
+ * Enhanced Property Display System
  */
 class EnhancedPropertyDisplay {
     constructor() {
-        // ... الخصائص الأخرى تبقى كما هي ...
         this.container = null;
         this.filterContainer = null;
-        this.welcomeBox = null;
         this.currentCategory = null;
         this.propertiesCache = new Map();
         this.isLoading = false;
@@ -16,15 +14,12 @@ class EnhancedPropertyDisplay {
             animationDuration: 300,
             cacheExpiry: 5 * 60 * 1000,
             loadingDelay: 500,
-            welcomeDisplayTime: 7000,
             maxRetries: 3,
             retryDelay: 1000,
-            // === التعديل الرئيسي هنا ===
-            // استخدام المتغير العام الذي تم تعريفه في HTML
-            baseDataPath: `${site_baseurl}/data/` 
+            // التعديل الرئيسي: مسار البيانات الصحيح لموقعك
+            baseDataPath: `${site_baseurl}/data/`
         };
 
-        // ... باقي تعريف التصنيفات يبقى كما هو ...
         this.categories = {
             "apartments": { label: "🏠 شقق للبيع", icon: "🏠", color: "#00ff88", description: "شقق سكنية فاخرة" },
             "apartments-rent": { label: "🏡 شقق للإيجار", icon: "🏡", color: "#00ccff", description: "شقق للإيجار الشهري" },
@@ -35,13 +30,6 @@ class EnhancedPropertyDisplay {
 
         this.init();
     }
-
-    //
-    // ... جميع الوظائف الأخرى (`init`, `setupElements`, `createFilterButtons`, etc.) تبقى كما هي في الكود الأصلي الذي قدمته لي ...
-    // ... لا حاجة لتغييرها، التغيير الوحيد كان في `baseDataPath` في الـ constructor ...
-    //
-    // سأقوم بلصق باقي الكود للتأكيد، مع التأكد من أن وظيفة fetch صحيحة
-    //
 
     async init() {
         if (document.readyState === 'loading') {
@@ -56,13 +44,13 @@ class EnhancedPropertyDisplay {
         this.container = document.getElementById("properties-container");
         this.filterContainer = document.getElementById("filter-buttons");
         if (!this.container || !this.filterContainer) {
-            console.error('العناصر الأساسية (properties-container or filter-buttons) غير موجودة.');
+            console.error('العناصر الأساسية غير موجودة.');
         }
     }
     
     createFilterButtons() {
         this.filterContainer.innerHTML = '';
-        Object.entries(this.categories).forEach(([key, category], index) => {
+        Object.entries(this.categories).forEach(([key, category]) => {
             const button = document.createElement("button");
             button.innerHTML = `${category.icon} ${category.label}`;
             button.dataset.category = key;
@@ -110,11 +98,9 @@ class EnhancedPropertyDisplay {
     async loadCategoryData(categoryKey) {
         const cached = this.propertiesCache.get(categoryKey);
         if (cached && (Date.now() - cached.timestamp < this.config.cacheExpiry)) {
-            console.log(`Loading ${categoryKey} from cache`);
             return cached.data;
         }
 
-        console.log(`Fetching ${categoryKey} from network`);
         const data = await this.fetchCategoryData(categoryKey);
         this.propertiesCache.set(categoryKey, { data, timestamp: Date.now() });
         return data;
@@ -176,7 +162,7 @@ class EnhancedPropertyDisplay {
     createPropertyCard(property) {
         const card = document.createElement("article");
         card.className = "property-card";
-        const detailPageUrl = `${site_baseurl}/details.html?id=${encodeURIComponent(property.slug || property.id)}`; // استخدام site_baseurl
+        const detailPageUrl = `${site_baseurl}/details.html?id=${encodeURIComponent(property.slug || property.id)}`;
 
         const detailsHtml = `
             ${property.area ? `<div class="property-detail"><span class="detail-icon">📏</span><span class="detail-label">المساحة:</span><span class="detail-value">${property.area} م²</span></div>` : ''}
@@ -224,5 +210,5 @@ class EnhancedPropertyDisplay {
     }
 }
 
-// تشغيل التطبيق
+// تشغيل النظام عند تحميل الصفحة
 new EnhancedPropertyDisplay();
