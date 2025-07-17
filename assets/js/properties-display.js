@@ -1,187 +1,241 @@
-document.addEventListener("DOMContentLoaded", async function () {
-    const container = document.getElementById("properties-container");
-    const filterContainer = document.getElementById("filter-buttons");
+/**
+ * نظام عرض العقارات المحسن - سمسار طلبك (الإصدار المعدل)
+ * Enhanced Property Display System - Fixed Version
+ */
+class EnhancedPropertyDisplay {
+    constructor() {
+        this.container = null;
+        this.filterContainer = null;
+        this.currentCategory = null;
+        this.propertiesCache = new Map();
+        this.isLoading = false;
+        this.lastRequestTime = 0; // لتتبع آخر طلب
+        this.minRequestInterval = 500; // 500 مللي ثانية بين الطلبات
 
-    // تصنيفات العقارات
-    const categories = {
-        "apartments": {
-            label: "🏠 شقق للبيع",
-            color: "#00ff88"
-        },
-        "apartments-rent": {
-            label: "🏡 شقق للإيجار",
-            color: "#00ccff"
-        },
-        "shops": {
-            label: "🏪 محلات تجارية",
-            color: "#ff6b35"
-        },
-        "offices": {
-            label: "🏢 مكاتب إدارية",
-            color: "#8b5cf6"
-        },
-        "admin-hq": {
-            label: "🏛️ مقرات إدارية",
-            color: "#f59e0b"
+        this.config = {
+            animationDuration: 300,
+            cacheExpiry: 5 * 60 * 1000,
+            loadingDelay: 500,
+            maxRetries: 3,
+            retryDelay: 1000,
+            baseDataPath: `${site_baseurl}/data/`
+        };
+
+        this.categories = {
+            "apartments": { label: "🏠 شقق للبيع", icon: "🏠", color: "#00ff88", description: "شقق سكنية فاخرة" },
+            "apartments-rent": { label: "🏡 شقق للإيجار", icon: "🏡", color: "#00ccff", description: "شقق للإيجار الشهري" },
+            "shops": { label: "🏪 محلات تجارية", icon: "🏪", color: "#ff6b35", description: "محلات ومساحات تجارية" },
+            "offices": { label: "🏢 مكاتب إدارية", icon: "🏢", color: "#8b5cf6", description: "مكاتب ومساحات عمل" },
+            "admin-hq": { label: "🏛️ مقرات إدارية", icon: "🏛️", color: "#f59e0b", description: "مقرات ومباني إدارية" }
+        };
+
+        this.init();
+    }
+
+    async init() {
+        if (document.readyState === 'loading') {
+            await new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve));
         }
-    };
+        this.setupElements();
+        this.createFilterButtons();
+        this.loadDefaultCategory();
+    }
 
-    // إنشاء أزرار التصنيفات
-    Object.entries(categories).forEach(([key, category]) => {
-        const btn = document.createElement("button");
-        btn.textContent = category.label;
-        btn.dataset.category = key;
-        btn.className = "filter-btn";
-        btn.style.borderColor = category.color;
-        btn.addEventListener("click", () => loadCategory(key));
-        filterContainer.appendChild(btn);
-    });
-
-    // تحميل التصنيف الافتراضي
-    const defaultCategory = Object.keys(categories)[0];
-    loadCategory(defaultCategory);
-
-    // دالة تحميل التصنيف
-    async function loadCategory(category) {
-        // إظهار حالة التحميل
-        container.innerHTML = `
-            <div style="text-align: center; grid-column: 1 / -1;">
-                <div class="loading-spinner"></div>
-                <p>جاري تحميل عروض ${categories[category].label}...</p>
-            </div>
-        `;
-
-        // تحديث الزر النشط
-        document.querySelectorAll(".filter-btn").forEach(btn => {
-            btn.classList.remove("active");
+    setupElements() {
+        this.container = document.getElementById("properties-container");
+        this.filterContainer = document.getElementById("filter-buttons");
+        if (!this.container || !this.filterContainer) {
+            console.error('العناصر الأساسية غير موجودة.');
+        }
+    }
+    
+    createFilterButtons() {
+        this.filterContainer.innerHTML = '';
+        Object.entries(this.categories).forEach(([key, category]) => {
+            const button = document.createElement("button");
+            button.innerHTML = `${category.icon} ${category.label}`;
+            button.dataset.category = key;
+            button.className = "filter-btn";
+            button.title = category.description;
+            
+            // إضافة منع النقر المتكرر
+            button.addEventListener("click", (e) => {
+                if (this.isLoading || Date.now() - this.lastRequestTime < this.minRequestInterval) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return;
+                }
+                this.handleCategoryChange(key, button);
+            });
+            
+            this.filterContainer.appendChild(button);
         });
-        document.querySelector(`[data-category="${category}"]`).classList.add("active");
+    }
+
+    async handleCategoryChange(categoryKey, button) {
+        // منع الطلبات المتكررة
+        if (this.isLoading || this.currentCategory === categoryKey) return;
+        
+        // تسجيل وقت الطلب الأخير
+        this.lastRequestTime = Date.now();
+        
+        this.isLoading = true;
+        this.currentCategory = categoryKey;
+        this.updateActiveButton(button);
+        this.showLoadingState();
 
         try {
-            // جلب البيانات (استبدل هذا بالاتصال الفعلي بالخادم)
-            const properties = await fetchProperties(category);
-            
-            // عرض العقارات
-            displayProperties(properties, category);
+            await this.delay(this.config.loadingDelay);
+            const data = await this.loadCategoryData(categoryKey);
+            this.displayProperties(data, categoryKey);
         } catch (error) {
-            console.error("حدث خطأ:", error);
-            container.innerHTML = `
-                <div style="text-align: center; grid-column: 1 / -1; color: #ff6b6b;">
-                    <p>حدث خطأ أثناء تحميل البيانات</p>
-                    <button onclick="location.reload()" style="
-                        background: var(--color-primary);
-                        color: #000;
-                        border: none;
-                        padding: 0.5rem 1rem;
-                        border-radius: 5px;
-                        margin-top: 1rem;
-                        cursor: pointer;
-                    ">
-                        إعادة المحاولة
-                    </button>
-                </div>
-            `;
+            console.error(`خطأ في تحميل التصنيف ${categoryKey}:`, error);
+            this.showErrorMessage(`فشل في تحميل عروض "${this.categories[categoryKey].label}"`);
+        } finally {
+            this.isLoading = false;
+        }
+    }
+    
+    updateActiveButton(activeButton) {
+        this.filterContainer.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('active');
+            btn.disabled = false; // تمكين جميع الأزرار
+        });
+        
+        if (activeButton) {
+            activeButton.classList.add('active');
+            activeButton.disabled = true; // تعطيل الزر النشط مؤقتًا
+            setTimeout(() => {
+                if (activeButton) activeButton.disabled = false;
+            }, 1000);
         }
     }
 
-    // دالة جلب البيانات (ستحتاج لتعديلها للاتصال بالخادم)
-    async function fetchProperties(category) {
-        // هذه بيانات تجريبية - استبدلها بالاتصال الفعلي بالخادم
-        return [
-            {
-                title: "شقة فاخرة للبيع في مدينة نصر",
-                price: "1,200,000 جنيه",
-                area: "150 متر",
-                location: "مدينة نصر، الحي السابع",
-                description: "شقة رائعة في موقع مميز، تشطيب سوبر لوكس، 3 غرف وصالة كبيرة، مطبخ أمريكي، 2 حمام، تكييف مركزي."
-            },
-            {
-                title: "محل تجاري مميز للإيجار",
-                price: "15,000 جنيه/شهري",
-                area: "80 متر",
-                location: "مدينة نصر، ميدان الحجاز",
-                description: "محل تجاري بموقع استراتيجي على الطريق الرئيسي، مناسب لجميع الأنشطة التجارية."
-            },
-            {
-                title: "مكتب إداري راقي للإيجار",
-                price: "25,000 جنيه/شهري",
-                area: "120 متر",
-                location: "مدينة نصر، شارع مصطفى النحاس",
-                description: "مكتب فاخر في مبنى إداري جديد، تشطيب سوبر لوكس، غرفة إدارة، غرفة اجتماعات."
-            }
-        ];
+    loadDefaultCategory() {
+        const defaultCategoryKey = Object.keys(this.categories)[0];
+        const defaultButton = this.filterContainer.querySelector(`[data-category="${defaultCategoryKey}"]`);
+        if (defaultButton) {
+            this.handleCategoryChange(defaultCategoryKey, defaultButton);
+        }
     }
 
-    // دالة عرض العقارات
-    function displayProperties(properties, category) {
+    async loadCategoryData(categoryKey) {
+        const cached = this.propertiesCache.get(categoryKey);
+        if (cached && (Date.now() - cached.timestamp < this.config.cacheExpiry)) {
+            return cached.data;
+        }
+
+        const data = await this.fetchCategoryData(categoryKey);
+        this.propertiesCache.set(categoryKey, { data, timestamp: Date.now() });
+        return data;
+    }
+
+    async fetchCategoryData(categoryKey) {
+        const indexUrl = `${this.config.baseDataPath}${categoryKey}/index.json`;
+        const indexResponse = await fetch(indexUrl, { cache: 'no-store' });
+        if (!indexResponse.ok) {
+            throw new Error(`لا يمكن العثور على ملف الفهرس: ${indexUrl}. الحالة: ${indexResponse.status}`);
+        }
+        const filenames = await indexResponse.json();
+
+        if (!Array.isArray(filenames) || filenames.length === 0) {
+            return [];
+        }
+
+        // تحسين الأداء: تحميل فقط أول 15 عقارًا
+        const limitedFilenames = filenames.slice(0, 15);
+        
+        const propertyPromises = limitedFilenames.map(filename => {
+            const fileUrl = `${this.config.baseDataPath}${categoryKey}/${filename}`;
+            return fetch(fileUrl).then(res => {
+                if (!res.ok) {
+                    console.warn(`فشل تحميل الملف: ${fileUrl}`);
+                    return null;
+                }
+                return res.json();
+            }).catch(err => {
+                console.error(`خطأ في جلب ${fileUrl}:`, err);
+                return null;
+            });
+        });
+
+        const properties = await Promise.all(propertyPromises);
+        return properties.filter(p => p !== null);
+    }
+
+    showLoadingState() {
+        this.container.innerHTML = `
+            <div style="text-align: center; grid-column: 1 / -1; padding: 2rem;">
+                <div class="loading-spinner"></div>
+                <p style="color: #00ff88; font-size: 1.2rem; margin-top: 1rem;">جاري تحميل أحدث العروض المميزة...</p>
+            </div>`;
+    }
+
+    displayProperties(properties, categoryKey) {
         if (!properties || properties.length === 0) {
-            container.innerHTML = `
-                <div style="text-align: center; grid-column: 1 / -1;">
-                    <p>لا توجد عروض متاحة حالياً في هذا القسم</p>
-                </div>
-            `;
+            this.showEmptyState(categoryKey);
             return;
         }
 
-        container.innerHTML = '';
-        
-        properties.forEach(property => {
-            const card = document.createElement("div");
-            card.className = "property-card";
-            card.style.borderColor = categories[category].color;
-            
-            card.innerHTML = `
-                <div class="property-header">
-                    <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" 
-                         alt="شعار سمسار طلبك" 
-                         class="property-logo"
-                         loading="lazy">
-                    <div>
-                        <strong>سمسار طلبك</strong>
-                        <p style="margin: 0.2rem 0 0; color: ${categories[category].color}">
-                            ${categories[category].label}
-                        </p>
-                    </div>
-                </div>
-                
-                <h2 class="property-title">${escapeHtml(property.title)}</h2>
-                
-                <div class="property-details">
-                    <div class="property-detail">
-                        <span class="detail-icon">💰</span>
-                        <span>${escapeHtml(property.price)}</span>
-                    </div>
-                    <div class="property-detail">
-                        <span class="detail-icon">📏</span>
-                        <span>${escapeHtml(property.area)}</span>
-                    </div>
-                    <div class="property-detail">
-                        <span class="detail-icon">📍</span>
-                        <span>${escapeHtml(property.location)}</span>
-                    </div>
-                </div>
-                
-                <p style="margin: 1rem 0;">${escapeHtml(property.description)}</p>
-                
-                <a href="/property-details.html?category=${category}&id=${generateId()}" 
-                   class="view-details-btn">
-                   عرض التفاصيل
-                </a>
-            `;
-            
-            container.appendChild(card);
+        this.container.innerHTML = '';
+        properties.forEach((property, index) => {
+            const card = this.createPropertyCard(property);
+            card.style.animation = `slideInUp 0.6s ${index * 0.1}s ease-out forwards`;
+            card.style.opacity = 0;
+            this.container.appendChild(card);
         });
     }
 
-    // دالة مساعدة للهروب من HTML
-    function escapeHtml(text) {
+    createPropertyCard(property) {
+        const card = document.createElement("article");
+        card.className = "property-card";
+        const detailPageUrl = `${site_baseurl}/details.html?id=${encodeURIComponent(property.slug || property.id)}`;
+
+        const detailsHtml = `
+            ${property.area ? `<div class="property-detail"><span class="detail-icon">📏</span><span class="detail-label">المساحة:</span><span class="detail-value">${property.area} م²</span></div>` : ''}
+            ${property.bedrooms ? `<div class="property-detail"><span class="detail-icon">🛏️</span><span class="detail-label">غرف نوم:</span><span class="detail-value">${property.bedrooms}</span></div>` : ''}
+            ${property.bathrooms ? `<div class="property-detail"><span class="detail-icon">🛁</span><span class="detail-label">حمامات:</span><span class="detail-value">${property.bathrooms}</span></div>` : ''}
+            ${property.level ? `<div class="property-detail"><span class="detail-icon">🏢</span><span class="detail-label">الطابق:</span><span class="detail-value">${this.escapeHtml(property.level)}</span></div>` : ''}
+            ${property.finishing ? `<div class="property-detail"><span class="detail-icon">✨</span><span class="detail-label">التشطيب:</span><span class="detail-value">${this.escapeHtml(property.finishing)}</span></div>` : ''}
+        `;
+
+        card.innerHTML = `
+            <div class="property-header">
+                <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار سمسار طلبك" class="property-logo" loading="lazy">
+                <div class="property-title-container">
+                    <h3 class="property-title">${this.escapeHtml(property.title)}</h3>
+                    <span class="property-type-badge">${this.escapeHtml(property.type)} - ${this.escapeHtml(property.listingType)}</span>
+                </div>
+            </div>
+            ${property.description ? `<p class="property-description">${this.escapeHtml(property.description.substring(0, 120))}...</p>` : ''}
+            <div class="property-details">
+                ${detailsHtml}
+            </div>
+            <a href="${detailPageUrl}" class="view-details-btn">عرض التفاصيل</a>
+        `;
+        return card;
+    }
+
+    showEmptyState(categoryKey) {
+        const categoryInfo = this.categories[categoryKey];
+        this.container.innerHTML = `<div class="no-properties">لا توجد عروض حالياً في فئة "${categoryInfo.label}"</div>`;
+    }
+
+    showErrorMessage(message) {
+        this.container.innerHTML = `<div class="error-message">⚠️ ${message}</div>`;
+    }
+
+    escapeHtml(text) {
+        if (text === null || typeof text === 'undefined') return '';
         const div = document.createElement('div');
-        div.textContent = text;
+        div.textContent = text.toString();
         return div.innerHTML;
     }
 
-    // دالة إنشاء معرف فريد (ستحتاج لتعديلها حسب نظامك)
-    function generateId() {
-        return Math.random().toString(36).substr(2, 9);
+    delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
-});
+}
+
+// تشغيل النظام عند تحميل الصفحة
+new EnhancedPropertyDisplay();
