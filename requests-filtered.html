@@ -1,22 +1,27 @@
 ---
 layout: default
-title: "طلبات العقارات في مدينة نصر"
-description: "اعرض طلبك العقاري أو ابحث عن عملاء جادين لشراء أو استئجار العقارات في مدينة نصر."
+title: "طلبات العملاء - سمسار طلبك"
+description: "تصفح أحدث طلبات العملاء الجادين لشراء أو استئجار العقارات. إذا كان لديك عرض مطابق، يمكنك التواصل مباشرة."
 ---
 
-<h1 style="text-align:center; margin-top:2rem; color:var(--color-primary);">📬 طلبات العقارات</h1>
+<h1 class="page-title">📬 سوق الطلبات العقارية</h1>
 
-<div style="text-align:center; margin: 1rem 0;">
-  <a href="/samsar-talabak/add-your-property.html" 
-     style="background:var(--color-whatsapp); color:#fff; padding: 0.8rem 1.5rem; border-radius: 10px; font-weight: bold; text-decoration: none; font-size: 1.1rem;">
-    ➕ أضف طلبك الآن
+<div class="page-subtitle">
+  هل لديك عقار؟ قد يكون أحد هؤلاء العملاء بانتظار عرضك.
+</div>
+
+<div class="main-cta-container">
+  <a href="/samsar-talabak/add-your-property.html" class="main-cta-button">
+    ➕ أعلن عن طلبك مجاناً
   </a>
 </div>
 
-<div id="filter-buttons" style="display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin:2rem 0;"></div>
+<!-- الحاوية التي سيتم ملؤها بواسطة الجافاسكربت -->
+<div id="filter-buttons" class="filter-container"></div>
 
-<div id="requests-container" style="max-width:1100px; margin:auto; padding:1rem; display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.5rem;">
-  ⏳ جاري تحميل الطلبات...
+<div id="requests-container" class="properties-grid-container">
+  <!-- سيتم عرض حالة التحميل هنا بواسطة الجافاسكربت -->
 </div>
 
-<script src="/samsar-talabak/assets/js/requests-display.js"></script>
+<!-- استدعاء ملف الجافاسكربت الجديد -->
+<script src="/samsar-talabak/assets/js/enhanced-requests-display.js"></script>
