@@ -4,67 +4,21 @@ title: "طلبات العملاء الجادة في مدينة نصر"
 description: "تصفح طلبات العملاء وابحث عن فرصة لتقديم عرضك العقاري المناسب عبر سمسار طلبك"
 ---
 
-<style>
-  /* ✨ تم حقن الأنماط المتقدمة ديناميكياً عبر ملف الجافاسكربت ✨ */
-  /* Dynamic styles are injected via the JavaScript file */
-</style>
-
+<!-- ✨ هذا القسم مطابق تماماً لصفحة العروض لتوحيد التصميم ✨ -->
 <section class="page-header">
   <h1>🤝 طلبات العملاء الجادة</h1>
   <p style="color: #ccc; font-size: 1.2rem; margin-top: 1rem;">ابحث عن الطلب المناسب لعقارك وقدم عرضك اليوم</p>
 </section>
 
-<section style="text-align:center; margin: 2rem 0;">
-  <a href="/samsar-talabak/add-your-property.html" class="nav-btn">
-    ✨ لديك عقار؟ أضفه الآن
-  </a>
-</section>
-
-<!-- رسالة ترحيب تفاعلية للوسطاء -->
-<div id="welcome-message" class="welcome-message" style="display:none;">
-  <h2 style="color: #00ff88; font-size: 2.5rem; margin-bottom: 1rem;">🎉 مرحباً بك يا وسيطنا العزيز</h2>
-  <p style="font-size: 1.3rem; color: #f1f1f1; line-height: 1.6;">
-    🔍 استكشف الآن أحدث طلبات العملاء الجادين في مدينة نصر.<br>
-    🤝 فرصتك لتقديم العرض المثالي وتحقيق صفقتك التالية!
-  </p>
-  <div style="margin-top: 1.5rem;">
-    <span style="color: #00ff88; font-weight: bold;">🔥 طلبات جديدة بانتظارك</span>
-  </div>
+<!-- حاوية الفلاتر التي سيتم ملؤها بواسطة الجافاسكربت -->
+<div id="filter-container" class="filter-container">
+  <!-- سيتم إضافة أزرار الفلترة والفرز هنا ديناميكياً -->
 </div>
 
-<!-- أزرار التصنيفات والفلاتر المحسنة -->
-<div id="filter-buttons" class="filter-container"></div>
-
-<!-- حاوية بطاقات الطلبات مع تحسينات التصميم -->
-<div id="requests-container" class="requests-grid">
-  <div class="loading-container" style="text-align: center; grid-column: 1 / -1; padding: 2rem;">
-    <div class="loading-spinner-enhanced"></div>
-    <p style="color: #00ff88; font-size: 1.2rem; margin-top: 1rem;">جاري تحميل أحدث الطلبات...</p>
-  </div>
+<!-- حاوية عرض الطلبات -->
+<div id="requests-grid" class="requests-grid">
+  <!-- سيتم عرض شاشة التحميل والبطاقات هنا بواسطة الجافاسكربت -->
 </div>
 
-<!-- عناصر تفاعلية عائمة -->
-<div class="floating-elements">
-  <div class="floating-element" style="left: 10%; animation-delay: 0s;"></div>
-  <div class="floating-element" style="left: 20%; animation-delay: 1s;"></div>
-  <div class="floating-element" style="left: 50%; animation-delay: 4s;"></div>
-  <div class="floating-element" style="left: 70%; animation-delay: 0.5s;"></div>
-  <div class="floating-element" style="left: 90%; animation-delay: 2.5s;"></div>
-</div>
-
-<!-- ملف الجافاسكربت المحسن والجديد -->
-<script src="/samsar-talabak/assets/js/enhanced-requests-display.js"></script>
-
-<!-- تشغيل الترحيب الذكي المحسن -->
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const welcomeBox = document.getElementById("welcome-message");
-    if (!localStorage.getItem("requestsWelcomeShown")) {
-      setTimeout(() => {
-        if (welcomeBox) {
-          welcomeBox.style.display = "block";
-        }
-      }, 500);
-    }
-  });
-</script>
+<!-- ✨ استدعاء ملف الجافاسكربت الجديد والموثوق ✨ -->
+<script src="/samsar-talabak/assets/js/requests-display.js"></script>
