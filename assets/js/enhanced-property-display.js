@@ -1,7 +1,8 @@
 /**
- * 🏢 سمسار طلبك الذكي - النسخة الذكية الاحترافية (Smart Enhanced Full Version v3)
+ * 🏢 سمسار طلبك الذكي - النسخة الذكية الاحترافية (Smart Enhanced Full Version v3.1 - Corrected)
  * نظام عرض العقارات الذكي والمطور
  * يشمل جميع الميزات الأصلية + الذكاء التفاعلي والتوصيات والSmartView
+ * @version 3.1 - تم إصلاح الأخطاء الهيكلية وتحسين الأداء
  */
 
 class EnhancedPropertyDisplay {
@@ -18,7 +19,7 @@ class EnhancedPropertyDisplay {
     
     this.config = {
       animationDuration: 300,
-      cacheExpiry: 5 * 60 * 1000,
+      cacheExpiry: 5 * 60 * 1000, // 5 دقائق
       loadingDelay: 800,
       welcomeDisplayTime: 7000,
       maxRetries: 3,
@@ -32,8 +33,6 @@ class EnhancedPropertyDisplay {
       "offices": { label: "🏢 مكاتب إدارية", icon: "🏢", color: "#8b5cf6", description: "مكاتب ومساحات عمل" },
       "admin-hq": { label: "🏛️ مقرات إدارية", icon: "🏛️", color: "#f59e0b", description: "مقرات ومباني إدارية" }
     };
-
-    this.init();
   }
 
   async init() {
@@ -70,20 +69,21 @@ class EnhancedPropertyDisplay {
     this.welcomeBox = document.getElementById("welcome-message");
 
     if (!this.container || !this.filterContainer) {
-      throw new Error('العناصر الأساسية غير موجودة');
+      throw new Error('العناصر الأساسية (properties-container, filter-buttons) غير موجودة في صفحة HTML.');
     }
 
     this.container.classList.add('enhanced-properties-container');
     this.filterContainer.classList.add('enhanced-filter-container');
   }
+
   setupEventListeners() {
     window.addEventListener('resize', this.debounce(() => this.handleResize(), 250));
     window.addEventListener('scroll', this.throttle(() => this.handleScroll(), 100));
     window.addEventListener('online', () => this.showNotification('تم استعادة الاتصال بالإنترنت', 'success'));
     window.addEventListener('offline', () => this.showNotification('انقطع الاتصال بالإنترنت', 'warning'));
     window.addEventListener('error', (event) => {
-      console.error('خطأ JavaScript:', event.error);
-      this.showNotification('حدث خطأ تقني', 'error');
+      console.error('خطأ JavaScript عام:', event.error);
+      this.showNotification('حدث خطأ تقني غير متوقع', 'error');
     });
   }
 
@@ -164,7 +164,7 @@ class EnhancedPropertyDisplay {
       oscillator.start(audioContext.currentTime);
       oscillator.stop(audioContext.currentTime + 0.5);
     } catch (error) {
-      console.log('لا يمكن تشغيل الصوت:', error);
+      console.log('لا يمكن تشغيل الصوت الترحيبي:', error);
     }
   }
 
@@ -188,6 +188,7 @@ class EnhancedPropertyDisplay {
       animation.onfinish = () => particle.remove();
     }
   }
+
   createFilterButtons() {
     Object.entries(this.categories).forEach(([key, category], index) => {
       const button = this.createFilterButton(key, category, index);
@@ -257,8 +258,8 @@ class EnhancedPropertyDisplay {
     if (this.isLoading || this.currentCategory === category) return;
     try {
       this.updateActiveButton(button);
+      this.currentCategory = category; // Set category early
       await this.loadCategory(category);
-      this.currentCategory = category;
       localStorage.setItem('lastCategory', category);
       this.showNotification(`تم تحميل ${this.categories[category].label}`, 'success');
     } catch (error) {
@@ -287,8 +288,13 @@ class EnhancedPropertyDisplay {
     const defaultButton = this.filterContainer.querySelector(`[data-category="${defaultCategory}"]`);
     if (defaultButton) {
       defaultButton.click();
+    } else {
+        // Fallback if button not found
+        const firstButton = this.filterContainer.querySelector('.filter-btn');
+        if(firstButton) firstButton.click();
     }
   }
+
   async loadCategory(category) {
     if (this.isLoading) return;
     this.isLoading = true;
@@ -304,8 +310,8 @@ class EnhancedPropertyDisplay {
       this.setCachedData(category, data);
       await this.displayProperties(data, category);
     } catch (error) {
-      console.error('خطأ في تحميل البيانات:', error);
-      this.showErrorMessage('فشل في تحميل البيانات');
+      console.error(`خطأ في تحميل بيانات التصنيف '${category}':`, error);
+      this.showErrorMessage(`فشل في تحميل بيانات '${this.categories[category].label}'`);
     } finally {
       this.isLoading = false;
     }
@@ -315,18 +321,21 @@ class EnhancedPropertyDisplay {
     let retries = 0;
     while (retries < this.config.maxRetries) {
       try {
+        // تأكد من أن المسار صحيح. قد تحتاج لتعديله حسب هيكل مشروعك.
         const indexResponse = await fetch(`/samsar-talabak/data/properties/${category}/index.json`);
-        if (!indexResponse.ok) throw new Error(`HTTP ${indexResponse.status}`);
+        if (!indexResponse.ok) throw new Error(`فشل في جلب ملف الفهرس: ${indexResponse.status}`);
         const files = await indexResponse.json();
         if (!Array.isArray(files) || files.length === 0) return [];
+        
         const propertyPromises = files.map(filename => this.fetchPropertyData(category, filename));
         const properties = await Promise.allSettled(propertyPromises);
+        
         return properties
-          .filter(result => result.status === 'fulfilled')
-          .map(result => result.value)
-          .filter(property => property !== null);
+          .filter(result => result.status === 'fulfilled' && result.value !== null)
+          .map(result => result.value);
       } catch (error) {
         retries++;
+        console.warn(`محاولة فاشلة (${retries}/${this.config.maxRetries}) لجلب بيانات ${category}:`, error);
         if (retries >= this.config.maxRetries) throw error;
         await this.delay(this.config.retryDelay * retries);
       }
@@ -337,7 +346,7 @@ class EnhancedPropertyDisplay {
   async fetchPropertyData(category, filename) {
     try {
       const response = await fetch(`/samsar-talabak/data/properties/${category}/${filename}`);
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      if (!response.ok) throw new Error(`فشل في جلب ملف العقار: ${response.status}`);
       const data = await response.json();
       return { ...data, filename, category };
     } catch (error) {
@@ -350,7 +359,7 @@ class EnhancedPropertyDisplay {
     this.container.innerHTML = `
       <div class="loading-container">
         <div class="loading-spinner-enhanced"></div>
-        <div class="loading-text"><h3>جاري تحميل أحدث العروض...</h3><p>يرجى الانتظار قليلاً</p></div>
+        <div class="loading-text"><h3>جاري تحميل العروض المميزة...</h3><p>لحظات من فضلك...</p></div>
         <div class="loading-progress"><div class="loading-progress-bar"></div></div>
       </div>
     `;
@@ -367,20 +376,28 @@ class EnhancedPropertyDisplay {
     let processedProperties = [...properties];
     const now = new Date();
     const oneDay = 1000 * 60 * 60 * 24;
+
     if (this.currentDateFilter === 'last_week' || this.currentDateFilter === 'last_month') {
       const daysToFilter = this.currentDateFilter === 'last_week' ? 7 : 30;
       processedProperties = processedProperties.filter(p => {
         if (!p.date) return false;
         try {
           const propDate = new Date(p.date);
+          if (isNaN(propDate)) return false; // Invalid date
           const diffDays = (now - propDate) / oneDay;
           return diffDays <= daysToFilter;
         } catch { return false; }
       });
     }
+
     if (this.currentDateFilter !== 'all') {
         processedProperties.sort((a, b) => {
-            try { return new Date(b.date) - new Date(a.date); } catch { return 0; }
+            try { 
+                const dateA = new Date(a.date);
+                const dateB = new Date(b.date);
+                if (isNaN(dateA) || isNaN(dateB)) return 0;
+                return dateB - dateA;
+            } catch { return 0; }
         });
     }
     return processedProperties;
@@ -388,17 +405,20 @@ class EnhancedPropertyDisplay {
 
   async displayProperties(properties, category) {
     if (!Array.isArray(properties)) {
-      this.showErrorMessage('بيانات غير صحيحة');
+      this.showErrorMessage('تم استلام بيانات غير صالحة.');
       return;
     }
     const filteredProperties = this.applyFiltersAndSorting(properties);
+    
+    this.container.innerHTML = ''; // Clear previous content
+
     if (filteredProperties.length === 0) {
       this.showEmptyState(category, properties.length > 0);
       return;
     }
-    this.container.innerHTML = '';
+
     for (let i = 0; i < filteredProperties.length; i++) {
-      await this.delay(50);
+      await this.delay(50); // Small delay for staggered animation
       const card = this.createPropertyCard(filteredProperties[i], category, i);
       this.container.appendChild(card);
       requestAnimationFrame(() => {
@@ -408,6 +428,7 @@ class EnhancedPropertyDisplay {
     }
     this.setupCardInteractions();
   }
+
   createPropertyCard(property, category, index) {
     const categoryInfo = this.categories[category];
     const card = document.createElement("div");
@@ -416,12 +437,12 @@ class EnhancedPropertyDisplay {
     card.dataset.category = category;
     card.style.cssText = `
       opacity: 0; transform: translateY(30px);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease-in-out;
       animation-delay: ${index * 100}ms;
     `;
     const detailPage = `/samsar-talabak/details.html?category=${category}&file=${encodeURIComponent(property.filename)}`;
     
-    const descriptionText = property.summary || property.description;
+    const descriptionText = property.summary || property.description || 'لا يوجد وصف متاح.';
 
     card.innerHTML = `
       <div class="property-header">
@@ -435,7 +456,7 @@ class EnhancedPropertyDisplay {
           <button class="share-btn" title="مشاركة"><span class="share-icon">📤</span></button>
         </div>
       </div>
-      <h2 class="property-title">${this.escapeHtml(property.title)}</h2>
+      <h2 class="property-title">${this.escapeHtml(property.title )}</h2>
       <div class="property-details">
         <div class="property-detail"><span class="detail-icon">💰</span><span class="detail-label">السعر:</span><span class="detail-value price-highlight">${this.escapeHtml(property.price)}</span></div>
         <div class="property-detail"><span class="detail-icon">📏</span><span class="detail-label">المساحة:</span><span class="detail-value">${this.escapeHtml(property.area)}</span></div>
@@ -517,16 +538,16 @@ class EnhancedPropertyDisplay {
   async shareProperty(property) {
     const shareData = {
       title: property.title,
-      text: `شاهد هذا العقار المميز: ${property.title}`,
-      url: window.location.href
+      text: `شاهد هذا العقار المميز من سمسار طلبك: ${property.title}`,
+      url: window.location.href.split('?')[0] + `details.html?category=${property.category}&file=${encodeURIComponent(property.filename)}`
     };
     try {
       if (navigator.share) {
         await navigator.share(shareData);
         this.showNotification('تم مشاركة العقار بنجاح', 'success');
       } else {
-        await navigator.clipboard.writeText(window.location.href);
-        this.showNotification('تم نسخ رابط العقار', 'success');
+        await navigator.clipboard.writeText(shareData.url);
+        this.showNotification('تم نسخ رابط العقار إلى الحافظة', 'success');
       }
     } catch (error) {
       console.error('خطأ في المشاركة:', error);
@@ -540,7 +561,7 @@ class EnhancedPropertyDisplay {
       card.style.boxShadow = '0 25px 50px rgba(0, 255, 136, 0.2)';
     } else {
       card.style.transform = 'translateY(0) scale(1)';
-      card.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.3)';
+      card.style.boxShadow = ''; // Reset to CSS default
     }
   }
 
@@ -580,18 +601,20 @@ class EnhancedPropertyDisplay {
         }
       }
     });
-   showEmptyState(category, isAfterFilter = false) {
+  }
+
+  showEmptyState(category, isAfterFilter = false) {
     const categoryInfo = this.categories[category];
-    let message = `<p>لم يتم العثور على عقارات في فئة "${categoryInfo.label}"</p>`;
+    let message = `<p>يبدو أنه لا توجد عقارات متاحة حالياً في قسم "${categoryInfo.label}".</p>`;
     if (isAfterFilter) {
-      message = `<p>لا توجد نتائج تطابق معايير الفرز الحالية.<br>جرب اختيار "كل الأوقات".</p>`;
+      message = `<p>لا توجد نتائج تطابق معايير الفرز الحالية.<br>جرب اختيار "كل الأوقات" من قائمة الفرز.</p>`;
     }
     this.container.innerHTML = `
       <div class="empty-state">
         <div class="empty-icon">${isAfterFilter ? '🧐' : categoryInfo.icon}</div>
         <h3>${isAfterFilter ? 'لا توجد نتائج مطابقة' : 'لا توجد عروض حالياً'}</h3>
         ${message}
-        <button class="refresh-btn" onclick="location.reload()">🔄 تحديث الصفحة</button>
+        <button class="refresh-btn" onclick="window.propertyDisplay.refreshCurrentCategory()">🔄 تحديث</button>
       </div>
     `;
   }
@@ -648,7 +671,7 @@ class EnhancedPropertyDisplay {
     if (!this.currentCategory || this.isLoading) return;
     this.clearCachedData(this.currentCategory);
     await this.loadCategory(this.currentCategory);
-    this.showNotification('تم تحديث البيانات', 'success');
+    this.showNotification('تم تحديث البيانات بنجاح', 'success');
   }
 
   scrollToTop() {
@@ -678,125 +701,12 @@ class EnhancedPropertyDisplay {
   }
 
   setupPerformanceMonitoring() {
-    if ('PerformanceObserver' in window) {
-      const observer = new PerformanceObserver((list) => {
-        list.getEntries().forEach((entry) => {
-          if (entry.entryType === 'navigation') {
-            console.log('📊 وقت تحميل الصفحة:', entry.loadEventEnd - entry.loadEventStart, 'ms');
-          }
-        });
-      });
-      observer.observe({ entryTypes: ['navigation'] });
+    if ('performance' in window && 'getEntriesByType' in window.performance) {
+        const navigationEntry = performance.getEntriesByType('navigation')[0];
+        if (navigationEntry) {
+            console.log('📊 وقت تحميل الصفحة:', navigationEntry.domComplete, 'ms');
+        }
     }
   }
 
-  setupAccessibility() {
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        document.querySelectorAll('.notification.show').forEach(n => this.hideNotification(n));
-      }
-    });
-
-    this.container.setAttribute('aria-label', 'قائمة العقارات');
-    this.filterContainer.setAttribute('aria-label', 'تصنيفات العقارات');
-  }
- }
-  debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-      const later = () => {
-        clearTimeout(timeout);
-        func(...args);
-      };
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-    };
-  }
-
-  throttle(func, limit) {
-    let inThrottle;
-    return function () {
-      if (!inThrottle) {
-        func.apply(this, arguments);
-        inThrottle = true;
-        setTimeout(() => (inThrottle = false), limit);
-      }
-    };
-  }
-
-  delay(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
-  escapeHtml(text) {
-    if (typeof text !== 'string') return '';
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-  }
-
-  getTimeAgo(dateString) {
-    if (!dateString) return 'غير محدد';
-    try {
-      const date = new Date(dateString);
-      const now = new Date();
-      const diffDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
-      if (diffDays === 0) return 'اليوم';
-      if (diffDays === 1) return 'أمس';
-      if (diffDays < 7) return `${diffDays} أيام`;
-      if (diffDays < 30) return `${Math.floor(diffDays / 7)} أسابيع`;
-      return `${Math.floor(diffDays / 30)} شهور`;
-    } catch {
-      return 'غير محدد';
-    }
-  }
-
-  getCachedData(category) {
-    const cached = this.propertiesCache.get(category);
-    if (!cached || (Date.now() - cached.timestamp > this.config.cacheExpiry)) {
-      this.propertiesCache.delete(category);
-      return null;
-    }
-    return cached.data;
-  }
-
-  setCachedData(category, data) {
-    this.propertiesCache.set(category, { data, timestamp: Date.now() });
-  }
-
-  clearCachedData(category) {
-    if (category) this.propertiesCache.delete(category);
-    else this.propertiesCache.clear();
-  }
-
-  addFavorite(property) {
-    const favorites = this.getFavorites();
-    if (!favorites.includes(property.filename)) {
-      favorites.push(property.filename);
-      localStorage.setItem('favorites', JSON.stringify(favorites));
-    }
-  }
-
-  removeFavorite(filename) {
-    const favorites = this.getFavorites();
-    const index = favorites.indexOf(filename);
-    if (index > -1) {
-      favorites.splice(index, 1);
-      localStorage.setItem('favorites', JSON.stringify(favorites));
-    }
-  }
-
-  getFavorites() {
-    try {
-      return JSON.parse(localStorage.getItem('favorites') || '[]');
-    } catch {
-      return [];
-    }
-  }
-}
-
-// 🔁 تشغيل الكود عند تحميل الصفحة
-const propertyDisplay = new EnhancedPropertyDisplay();
-
-// 🧠 ربط الكلاس عالمياً عند الحاجة من المطورين الآخرين
-window.EnhancedPropertyDisplay = EnhancedPropertyDisplay;
+  setupAccessibility
