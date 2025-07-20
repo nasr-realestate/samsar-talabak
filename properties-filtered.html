@@ -1,0 +1,268 @@
+---
+layout: default
+title: "عروض العقارات المميزة في مدينة نصر"
+description: "استكشف أفضل العروض العقارية في مدينة نصر - شقق فاخرة، محلات تجارية، ومكاتب إدارية مع سمسار طلبك"
+---
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }}</title>
+  <meta name="description" content="{{ page.description }}">
+  
+  <style>
+    /* =================================== */
+    /* ✨ تحسينات التصميم المتقدمة للصفحة */
+    /* =================================== */
+
+    /* --- رأس الصفحة --- */
+    .page-header {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      padding: 3rem 1rem;
+      text-align: center;
+      border-radius: 0 0 30px 30px;
+      box-shadow: 0 10px 30px rgba(0, 255, 136, 0.1);
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%2300ff88" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+      pointer-events: none;
+    }
+
+    .page-header h1 {
+      font-size: 3rem;
+      background: linear-gradient(45deg, #00ff88, #00cc6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 0;
+      text-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.3)); }
+      to { filter: drop-shadow(0 0 20px rgba(0, 255, 136, 0.6)); }
+    }
+
+    /* --- أزرار التنقل الرئيسية --- */
+    .nav-btn {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: linear-gradient(45deg, #00ff88, #00cc6a);
+      color: #000;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      box-shadow: 0 8px 25px rgba(0, 255, 136, 0.3);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .nav-btn:hover::before {
+      left: 100%;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 15px 35px rgba(0, 255, 136, 0.4);
+    }
+
+    /* --- رسالة الترحيب --- */
+    .welcome-message {
+      background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+      border: 2px solid #00ff88;
+      border-radius: 20px;
+      padding: 2.5rem;
+      margin: 2rem auto;
+      max-width: 800px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 255, 136, 0.1);
+      position: relative;
+      overflow: hidden;
+      animation: slideInUp 0.8s ease-out;
+    }
+
+    @keyframes slideInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .welcome-message::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, #00ff88, transparent);
+      animation: rotate 4s linear infinite;
+      z-index: -1;
+    }
+
+    .welcome-message::after {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+      border-radius: 18px;
+      z-index: -1;
+    }
+
+    @keyframes rotate {
+      to { transform: rotate(360deg); }
+    }
+
+    /* --- حاوية الفلاتر --- */
+    .filter-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 2rem 0;
+      padding: 0 1rem;
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+      transition: all 0.3s ease;
+    }
+    
+    .filter-container.scrolled {
+        background: rgba(26, 26, 26, 0.8);
+        backdrop-filter: blur(10px);
+        padding: 1rem;
+        border-radius: 25px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        width: fit-content;
+        margin: 2rem auto;
+    }
+
+    /* --- شبكة عرض العقارات --- */
+    .properties-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    /* --- العناصر العائمة في الخلفية --- */
+    .floating-elements {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .floating-element {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #00ff88;
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    /* --- تصميم متجاوب --- */
+    @media (max-width: 768px) {
+      .page-header h1 { font-size: 2rem; }
+      .properties-grid { grid-template-columns: 1fr; gap: 1.5rem; padding: 0.5rem; }
+      .filter-container { gap: 0.5rem; }
+      .welcome-message { margin: 1rem; padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="page-header">
+    <h1>🏢 عروض العقارات المميزة</h1>
+    <p style="color: #ccc; font-size: 1.2rem; margin-top: 1rem;">اكتشف أفضل الفرص العقارية في قلب مدينة نصر</p>
+  </header>
+
+  <main>
+    <section style="text-align:center; margin: 2rem 0;">
+      <a href="/samsar-talabak/add-your-property.html" class="nav-btn">
+        ✨ أضف عقارك المميز الآن
+      </a>
+    </section>
+
+    <!-- رسالة ترحيب تفاعلية (يتم التحكم بها عبر JS) -->
+    <div id="welcome-message" class="welcome-message" style="display:none;">
+      <h2 style="color: #00ff88; font-size: 2.5rem; margin-bottom: 1rem;">🎉 مرحباً بك في سمسار طلبك</h2>
+      <p style="font-size: 1.3rem; color: #f1f1f1; line-height: 1.6;">
+        🏠 استكشف الآن أحدث وأفضل العروض العقارية في مدينة نصر<br>
+        💎 شقق فاخرة • محلات تجارية • مكاتب إدارية • وأكثر بكثير!
+      </p>
+      <div style="margin-top: 1.5rem;">
+        <span style="color: #00ff88; font-weight: bold;">⏰ عروض محدودة الوقت</span>
+      </div>
+    </div>
+
+    <!-- أزرار التصنيفات (سيتم ملؤها عبر JS) -->
+    <div id="filter-buttons" class="filter-container"></div>
+
+    <!-- حاوية البطاقات (سيتم ملؤها عبر JS) -->
+    <div id="properties-container" class="properties-grid">
+      <!-- حالة التحميل الأولية -->
+      <div style="text-align: center; grid-column: 1 / -1; padding: 2rem;">
+        <div class="loading-spinner-enhanced" style="margin: 0 auto;"></div>
+        <p style="color: #00ff88; font-size: 1.2rem; margin-top: 1rem;">جاري تحميل أحدث العروض المميزة...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- عناصر تفاعلية عائمة في الخلفية -->
+  <div class="floating-elements">
+    <div class="floating-element" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="floating-element" style="left: 20%; animation-delay: 1s;"></div>
+    <div class="floating-element" style="left: 30%; animation-delay: 2s;"></div>
+    <div class="floating-element" style="left: 40%; animation-delay: 3s;"></div>
+    <div class="floating-element" style="left: 50%; animation-delay: 4s;"></div>
+    <div class="floating-element" style="left: 60%; animation-delay: 5s;"></div>
+    <div class="floating-element" style="left: 70%; animation-delay: 0.5s;"></div>
+    <div class="floating-element" style="left: 80%; animation-delay: 1.5s;"></div>
+    <div class="floating-element" style="left: 90%; animation-delay: 2.5s;"></div>
+  </div>
+
+  <!-- استدعاء ملف الجافاسكربت الرئيسي الذي يحتوي على الكلاس -->
+  <!-- تأكد من أن المسار صحيح -->
+  <script src="/samsar-talabak/assets/js/enhanced-property-display.js"></script>
+
+</body>
+</html>
