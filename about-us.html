@@ -1,30 +1,21 @@
----
-layout: default
-title: عن سمسار طلبك
-description: تعرف على فريق سمسار طلبك، رسالتنا، قيمنا، خبرتنا وشهادات عملائنا. نساعدك في البيع والشراء والإيجار بثقة في مدينة نصر.
-permalink: /about-us.html
+
 ---
 
-<!-- ✅ Google Tag Manager -->
-<script>
+layout: default title: عن سمسار طلبك description: تعرف على فريق سمسار طلبك، رسالتنا، قيمنا، خبرتنا وشهادات عملائنا. نساعدك في البيع والشراء والإيجار بثقة في مدينة نصر. permalink: /about-us.html
+
+<!-- ✅ Google Tag Manager --><script>
 (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-MHPZ8NP');
-</script>
-
-<!-- ✅ Meta Tags -->
-<meta name="robots" content="index, follow">
+</script><!-- ✅ Meta Tags --><meta name="robots" content="index, follow">
 <meta name="author" content="سمسار طلبك">
 <meta property="og:title" content="عن سمسار طلبك">
 <meta property="og:description" content="اكتشف رسالتنا وفريقنا ورؤيتنا في تقديم أفضل تجربة عقارية في مدينة نصر.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak/about-us.html">
-<meta property="og:image" content="https://i.postimg.cc/Vk8Nn1xZ/me.jpg">
-
-<!-- ✅ Structured Data -->
-<script type="application/ld+json">
+<meta property="og:image" content="https://i.postimg.cc/Vk8Nn1xZ/me.jpg"><!-- ✅ Structured Data --><script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "AboutPage",
@@ -39,14 +30,26 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     }
   }
 }
-</script>
-
-<!-- ✅ تنسيق -->
-<style>
+</script><style>
   body {
     background: #101010;
     color: #fff;
     font-family: 'Tajawal', sans-serif;
+    margin: 0;
+    padding: 2rem;
+  }
+
+  h1, h2 {
+    color: #00ff88;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    line-height: 1.8;
+    font-size: 1.1rem;
+    color: #f1f1f1;
+    text-align: center;
   }
 
   .about-container {
@@ -56,17 +59,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     background: rgba(255, 255, 255, 0.03);
     border-radius: 12px;
     box-shadow: 0 0 10px rgba(0,0,0,0.6);
-  }
-
-  h1, h2 {
-    color: #00ff88;
-    text-align: center;
-  }
-
-  p {
-    line-height: 1.8;
-    font-size: 1.1rem;
-    color: #f1f1f1;
+    animation: fadeIn 1s ease-in-out;
   }
 
   .logo {
@@ -74,6 +67,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     margin: 0 auto 2rem;
     border-radius: 12px;
     width: 120px;
+    animation: fadeInDown 1s ease-in-out;
   }
 
   .back-btn {
@@ -86,33 +80,97 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     border-radius: 8px;
     font-weight: bold;
     text-decoration: none;
+    transition: all 0.3s ease;
   }
-</style>
 
-<main class="about-container">
-  <img class="logo" src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار سمسار طلبك">
+  .back-btn:hover {
+    background: #00e67a;
+    transform: scale(1.05);
+  }
 
-  <h1>عن سمسار طلبك</h1>
+  .team-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
 
-  <section>
+  .team-member {
+    text-align: center;
+    max-width: 200px;
+    animation: zoomIn 1s ease forwards;
+    opacity: 0;
+  }
+
+  .team-member img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,255,136,0.4);
+    transition: transform 0.3s ease;
+  }
+
+  .team-member img:hover {
+    transform: scale(1.05);
+  }
+
+  .team-member h3 {
+    color: #00ff88;
+    margin-top: 0.8rem;
+  }
+
+  .team-member p {
+    font-size: 0.95rem;
+    color: #ccc;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes zoomIn {
+    to { opacity: 1; transform: scale(1); }
+  }
+</style><main class="about-container">
+  <img class="logo" src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار سمسار طلبك">  <h1>عن سمسار طلبك</h1>  <section>
     <h2>من نحن</h2>
     <p>نحن فريق متخصص في المجال العقاري بمدينة نصر. نعمل بشغف منذ سنوات لخدمة كل من يبحث عن بيع، شراء، أو تأجير عقار بمهنية وشفافية تامة.</p>
-  </section>
-
-  <section>
+  </section>  <section>
     <h2>رسالتنا</h2>
     <p>تقديم تجربة عقارية مميزة وآمنة، مبنية على الصدق وسرعة الإنجاز، مع احترام خصوصية ووقت عملائنا.</p>
-  </section>
-
-  <section>
+  </section>  <section>
     <h2>فريقنا</h2>
-    <p>يضم فريقنا نخبة من المتخصصين: <strong>وليد فيصل</strong> لبيع العقارات، <strong>أميرة وليد</strong> لتأجير المحلات والمقرات، و<strong>طارق طنطاوي</strong> للشقق المفروشة.</p>
-  </section>
-
-  <section>
+    <div class="team-grid">
+      <div class="team-member">
+        <img src="https://i.postimg.cc/ZqrN8w19/Tariq-Tantawi.webp" alt="طارق طنطاوي">
+        <h3>طارق طنطاوي</h3>
+        <p>المؤسس والرؤية الاستراتيجية خلف سمسار طلبك.</p>
+      </div>
+      <div class="team-member">
+        <img src="https://i.postimg.cc/jjVNnpk0/Walid-Faisal.webp" alt="وليد فيصل">
+        <h3>وليد فيصل</h3>
+        <p>خبير البيع المباشر للعقارات.</p>
+      </div>
+      <div class="team-member">
+        <img src="https://i.postimg.cc/T35gwd0J/Princess-Walid.webp" alt="أميرة وليد">
+        <h3>أميرة وليد</h3>
+        <p>مسؤولة التسويق وتأجير المحلات والمقرات.</p>
+      </div>
+      <div class="team-member">
+        <img src="https://i.postimg.cc/qR43j8T1/Mohamed-Adel.webp" alt="محمد عادل">
+        <h3>محمد عادل</h3>
+        <p>خبير المتابعة الميدانية وخدمة العملاء.</p>
+      </div>
+    </div>
+  </section>  <section>
     <h2>رؤيتنا</h2>
     <p>أن نكون الخيار الأول في سوق العقارات في مدينة نصر بفضل السمعة الطيبة والخدمة الشخصية والدقيقة.</p>
-  </section>
+  </section><a href="/samsar-talabak/" class="back-btn">← العودة للصفحة الرئيسية</a>
 
-  <a href="/samsar-talabak/" class="back-btn">← العودة للصفحة الرئيسية</a>
 </main>
