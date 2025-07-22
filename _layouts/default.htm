@@ -2,38 +2,28 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
+<!-- Social Share Meta Tags -->
+<meta property="og:title" content="سمسار طلبك | عقارات مدينة نصر بين يديك">
+<meta property="og:description" content="شقق، محلات، مكاتب – كل ما تحتاجه في مكان واحد.">
+<meta property="og:image" content="https://i.postimg.cc/vZH0t24C/20250628-212125.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak">
+
+<!-- Twitter Card (اختياري لدعم تويتر) -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="سمسار طلبك | عقارات مدينة نصر">
+<meta name="twitter:description" content="خدمات عقارية احترافية في قلب مدينة نصر">
+<meta name="twitter:image" content="https://i.postimg.cc/vZH0t24C/20250628-212125.webp">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
   <title>{{ page.title | default: site.title }}</title>
   <meta name="description" content="{{ page.description | default: site.description }}">
-
-  <!-- ✅ هوية السوشيال ميديا -->
-  <meta property="og:title" content="سمسار طلبك | عقارات مدينة نصر بين يديك">
-  <meta property="og:description" content="شقق، محلات، مكاتب – كل ما تحتاجه في مكان واحد.">
-  <meta property="og:image" content="https://i.postimg.cc/vZH0t24C/20250628-212125.webp">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak">
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="سمسار طلبك | عقارات مدينة نصر">
-  <meta name="twitter:description" content="خدمات عقارية احترافية في قلب مدينة نصر">
-  <meta name="twitter:image" content="https://i.postimg.cc/vZH0t24C/20250628-212125.webp">
-
-  <!-- ✅ ملفات التصميم -->
   <link rel="stylesheet" href="/samsar-talabak/assets/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-  <!-- ✅ تحسين الأداء -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  
-  <!-- ✅ ملف السيو من Jekyll -->
   {% seo %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-
-<body data-theme="light">
+<body>
 
   {% include navbar.html %}
 
@@ -43,292 +33,5 @@
 
   {% include footer.html %}
 
-  <!-- ✅ JavaScript محسن لتبديل الوضع -->
-  <script>
-    // نظام تبديل الوضع المحسن
-    class ThemeManager {
-      constructor() {
-        this.themeToggle = document.getElementById('themeToggle');
-        this.body = document.body;
-        this.currentTheme = this.getStoredTheme() || 'light';
-        
-        this.init();
-      }
-
-      init() {
-        // تطبيق الوضع المحفوظ
-        this.applyTheme(this.currentTheme);
-        
-        // ربط الأحداث
-        if (this.themeToggle) {
-          this.themeToggle.addEventListener('click', () => this.toggleTheme());
-          
-          // تحسين إمكانية الوصول
-          this.themeToggle.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              this.toggleTheme();
-            }
-          });
-        }
-
-        // الاستماع لتفضيلات النظام
-        this.watchSystemTheme();
-      }
-
-      getStoredTheme() {
-        try {
-          return localStorage.getItem('theme');
-        } catch (e) {
-          console.warn('localStorage غير متاح:', e);
-          return null;
-        }
-      }
-
-      setStoredTheme(theme) {
-        try {
-          localStorage.setItem('theme', theme);
-        } catch (e) {
-          console.warn('لا يمكن حفظ الوضع:', e);
-        }
-      }
-
-      applyTheme(theme) {
-        this.body.setAttribute('data-theme', theme);
-        this.currentTheme = theme;
-        this.setStoredTheme(theme);
-        this.updateToggleIcon(theme);
-        
-        // إرسال حدث مخصص للمكونات الأخرى
-        window.dispatchEvent(new CustomEvent('themeChanged', { 
-          detail: { theme } 
-        }));
-      }
-
-      updateToggleIcon(theme) {
-        if (this.themeToggle) {
-          this.themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
-          this.themeToggle.setAttribute('aria-label', 
-            theme === 'dark' ? 'تبديل إلى الوضع الفاتح' : 'تبديل إلى الوضع الداكن'
-          );
-        }
-      }
-
-      toggleTheme() {
-        const newTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
-        this.applyTheme(newTheme);
-        
-        // تأثير بصري للتبديل
-        this.addToggleEffect();
-      }
-
-      addToggleEffect() {
-        if (this.themeToggle) {
-          this.themeToggle.style.transform = 'scale(0.8) rotate(180deg)';
-          setTimeout(() => {
-            this.themeToggle.style.transform = '';
-          }, 200);
-        }
-      }
-
-      watchSystemTheme() {
-        if (window.matchMedia) {
-          const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-          
-          // تطبيق وضع النظام إذا لم يكن هناك تفضيل محفوظ
-          if (!this.getStoredTheme()) {
-            this.applyTheme(mediaQuery.matches ? 'dark' : 'light');
-          }
-
-          // الاستماع لتغييرات وضع النظام
-          mediaQuery.addEventListener('change', (e) => {
-            if (!this.getStoredTheme()) {
-              this.applyTheme(e.matches ? 'dark' : 'light');
-            }
-          });
-        }
-      }
-    }
-
-    // تحسينات الأداء والتجربة
-    class PerformanceEnhancer {
-      constructor() {
-        this.init();
-      }
-
-      init() {
-        // تحسين التمرير السلس
-        this.enhanceScrolling();
-        
-        // تحسين التفاعلات
-        this.enhanceInteractions();
-        
-        // تحسين التحميل
-        this.enhanceLoading();
-      }
-
-      enhanceScrolling() {
-        // إضافة فئة عند التمرير
-        let scrollTimer = null;
-        window.addEventListener('scroll', () => {
-          document.body.classList.add('scrolling');
-          
-          clearTimeout(scrollTimer);
-          scrollTimer = setTimeout(() => {
-            document.body.classList.remove('scrolling');
-          }, 150);
-        }, { passive: true });
-      }
-
-      enhanceInteractions() {
-        // تحسين تأثيرات الهوفر على الأجهزة اللمسية
-        if ('ontouchstart' in window) {
-          document.body.classList.add('touch-device');
-        }
-
-        // تحسين النقر على البطاقات
-        document.addEventListener('click', (e) => {
-          const card = e.target.closest('.card');
-          if (card) {
-            this.addRippleEffect(card, e);
-          }
-        });
-      }
-
-      addRippleEffect(element, event) {
-        const ripple = document.createElement('span');
-        const rect = element.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        const x = event.clientX - rect.left - size / 2;
-        const y = event.clientY - rect.top - size / 2;
-
-        ripple.style.cssText = `
-          position: absolute;
-          width: ${size}px;
-          height: ${size}px;
-          left: ${x}px;
-          top: ${y}px;
-          background: rgba(4, 231, 98, 0.3);
-          border-radius: 50%;
-          transform: scale(0);
-          animation: ripple 0.6s ease-out;
-          pointer-events: none;
-          z-index: 1;
-        `;
-
-        element.style.position = 'relative';
-        element.style.overflow = 'hidden';
-        element.appendChild(ripple);
-
-        setTimeout(() => {
-          ripple.remove();
-        }, 600);
-      }
-
-      enhanceLoading() {
-        // إضافة مؤشر تحميل للصور
-        const images = document.querySelectorAll('img');
-        images.forEach(img => {
-          if (!img.complete) {
-            img.style.opacity = '0';
-            img.addEventListener('load', () => {
-              img.style.transition = 'opacity 0.3s ease';
-              img.style.opacity = '1';
-            });
-          }
-        });
-      }
-    }
-
-    // تحسينات إمكانية الوصول
-    class AccessibilityEnhancer {
-      constructor() {
-        this.init();
-      }
-
-      init() {
-        this.enhanceKeyboardNavigation();
-        this.enhanceScreenReader();
-        this.enhanceFocusManagement();
-      }
-
-      enhanceKeyboardNavigation() {
-        // تحسين التنقل بالكيبورد
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Tab') {
-            document.body.classList.add('keyboard-navigation');
-          }
-        });
-
-        document.addEventListener('mousedown', () => {
-          document.body.classList.remove('keyboard-navigation');
-        });
-      }
-
-      enhanceScreenReader() {
-        // إضافة تسميات للعناصر التفاعلية
-        const interactiveElements = document.querySelectorAll('a, button, input, textarea, select');
-        interactiveElements.forEach(element => {
-          if (!element.getAttribute('aria-label') && !element.textContent.trim()) {
-            element.setAttribute('aria-label', 'عنصر تفاعلي');
-          }
-        });
-      }
-
-      enhanceFocusManagement() {
-        // تحسين إدارة التركيز
-        const focusableElements = document.querySelectorAll(
-          'a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])'
-        );
-
-        focusableElements.forEach(element => {
-          element.addEventListener('focus', () => {
-            element.classList.add('focused');
-          });
-
-          element.addEventListener('blur', () => {
-            element.classList.remove('focused');
-          });
-        });
-      }
-    }
-
-    // تهيئة النظام عند تحميل الصفحة
-    document.addEventListener('DOMContentLoaded', () => {
-      new ThemeManager();
-      new PerformanceEnhancer();
-      new AccessibilityEnhancer();
-    });
-
-    // إضافة CSS للتأثيرات الديناميكية
-    const dynamicStyles = document.createElement('style');
-    dynamicStyles.textContent = `
-      @keyframes ripple {
-        to {
-          transform: scale(2);
-          opacity: 0;
-        }
-      }
-
-      .keyboard-navigation *:focus {
-        outline: 2px solid var(--color-primary) !important;
-        outline-offset: 2px;
-      }
-
-      .touch-device .nav-btn:hover {
-        transform: none;
-      }
-
-      .scrolling .nav-bar {
-        backdrop-filter: blur(20px);
-      }
-
-      .focused {
-        box-shadow: 0 0 0 3px rgba(4, 231, 98, 0.3) !important;
-      }
-    `;
-    document.head.appendChild(dynamicStyles);
-  </script>
 </body>
 </html>
-
