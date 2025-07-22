@@ -1,49 +1,57 @@
 /* =========================================================
-   نظام الألوان الاحترافي الجديد - هوية "سمسار طلبك"
-   مستوحى من الشعار | تصميم: مساعد الذكاء الاصطناعي
+   سمسار طلبك - نظام ألوان وهُوية احترافية
+   يدعم الوضع الداكن والفاتح (Dark & Light Theme)
    ========================================================= */
 
+/* 🧠 الوضع الفاتح (هو الوضع الأساسي) */
 :root {
-  /* --- ألوان الهوية الأساسية (من الشعار) --- */
-  --color-primary: #04E762;      /* الأخضر الساطع للنمو والطاقة */
-  --color-secondary: #FFC107;   /* الأصفر الذهبي للثقة والجودة (لون المفتاح) */
-  --color-whatsapp: #25D366;     /* لون واتساب الرسمي */
-  
-  /* --- نظام الوضع الداكن (Dark Mode) --- */
-  --color-background: #121212;   /* خلفية داكنة جداً (أفضل من الأسود الصريح) */
-  --color-surface-1: #1E1E1E;    /* لون الأسطح الرئيسية (مثل الشريط العلوي والفوتر) */
-  --color-surface-2: #2A2A2A;    /* لون الأسطح الثانوية (مثل البطاقات) */
+  --color-primary: #04E762;        /* أخضر ساطع */
+  --color-secondary: #FFC107;      /* أصفر ذهبي */
+  --color-whatsapp: #25D366;
 
-  /* --- نظام النصوص والحدود --- */
-  --color-text-primary: #E0E0E0;   /* أبيض فاتح للنصوص الرئيسية (أريح للعين من الأبيض النقي) */
-  --color-text-secondary: #A0A0A0; /* رمادي فاتح للنصوص الفرعية والأوصاف */
-  --color-border: #383838;         /* لون خافت للحدود والفواصل */
+  --color-background: #ffffff;
+  --color-surface-1: #f5f5f5;
+  --color-surface-2: #e0e0e0;
 
-  /* --- ألوان الحالات والإشعارات --- */
-  --color-success: #2E7D32;        /* أخضر داكن للنجاح (مثل حالة 'متوفر') */
-  --color-success-bg: rgba(4, 231, 98, 0.1); /* خلفية شفافة للنجاح */
-  --color-error: #C62828;          /* أحمر داكن للخطأ (مثل حالة 'غير متوفر') */
-  --color-error-bg: rgba(231, 4, 4, 0.1); /* خلفية شفافة للخطأ */
+  --color-text-primary: #111;
+  --color-text-secondary: #444;
+  --color-border: #ccc;
 
-  /* --- الخطوط --- */
+  --color-success: #2E7D32;
+  --color-success-bg: rgba(4, 231, 98, 0.1);
+  --color-error: #C62828;
+  --color-error-bg: rgba(231, 4, 4, 0.1);
+
   --font-family: 'Tajawal', sans-serif;
 }
 
+/* 🌓 الوضع الداكن */
+[data-theme="dark"] {
+  --color-background: #121212;
+  --color-surface-1: #1E1E1E;
+  --color-surface-2: #2A2A2A;
+
+  --color-text-primary: #E0E0E0;
+  --color-text-secondary: #A0A0A0;
+  --color-border: #383838;
+}
+
+/* === Reset === */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: var(--font-family);
 }
-
 body {
   background: var(--color-background);
   color: var(--color-text-primary);
   line-height: 1.6;
   direction: rtl;
+  transition: all 0.4s ease;
 }
 
-/* === NAV BAR (الشريط العلوي) === */
+/* === Navbar === */
 .nav-bar {
   background: var(--color-surface-1);
   padding: 1rem 2rem;
@@ -52,150 +60,64 @@ body {
   align-items: center;
   border-bottom: 1px solid var(--color-border);
 }
-
-.logo h1,
-.nav-bar h1 {
-  color: var(--color-primary); /* العنوان الرئيسي باللون الأخضر */
+.logo h1 {
   font-size: 1.8rem;
+  color: var(--color-primary);
 }
-
-.nav-bar h1 span {
-  color: var(--color-secondary); /* الكلمة المميزة باللون الذهبي */
+.logo h1 span {
+  color: var(--color-secondary);
 }
-
 .nav-links {
   display: flex;
   gap: 1rem;
 }
-
 .nav-btn {
-  color: var(--color-text-primary);
-  text-decoration: none;
   padding: 0.6rem 1.2rem;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: all 0.3s;
+  border-radius: 6px;
   border: 2px solid transparent;
+  text-decoration: none;
+  font-weight: bold;
+  color: var(--color-text-primary);
+  background: var(--color-surface-2);
+  transition: 0.3s;
 }
-
 .nav-btn:hover {
   background-color: var(--color-primary);
-  color: var(--color-background); /* نص داكن على خلفية خضراء */
+  color: #000;
 }
 
-.nav-btn.active {
-  border: 2px solid var(--color-primary);
+/* === Toggle Button (الوضع الداكن/الفاتح) === */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 999;
+  background: var(--color-secondary);
+  color: #000;
+  border: none;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.theme-toggle:hover {
+  transform: scale(1.1);
 }
 
-/* === HEADER (رأس الصفحة) === */
-.page-header {
-  background: linear-gradient(rgba(30, 30, 30, 0.9), rgba(30, 30, 30, 0.9)), url('path/to/your/background-image.jpg');
-  background-size: cover;
-  color: var(--color-text-primary);
-  text-align: center;
-  padding: 2rem;
-}
-
-.page-header h1 {
-  font-size: 1.8rem;
-  margin-bottom: 0.5rem;
-}
-
-/* === الحالة - حالة التوفر === */
-.status-badge {
-  display: inline-block;
-  padding: 0.4rem 1rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-  text-align: center;
-  width: fit-content;
-  margin-left: auto;
-  margin-right: auto;
-  font-weight: bold;
-}
-
-.open {
-  background-color: var(--color-success-bg);
-  color: var(--color-success);
-  border: 1px solid var(--color-success);
-}
-
-.closed {
-  background-color: var(--color-error-bg);
-  color: var(--color-error);
-  border: 1px solid var(--color-error);
-}
-
-/* === FOOTER (الفوتر) === */
-footer {
-  background-color: var(--color-surface-1);
-  color: var(--color-text-secondary);
-  padding: 40px 20px;
-  text-align: center;
-  border-top: 1px solid var(--color-border);
-}
-
-footer a {
-  color: var(--color-text-primary);
-  margin: 0 10px;
-  text-decoration: none;
-}
-
-footer a:hover {
-  color: var(--color-primary);
-  text-decoration: underline;
-}
-
-/* === بطاقات التصنيفات (موحدة واحترافية) === */
-.card { /* استخدم هذا الكلاس العام لكل البطاقات */
+/* === Cards === */
+.card {
   background-color: var(--color-surface-2);
   border: 1px solid var(--color-border);
-  transition: all 0.3s ease;
+  padding: 1.5rem;
+  border-radius: 10px;
+  transition: 0.3s ease;
 }
 .card:hover {
+  transform: translateY(-5px);
   border-color: var(--color-primary);
-  transform: translateY(-4px);
-  box-shadow: 0 8px 25px rgba(4, 231, 98, 0.1);
-}
-
-/* === فلاتر التصنيفات === */
-.filter-btn {
-  padding: 0.7rem 1.35rem;
-  border: 1px solid var(--color-border);
-  background: var(--color-surface-2);
-  color: var(--color-text-primary);
-  font-weight: bold;
-  border-radius: 6px;
-  cursor: pointer;
-  margin: 0.3rem;
-  transition: all 0.3s ease;
-}
-
-.filter-btn:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-}
-
-.filter-btn.active {
-  background-color: var(--color-primary);
-  color: var(--color-background);
-  border-color: var(--color-primary);
-}
-
-/* === RESPONSIVE === */
-@media (max-width: 768px) {
-  .nav-bar {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .filter-btn {
-    padding: 0.75rem 1.4rem;
-    width: 100%;
-    max-width: 280px;
-    margin: 0.35rem auto;
-  }
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 /* === تفاصيل العقار === */
@@ -207,106 +129,75 @@ footer a:hover {
   border-radius: 8px;
   border: 1px solid var(--color-border);
 }
-
 .property-details h1 {
   font-size: 1.8rem;
   margin-bottom: 1rem;
-  color: var(--color-primary); /* العنوان الرئيسي بالأخضر */
+  color: var(--color-primary);
 }
-
 .property-details p {
-  margin-bottom: 0.8rem;
-  font-size: 1.1rem;
   color: var(--color-text-secondary);
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
 }
 
+/* === زر السعر === */
 .price-tag {
   font-size: 1.6rem;
-  color: var(--color-secondary); /* السعر باللون الذهبي المميز */
+  color: var(--color-secondary);
   font-weight: bold;
   margin-bottom: 1rem;
 }
 
-.whatsapp-btn,
-.back-btn {
+/* === الحالة === */
+.status-badge {
   display: inline-block;
-  margin-top: 1rem;
-  padding: 0.8rem 1.5rem;
-  border-radius: 6px;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
   font-weight: bold;
-  text-decoration: none;
-  font-size: 0.95rem;
   text-align: center;
-  transition: all 0.3s ease;
-  border: none;
+}
+.open {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+  border: 1px solid var(--color-success);
+}
+.closed {
+  background-color: var(--color-error-bg);
+  color: var(--color-error);
+  border: 1px solid var(--color-error);
 }
 
-.whatsapp-btn {
-  background: var(--color-whatsapp);
-  color: white;
+/* === Footer === */
+footer {
+  background-color: var(--color-surface-1);
+  color: var(--color-text-secondary);
+  padding: 40px 20px;
+  text-align: center;
+  border-top: 1px solid var(--color-border);
 }
-
-.whatsapp-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-}
-
-.back-btn {
-  background: var(--color-surface-2);
+footer a {
   color: var(--color-text-primary);
-  margin-right: 1rem;
-}
-
-.back-btn:hover {
-  background: var(--color-border);
-}
-
-/* === تواصل معنا - البطاقات === */
-.contact-card {
-  background: var(--color-surface-2);
-  padding: 1.5rem;
-  border-radius: 8px;
-  border: 1px solid var(--color-border);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  text-align: center;
-  transition: 0.3s ease;
-}
-
-.contact-card:hover {
-  transform: translateY(-5px);
-  border-color: var(--color-secondary);
-  box-shadow: 0 6px 20px rgba(255, 193, 7, 0.1);
-}
-
-.contact-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 0.8rem;
-  flex-wrap: wrap;
-  margin-top: 1rem;
-}
-
-.icon-btn {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
+  margin: 0 10px;
   text-decoration: none;
-  font-size: 1.2rem;
-  color: white;
-  transition: all 0.3s ease;
+}
+footer a:hover {
+  color: var(--color-primary);
 }
 
-.icon-btn.phone {
-  background: var(--color-primary);
+/* === استجابة الهاتف === */
+@media (max-width: 768px) {
+  .nav-bar {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .theme-toggle {
+    top: 15px;
+    left: 15px;
+  }
 }
-
-.icon-btn.whatsapp {
-  background: var(--color-whatsapp);
-}
-
-.icon-btn:hover {
-  transform: translateY(-3px) scale(1.1);
-     }
