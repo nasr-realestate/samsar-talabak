@@ -2,14 +2,24 @@
  * 🤝 سمسار طلبك - نظام عرض طلبات العملاء المحسن (النسخة النهائية الكاملة v3)
  * Enhanced Customer Requests Display System (Final Full Version v3)
  * 
- * هذا هو الملف الكامل والنهائي، مع تعديل دالة createRequestCard لتناسب التصميم الجديد.
+ * الميزات المدمجة (مطابقة تماماً لصفحة العروض):
+ * - تحميل ذكي للبيانات مع تخزين مؤقت متقدم.
+ * - تأثيرات بصرية متقدمة وتفاعلية.
+ * - نظام إشعارات ذكي وتحسينات أداء.
+ * - تمييز آخر طلب تم عرضه عند عودة المستخدم.
+ * - إضافة فلتر للفرز حسب تاريخ الإضافة.
+ * - نظام المفضلة والمشاركة.
+ * - إحصائيات وتفاعلات متقدمة.
+ * - تأثيرات الحركة والانتقالات السلسة.
+ * - دعم اللمس والإيماءات.
+ * - مراقبة الأداء وإمكانية الوصول.
  */
 
 class EnhancedRequestDisplay {
   constructor() {
-    this.container = document.getElementById("requests-container");
-    this.filterContainer = document.getElementById("filter-buttons");
-    this.welcomeBox = document.getElementById("welcome-message");
+    this.container = null;
+    this.filterContainer = null;
+    this.welcomeBox = null;
     this.currentCategory = null;
     this.currentDateFilter = 'latest';
     this.requestsCache = new Map();
@@ -26,12 +36,13 @@ class EnhancedRequestDisplay {
       retryDelay: 1000
     };
 
+    // ✨ تكييف الفئات لتناسب أنواع الطلبات مع المجلدات الفرعية
     this.categories = {
-      "apartments": { label: "شقق", icon: "🏠", color: "#00ff88", folder: "apartments" },
-      "apartments-rent": { label: "إيجار", icon: "🏡", color: "#00ccff", folder: "apartments-rent" },
-      "shops": { label: "محلات", icon: "🏪", color: "#ff6b35", folder: "shops" },
-      "offices": { label: "مكاتب", icon: "🏢", color: "#8b5cf6", folder: "offices" },
-      "admin-hq": { label: "مقرات", icon: "🏛️", color: "#f59e0b", folder: "admin-hq" }
+      "apartments": { label: "🏠 طلبات شقق", icon: "🏠", color: "#00ff88", description: "طلبات شراء وإيجار الشقق", folder: "apartments" },
+      "apartments-rent": { label: "🏡 طلبات إيجار", icon: "🏡", color: "#00ccff", description: "طلبات إيجار الشقق", folder: "apartments-rent" },
+      "shops": { label: "🏪 طلبات محلات", icon: "🏪", color: "#ff6b35", description: "طلبات المحلات التجارية", folder: "shops" },
+      "offices": { label: "🏢 طلبات مكاتب", icon: "🏢", color: "#8b5cf6", description: "طلبات المكاتب الإدارية", folder: "offices" },
+      "admin-hq": { label: "🏛️ طلبات مقرات", icon: "🏛️", color: "#f59e0b", description: "طلبات المقرات الإدارية", folder: "admin-hq" }
     };
 
     this.init();
@@ -49,6 +60,7 @@ class EnhancedRequestDisplay {
       this.loadDefaultCategory();
       this.setupPerformanceMonitoring();
       this.setupAccessibility();
+      this.injectStyles();
     } catch (error) {
       console.error('خطأ في تهيئة التطبيق:', error);
       this.showErrorMessage('حدث خطأ في تحميل التطبيق');
@@ -66,9 +78,14 @@ class EnhancedRequestDisplay {
   }
 
   setupElements() {
+    this.container = document.getElementById("requests-container");
+    this.filterContainer = document.getElementById("filter-buttons");
+    this.welcomeBox = document.getElementById("welcome-message");
+
     if (!this.container || !this.filterContainer) {
       throw new Error('العناصر الأساسية غير موجودة');
     }
+
     this.container.classList.add('enhanced-properties-container');
     this.filterContainer.classList.add('enhanced-filter-container');
   }
@@ -78,6 +95,10 @@ class EnhancedRequestDisplay {
     window.addEventListener('scroll', this.throttle(() => this.handleScroll(), 100));
     window.addEventListener('online', () => this.showNotification('تم استعادة الاتصال بالإنترنت', 'success'));
     window.addEventListener('offline', () => this.showNotification('انقطع الاتصال بالإنترنت', 'warning'));
+    window.addEventListener('error', (event) => {
+      console.error('خطأ JavaScript:', event.error);
+      this.showNotification('حدث خطأ تقني', 'error');
+    });
   }
 
   setupTouchEvents() {
@@ -90,7 +111,8 @@ class EnhancedRequestDisplay {
 
   handleSwipeGesture() {
     const swipeThreshold = 50;
-    if (this.touchStartY - this.touchEndY < -swipeThreshold) {
+    const diff = this.touchStartY - this.touchEndY;
+    if (diff < -swipeThreshold) {
       this.scrollToTop();
     }
   }
@@ -99,18 +121,82 @@ class EnhancedRequestDisplay {
     if (!this.welcomeBox) return;
     const hasShownWelcome = localStorage.getItem("welcomeShown_requests");
     if (!hasShownWelcome) {
-      setTimeout(() => {
-        this.welcomeBox.style.display = "block";
-        requestAnimationFrame(() => {
-            this.welcomeBox.style.transition = "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)";
-            this.welcomeBox.style.opacity = "1";
-            this.welcomeBox.style.transform = "translateY(0) scale(1)";
-        });
-        setTimeout(() => {
-            this.welcomeBox.style.display = "none";
-            localStorage.setItem("welcomeShown_requests", "true");
-        }, this.config.welcomeDisplayTime);
-      }, 500);
+      setTimeout(() => this.showWelcomeMessage(), 500);
+    }
+  }
+
+  showWelcomeMessage() {
+    if (!this.welcomeBox) return;
+
+    this.welcomeBox.style.display = "block";
+    this.welcomeBox.style.opacity = "0";
+    this.welcomeBox.style.transform = "translateY(30px) scale(0.95)";
+
+    requestAnimationFrame(() => {
+      this.welcomeBox.style.transition = "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)";
+      this.welcomeBox.style.opacity = "1";
+      this.welcomeBox.style.transform = "translateY(0) scale(1)";
+    });
+
+    this.createParticleEffect(this.welcomeBox);
+    this.playWelcomeSound();
+
+    setTimeout(() => {
+      this.hideWelcomeMessage();
+    }, this.config.welcomeDisplayTime);
+  }
+
+  hideWelcomeMessage() {
+    if (!this.welcomeBox) return;
+
+    this.welcomeBox.style.transition = "all 0.4s ease-out";
+    this.welcomeBox.style.opacity = "0";
+    this.welcomeBox.style.transform = "translateY(-20px) scale(0.95)";
+
+    setTimeout(() => {
+      this.welcomeBox.style.display = "none";
+      localStorage.setItem("welcomeShown_requests", "true");
+    }, 400);
+  }
+
+  playWelcomeSound() {
+    try {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+
+      oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime);
+      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.5);
+    } catch (error) {
+      console.log('لا يمكن تشغيل الصوت:', error);
+    }
+  }
+
+  createParticleEffect(element) {
+    const particleCount = 20;
+
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.style.cssText = `
+        position: absolute; width: 4px; height: 4px; background: #00ff88;
+        border-radius: 50%; pointer-events: none; opacity: 0.7; z-index: 1000;
+      `;
+      const rect = element.getBoundingClientRect();
+      particle.style.left = (rect.left + Math.random() * rect.width) + 'px';
+      particle.style.top = (rect.top + Math.random() * rect.height) + 'px';
+      document.body.appendChild(particle);
+      const animation = particle.animate([
+        { transform: 'translateY(0px) scale(1)', opacity: 0.7 },
+        { transform: `translateY(-${50 + Math.random() * 50}px) scale(0)`, opacity: 0 }
+      ], { duration: 2000 + Math.random() * 1000, easing: 'cubic-bezier(0.4, 0, 0.2, 1)' });
+      animation.onfinish = () => particle.remove();
     }
   }
 
@@ -125,13 +211,33 @@ class EnhancedRequestDisplay {
     const button = document.createElement("button");
     button.textContent = category.label;
     button.dataset.category = key;
-    button.className = "filter-btn";
+    button.className = "filter-btn enhanced-filter-btn";
     button.title = category.description;
+    button.style.animationDelay = `${index * 100}ms`;
+    button.style.setProperty('--category-color', category.color);
     button.addEventListener("click", (e) => {
       e.preventDefault();
       this.handleCategoryChange(key, button);
     });
+    button.addEventListener('mouseenter', (e) => this.createRippleEffect(e.currentTarget, category.color));
     return button;
+  }
+  
+  createRippleEffect(element, color) {
+    const ripple = document.createElement('span');
+    ripple.style.cssText = `
+      position: absolute; border-radius: 50%; background: ${color};
+      transform: scale(0); animation: ripple 0.6s linear;
+      pointer-events: none; opacity: 0.3;
+    `;
+    const rect = element.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    ripple.style.width = ripple.style.height = size + 'px';
+    ripple.style.left = (rect.width / 2 - size / 2) + 'px';
+    ripple.style.top = (rect.height / 2 - size / 2) + 'px';
+    element.style.position = 'relative';
+    element.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
   }
 
   createDateFilter() {
@@ -147,35 +253,49 @@ class EnhancedRequestDisplay {
       </select>
     `;
     this.filterContainer.appendChild(filterWrapper);
-    document.getElementById('date-filter').addEventListener('change', (e) => this.handleDateFilterChange(e.target.value));
+    const selectElement = document.getElementById('date-filter');
+    selectElement.addEventListener('change', (e) => this.handleDateFilterChange(e.target.value));
   }
 
   async handleDateFilterChange(newFilterValue) {
     this.currentDateFilter = newFilterValue;
-    if (this.currentCategory) {
-        const cachedData = this.getCachedData(this.currentCategory);
-        if (cachedData) {
-            await this.displayRequests(cachedData, this.currentCategory);
-        }
+    const cachedData = this.getCachedData(this.currentCategory);
+    if (cachedData) {
+      await this.displayRequests(cachedData, this.currentCategory);
     }
   }
 
   async handleCategoryChange(category, button) {
     if (this.isLoading || this.currentCategory === category) return;
-    this.updateActiveButton(button);
-    this.currentCategory = category;
-    localStorage.setItem('lastCategory_requests', category);
-    await this.loadCategory(category);
+    try {
+      this.updateActiveButton(button);
+      await this.loadCategory(category);
+      this.currentCategory = category;
+      localStorage.setItem('lastCategory_requests', category);
+      this.showNotification(`تم تحميل ${this.categories[category].label}`, 'success');
+    } catch (error) {
+      console.error('خطأ في تغيير التصنيف:', error);
+      this.showErrorMessage('فشل في تحميل التصنيف');
+    }
   }
   
   updateActiveButton(activeButton) {
-    this.filterContainer.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    this.filterContainer.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.remove('active');
+      btn.style.transform = 'scale(1)';
+    });
     activeButton.classList.add('active');
+    activeButton.style.transform = 'scale(1.05)';
+    activeButton.animate([
+      { transform: 'scale(1.05)' }, { transform: 'scale(1.1)' }, { transform: 'scale(1.05)' }
+    ], { duration: 200, easing: 'ease-out' });
   }
 
   loadDefaultCategory() {
     const savedCategory = localStorage.getItem('lastCategory_requests');
-    const defaultCategory = savedCategory && this.categories[savedCategory] ? savedCategory : Object.keys(this.categories)[0];
+    const defaultCategory = savedCategory && this.categories[savedCategory] 
+      ? savedCategory 
+      : Object.keys(this.categories)[0];
     const defaultButton = this.filterContainer.querySelector(`[data-category="${defaultCategory}"]`);
     if (defaultButton) {
       defaultButton.click();
@@ -190,6 +310,7 @@ class EnhancedRequestDisplay {
       const cachedData = this.getCachedData(category);
       if (cachedData) {
         await this.displayRequests(cachedData, category);
+        this.isLoading = false;
         return;
       }
       const data = await this.fetchCategoryData(category);
@@ -215,7 +336,10 @@ class EnhancedRequestDisplay {
         if (!Array.isArray(files) || files.length === 0) return [];
         const requestPromises = files.map(filename => this.fetchRequestData(folderName, filename, category));
         const requests = await Promise.allSettled(requestPromises);
-        return requests.filter(r => r.status === 'fulfilled').map(r => r.value).filter(Boolean);
+        return requests
+          .filter(result => result.status === 'fulfilled')
+          .map(result => result.value)
+          .filter(request => request !== null);
       } catch (error) {
         retries++;
         if (retries >= this.config.maxRetries) throw error;
@@ -241,8 +365,17 @@ class EnhancedRequestDisplay {
     this.container.innerHTML = `
       <div class="loading-container">
         <div class="loading-spinner-enhanced"></div>
-        <div class="loading-text"><h3>جاري تحميل أحدث الطلبات...</h3></div>
-      </div>`;
+        <div class="loading-text"><h3>جاري تحميل أحدث الطلبات...</h3><p>يرجى الانتظار قليلاً</p></div>
+        <div class="loading-progress"><div class="loading-progress-bar"></div></div>
+      </div>
+    `;
+    const progressBar = this.container.querySelector('.loading-progress-bar');
+    if (progressBar) {
+      progressBar.style.width = '0%';
+      progressBar.animate([
+        { width: '0%' }, { width: '70%' }, { width: '100%' }
+      ], { duration: this.config.loadingDelay, easing: 'ease-out' });
+    }
   }
   
   applyFiltersAndSorting(requests) {
@@ -254,7 +387,9 @@ class EnhancedRequestDisplay {
       processedRequests = processedRequests.filter(r => {
         if (!r.date) return false;
         try {
-          return (now - new Date(r.date)) / oneDay <= daysToFilter;
+          const reqDate = new Date(r.date);
+          const diffDays = (now - reqDate) / oneDay;
+          return diffDays <= daysToFilter;
         } catch { return false; }
       });
     }
@@ -277,57 +412,64 @@ class EnhancedRequestDisplay {
       return;
     }
     this.container.innerHTML = '';
-    filteredRequests.forEach((request, i) => {
-        const card = this.createRequestCard(request, category, i);
-        this.container.appendChild(card);
-    });
+    for (let i = 0; i < filteredRequests.length; i++) {
+      await this.delay(50);
+      const card = this.createRequestCard(filteredRequests[i], category, i);
+      this.container.appendChild(card);
+      requestAnimationFrame(() => {
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      });
+    }
     this.setupCardInteractions();
   }
 
-  /**
-   * ✨✨✨ الدالة الرئيسية المعدلة ✨✨✨
-   * تم تحديث هيكل HTML هنا ليتوافق مع التصميم الجديد المقترح.
-   */
   createRequestCard(request, category, index) {
     const categoryInfo = this.categories[category];
     const card = document.createElement("div");
-    card.className = `property-card card-${category}`;
+    card.className = `property-card enhanced-property-card card-${category}`;
     card.dataset.filename = request.filename;
     card.dataset.category = category;
+    card.style.cssText = `
+      opacity: 0; transform: translateY(30px);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      animation-delay: ${index * 100}ms;
+    `;
     
+    // ✨ تكييف رابط التفاصيل لصفحة الطلبات
     const detailPage = `/samsar-talabak/request-details.html?category=${category}&file=${encodeURIComponent(request.filename)}`;
+    
+    // ✨ استخدام الملخص أو الوصف
     const descriptionText = request.summary || request.description;
 
     card.innerHTML = `
       <div class="property-header">
+        <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار سمسار طلبك" class="property-logo" loading="lazy">
         <div class="property-brand">
-            <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار سمسار طلبك" class="property-logo">
-            <span class="property-category-badge" style="background: ${categoryInfo.color}">${categoryInfo.icon} ${categoryInfo.label}</span>
+          <strong>سمسار طلبك</strong>
+          <span class="property-category-badge" style="background: ${categoryInfo.color}">${categoryInfo.icon} ${categoryInfo.label}</span>
         </div>
-        <div class="property-stats">
-            <span class="stat-item"><span class="stat-icon">⏰</span><span class="stat-value">${this.getTimeAgo(request.date)}</span></span>
-        </div>
-      </div>
-
-      <h2 class="property-title">${this.escapeHtml(request.title)}</h2>
-      
-      <div class="property-details">
-        <div class="property-detail"><span class="detail-icon">💰</span><span class="detail-label">الميزانية:</span><span class="detail-value price-highlight">${this.escapeHtml(request.budget)}</span></div>
-        <div class="property-detail"><span class="detail-icon">📏</span><span class="detail-label">المساحة:</span><span class="detail-value">${this.escapeHtml(request.area)}</span></div>
-        ${request.location ? `<div class="property-detail"><span class="detail-icon">📍</span><span class="detail-label">المنطقة:</span><span class="detail-value">${this.escapeHtml(request.location)}</span></div>` : ''}
-      </div>
-      
-      <div class="property-description"><p>${this.escapeHtml(descriptionText)}</p></div>
-      
-      <div class="property-footer">
-        <a href="${detailPage}" class="view-details-btn" onclick="localStorage.setItem('lastViewedCard_requests', '${request.filename}')"><span class="btn-icon">🤝</span><span class="btn-text">لدي عرض مناسب</span></a>
         <div class="property-actions">
           <button class="favorite-btn" title="إضافة للمفضلة"><span class="heart-icon">♡</span></button>
           <button class="share-btn" title="مشاركة"><span class="share-icon">📤</span></button>
         </div>
       </div>
+      <h2 class="property-title">${this.escapeHtml(request.title)}</h2>
+      <div class="property-details">
+        <div class="property-detail"><span class="detail-icon">💰</span><span class="detail-label">الميزانية:</span><span class="detail-value price-highlight">${this.escapeHtml(request.budget)}</span></div>
+        <div class="property-detail"><span class="detail-icon">📏</span><span class="detail-label">المساحة المطلوبة:</span><span class="detail-value">${this.escapeHtml(request.area)}</span></div>
+        <div class="property-detail"><span class="detail-icon">📅</span><span class="detail-label">تاريخ الطلب:</span><span class="detail-value">${this.escapeHtml(request.date || "غير متوفر")}</span></div>
+        ${request.location ? `<div class="property-detail"><span class="detail-icon">📍</span><span class="detail-label">المنطقة المفضلة:</span><span class="detail-value">${this.escapeHtml(request.location)}</span></div>` : ''}
+      </div>
+      <div class="property-description"><p>${this.escapeHtml(descriptionText)}</p></div>
+      <div class="property-footer">
+        <a href="${detailPage}" class="view-details-btn"><span class="btn-icon">🤝</span><span class="btn-text">لدي عرض مناسب</span><span class="btn-arrow">←</span></a>
+        <div class="property-stats">
+          <span class="stat-item"><span class="stat-icon">👀</span><span class="stat-value">${Math.floor(Math.random() * 50) + 5}</span></span>
+          <span class="stat-item"><span class="stat-icon">⏰</span><span class="stat-value">${this.getTimeAgo(request.date)}</span></span>
+        </div>
+      </div>
     `;
-    
     this.setupCardEvents(card, request);
     return card;
   }
@@ -342,12 +484,19 @@ class EnhancedRequestDisplay {
     favoriteBtn.addEventListener('click', (e) => { e.stopPropagation(); this.toggleFavorite(card, request); });
     const shareBtn = card.querySelector('.share-btn');
     shareBtn.addEventListener('click', (e) => { e.stopPropagation(); this.shareRequest(request); });
+    const viewDetailsBtn = card.querySelector('.view-details-btn');
+    viewDetailsBtn.addEventListener('click', () => { localStorage.setItem('lastViewedCard_requests', request.filename); });
+    card.addEventListener('mouseenter', () => this.handleCardHover(card, true));
+    card.addEventListener('mouseleave', () => this.handleCardHover(card, false));
   }
 
   handleCardClick(card, request) {
     this.container.querySelectorAll('.property-card').forEach(c => c.classList.remove('highlighted'));
     card.classList.add('highlighted');
     localStorage.setItem('highlightCard_requests', request.filename);
+    card.animate([
+      { transform: 'scale(1)' }, { transform: 'scale(0.98)' }, { transform: 'scale(1)' }
+    ], { duration: 150, easing: 'ease-out' });
     card.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
@@ -365,6 +514,9 @@ class EnhancedRequestDisplay {
       this.addFavorite(request);
       this.showNotification('تم إضافة الطلب للمفضلة', 'success');
     }
+    heartIcon.animate([
+      { transform: 'scale(1)' }, { transform: 'scale(1.3)' }, { transform: 'scale(1)' }
+    ], { duration: 300, easing: 'ease-out' });
   }
 
   async shareRequest(request) {
@@ -372,12 +524,24 @@ class EnhancedRequestDisplay {
     try {
       if (navigator.share) {
         await navigator.share(shareData);
+        this.showNotification('تم مشاركة الطلب بنجاح', 'success');
       } else {
         await navigator.clipboard.writeText(window.location.href);
         this.showNotification('تم نسخ رابط الطلب', 'success');
       }
     } catch (error) {
+      console.error('خطأ في المشاركة:', error);
       this.showNotification('فشل في مشاركة الطلب', 'error');
+    }
+  }
+
+  handleCardHover(card, isHovering) {
+    if (isHovering) {
+      card.style.transform = 'translateY(-8px) scale(1.02)';
+      card.style.boxShadow = '0 25px 50px rgba(0, 255, 136, 0.2)';
+    } else {
+      card.style.transform = 'translateY(0) scale(1)';
+      card.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.3)';
     }
   }
 
@@ -397,7 +561,10 @@ class EnhancedRequestDisplay {
     const cardToHighlight = this.container.querySelector(`[data-filename="${lastViewedFilename}"]`);
     if (cardToHighlight) {
       cardToHighlight.classList.add('last-viewed');
-      cardToHighlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const rect = cardToHighlight.getBoundingClientRect();
+      if (rect.top < 0 || rect.bottom > window.innerHeight) {
+        cardToHighlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
       localStorage.removeItem('lastViewedCard_requests');
     }
   }
@@ -420,19 +587,41 @@ class EnhancedRequestDisplay {
     const categoryInfo = this.categories[category];
     let message = `<p>لم يتم العثور على طلبات في فئة "${categoryInfo.label}"</p>`;
     if (isAfterFilter) {
-      message = `<p>لا توجد نتائج تطابق معايير الفرز الحالية.</p>`;
+      message = `<p>لا توجد نتائج تطابق معايير الفرز الحالية.<br>جرب اختيار "كل الأوقات".</p>`;
     }
-    this.container.innerHTML = `<div class="empty-state"><h3>${isAfterFilter ? 'لا توجد نتائج مطابقة' : 'لا توجد طلبات حالياً'}</h3>${message}</div>`;
+    this.container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">${isAfterFilter ? '🧐' : categoryInfo.icon}</div>
+        <h3>${isAfterFilter ? 'لا توجد نتائج مطابقة' : 'لا توجد طلبات حالياً'}</h3>
+        ${message}
+        <button class="refresh-btn" onclick="location.reload()">🔄 تحديث الصفحة</button>
+      </div>
+    `;
   }
 
   showErrorMessage(message) {
-    this.container.innerHTML = `<div class="error-state"><h3>حدث خطأ</h3><p>${message}</p><button onclick="location.reload()">إعادة المحاولة</button></div>`;
+    this.container.innerHTML = `
+      <div class="error-state">
+        <div class="error-icon">⚠️</div>
+        <h3>حدث خطأ</h3><p>${message}</p>
+        <div class="error-actions">
+          <button class="retry-btn" onclick="location.reload()">🔄 إعادة المحاولة</button>
+          <button class="contact-btn" onclick="window.open('tel:+201234567890')">📞 اتصل بنا</button>
+        </div>
+      </div>
+    `;
   }
 
   showNotification(message, type = 'info') {
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
-    notification.innerHTML = `<span>${message}</span><button class="notification-close">×</button>`;
+    notification.innerHTML = `
+      <div class="notification-content">
+        <span class="notification-icon">${this.getNotificationIcon(type)}</span>
+        <span class="notification-message">${message}</span>
+        <button class="notification-close">×</button>
+      </div>
+    `;
     document.body.appendChild(notification);
     requestAnimationFrame(() => notification.classList.add('show'));
     const timer = setTimeout(() => this.hideNotification(notification), 4000);
@@ -448,14 +637,62 @@ class EnhancedRequestDisplay {
     setTimeout(() => notification.remove(), 300);
   }
 
+  getNotificationIcon(type) {
+    const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
+    return icons[type] || icons.info;
+  }
+
+  async refreshCurrentCategory() {
+    if (!this.currentCategory || this.isLoading) return;
+    this.clearCachedData(this.currentCategory);
+    await this.loadCategory(this.currentCategory);
+    this.showNotification('تم تحديث البيانات', 'success');
+  }
+
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  handleResize() { /* For future use */ }
-  handleScroll() { /* For future use */ }
-  setupPerformanceMonitoring() { /* For future use */ }
-  setupAccessibility() { /* For future use */ }
+  handleResize() { this.updateCardLayout(); }
+
+  handleScroll() {
+    const scrollTop = window.pageYOffset;
+    if (this.filterContainer) {
+        if (scrollTop > 200) {
+            this.filterContainer.classList.add('scrolled');
+        } else {
+            this.filterContainer.classList.remove('scrolled');
+        }
+    }
+  }
+
+  updateCardLayout() {
+    const cards = this.container.querySelectorAll('.property-card');
+    cards.forEach((card, index) => { card.style.animationDelay = `${index * 50}ms`; });
+  }
+
+  setupPerformanceMonitoring() {
+    if ('PerformanceObserver' in window) {
+      const observer = new PerformanceObserver((list) => {
+        list.getEntries().forEach((entry) => {
+          if (entry.entryType === 'navigation') {
+            console.log('وقت تحميل الصفحة:', entry.loadEventEnd - entry.loadEventStart, 'ms');
+          }
+        });
+      });
+      observer.observe({ entryTypes: ['navigation'] });
+    }
+  }
+
+  setupAccessibility() {
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.notification.show').forEach(n => this.hideNotification(n));
+      }
+    });
+    this.container.setAttribute('aria-label', 'قائمة طلبات العملاء');
+    this.filterContainer.setAttribute('aria-label', 'تصنيفات الطلبات');
+  }
 
   debounce(func, wait) {
     let timeout;
@@ -515,6 +752,11 @@ class EnhancedRequestDisplay {
     this.requestsCache.set(category, { data, timestamp: Date.now() });
   }
 
+  clearCachedData(category) {
+    if (category) this.requestsCache.delete(category);
+    else this.requestsCache.clear();
+  }
+
   addFavorite(request) {
     const favorites = this.getFavorites();
     if (!favorites.includes(request.filename)) {
@@ -524,15 +766,103 @@ class EnhancedRequestDisplay {
   }
 
   removeFavorite(filename) {
-    let favorites = this.getFavorites();
-    favorites = favorites.filter(fav => fav !== filename);
-    localStorage.setItem('favorites_requests', JSON.stringify(favorites));
+    const favorites = this.getFavorites();
+    const index = favorites.indexOf(filename);
+    if (index > -1) {
+      favorites.splice(index, 1);
+      localStorage.setItem('favorites_requests', JSON.stringify(favorites));
+    }
   }
 
   getFavorites() {
     try { return JSON.parse(localStorage.getItem('favorites_requests') || '[]'); } catch { return []; }
   }
+
+  // ✨ حقن الأنماط المطابقة تماماً لصفحة العروض
+  injectStyles() {
+    const styleId = 'enhanced-requests-styles';
+    if (document.getElementById(styleId)) return;
+    
+    const additionalStyles = `
+      <style id="${styleId}">
+        .page-header { background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 3rem 1rem; text-align: center; border-radius: 0 0 30px 30px; box-shadow: 0 10px 30px rgba(0, 255, 136, 0.1); margin-bottom: 2rem; position: relative; overflow: hidden; }
+        .page-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%2300ff88" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>'); pointer-events: none; }
+        .page-header h1 { font-size: 3rem; background: linear-gradient(45deg, #00ff88, #00cc6a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 0; text-shadow: 0 0 30px rgba(0, 255, 136, 0.3); }
+        .nav-btn { display: inline-block; padding: 1rem 2rem; background: linear-gradient(45deg, #00ff88, #00cc6a); color: #000; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 1.1rem; box-shadow: 0 8px 25px rgba(0, 255, 136, 0.3); transition: all 0.3s ease; }
+        .nav-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 15px 35px rgba(0, 255, 136, 0.4); }
+        .welcome-message { background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%); border: 2px solid #00ff88; border-radius: 20px; padding: 2.5rem; margin: 2rem auto; max-width: 800px; text-align: center; box-shadow: 0 20px 60px rgba(0, 255, 136, 0.1); }
+        .filter-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin: 2rem 0; padding: 0 1rem; align-items: center; }
+        .filter-btn { padding: 0.8rem 1.5rem; background: #2a2a2a; color: #f1f1f1; border: 2px solid #444; border-radius: 25px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; }
+        .filter-btn:hover { color: #000; background: #00ff88; border-color: #00ff88; transform: translateY(-2px); }
+        .filter-btn.active { background: linear-gradient(45deg, #00ff88, #00cc6a); color: #000; border-color: #00ff88; box-shadow: 0 8px 25px rgba(0, 255, 136, 0.3); }
+        .requests-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; padding: 1rem; min-height: 300px; }
+        .property-card { background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%); border: 1px solid #333; border-radius: 20px; padding: 2rem; transition: all 0.4s ease; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); cursor: pointer; }
+        .property-card:hover { transform: translateY(-10px) scale(1.02); border-color: #00ff88; box-shadow: 0 25px 50px rgba(0, 255, 136, 0.2); }
+        .property-card.highlighted { border: 3px solid #00ff88; box-shadow: 0 0 30px rgba(0, 255, 136, 0.4); animation: pulse 2s infinite; }
+        .property-card.last-viewed { border-color: #f59e0b; box-shadow: 0 0 35px rgba(245,158,11,.4); transform: translateY(-10px) scale(1.02)!important; transition: all 0.3s ease-in-out; }
+        .property-card.last-viewed:hover { border-color: #f59e0b; box-shadow: 0 15px 40px rgba(245,158,11,.5); }
+        @keyframes pulse { 0%, 100% { box-shadow: 0 0 30px rgba(0, 255, 136, 0.4); } 50% { box-shadow: 0 0 50px rgba(0, 255, 136, 0.6); } }
+        .property-header { display: flex; align-items: center; gap: 15px; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #333; }
+        .property-logo { width: 50px; height: 50px; border-radius: 50%; border: 2px solid #00ff88; }
+        .property-brand strong { color: #00ff88; font-size: 1.1rem; }
+        .property-category-badge { font-size: 0.8rem; padding: 0.2rem 0.5rem; border-radius: 15px; color: #000; font-weight: 700; margin-left: 0.5rem; }
+        .property-actions { display: flex; gap: 8px; margin-left: auto; }
+        .favorite-btn, .share-btn { background: rgba(255,255,255,.1); border: 0; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; transition: all .3s ease; display: flex; align-items: center; justify-content: center; }
+        .favorite-btn:hover, .share-btn:hover { background: rgba(0,255,136,.2); transform: scale(1.1); }
+        .property-title { color: #00ff88; font-size: 1.5rem; font-weight: bold; margin: 0 0 1rem 0; }
+        .property-details { display: grid; gap: 0.8rem; margin: 1.5rem 0; }
+        .property-detail { display: flex; align-items: center; gap: 10px; padding: 0.5rem; background: rgba(0, 255, 136, 0.05); border-radius: 10px; border-left: 3px solid #00ff88; }
+        .detail-label { font-weight: 600; color: #00ff88; min-width: 140px; }
+        .detail-value { color: #f1f1f1; }
+        .price-highlight { color: #00ff88; font-weight: bold; }
+        .property-description { background: rgba(0, 0, 0, 0.3); padding: 1rem; border-radius: 10px; margin: 1rem 0; border-left: 4px solid #00ff88; color: #ccc; }
+        .property-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; }
+        .view-details-btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(45deg, #00ff88, #00cc6a); color: #000; padding: 1rem 2rem; border-radius: 15px; text-decoration: none; font-weight: bold; transition: all 0.3s ease; }
+        .view-details-btn:hover { transform: translateY(-2px); box-shadow: 0 15px 35px rgba(0, 255, 136, 0.4); }
+        .property-stats { display: flex; gap: 15px; font-size: 0.9rem; color: #888; }
+        .stat-item { display: flex; align-items: center; gap: 5px; }
+        .loading-container, .empty-state, .error-state { text-align: center; padding: 4rem 2rem; color: #888; grid-column: 1 / -1; }
+        .loading-spinner-enhanced { width: 60px; height: 60px; border: 4px solid #333; border-top: 4px solid #00ff88; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 2rem; }
+        .loading-progress { width: 200px; height: 4px; background: #333; border-radius: 2px; margin: 2rem auto; overflow: hidden; }
+        .loading-progress-bar { height: 100%; background: linear-gradient(45deg,#00ff88,#00cc6a); border-radius: 2px; transition: width .3s ease; }
+        .empty-icon, .error-icon { font-size: 4rem; margin-bottom: 1rem; }
+        .error-state { color: #ff6b6b; }
+        .refresh-btn, .retry-btn, .contact-btn { background: linear-gradient(45deg,#00ff88,#00cc6a); color: #000; border: 0; padding: .8rem 1.5rem; border-radius: 25px; cursor: pointer; font-weight: 700; margin: .5rem; transition: all .3s ease; }
+        .refresh-btn:hover, .retry-btn:hover, .contact-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,255,136,.3); }
+        .date-filter-wrapper { display: flex; align-items: center; gap: 10px; background: #2a2a2a; padding: 8px 15px; border-radius: 25px; border: 2px solid #444; transition: all .3s ease; }
+        .date-filter-wrapper:hover { border-color: #00ff88; box-shadow: 0 5px 15px rgba(0,255,136,.15); }
+        .date-filter-label { color: #ccc; font-weight: 600; font-size: .9rem; }
+        .date-filter-select { background: 0 0; border: 0; color: #00ff88; font-weight: 700; font-size: 1rem; cursor: pointer; -webkit-appearance: none; -moz-appearance: none; appearance: none; padding-right: 15px; background-image: url("data:image/svg+xml;utf8,<svg fill='%2300ff88' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>"); background-repeat: no-repeat; background-position: right center; }
+        .date-filter-select:focus { outline: 0; }
+        .date-filter-select option { background: #1e1e1e; color: #f1f1f1; }
+        .notification { position: fixed; top: 20px; right: 20px; background: #1e1e1e; border: 1px solid #333; border-radius: 12px; padding: 1rem; box-shadow: 0 10px 30px rgba(0,0,0,.3); z-index: 10000; transform: translateX(400px); opacity: 0; transition: all .3s cubic-bezier(.4,0,.2,1); max-width: 350px; }
+        .notification.show { transform: translateX(0); opacity: 1; }
+        .notification-content { display: flex; align-items: center; gap: 10px; color: #f1f1f1; }
+        .notification-close { background: 0 0; border: 0; color: #888; cursor: pointer; font-size: 1.2rem; margin-left: auto; }
+        .notification-success { border-color: #00ff88; }
+        .notification-error { border-color: #ff6b6b; }
+        .notification-warning { border-color: #ffa500; }
+        .notification-info { border-color: #00ccff; }
+        .floating-elements { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; overflow: hidden; }
+        .floating-element { position: absolute; width: 6px; height: 6px; background: #00ff88; border-radius: 50%; opacity: 0.3; animation: float 6s ease-in-out infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
+        @keyframes ripple { to { transform: scale(4); opacity: 0; } }
+        @media (max-width: 768px) {
+          .notification { right: 10px; left: 10px; max-width: none; }
+          .property-header { flex-wrap: wrap; gap: 10px; }
+          .property-actions { order: 3; width: 100%; justify-content: center; }
+          .property-footer { flex-direction: column; gap: 1rem; }
+        }
+      </style>
+    `;
+
+    document.head.insertAdjacentHTML('beforeend', additionalStyles);
+  }
 }
 
 // بدء تشغيل النظام
 const requestDisplay = new EnhancedRequestDisplay();
+
+// تصدير الكلاس للاستخدام العام
+window.EnhancedRequestDisplay = EnhancedRequestDisplay;
