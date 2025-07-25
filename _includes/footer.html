@@ -1,16 +1,16 @@
-<!-- === الفوتر (Footer) - النسخة النظيفة === -->
+<!-- === الفوتر (Footer) - النسخة النظيفة والنهائية === -->
 <footer class="site-footer">
   <div class="footer-container">
     <h3 class="footer-title">
-      <a href="/samsar-talabak/">{{ site.title }}</a>
+      <a href="{{ '/' | relative_url }}">{{ site.title }}</a>
     </h3>
 
     <p class="footer-description">نخدمك في مدينة نصر وما حولها - بيع، شراء، وتأجير بأمان واحترافية.</p>
 
     <div class="footer-links">
-      <a href="/samsar-talabak/privacy-policy.html">سياسة الخصوصية</a>
-      <a href="/samsar-talabak/contact-us.html">تواصل معنا</a>
-      <a href="/samsar-talabak/about-us.html">عنّا</a>
+      <a href="{{ '/privacy-policy.html' | relative_url }}">سياسة الخصوصية</a>
+      <a href="{{ '/contact-us.html' | relative_url }}">تواصل معنا</a>
+      <a href="{{ '/about-us.html' | relative_url }}">عنّا</a>
     </div>
 
     <div class="social-links">
@@ -20,6 +20,6 @@
       <a href="https://pin.it/4tCl3jl6r" target="_blank">Pinterest</a>
     </div>
 
-    <p class="copyright">© 2025 <a href="/samsar-talabak/">{{ site.title }}</a>. جميع الحقوق محفوظة.</p>
+    <p class="copyright">© {% now '%Y' %} <a href="{{ '/' | relative_url }}">{{ site.title }}</a>. جميع الحقوق محفوظة.</p>
   </div>
 </footer>
