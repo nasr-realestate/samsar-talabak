@@ -1,16 +1,23 @@
-<nav class="nav-bar" style="background-color: #111; padding: 20px; display: flex; justify-content: space-between; align-items: center; font-family: 'Tajawal', sans-serif;">
+<!-- === الشريط العلوي (Navbar) - النسخة النظيفة === -->
+<nav class="site-header">
   <div class="logo">
-    <a href="/samsar-talabak/" style="text-decoration: none; color: #00cc66; font-size: 1.5rem; font-weight: bold;">
+    <a href="/samsar-talabak/">
       سمسار طلبك
     </a>
   </div>
 
-  <div class="nav-links" style="display: flex; gap: 15px;">
-    <a href="/samsar-talabak/properties-filtered.html" class="nav-btn" style="background-color: #00cc66; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none;">
+  <div class="nav-links">
+    <!-- 
+      ملاحظة هامة:
+      - استخدمنا نفس كلاس "nav-btn" من التصميم الرئيسي.
+      - أضفت كلاس "active" الذي ناقشناه سابقاً. ستحتاج إلى منطق في Jekyll 
+        لتحديد أي زر هو النشط حالياً بناءً على الصفحة.
+      - حالياً، جعلت زر "أبحث عن عقار" هو النشط كمثال.
+    -->
+    <a href="/samsar-talabak/properties-filtered.html" class="nav-btn active">
       👀 أبحث عن عقار
     </a>
-
-    <a href="/samsar-talabak/requests-filtered.html" class="nav-btn" style="background-color: #444; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none;">
+    <a href="/samsar-talabak/requests-filtered.html" class="nav-btn">
       🏘️ عندي عقار أعرضه
     </a>
   </div>
