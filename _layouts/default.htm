@@ -8,48 +8,28 @@
   <title>{{ page.title | default: site.title }}</title>
   <meta name="description" content="{{ page.description | default: site.description }}">
   
-  <!-- 
-    هذا السطر هو أهم تغيير. 
-    نحن الآن نستدعي ملف main.css الذي يحتوي على التصميم الموحد بالكامل.
-  -->
-  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
-  
-  <!-- 
-    Jekyll SEO Tag (أبقِ عليه كما هو، فهو مفيد لتحسين محركات البحث) 
-  -->
-  {% seo %}
-  
-  <!-- 
-    Font Awesome for Icons (أبقِ عليه كما هو، قد نحتاجه لاحقاً) 
-  -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
   <!-- Google Fonts (مهم جداً لجمال الخطوط العربية) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-
+  
+  <!-- 
+    هذا هو السطر الوحيد الذي يستدعي الـ CSS.
+    يجب أن يشير إلى ملف main.css الموحد.
+  -->
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+  
+  {% seo %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
-  <!-- 
-    استدعاء شريط التنقل العلوي (Navbar)
-    سيتم إدراج محتوى ملف _includes/navbar.html هنا.
-  -->
   {% include navbar.html %}
 
-  <!-- 
-    هذا هو المكان الذي سيتم فيه عرض محتوى كل صفحة
-    (مثل صفحة عروض العقارات أو صفحة الطلبات).
-  -->
   <main>
     {{ content }}
   </main>
 
-  <!-- 
-    استدعاء الفوتر (الجزء السفلي من الموقع)
-    سيتم إدراج محتوى ملف _includes/footer.html هنا.
-  -->
   {% include footer.html %}
 
 </body>
