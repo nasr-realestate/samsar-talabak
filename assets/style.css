@@ -285,3 +285,112 @@ body {
   .filter-btn { padding: 0.6rem 1rem; font-size: 0.9rem; }
   .property-card { padding: 1.5rem; }
 }
+/* === 🏛️ تصميم الهيدر والفوتر (Header & Footer) === */
+
+/* --- تصميم الشريط العلوي --- */
+.site-header {
+  background: var(--color-surface-1);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.site-header .logo a {
+  text-decoration: none;
+  color: var(--color-primary);
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.site-header .nav-links {
+  display: flex;
+  gap: 1rem;
+}
+
+/* 
+  هذا سيعيد استخدام تصميم زر الفلتر الجميل للأزرار في الهيدر،
+  مما يخلق تناسقاً رائعاً في التصميم.
+*/
+.site-header .nav-btn {
+  padding: 0.7rem 1.35rem;
+  background: var(--color-surface-2);
+  color: var(--color-text-primary);
+  border: 2px solid var(--color-border);
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.site-header .nav-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-text-on-primary);
+  background-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px var(--color-primary-shadow-medium);
+}
+
+.site-header .nav-btn.active {
+  background: linear-gradient(45deg, var(--color-primary), var(--color-primary-dark));
+  color: var(--color-text-on-primary);
+  border-color: var(--color-primary);
+  box-shadow: 0 8px 25px var(--color-primary-shadow-strong);
+}
+
+/* --- تصميم الفوتر --- */
+.site-footer {
+  background-color: var(--color-surface-1);
+  color: var(--color-text-secondary);
+  padding: 40px 20px;
+  text-align: center;
+  border-top: 1px solid var(--color-border-light);
+}
+
+.site-footer .footer-container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.site-footer a {
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.site-footer a:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.footer-title a {
+  color: var(--color-primary);
+  font-size: 1.5rem;
+}
+
+.footer-title a:hover {
+  text-decoration: none;
+}
+
+.footer-description {
+  margin: 10px 0 20px 0;
+}
+
+.footer-links, .social-links {
+  margin: 20px 0;
+}
+
+.footer-links a, .social-links a {
+  margin: 0 10px;
+}
+
+.copyright {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.copyright a {
+  color: var(--color-primary);
+}
