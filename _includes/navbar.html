@@ -1,23 +1,17 @@
-<!-- === الشريط العلوي (Navbar) - النسخة النظيفة والنهائية === -->
-<header class="site-header">
+<nav class="nav-bar" style="background-color: #111; padding: 20px; display: flex; justify-content: space-between; align-items: center; font-family: 'Tajawal', sans-serif;">
   <div class="logo">
-    <a href="{{ '/' | relative_url }}">
+    <a href="/samsar-talabak/" style="text-decoration: none; color: #00cc66; font-size: 1.5rem; font-weight: bold;">
       سمسار طلبك
     </a>
   </div>
 
-  <div class="nav-links">
-    <!-- 
-      منطق Jekyll لتحديد الزر النشط 
-      (يعطي كلاس 'active' للرابط الذي يطابق الصفحة الحالية)
-    -->
-    <a href="{{ '/properties-filtered.html' | relative_url }}" 
-       class="nav-btn {% if page.url == '/properties-filtered.html' %}active{% endif %}">
+  <div class="nav-links" style="display: flex; gap: 15px;">
+    <a href="/samsar-talabak/properties-filtered.html" class="nav-btn" style="background-color: #00cc66; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none;">
       👀 أبحث عن عقار
     </a>
-    <a href="{{ '/requests-filtered.html' | relative_url }}" 
-       class="nav-btn {% if page.url == '/requests-filtered.html' %}active{% endif %}">
+
+    <a href="/samsar-talabak/requests-filtered.html" class="nav-btn" style="background-color: #444; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none;">
       🏘️ عندي عقار أعرضه
     </a>
   </div>
-</header>
+</nav>
