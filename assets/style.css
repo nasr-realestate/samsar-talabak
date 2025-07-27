@@ -1,0 +1,134 @@
+/* =========================================================
+ * 🏢 سمسار طلبك - نظام التصميم الموحد والنهائي V3 (محسّن SEO)
+ * تحسينات: أداء + SEO + جماليات البطاقات مع الحفاظ على الوضع الداكن
+ * ========================================================= */
+
+:root {
+  /* ... الألوان الحالية تبقى كما هي ... */
+}
+
+/* === 🌍 الإعدادات العامة === */
+body {
+  /* إضافة خاصية smooth scrolling لتحسين UX */
+  scroll-behavior: smooth;
+}
+
+/* === تحسينات SEO للعناوين === */
+h1 {
+  font-size: 2.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+h1::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary), transparent);
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin: 1.5rem 0 1rem;
+  border-right: 3px solid var(--color-primary);
+  padding-right: 10px;
+}
+
+/* === 🎨 تحسينات جمالية للبطاقات === */
+.property-card {
+  /* تدرج لوني جديد مع الحفاظ على المظهر الداكن */
+  background: linear-gradient(135deg, #1e2a38 0%, #1a2430 100%);
+  border-left: 4px solid var(--color-primary);
+  
+  /* تأثير ظل متطور */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  
+  /* تأثير تحليق متطور */
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.3s ease;
+}
+
+.property-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-left-color: #ffcc00; /* اللون الأصفر عند التحليق */
+  box-shadow: 0 15px 35px rgba(0, 255, 136, 0.25);
+}
+
+/* شريط لوني علوي للبطاقة */
+.property-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, 
+    var(--color-primary) 0%, 
+    #ffcc00 50%, 
+    var(--color-primary) 100%);
+  border-radius: 20px 20px 0 0;
+}
+
+/* === 🖼️ تحسين أداء الصور === */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* === ⚡ تحسينات الأداء === */
+/* تقليل حجم الظلال المتحركة */
+.property-card:hover {
+  box-shadow: 0 12px 30px rgba(0, 255, 136, 0.2); /* أخف ظل */
+}
+
+/* تبسيط تأثيرات التحليق */
+.nav-btn:hover, .view-details-btn:hover {
+  transform: translateY(-3px); /* إزالة scale لتقليل التكلفة */
+}
+
+/* === 📱 تحسينات الجوّال (أداء) === */
+@media (max-width: 768px) {
+  .properties-grid {
+    gap: 1.2rem; /* تقليل المسافة لتوفير مساحة */
+  }
+  
+  .property-card {
+    padding: 1.2rem; /* حشو أقل */
+  }
+  
+  /* إزالة بعض التأثيرات الثقيلة على الجوّال */
+  .property-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 255, 136, 0.15);
+  }
+}
+
+/* === 🎯 تحسينات الفلاتر === */
+.filter-btn {
+  /* تدرج لوني جديد */
+  background: linear-gradient(135deg, #2a3a4d 0%, #223040 100%);
+  border: 1px solid #334155;
+}
+
+.filter-btn:hover {
+  background: linear-gradient(135deg, #31475f 0%, #293d54 100%);
+}
+
+/* === ✨ لمسات نهائية === */
+.property-header {
+  border-bottom: 1px solid rgba(0, 255, 136, 0.15); /* خط أكثر نعومة */
+}
+
+.property-detail {
+  /* تناوب لوني للتفاصيل */
+  background: rgba(255, 204, 0, 0.05);
+  border-left: 3px solid #ffcc00;
+}
+
+.property-detail:nth-child(even) {
+  background: rgba(0, 255, 136, 0.05);
+  border-left: 3px solid var(--color-primary);
+  }
