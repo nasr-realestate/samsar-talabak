@@ -40,15 +40,26 @@ function updateSeoTags(prop) {
 
   // 1. تحديث عنوان الصفحة والوصف
   document.title = pageTitle;
-  document.querySelector('meta[name="description"]').setAttribute('content', description);
+  const descriptionMeta = document.querySelector('meta[name="description"]');
+  if (descriptionMeta) {
+    descriptionMeta.setAttribute('content', description);
+  }
 
   // 2. تحديث وسوم Open Graph (لواتساب)
-  document.querySelector('meta[property="og:title"]').setAttribute('content', pageTitle);
-  document.querySelector('meta[property="og:description"]').setAttribute('content', description);
-  document.querySelector('meta[property="og:url"]').setAttribute('content', pageURL);
+  const ogTitleMeta = document.querySelector('meta[property="og:title"]');
+  if (ogTitleMeta) {
+    ogTitleMeta.setAttribute('content', pageTitle);
+  }
+  const ogDescriptionMeta = document.querySelector('meta[property="og:description"]');
+  if (ogDescriptionMeta) {
+    ogDescriptionMeta.setAttribute('content', description);
+  }
+  const ogUrlMeta = document.querySelector('meta[property="og:url"]');
+  if (ogUrlMeta) {
+    ogUrlMeta.setAttribute('content', pageURL);
+  }
   
   // 3. ✨ منطق ذكي لتحديد القيم الرقمية لبيانات Schema.org
-  // يبحث عن الحقل الرقمي الجديد، وإذا لم يجده، يستخدم الحقل النصي القديم
   const schemaPrice = (prop.price_min !== undefined && prop.price_min > 0) 
     ? prop.price_min 
     : (prop.price || "0").replace(/[^0-9]/g, '');
@@ -95,7 +106,6 @@ function renderPropertyDetails(prop, container) {
   const pageURL = window.location.href;
   
   // ✨ منطق ذكي لتحديد القيم التي ستظهر للمستخدم
-  // يبحث عن حقل العرض الجديد، وإذا لم يجده، يستخدم الحقل القديم
   const priceToRender = prop.price_display || prop.price || "غير محدد";
   const areaToRender = prop.area_display || prop.area || 'غير محددة';
 
@@ -127,7 +137,7 @@ function renderPropertyDetails(prop, container) {
     <p class="details-date">📅 <strong>تاريخ الإضافة:</strong> ${prop.date || 'غير متوفر'}</p>
 
     <footer class="details-actions">
-      <a href="https://wa.me/${whatsapp}?text=أريد الاستفسار عن ${encodeURIComponent(prop.title)}" target="_blank" class="action-btn whatsapp-btn">
+      <a href="https://wa.me/${whatsapp}?text=أريد الاستفسار عن ${encodeURIComponent(prop.title || '')}" target="_blank" class="action-btn whatsapp-btn">
         تواصل عبر واتساب
       </a>
       <button onclick="copyToClipboard('${pageURL}')" class="action-btn copy-btn" title="انسخ رابط العرض">
@@ -145,4 +155,4 @@ function copyToClipboard(text) {
       setTimeout(() => { toast.classList.remove('show'); }, 2000);
     }
   });
-    }
+}
