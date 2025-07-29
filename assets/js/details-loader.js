@@ -1,4 +1,4 @@
-// SEO Improvement: الكود بأكمله مُعاد هيكلته ليدعم SEO
+// SEO Improvement: الكود بأكمله مُعاد هيكلته ليدعم SEO والتوافق مع الإصدارات السابقة من JSON
 document.addEventListener("DOMContentLoaded", async function () {
   const container = document.getElementById("property-details");
   const params = new URLSearchParams(window.location.search);
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     if (!res.ok) throw new Error(`Failed to fetch: ${res.status}`);
     const propertyData = await res.json();
     
-    // استدعاء الدوال الجديدة
+    // استدعاء الدوال المحدثة
     updateSeoTags(propertyData);
     renderPropertyDetails(propertyData, container);
 
@@ -26,12 +26,16 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 /**
- * SEO: تحديث وسوم SEO و JSON-LD ديناميكيًا
+ * SEO: تحديث وسوم SEO و JSON-LD ديناميكيًا مع دعم القوام القديم والجديد
  * @param {object} prop - بيانات العقار
  */
 function updateSeoTags(prop) {
+  // تحديد القيم التي ستظهر في النصوص (مثل وصف الميتا)
+  const priceForDisplay = prop.price_display || prop.price || 'غير محدد';
+  const areaForDisplay = prop.area_display || prop.area || 'غير محددة';
+
   const pageTitle = `${prop.title || 'عرض عقاري'} - سمسار طلبك`;
-  const description = `تفاصيل عقار: ${prop.title || ''}. المساحة: ${prop.area || 'غير محددة'}، السعر: ${prop.price || 'غير محدد'}. ${(prop.description || '').substring(0, 120)}...`;
+  const description = `تفاصيل عقار: ${prop.title || ''}. المساحة: ${areaForDisplay}، السعر: ${priceForDisplay}. ${(prop.description || '').substring(0, 120)}...`;
   const pageURL = window.location.href;
 
   // 1. تحديث عنوان الصفحة والوصف
@@ -43,7 +47,17 @@ function updateSeoTags(prop) {
   document.querySelector('meta[property="og:description"]').setAttribute('content', description);
   document.querySelector('meta[property="og:url"]').setAttribute('content', pageURL);
   
-  // 3. ملء بيانات Schema.org
+  // 3. ✨ منطق ذكي لتحديد القيم الرقمية لبيانات Schema.org
+  // يبحث عن الحقل الرقمي الجديد، وإذا لم يجده، يستخدم الحقل النصي القديم
+  const schemaPrice = (prop.price_min !== undefined && prop.price_min > 0) 
+    ? prop.price_min 
+    : (prop.price || "0").replace(/[^0-9]/g, '');
+
+  const schemaArea = (prop.area_min !== undefined && prop.area_min > 0) 
+    ? prop.area_min 
+    : (prop.area || "0").replace(/[^0-9]/g, '');
+
+  // 4. ملء بيانات Schema.org بالقيم الدقيقة
   const schema = {
     "@context": "https://schema.org",
     "@type": "RealEstateListing",
@@ -52,12 +66,12 @@ function updateSeoTags(prop) {
     "url": pageURL,
     "offers": {
       "@type": "Offer",
-      "price": (prop.price || "0").replace(/[^0-9]/g, ''), // استخلاص الأرقام فقط
+      "price": schemaPrice,
       "priceCurrency": "EGP" // يمكنك تغييرها
     },
     "floorSize": {
       "@type": "QuantitativeValue",
-      "value": (prop.area || "0").replace(/[^0-9]/g, ''),
+      "value": schemaArea,
       "unitText": "متر مربع"
     },
     "numberOfRooms": prop.rooms,
@@ -72,13 +86,18 @@ function updateSeoTags(prop) {
 }
 
 /**
- * عرض محتوى العقار باستخدام وسوم دلالية وكلاسات CSS
+ * عرض محتوى العقار مع دعم القوام القديم والجديد
  * @param {object} prop - بيانات العقار
  * @param {HTMLElement} container - الحاوية لعرض المحتوى بداخلها
  */
 function renderPropertyDetails(prop, container) {
   const whatsapp = prop.whatsapp || "201147758857";
   const pageURL = window.location.href;
+  
+  // ✨ منطق ذكي لتحديد القيم التي ستظهر للمستخدم
+  // يبحث عن حقل العرض الجديد، وإذا لم يجده، يستخدم الحقل القديم
+  const priceToRender = prop.price_display || prop.price || "غير محدد";
+  const areaToRender = prop.area_display || prop.area || 'غير محددة';
 
   container.innerHTML = `
     <header class="details-header">
@@ -86,10 +105,10 @@ function renderPropertyDetails(prop, container) {
       <h1>${prop.title || "تفاصيل العرض"}</h1>
     </header>
 
-    <p class="details-price">💰 ${prop.price || "غير محدد"}</p>
+    <p class="details-price">💰 ${priceToRender}</p>
 
     <section class="details-grid">
-      <div class="detail-item"><strong>📏 المساحة:</strong> ${prop.area || 'غير محددة'}</div>
+      <div class="detail-item"><strong>📏 المساحة:</strong> ${areaToRender}</div>
       <div class="detail-item"><strong>🛏️ عدد الغرف:</strong> ${prop.rooms ?? 'غير محدد'}</div>
       <div class="detail-item"><strong>🛁 عدد الحمامات:</strong> ${prop.bathrooms ?? 'غير محدد'}</div>
       <div class="detail-item"><strong>🏢 الدور:</strong> ${prop.floor ?? 'غير محدد'}</div>
@@ -126,4 +145,4 @@ function copyToClipboard(text) {
       setTimeout(() => { toast.classList.remove('show'); }, 2000);
     }
   });
-                       }
+    }
