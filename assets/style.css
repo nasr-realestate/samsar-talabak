@@ -1,0 +1,174 @@
+/* =========================================================
+ * 🏢 سمسار طلبك - نظام التصميم الموحد والنهائي V6
+ * هذا الملف كامل ويدمج كل تنسيقات الموقع بما فيها الهيكل العام.
+ * ========================================================= */
+
+:root {
+  /* ... (نفس المتغيرات السابقة) ... */
+  --color-primary: #00ff88;
+  --color-primary-dark: #00cc6a;
+  --color-primary-shadow-light: rgba(0, 255, 136, 0.1);
+  --color-primary-shadow-medium: rgba(0, 255, 136, 0.2);
+  --color-primary-shadow-strong: rgba(0, 255, 136, 0.3);
+  --color-primary-shadow-hover: rgba(0, 255, 136, 0.4);
+  --color-background: #1a1a1a;
+  --color-surface-1: #1e1e1e;
+  --color-surface-2: #2a2a2a;
+  --color-surface-gradient: linear-gradient(135deg, var(--color-surface-1) 0%, var(--color-surface-2) 100%);
+  --color-text-primary: #f1f1f1;
+  --color-text-secondary: #ccc;
+  --color-text-on-primary: #000;
+  --color-border: #444;
+  --color-border-light: #333;
+  --color-error: #ff6b6b;
+}
+
+/* === 🌍 الإعدادات العامة والتأسيس === */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: 'Tajawal', sans-serif;
+  line-height: 1.6;
+  direction: rtl;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+main {
+  flex-grow: 1; /* تجعل المحتوى الرئيسي يملأ المساحة المتاحة */
+}
+
+
+/* ========================================================= */
+/* === 🧭 شريط التنقل العلوي (Navbar) 🧭 === */
+/* ========================================================= */
+.navbar {
+  background-color: rgba(26, 26, 26, 0.85); /* خلفية شبه شفافة */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid var(--color-border-light);
+}
+.navbar-logo a {
+  text-decoration: none; color: var(--color-primary);
+  font-size: 1.6rem; font-weight: 700;
+  transition: color 0.3s ease;
+}
+.navbar-logo a:hover {
+  color: var(--color-primary-dark);
+}
+.navbar-links {
+  display: flex; gap: 1rem;
+}
+.nav-link {
+  display: flex; align-items: center; gap: 0.5rem;
+  color: var(--color-text-primary); padding: 0.75rem 1.5rem;
+  border-radius: 50px; text-decoration: none; font-weight: bold;
+  transition: all 0.3s ease;
+}
+.nav-link.properties {
+  background-color: var(--color-primary); color: var(--color-text-on-primary);
+}
+.nav-link.requests {
+  background-color: var(--color-surface-2); border: 1px solid var(--color-border);
+}
+.nav-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px var(--color-primary-shadow-medium);
+}
+.nav-link.requests:hover {
+  border-color: var(--color-primary);
+}
+
+
+/* ... (كل التنسيقات الأخرى من الملف السابق تبقى هنا) ... */
+/* === 🏠 تنسيقات الصفحة الرئيسية (Homepage) 🏠 === */
+body.homepage {
+  background: url('https://i.postimg.cc/SsYbYXf1/file-00000000363861fdb27359b8f1f81ea2.webp') center center / cover no-repeat fixed;
+}
+.home-hero { /* ... */ }
+/* ... (باقي تنسيقات الصفحة الرئيسية) */
+.page-header { /* ... */ }
+/* ... (باقي تنسيقات الموقع) */
+
+
+/* ========================================================= */
+/* === 🦶 تذييل الموقع (Footer) 🦶 === */
+/* ========================================================= */
+.site-footer {
+  background-color: var(--color-surface-1);
+  color: var(--color-text-secondary);
+  padding: 3rem 2rem;
+  text-align: center;
+  border-top: 1px solid var(--color-border-light);
+}
+.footer-content {
+  max-width: 1200px;
+  margin: auto;
+}
+.footer-logo a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  display: inline-block;
+}
+.footer-description {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+.footer-links {
+  margin: 1.5rem 0;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.footer-links a {
+  color: var(--color-text-primary);
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+.footer-links a:hover {
+  color: var(--color-primary);
+}
+.social-links {
+  margin: 1.5rem 0;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+.social-links a {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: 1.4rem;
+  width: 45px;
+  height: 45px;
+  line-height: 45px;
+  border-radius: 50%;
+  background-color: var(--color-surface-2);
+  transition: all 0.3s ease;
+}
+.social-links a:hover {
+  color: var(--color-text-on-primary);
+  background-color: var(--color-primary);
+  transform: translateY(-3px);
+}
+.copyright {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+}
+.copyright a {
+  color: var(--color-primary);
+  text-decoration: none;
+  }
