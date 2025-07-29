@@ -2,6 +2,7 @@
 layout: default
 title: "سمسار طلبك | عقارات مدينة نصر"
 description: "ابدأ رحلتك العقارية الآن مع أفضل وسيط عقاري في مدينة نصر. شقق ومحلات ومكاتب بأسعار منافسة وشفافية كاملة."
+body_class: homepage  # <-- إضافة كلاس مخصص للصفحة الرئيسية
 ---
 
 <!-- ✅ Google Tag Manager -->
@@ -44,68 +45,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- ✅ رابط خريطة الموقع -->
 <link rel="sitemap" type="application/xml" title="Sitemap" href="/samsar-talabak/sitemap.xml">
 
-<!-- ✅ تصميم الصفحة الرئيسية -->
-<style>
-  body {
-    background: url('https://i.postimg.cc/SsYbYXf1/file-00000000363861fdb27359b8f1f81ea2.webp') center center / cover no-repeat fixed;
-  }
+<!-- المحتوى الرئيسي للصفحة -->
+<main>
+  <section class="home-hero">
+    <h1>مرحبًا بك في سمسار طلبك</h1>
+    <p>ابدأ رحلتك العقارية الآن — سواء كنت تبحث عن شقة أو لديك عرض مميز!</p>
 
-  .home-hero {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 80vh;
-    background-color: rgba(0, 0, 0, 0.75); /* شفافية لتمييز النص */
-    color: #f1f1f1;
-    text-align: center;
-    padding: 2rem;
-    font-family: 'Tajawal', sans-serif;
-  }
-
-  .home-hero h1 {
-    font-size: 2.5rem;
-    color: #00ff88;
-    margin-bottom: 1rem;
-  }
-
-  .home-hero p {
-    font-size: 1.2rem;
-    color: #ccc;
-    margin-bottom: 2rem;
-  }
-
-  .hero-buttons {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .hero-buttons a {
-    background-color: #00ff88;
-    color: #000;
-    padding: 1rem 2rem;
-    border-radius: 8px;
-    font-weight: bold;
-    text-decoration: none;
-    font-size: 1.1rem;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    transition: all 0.3s ease;
-  }
-
-  .hero-buttons a:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 14px rgba(0,0,0,0.4);
-  }
-</style>
-
-<section class="home-hero">
-  <h1>مرحبًا بك في سمسار طلبك</h1>
-  <p>ابدأ رحلتك العقارية الآن — سواء كنت تبحث عن شقة أو لديك عرض مميز!</p>
-
-  <div class="hero-buttons">
-    <a href="/samsar-talabak/properties-filtered.html">🏠 عروض العقارات</a>
-    <a href="/samsar-talabak/requests-filtered.html">📩 طلبات العملاء</a>
-  </div>
-</section>
+    <div class="hero-buttons">
+      <a href="/samsar-talabak/properties-filtered.html">🏠 عروض العقارات</a>
+      <a href="/samsar-talabak/requests-filtered.html">📩 طلبات العملاء</a>
+    </div>
+  </section>
+</main>
