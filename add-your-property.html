@@ -1,132 +1,81 @@
 ---
 layout: default
-title: "أضف عقارك أو طلبك"
-description: "أرسل تفاصيل عقارك أو طلبك العقاري عبر الواتساب وسيقوم فريق سمسار طلبك بإضافته إلى الموقع خلال دقائق."
+title: "أضف عقارك أو طلبك عبر واتساب"
+description: "أرسل تفاصيل عقارك المعروض أو طلبك العقاري عبر الواتساب وسيقوم فريق سمسार طلبك بإضافته إلى الموقع خلال دقائق بعد المراجعة."
 ---
 
-<!-- ✅ Meta Tags -->
-<meta name="robots" content="noindex, follow">
-<meta name="author" content="سمسار طلبك">
+<!-- SEO: Open Graph Meta Tags -->
+<meta name="robots" content="noindex, follow"> <!-- noindex جيد لهذه الصفحة لأنها إجرائية وليست محتوى رئيسي -->
 <meta property="og:title" content="أضف عقارك أو طلبك - سمسار طلبك">
 <meta property="og:description" content="أرسل التفاصيل عبر واتساب وسيتم عرضها على الموقع بعد المراجعة.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://nasr-realestate.github.io/samsar-talabak/add-your-property.html">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
 <meta property="og:image" content="https://i.postimg.cc/Vk8Nn1xZ/me.jpg">
 
-<style>
-  body {
-    background-color: #121212;
-    color: #f1f1f1;
-    font-family: 'Tajawal', sans-serif;
-    padding: 2rem;
-    text-align: center;
-  }
+<!-- 1. رأس الصفحة الموحد -->
+<header class="page-header">
+  <h1>📝 أضف عقارك أو طلبك بسهولة</h1>
+  <p>سواء كنت تعرض عقارًا للبيع أو تبحث عن طلب، أرسل التفاصيل عبر واتساب وسيتم نشرها في دقائق.</p>
+</header>
 
-  h1 {
-    color: #00ff88;
-    margin-bottom: 1rem;
-    font-size: 2.5rem;
-  }
+<!-- 2. المحتوى الرئيسي للصفحة -->
+<main class="content-wrapper">
+  
+  <section class="content-section text-center">
+    <p class="lead-text">
+      انضم إلى أكثر من <strong>100+ عميل</strong> أضافوا عروضهم وطلباتهم بنجاح.<br>
+      اضغط على الزر التالي وأرسل لنا التفاصيل مباشرة.
+    </p>
 
-  h2 {
-    font-size: 1.6rem;
-    color: #ffc107;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-  }
+    <a class="whatsapp-btn-large" href="https://wa.me/201147758857?text=مرحبًا، أرغب في إضافة عقار أو طلب على موقع سمسار طلبك.">
+      <i class="fab fa-whatsapp"></i>
+      <span>اضغط هنا للإرسال عبر واتساب</span>
+    </a>
+  </section>
 
-  p {
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
-    color: #ccc;
-    line-height: 1.8;
-  }
+  <section class="content-section">
+    <h2 class="section-title">📋 المعلومات المطلوبة</h2>
+    <div class="info-grid required-info-grid">
+      <div class="info-item">
+        <div class="info-icon">📍</div>
+        <h3>الموقع</h3>
+        <p>مثال: مدينة نصر، شارع مصطفى النحاس.</p>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📏</div>
+        <h3>المساحة</h3>
+        <p>بالمتر المربع (صافي أو إجمالي).</p>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">💰</div>
+        <h3>السعر / الميزانية</h3>
+        <p>السعر المطلوب أو الميزانية المتاحة.</p>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🛏️</div>
+        <h3>التفاصيل</h3>
+        <p>عدد الغرف، الحمامات، الدور، التشطيب.</p>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📸</div>
+        <h3>الصور</h3>
+        <p>صور واضحة للعقار (إن وجدت).</p>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🎯</div>
+        <h3>الهدف</h3>
+        <p>هل هو للبيع، للإيجار، أم طلب شراء؟</p>
+      </div>
+    </div>
+  </section>
 
-  ul {
-    list-style: none;
-    padding: 0;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-
-  ul li::before {
-    content: "✅ ";
-    color: #25D366;
-    margin-right: 5px;
-  }
-
-  ul li {
-    text-align: right;
-    color: #bbb;
-    font-size: 1rem;
-    margin: 0.5rem 0;
-  }
-
-  .whatsapp-btn {
-    display: inline-block;
-    background-color: #25D366;
-    color: #fff;
-    font-weight: bold;
-    padding: 1rem 2rem;
-    border-radius: 10px;
-    font-size: 1.2rem;
-    text-decoration: none;
-    transition: 0.3s ease-in-out;
-  }
-
-  .whatsapp-btn:hover {
-    background-color: #1ebe5d;
-    transform: scale(1.05);
-  }
-
-  .note {
-    margin-top: 2rem;
-    font-size: 1rem;
-    color: #999;
-  }
-
-  .qr {
-    margin-top: 2rem;
-  }
-
-  .qr img {
-    width: 180px;
-    height: 180px;
-    margin-top: 1rem;
-  }
-</style>
-
-<h1>📝 أضف عقارك أو طلبك بسهولة</h1>
-
-<p>
-  سواء كنت <strong>بتعرض شقة أو محل للبيع</strong>  
-  أو <strong>بتدور على عقار معين</strong>،  
-  ابعت التفاصيل والصور على الواتساب وهيتم إضافتها للموقع خلال دقائق.
-</p>
-
-<a class="whatsapp-btn" href="https://wa.me/201147758857?text=مرحبًا، أرغب في إضافة عقار أو طلب على موقع سمسار طلبك.">
-  🚀 اضغط هنا لإرسال التفاصيل الآن
-</a>
-
-<h2>📋 المعلومات اللي نحتاجها:</h2>
-<ul>
-  <li>📍 الموقع بالتفصيل (مثلاً: مدينة نصر، شارع مصطفى النحاس)</li>
-  <li>📏 المساحة (بالمتر)</li>
-  <li>💰 السعر المطلوب أو الميزانية</li>
-  <li>🛏️ عدد الغرف والحمامات</li>
-  <li>📸 صور واضحة (لو متاحة)</li>
-  <li>🎯 هدفك (للبيع – للإيجار – طلب)</li>
-</ul>
-
-<div class="note">
-  ⏱️ <strong>خدمة سريعة:</strong> يتم مراجعة التفاصيل وإضافتها خلال أقل من <strong>30 دقيقة</strong>!
-</div>
-
-<div class="note">
-  ✅ أكثر من <strong>100+ عميل</strong> أرسلوا عقاراتهم بنجاح عن طريق هذه الصفحة.
-</div>
-
-<div class="qr">
-  <p class="note">📱 امسح الكود لمراسلتنا مباشرة من جوالك</p>
-  <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://wa.me/201147758857" alt="QR لواتساب">
-</div>
+  <section class="content-section text-center">
+    <h2 class="section-title">📱 أو امسح الكود</h2>
+    <p>افتح كاميرا جوالك وامسح الكود التالي لمراسلتنا مباشرة عبر واتساب.</p>
+    <div class="qr-code">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://wa.me/201147758857" alt="QR Code for WhatsApp contact">
+    </div>
+    <p class="note">⏱️ <strong>خدمة سريعة ومجانية:</strong> يتم مراجعة التفاصيل وإضافتها خلال أقل من <strong>30 دقيقة</strong>!</p>
+  </section>
+  
+</main>
