@@ -1,17 +1,22 @@
+<!-- 
+  شريط التنقل العلوي (Navbar)
+  أصبح الآن نظيفًا تمامًا من أي تنسيقات مدمجة.
+  يتم التحكم في تصميمه بالكامل من ملف style.css
+-->
 <nav class="navbar">
   <div class="navbar-logo">
-    <a href="{{ site.baseurl }}/">
+    <a href="{{ '/' | relative_url }}">
       {{ site.title }}
     </a>
   </div>
 
   <div class="navbar-links">
-    <a href="{{ site.baseurl }}/properties-filtered.html" class="nav-link properties">
+    <a href="{{ '/properties-filtered.html' | relative_url }}" class="nav-link properties">
       <i class="fas fa-search"></i>
       <span>أبحث عن عقار</span>
     </a>
 
-    <a href="{{ site.baseurl }}/requests-filtered.html" class="nav-link requests">
+    <a href="{{ '/requests-filtered.html' | relative_url }}" class="nav-link requests">
       <i class="fas fa-bullhorn"></i>
       <span>لدي عقار</span>
     </a>
