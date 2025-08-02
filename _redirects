@@ -1,0 +1,2 @@
+/property/:id   /details.html?id=:id   200
+/request/:id    /request-details.html?id=:id   200
