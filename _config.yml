@@ -1,11 +1,12 @@
 title: "سمسار طلبك"
 description: "شقق تمليك في مدينة نصر - عروض حصرية وأسعار تنافسية"
-url: "https://aqarnasr.netlify.app" 
-baseurl: "" 
+url: "https://nasr-realestate.github.io"
+baseurl: "/samsar-talabak" # <-- أهم سطر: يجب أن يكون موجودًا لـ GitHub Pages
 
 lang: "ar"
 email: "elraikonly@outlook.sa"
-# theme: minima  <-- تم حذف هذا السطر لمنع تعارض التصميم
+
+# theme: minima <-- تأكد من أن هذا السطر محذوف أو أمامه علامة #
 
 #  هذا هو الإعداد الرئيسي للبيانات
 data_source: data
