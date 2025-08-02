@@ -1,11 +1,11 @@
 title: "سمسار طلبك"
 description: "شقق تمليك في مدينة نصر - عروض حصرية وأسعار تنافسية"
-url: "https://aqarnasr.netlify.app" # <-- تم تحديثه ليعكس رابط Netlify الجديد
-baseurl: "" # <-- التعديل الأهم: أصبح فارغًا
+url: "https://aqarnasr.netlify.app" 
+baseurl: "" 
 
 lang: "ar"
 email: "elraikonly@outlook.sa"
-theme: minima
+# theme: minima  <-- تم حذف هذا السطر لمنع تعارض التصميم
 
 #  هذا هو الإعداد الرئيسي للبيانات
 data_source: data
@@ -23,7 +23,7 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 
-# إعدادات الصفحات الاftراضية
+# إعدادات الصفحات الافتراضية
 defaults:
   -
     scope:
