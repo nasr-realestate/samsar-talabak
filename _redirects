@@ -1,11 +1,2 @@
-# إعادة توجيه الروابط الطويلة إلى الروابط القصيرة
-/details.html?id=:id    /property/:id    301
-/request-details.html?id=:id    /request/:id    301
-
-# إعادة توجيه الروابط القصيرة إلى الصفحات الحقيقية
-/property/:id    /details.html?id=:id    200
-/request/:id    /request-details.html?id=:id    200
-
-# إعادة توجيه الصفحات القديمة
-/properties-filtered.html    /properties.html    301
-/requests-filtered.html      /requests.html      301
+/property/:id   /details.html?id=:id   200
+/request/:id    /request-details.html?id=:id   200
