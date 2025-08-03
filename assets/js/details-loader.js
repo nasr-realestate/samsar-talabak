@@ -1,5 +1,5 @@
 /**
- * نظام تحميل تفاصيل العقار (النسخة النهائية الكاملة v2.0 - تفعيل الروابط القصيرة)
+ * نظام تحميل تفاصيل العقار (النسخة النهائية الكاملة v2.1 - تفعيل الروابط القصيرة)
  */
 
 document.addEventListener("DOMContentLoaded", async function () {
@@ -9,27 +9,27 @@ document.addEventListener("DOMContentLoaded", async function () {
   const pathParts = window.location.pathname.split('/');
   const propertyId = parseInt(pathParts[pathParts.length - 1], 10);
 
-  if (!propertyId) {
-    container.innerHTML = `<p class="error-message">❌ لم يتم تحديد العقار.</p>`;
+  if (!propertyId || isNaN(propertyId)) {
+    container.innerHTML = `<p class="error-message">❌ لم يتم تحديد العقار أو أن الرابط غير صحيح.</p>`;
     return;
   }
 
   try {
     // ✨ التعديل: جلب الفهرس المركزي أولاً
     const indexRes = await fetch(`/data/properties_index.json`);
-    if (!indexRes.ok) throw new Error(`Failed to fetch properties index`);
+    if (!indexRes.ok) throw new Error(`Failed to fetch properties index.`);
     const propertiesIndex = await indexRes.json();
 
     // البحث عن مسار الملف الصحيح باستخدام الـ ID
     const propertyInfo = propertiesIndex.find(p => p.id === propertyId);
 
-    if (!propertyInfo) {
+    if (!propertyInfo || !propertyInfo.path) {
       throw new Error(`Property with ID ${propertyId} not found in index.`);
     }
 
     // جلب ملف JSON الفعلي للعقار
     const res = await fetch(propertyInfo.path);
-    if (!res.ok) throw new Error(`Failed to fetch: ${res.status}`);
+    if (!res.ok) throw new Error(`Failed to fetch property data: ${res.status}`);
     const propertyData = await res.json();
     
     updateSeoTags(propertyData);
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   } catch (err) {
     console.error("فشل في جلب تفاصيل العقار:", err);
-    container.innerHTML = `<p class="error-message">❌ حدث خطأ أثناء تحميل بيانات العقار.</p>`;
+    container.innerHTML = `<p class="error-message">❌ حدث خطأ أثناء تحميل بيانات العقار. قد يكون العقار غير موجود.</p>`;
   }
 });
 
@@ -51,7 +51,6 @@ function updateSeoTags(prop) {
   const pageTitle = `${prop.title || 'عرض عقاري'} - سمسار طلبك`;
   const description = `تفاصيل عقار: ${prop.title || ''}. المساحة: ${areaForDisplay}، السعر: ${priceForDisplay}. ${(prop.description || '').substring(0, 120)}...`;
   
-  // ✨ التعديل: إنشاء الرابط القصير والصحيح للصفحة الحالية
   const pageURL = new URL(`/property/${prop.id}`, window.location.origin).href;
 
   document.title = pageTitle;
@@ -156,4 +155,4 @@ function copyToClipboard(text) {
       setTimeout(() => { toast.classList.remove('show'); }, 2000);
     }
   });
-}
+    }
