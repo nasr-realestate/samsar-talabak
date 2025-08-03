@@ -1,14 +1,12 @@
 # =========================================================
-# === إعدادات النشر لـ Netlify (النسخة النهائية) ===
+# === إعدادات النشر لـ Netlify (النسخة المعدلة) ===
 # =========================================================
 
 title: "سمسار طلبك"
 description: "شقق تمليك في مدينة نصر - عروض حصرية وأسعار تنافسية"
 
-# ✨ التعديل 1: تم تحديث الرابط ليعكس رابط Netlify الجديد
+# ✨ الإعداد الصحيح للروابط على Netlify
 url: "https://aqarnasr.netlify.app" 
-
-# ✨ التعديل 2: تم جعل baseurl فارغًا، وهذا هو أهم تعديل لـ Netlify
 baseurl: "" 
 
 lang: "ar"
@@ -33,21 +31,24 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 
-# إعدادات الصفحات الافتراضية
+# ✨ إضافة مهمة: إعدادات الروابط الدائمة
+permalink: /property/:id/
+
+# ✨ إعدادات الصفحات الافتراضية المعدلة
 defaults:
   -
     scope:
-      path: ""
-      type: "pages"
+      path: "" # جميع الملفات
     values:
       layout: "default"
       lang: "ar"
+      permalink: /:path/
   -
     scope:
-      path: ""
-      type: "posts"
+      path: "property" # الصفحات في مجلد property
+      type: pages
     values:
-      lang: "ar"
+      permalink: /property/:id/
 
 # استثناءات الملفات والمجلدات التي لا تُنشر
 exclude:
@@ -55,6 +56,14 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - README.md
+  - .gitignore
+  - netlify.toml # إذا كنت تستخدمه
+
+# ✨ إعدادات مهمة لصفحة التفاصيل
+collections:
+  properties:
+    output: true
+    permalink: /property/:id/
 
 # إعدادات السيو الإضافية
 seo:
@@ -64,3 +73,7 @@ seo:
 # إعدادات التصفح Pagination
 paginate: 10
 paginate_path: "/page:num/"
+
+# ✨ إعدادات إضافية لـ Netlify
+timezone: Africa/Cairo
+future: false
