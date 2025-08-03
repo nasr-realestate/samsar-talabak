@@ -9,10 +9,11 @@ description: "تصفح طلبات العملاء الجادين لشراء وا�
 <meta property="og:description" content="تصفح طلبات العملاء الجادين لشراء واستئجار العقارات في مدينة نصر.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="{{ page.url | absolute_url }}">
-<!-- ملاحظة: إذا كان لديك لوجو للموقع، يمكنك وضعه هنا ليظهر في المعاينة -->
-<!-- <meta property="og:image" content="{{ '/assets/images/logo.png' | absolute_url }}"> -->
+{% if site.logo %}
+<meta property="og:image" content="{{ site.logo | absolute_url }}">
+{% endif %}
 
-<!-- 1. رأس الصفحة الاحترافي مع تأثيرات بصرية (استخدام <header> دلاليًا) -->
+<!-- 1. رأس الصفحة الاحترافي مع تأثيرات بصرية -->
 <header class="page-header">
   <h1>🤝 طلبات العملاء الجادة</h1>
   <p style="color: #ccc; font-size: 1.2rem; margin-top: 1rem;">ابحث عن الطلب المثالي لعقارك وقدم عرضك اليوم</p>
@@ -22,7 +23,7 @@ description: "تصفح طلبات العملاء الجادين لشراء وا�
 <main>
   <!-- 2. زر الإجراء الرئيسي -->
   <section style="text-align:center; margin: 2rem 0;">
-    <a href="/samsar-talabak/add-your-property.html" class="nav-btn">
+    <a href="{{ '/add-your-property' | relative_url }}" class="nav-btn">
       ✨ لديك عقار؟ قدمه الآن
     </a>
   </section>
@@ -39,7 +40,7 @@ description: "تصفح طلبات العملاء الجادين لشراء وا�
     </div>
   </div>
 
-  <!-- 4. حاوية الفلاتر الديناميكية (داخل <section> للتنظيم) -->
+  <!-- 4. حاوية الفلاتر الديناميكية -->
   <section id="filter-buttons" class="filter-container enhanced-filter-container">
     <!-- سيتم ملء هذا القسم بواسطة الجافاسكربت -->
   </section>
@@ -59,5 +60,81 @@ description: "تصفح طلبات العملاء الجادين لشراء وا�
   <div class="floating-element" style="left: 85%; animation-delay: 2.2s;"></div>
 </div>
 
+<!-- أنماط التحميل والخطأ -->
+<style>
+  .loading-container { 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+  }
+  
+  .loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 5px solid #333;
+    border-top: 5px solid #00ff88;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+  }
+  
+  .loading-text {
+    color: #f1f1f1;
+    font-size: 1.2rem;
+    text-align: center;
+  }
+  
+  .loading-subtext {
+    color: #888;
+    margin-top: 10px;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .floating-element {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #00ff88;
+    border-radius: 50%;
+    opacity: 0.2;
+    animation: float 6s ease-in-out infinite;
+    z-index: -1;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+</style>
+
+<!-- نظام التوجيه الذكي -->
+<script>
+  // نظام توجيه ذكي للروابط القديمة
+  const urlParams = new URLSearchParams(window.location.search);
+  const requestId = urlParams.get('id');
+  
+  if (requestId) {
+    // تحويل فوري مع رسالة ترحيب
+    document.getElementById('requests-container').innerHTML = `
+      <div class="loading-container">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">جارٍ تحويلك إلى الرابط الجديد...</div>
+        <p class="loading-subtext">نقوم بتحديث نظام الروابط لتحسين تجربتك</p>
+      </div>
+    `;
+    
+    // تأخير بسيط لتحسين تجربة المستخدم
+    setTimeout(() => {
+      window.location.href = `{{ '/' | relative_url }}request/${requestId}`;
+    }, 1500);
+  }
+</script>
+
 <!-- 7. استدعاء ملف الجافاسكربت النهائي المحسن -->
-<script src="/samsar-talabak/assets/js/requests-display-enhanced.js"></script>
+<script src="{{ '/assets/js/requests-display-enhanced.js' | relative_url }}"></script>
