@@ -20,51 +20,38 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup jq
+        run: sudo apt-get install jq -y
+
       - name: Generate master index for properties
         run: |
           echo "🔍 Generating properties index..."
           INDEX_FILE="data/properties_index.json"
-          echo "[" > $INDEX_FILE
           
-          find data/properties -type f -name '*.json' ! -name 'index.json' | while read file; do
-            id=$(grep -o '"id": *"[^"]*"' "$file" | sed 's/"id": *"\([^"]*\)"/\1/')
-            if [ -n "$id" ]; then
-              path="${file}"
-              echo "  {" >> $INDEX_FILE
-              echo "    \"id\": \"$id\"," >> $INDEX_FILE
-              echo "    \"path\": \"$path\"" >> $INDEX_FILE
-              echo "  }," >> $INDEX_FILE
-            else
-              echo "⚠️ Warning: No 'id' field found in $file. Skipping."
-            fi
-          done
-
-          sed -i '$ s/},/}/' $INDEX_FILE
-          echo "]" >> $INDEX_FILE
+          # إنشاء مصفوفة JSON باستخدام jq
+          find data/properties -type f -name '*.json' ! -name 'index.json' -exec \
+            jq -n --arg path {} '{
+              id: (input_filename | split("/")[-1] | split(".")[0]),
+              path: ("/" + $path)
+            }' {} + | jq -s '.' > $INDEX_FILE
+          
           echo "✅ Master properties index generated at $INDEX_FILE"
+          cat $INDEX_FILE
 
       - name: Generate master index for requests
         run: |
           echo "🔍 Generating requests index..."
           INDEX_FILE="data/requests_index.json"
-          echo "[" > $INDEX_FILE
           
-          find data/requests -type f -name '*.json' ! -name 'index.json' | while read file; do
-            id=$(grep -o '"id": *"[^"]*"' "$file" | sed 's/"id": *"\([^"]*\)"/\1/')
-            if [ -n "$id" ]; then
-              path="${file}"
-              echo "  {" >> $INDEX_FILE
-              echo "    \"id\": \"$id\"," >> $INDEX_FILE
-              echo "    \"path\": \"$path\"" >> $INDEX_FILE
-              echo "  }," >> $INDEX_FILE
-            else
-              echo "⚠️ Warning: No 'id' field found in $file. Skipping."
-            fi
-          done
-
-          sed -i '$ s/},/}/' $INDEX_FILE
-          echo "]" >> $INDEX_FILE
+          # إنشاء مصفوفة JSON باستخدام jq
+          find data/requests -type f -name '*.json' ! -name 'index.json' -exec \
+            jq -n --arg path {} '{
+              id: (input_filename | split("/")[-1] | split(".")[0]),
+              path: ("/" + $path)
+            }' {} + | jq -s '.' > $INDEX_FILE
+          
           echo "✅ Master requests index generated at $INDEX_FILE"
+          cat $INDEX_FILE
 
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
