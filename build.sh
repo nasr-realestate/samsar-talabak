@@ -3,15 +3,22 @@
 # الخروج فورًا عند حدوث أي خطأ
 set -e
 
-echo "BUILD SCRIPT v2.0: Starting..."
+# ✨ الخطوة الجديدة (والأهم): مسح ذاكرة Netlify المؤقتة قبل البدء
+# هذا يضمن أن كل عملية بناء تبدأ من الصفر ببيانات جديدة تمامًا.
+echo "[1/6] CLEANING: Removing old build cache..."
+rm -rf .jekyll-cache
+rm -rf _site
+echo "✅ Cache cleaned."
 
-# --- الخطوة 1: تثبيت الأدوات ---
-echo "[1/5] Installing build tools (jq)..."
+echo "BUILD SCRIPT v2.1: Starting..."
+
+# --- الخطوة 2: تثبيت الأدوات ---
+echo "[2/6] Installing build tools (jq)..."
 apt-get update -y && apt-get install -y jq
 echo "✅ jq installed."
 
-# --- الخطوة 2: توليد فهارس الفئات (هذا الجزء يعمل لديك حاليًا) ---
-echo "[2/5] Generating category indexes..."
+# --- الخطوة 3: توليد فهارس الفئات ---
+echo "[3/6] Generating category indexes..."
 for base in data/properties data/requests; do
   for dir in "$base"/*/; do
     if [ -d "$dir" ]; then
@@ -25,24 +32,15 @@ for base in data/properties data/requests; do
 done
 echo "✅ Category indexes are ready."
 
-# --- الخطوة 3: التحقق من وجود ملفات JSON قبل إنشاء الفهرس الرئيسي ---
-echo "[3/5] Verifying that property JSON files exist..."
-find data/properties -type f -name '*.json' ! -path '*/index.json' -ls
-echo "--- Verification complete. ---"
+# --- الخطوة 4: التحقق وتوليد الفهارس الرئيسية ---
+echo "[4/6] Generating master indexes..."
 
-# --- الخطوة 4: توليد الفهارس الرئيسية (الجزء الذي سنصلحه) ---
-echo "[4/5] Generating master indexes..."
-
-# ✨ إصلاح محتمل: تبسيط الأمر وتصحيح المسارات لـ jq
 PROPERTIES_JSON_FILES=$(find data/properties -type f -name '*.json' ! -path '*/index.json')
 if [ -n "$PROPERTIES_JSON_FILES" ]; then
   echo "$PROPERTIES_JSON_FILES" | xargs -I {} jq -n --arg path {} '{id: ($path | split("/")[-1] | split(".")[0]), path: ("/" + $path)}' {} | jq -s '.' > data/properties_index.json
   echo "✅ Master properties index generated."
-  echo "--- Master Properties Index Content: ---"
-  cat data/properties_index.json
-  echo "----------------------------------------"
 else
-  echo "⚠️ No property files found to index. Creating an empty index."
+  echo "⚠️ No property files found. Creating an empty properties index."
   echo "[]" > data/properties_index.json
 fi
 
@@ -51,11 +49,17 @@ if [ -n "$REQUESTS_JSON_FILES" ]; then
   echo "$REQUESTS_JSON_FILES" | xargs -I {} jq -n --arg path {} '{id: ($path | split("/")[-1] | split(".")[0]), path: ("/" + $path)}' {} | jq -s '.' > data/requests_index.json
   echo "✅ Master requests index generated."
 else
-  echo "⚠️ No request files found to index. Creating an empty index."
+  echo "⚠️ No request files found. Creating an empty requests index."
   echo "[]" > data/requests_index.json
 fi
 
-# --- الخطوة 5: بناء موقع Jekyll ---
-echo "[5/5] Starting Jekyll build..."
+# --- الخطوة 5: عرض محتوى الفهرس الرئيسي للتأكد ---
+echo "[5/6] Verifying master properties index content..."
+echo "--- Master Properties Index Content: ---"
+cat data/properties_index.json
+echo "----------------------------------------"
+
+# --- الخطوة 6: بناء موقع Jekyll ---
+echo "[6/6] Starting Jekyll build..."
 bundle exec jekyll build
 echo "🚀 Build complete. Site is ready!"
