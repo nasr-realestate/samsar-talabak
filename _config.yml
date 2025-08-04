@@ -1,0 +1,66 @@
+# =========================================================
+# === إعدادات النشر لـ Netlify (النسخة النهائية) ===
+# =========================================================
+
+title: "سمسار طلبك"
+description: "شقق تمليك في مدينة نصر - عروض حصرية وأسعار تنافسية"
+
+# ✨ التعديل 1: تم تحديث الرابط ليعكس رابط Netlify الجديد
+url: "https://aqarnasr.netlify.app" 
+
+# ✨ التعديل 2: تم جعل baseurl فارغًا، وهذا هو أهم تعديل لـ Netlify
+baseurl: "" 
+
+lang: "ar"
+email: "elraikonly@outlook.sa"
+
+# تم التأكد من أن هذا السطر محذوف أو معطل
+# theme: minima
+
+#  هذا هو الإعداد الرئيسي للبيانات
+data_source: data
+
+# إعدادات SEO
+google_site_verification: "ozxUgrS2657mo8HYSvgjhYSeYv1FCcc8ig_3wjmSoGA"
+
+# دعم Markdown و HTML
+markdown: kramdown
+kramdown:
+  input: GFM
+
+# إعدادات البناء
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# إعدادات الصفحات الافتراضية
+defaults:
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+      lang: "ar"
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      lang: "ar"
+
+# استثناءات الملفات والمجلدات التي لا تُنشر
+exclude:
+  - node_modules
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+
+# إعدادات السيو الإضافية
+seo:
+  title: "سمسار طلبك - أفضل عروض العقارات في مدينة نصر"
+  description: "استكشف أفضل الشقق المعروضة للبيع والإيجار في مدينة نصر مع عروض حصرية وأسعار تنافسية."
+
+# إعدادات التصفح Pagination
+paginate: 10
+paginate_path: "/page:num/"
