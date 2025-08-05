@@ -5,6 +5,7 @@ description: "طلب عقاري مقدم عبر سمسار طلبك - مدينة
 ---
 
 <!-- SEO: وسوم سيتم تحديثها ديناميكيًا بواسطة جافاسكريبت -->
+<!-- ملاحظة: يفضل وضع هذه الوسوم داخل الـ <head> عبر ملف الـ layout -->
 <meta name="description" content="تفاصيل طلب عقاري من حيث المساحة، الميزانية، وعدد الغرف المطلوبة.">
 <meta property="og:title" content="تفاصيل الطلب - سمسار طلبك">
 <meta property="og:description" content="تفاصيل طلب عقاري من حيث المساحة، الميزانية، وعدد الغرف المطلوبة.">
@@ -14,23 +15,24 @@ description: "طلب عقاري مقدم عبر سمسار طلبك - مدينة
 <!-- SEO: بيانات Schema.org JSON-LD ستُملأ هنا -->
 <script type="application/ld+json" id="schema-json"></script>
 
-<!-- SEO: استخدام article هو الأنسب دلاليًا لصفحة تفاصيل -->
-<article id="request-details" class="details-container">
-  <p class="loading-message">⏳ جاري تحميل تفاصيل الطلب...</p>
+
+<!-- ✨ الإصلاح: تمت إزالة class="details-container" لتجنب أي تضارب مع الأنماط التي يضيفها JS -->
+<article id="request-details">
+  <!-- ✨ تم تحسين رسالة التحميل لتكون متوافقة مع التصميم -->
+  <div class="loading-container" style="text-align: center; padding: 40px;">
+    <div class="loading-spinner" style="width: 50px; height: 50px; border: 5px solid #333; border-top: 5px solid #00ccff; border-radius: 50%; margin: 0 auto 20px; animation: spin 1s linear infinite;"></div>
+    <p class="loading-message" style="color: #ccc;">⏳ جاري تحميل تفاصيل الطلب...</p>
+  </div>
+  <style>@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>
 </article>
 
-<!-- 🔁 زر العودة -->
-<div class="back-button-container">
-  <a href="/samsar-talabak/requests-filtered.html" class="back-btn">
-    ← العودة للطلبات
-  </a>
-</div>
 
-<!-- ✅ إشعار النسخ -->
-<div id="copy-toast" class="toast-notification">
-  ✅ تم نسخ رابط الطلب
-</div>
+<!-- ملاحظة: زر العودة يتم إنشاؤه الآن ديناميكيًا داخل الجافا سكريبت لضمان التناسق -->
 
-<!-- ✅ سكربت التحميل الخارجي (تم فصله عن الكود المدمج) -->
-<script src="/samsar-talabak/assets/js/requests-details-script.js
-"></script>
+
+<!-- ✨ الإصلاح: تم نقل منطق رسالة النسخ بالكامل إلى الجافا سكريبت لتوحيد السلوك -->
+
+
+<!-- ✨✨✨ الإصلاح الحاسم: تم تصحيح مسار استدعاء الجافا سكريبت ✨✨✨ -->
+<!-- تم استخدام فلتر Jekyll لضمان صحة الرابط دائمًا -->
+<script src="{{ '/assets/js/requests-details-script.js' | relative_url }}" defer></script>
