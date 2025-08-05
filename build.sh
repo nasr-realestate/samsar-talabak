@@ -1,65 +1,66 @@
 #!/bin/bash
-
-# الخروج فورًا عند حدوث أي خطأ
 set -e
 
-# ✨ الخطوة الجديدة (والأهم): مسح ذاكرة Netlify المؤقتة قبل البدء
-# هذا يضمن أن كل عملية بناء تبدأ من الصفر ببيانات جديدة تمامًا.
-echo "[1/6] CLEANING: Removing old build cache..."
-rm -rf .jekyll-cache
-rm -rf _site
-echo "✅ Cache cleaned."
+echo "--- BUILD SCRIPT v2.2 (Robust) START ---"
 
-echo "BUILD SCRIPT v2.1: Starting..."
+# 1. التنظيف
+echo "[1] Cleaning old cache..."
+rm -rf .jekyll-cache _site
+echo "  -> Done."
 
-# --- الخطوة 2: تثبيت الأدوات ---
-echo "[2/6] Installing build tools (jq)..."
-apt-get update -y && apt-get install -y jq
-echo "✅ jq installed."
+# 2. تثبيت الأدوات
+echo "[2] Installing tools (jq)..."
+apt-get update -y > /dev/null && apt-get install -y jq > /dev/null
+echo "  -> Done."
 
-# --- الخطوة 3: توليد فهارس الفئات ---
-echo "[3/6] Generating category indexes..."
-for base in data/properties data/requests; do
-  for dir in "$base"/*/; do
-    if [ -d "$dir" ]; then
-      INDEX_FILE="$dir/index.json"
-      echo "  -> Generating index for $dir"
-      find "$dir" -maxdepth 1 -type f -name '*.json' ! -name 'index.json' -printf '"%f",\n' | sed '$ s/,$//' > temp_file.txt
-      echo -e "[\n$(cat temp_file.txt)\n]" > "$INDEX_FILE"
-      rm temp_file.txt
-    fi
-  done
+# 3. توليد فهارس الفئات
+echo "[3] Generating category indexes..."
+find data/properties data/requests -mindepth 1 -type d | while read dir; do
+  INDEX_FILE="$dir/index.json"
+  echo "  -> Processing $dir..."
+  # إنشاء قائمة بأسماء الملفات فقط، مع التأكد من أنها ليست فارغة
+  FILES_FOUND=$(find "$dir" -maxdepth 1 -type f -name '*.json' ! -name 'index.json' -printf '"%f"\n' | paste -sd, -)
+  if [ -n "$FILES_FOUND" ]; then
+    echo "[$FILES_FOUND]" > "$INDEX_FILE"
+    echo "    -> Created $INDEX_FILE"
+  else
+    echo "[]" > "$INDEX_FILE"
+    echo "    -> No files found, created empty index."
+  fi
 done
-echo "✅ Category indexes are ready."
+echo "  -> Done."
 
-# --- الخطوة 4: التحقق وتوليد الفهارس الرئيسية ---
-echo "[4/6] Generating master indexes..."
+# 4. توليد الفهارس الرئيسية
+echo "[4] Generating master indexes..."
 
-PROPERTIES_JSON_FILES=$(find data/properties -type f -name '*.json' ! -path '*/index.json')
-if [ -n "$PROPERTIES_JSON_FILES" ]; then
-  echo "$PROPERTIES_JSON_FILES" | xargs -I {} jq -n --arg path {} '{id: ($path | split("/")[-1] | split(".")[0]), path: ("/" + $path)}' {} | jq -s '.' > data/properties_index.json
-  echo "✅ Master properties index generated."
-else
-  echo "⚠️ No property files found. Creating an empty properties index."
-  echo "[]" > data/properties_index.json
-fi
+# الفهرس الرئيسي للعقارات
+MASTER_PROPERTIES_FILE="data/properties_index.json"
+echo "  -> Creating $MASTER_PROPERTIES_FILE..."
+find data/properties -type f -name '*.json' ! -path '*/index.json' -print0 | \
+  xargs -0 -I {} jq -n --arg path "{}" '{id: ($path | split("/")[-1] | split(".")[0]), path: ("/" + $path)}' | \
+  jq -s '.' > "$MASTER_PROPERTIES_FILE"
+echo "  -> Done."
 
-REQUESTS_JSON_FILES=$(find data/requests -type f -name '*.json' ! -path '*/index.json')
-if [ -n "$REQUESTS_JSON_FILES" ]; then
-  echo "$REQUESTS_JSON_FILES" | xargs -I {} jq -n --arg path {} '{id: ($path | split("/")[-1] | split(".")[0]), path: ("/" + $path)}' {} | jq -s '.' > data/requests_index.json
-  echo "✅ Master requests index generated."
-else
-  echo "⚠️ No request files found. Creating an empty requests index."
-  echo "[]" > data/requests_index.json
-fi
+# الفهرس الرئيسي للطلبات
+MASTER_REQUESTS_FILE="data/requests_index.json"
+echo "  -> Creating $MASTER_REQUESTS_FILE..."
+find data/requests -type f -name '*.json' ! -path '*/index.json' -print0 | \
+  xargs -0 -I {} jq -n --arg path "{}" '{id: ($path | split("/")[-1] | split(".")[0]), path: ("/" + $path)}' | \
+  jq -s '.' > "$MASTER_REQUESTS_FILE"
+echo "  -> Done."
 
-# --- الخطوة 5: عرض محتوى الفهرس الرئيسي للتأكد ---
-echo "[5/6] Verifying master properties index content..."
-echo "--- Master Properties Index Content: ---"
-cat data/properties_index.json
+# 5. التحقق من المحتوى (أهم خطوة)
+echo "[5] Verifying master index content..."
+echo "--- CONTENT OF $MASTER_PROPERTIES_FILE ---"
+cat "$MASTER_PROPERTIES_FILE"
+echo "----------------------------------------"
+echo "--- CONTENT OF $MASTER_REQUESTS_FILE ---"
+cat "$MASTER_REQUESTS_FILE"
 echo "----------------------------------------"
 
-# --- الخطوة 6: بناء موقع Jekyll ---
-echo "[6/6] Starting Jekyll build..."
+# 6. بناء Jekyll
+echo "[6] Running Jekyll build..."
 bundle exec jekyll build
-echo "🚀 Build complete. Site is ready!"
+echo "  -> Done."
+
+echo "--- BUILD SCRIPT END ---"
