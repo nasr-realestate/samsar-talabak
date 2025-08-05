@@ -1,109 +1,98 @@
 /**
- * نظام تحميل تفاصيل العقار (النسخة النهائية v5.1 - إصلاحات التصميم النهائية)
+ * نظام تحميل تفاصيل العقار (النسخة الناجحة والمستقرة v5.0)
+ * هذه النسخة تركز على جلب البيانات بنجاح مع عرض مبسط.
  */
 
-// ... (كل الكود العلوي يبقى كما هو بدون تغيير) ...
 document.addEventListener("DOMContentLoaded", async function () {
-    // ... (كل كود جلب البيانات يبقى كما هو) ...
-    try {
-        // ... الكود ...
-        const propertyData = await propertyRes.json();
-        const propertyId = propertyInfo.id; // نحصل على الـ ID من الفهرس
+  const container = document.getElementById("property-details");
+  if (!container) {
+    console.error("خطأ فادح: الحاوية #property-details غير موجودة.");
+    return;
+  }
 
-        // ✨ تمرير الـ ID إلى دوال العرض
-        updateSeoTags(propertyData, propertyId); 
-        renderPropertyDetails(propertyData, container, propertyId);
-
-    } catch (err) {
-        // ...
+  // --- الخطوة 1: استخراج الـ ID من الرابط (الطريقة المضمونة) ---
+  let propertyId = null;
+  try {
+    const path = window.location.pathname;
+    const parts = path.split('/').filter(Boolean); // مثال: ["property", "shqa-ahly-fursan-1"]
+    if ((parts[0] === 'property' || parts[0] === 'request') && parts.length > 1) {
+      propertyId = parts[1];
     }
+  } catch (e) {
+    showErrorState(container, "الرابط المستخدم غير صالح.");
+    return;
+  }
+
+  if (!propertyId) {
+    showErrorState(container, `لم يتم تحديد مُعرّف في الرابط. المسار الحالي: ${window.location.pathname}`);
+    return;
+  }
+  
+  // --- الخطوة 2: جلب البيانات (العملية الناجحة) ---
+  try {
+    const indexType = window.location.pathname.includes('/property/') ? 'properties' : 'requests';
+    const indexUrl = `/data/${indexType}_index.json`;
+    
+    const indexRes = await fetch(`${indexUrl}?t=${Date.now()}`);
+    if (!indexRes.ok) throw new Error(`فشل تحميل فهرس البيانات (خطأ ${indexRes.status}).`);
+
+    const masterIndex = await indexRes.json();
+    const propertyInfo = masterIndex.find(p => String(p.id) === String(propertyId));
+
+    if (!propertyInfo) {
+      throw new Error(`العقار بالرقم "${propertyId}" غير موجود في الفهرس.`);
+    }
+
+    const propertyRes = await fetch(`${propertyInfo.path}?t=${Date.now()}`);
+    if (!propertyRes.ok) throw new Error(`فشل تحميل بيانات العقار من المسار ${propertyInfo.path}.`);
+    
+    const propertyData = await propertyRes.json();
+    
+    // --- الخطوة 3: عرض البيانات (باستخدام دوال مبسطة ومضمونة) ---
+    updateSeoTags_Simple(propertyData); 
+    renderPropertyDetails_Simple(propertyData, container, propertyId);
+
+  } catch (err) {
+    console.error("Error in data fetching chain:", err);
+    showErrorState(container, err.message);
+  }
 });
 
-function showErrorState(container, message) { /* ... نفس الكود ... */ }
 
-// ✨✨✨ تم تعديل هذه الدالة بشكل نهائي ✨✨✨
-function renderPropertyDetails(prop, container, propertyId) { // ✨ استقبلنا الـ ID هنا
-  const whatsapp = prop.whatsapp || "201147758857";
-  const pageURL = new URL(`/property/${propertyId}`, window.location.origin).href;
-  
-  const priceToRender = prop.price_display || prop.price || "غير محدد";
-  const areaToRender = prop.area_display || prop.area || 'غير محددة';
-  const description = prop.description || 'لا يوجد وصف متاح';
-  const moreDetails = prop.more_details || '';
-  
+// --- الدوال المساعدة ---
+
+function showErrorState(container, message) {
   container.innerHTML = `
-    <header class="details-header">
-      <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار سمسار طلبك" class="brand-logo">
-      <h1>${prop.title || "تفاصيل العرض"}</h1>
-    </header>
-    
-    <!-- ✨ تم إصلاح عرض رقم العقار -->
-    <div class="property-id-badge">رقم العقار: ${propertyId}</div>
-
-    <p class="details-price">💰 ${priceToRender}</p>
-
-    <section class="details-grid">
-      <div class="detail-item"><strong>📏 المساحة:</strong> ${areaToRender}</div>
-      <div class="detail-item"><strong>🛏️ عدد الغرف:</strong> ${prop.rooms ?? 'غير محدد'}</div>
-      <div class="detail-item"><strong>🛁 عدد الحمامات:</strong> ${prop.bathrooms ?? 'غير محدد'}</div>
-      <div class="detail-item"><strong>🏢 الدور:</strong> ${prop.floor ?? 'غير محدد'}</div>
-      <div class="detail-item"><strong>🛗 مصعد:</strong> ${prop.elevator ? 'نعم' : 'لا'}</div>
-      <div class="detail-item"><strong>🚗 جراج:</strong> ${prop.garage ? 'متوفر' : 'غير متوفر'}</div>
-      <div class="detail-item"><strong>🎨 التشطيب:</strong> ${prop.finish || 'غير محدد'}</div>
-      <div class="detail-item"><strong>🧭 الاتجاه:</strong> ${prop.direction || 'غير محدد'}</div>
-    </section>
-
-    <section class="details-description">
-      <h2>📝 الوصف</h2>
-      <p>${description}</p>
-      ${moreDetails ? `<h2>📌 تفاصيل إضافية</h2><p>${moreDetails}</p>` : ''}
-    </section>
-
-    <p class="details-date">📅 <strong>تاريخ الإضافة:</strong> ${prop.date || 'غير متوفر'}</p>
-
-    <footer class="details-actions">
-      <a href="https://wa.me/${whatsapp}?text=أريد الاستفسار عن ${encodeURIComponent(prop.title || '')} - رقم العقار: ${propertyId}" 
-         target="_blank" class="action-btn whatsapp-btn">
-        <span class="btn-icon">💬</span> تواصل عبر واتساب
-      </a>
-      <button onclick="copyToClipboard('${pageURL}')" class="action-btn copy-btn" title="انسخ رابط العرض">
-        <span class="btn-icon">📤</span> مشاركة الرابط
-      </button>
-      <a href="/properties-filtered.html" class="action-btn back-btn">
-        <span class="btn-icon">←</span> العودة للقائمة
-      </a>
-    </footer>
-    
-    <!-- ✨ تم إصلاح مشكلة ظهور رسالة النسخ -->
-    <div id="copy-toast" class="toast" style="visibility: hidden; opacity: 0;">تم نسخ الرابط بنجاح ✓</div>
+    <div class="error-state" style="padding: 40px; text-align: center;">
+      <div class="error-icon" style="font-size: 3rem;">⚠️</div>
+      <h3>حدث خطأ</h3>
+      <p style="color: #ccc;">${message}</p>
+      <a href="/" style="color:white; text-decoration: none; background: #333; padding: 10px 20px; border-radius: 20px; margin-top: 20px; display: inline-block;">العودة للرئيسية</a>
+    </div>
   `;
 }
 
-// ✨✨✨ تم تعديل هذه الدالة بشكل نهائي ✨✨✨
-function updateSeoTags(prop, propertyId) { // ✨ استقبلنا الـ ID هنا
-  const priceForDisplay = prop.price_display || prop.price || 'غير محدد';
-  const areaForDisplay = prop.area_display || prop.area || 'غير محددة';
-  const pageTitle = `${prop.title || 'عرض عقاري'} - سمسار طلبك`;
-  const description = `تفاصيل عقار: ${prop.title || ''}. المساحة: ${areaForDisplay}، السعر: ${priceForDisplay}. ${(prop.description || '').substring(0, 120)}...`;
-  const pageURL = new URL(`/property/${propertyId}`, window.location.origin).href;
-  document.title = pageTitle;
-  // ... باقي كود السيو الخاص بك
+/**
+ * دالة عرض مبسطة جدًا لضمان عدم وجود أخطاء في التصميم
+ */
+function renderPropertyDetails_Simple(prop, container, propertyId) {
+  const title = prop.title || "تفاصيل العرض";
+  const description = prop.description || "لا يوجد وصف متاح.";
+  const price = prop.price || "السعر غير محدد";
+
+  container.style.cssText = "padding: 20px; color: white; max-width: 800px; margin: auto;";
+  container.innerHTML = `
+    <h1 style="color: #00ff88; border-bottom: 2px solid #333; padding-bottom: 10px;">${title}</h1>
+    <p style="font-size: 1.2rem;"><strong>رقم العقار:</strong> ${propertyId}</p>
+    <p style="font-size: 1.5rem; color: #00ccff;"><strong>السعر:</strong> ${price}</p>
+    <h3 style="margin-top: 30px; color: #00ff88;">الوصف:</h3>
+    <p>${description}</p>
+  `;
 }
 
-function copyToClipboard(text) {
-  navigator.clipboard.writeText(text).then(() => {
-    const toast = document.getElementById("copy-toast");
-    if (toast) {
-      // ✨ تم تعديل طريقة الإظهار لتعمل مع الإصلاح
-      toast.style.visibility = 'visible';
-      toast.style.opacity = '1';
-      setTimeout(() => { 
-        toast.style.visibility = 'hidden';
-        toast.style.opacity = '0';
-      }, 3000);
-    }
-  }).catch(err => {
-    console.error('فشل في نسخ الرابط:', err);
-    alert('فشل في نسخ الرابط');
-  });
+/**
+ * دالة SEO مبسطة
+ */
+function updateSeoTags_Simple(prop) {
+  document.title = `${prop.title || 'عرض عقاري'} - سمسار طلبك`;
 }
