@@ -1,14 +1,17 @@
 /**
- * نظام تحميل تفاصيل العقار (النسخة النهائية والمدمجة v7.0)
- * يجمع هذا الكود بين محرك جلب البيانات الجديد والتصميم الأصلي الكامل.
+ * نظام تحميل تفاصيل العقار (الإصدار النهائي والاحترافي v8.0)
+ * يجمع هذا الكود بين محرك جلب البيانات الموثوق والتصميم الكامل مع كافة الإصلاحات.
  */
 
 // --- الجزء الأول: محرك جلب البيانات الجديد والناجح ---
 document.addEventListener("DOMContentLoaded", async function () {
   const container = document.getElementById("property-details");
-  if (!container) { return; }
+  if (!container) { 
+    console.error("خطأ فادح: الحاوية #property-details غير موجودة في الصفحة.");
+    return; 
+  }
 
-  // ✨ إصلاح مشكلة الحجم الكبير عن طريق تحديد عرض أقصى للحاوية
+  // ✨ إصلاح مشكلة الحجم الكبير للصفحة عن طريق تحديد عرض أقصى للحاوية
   container.style.maxWidth = '960px';
   container.style.margin = '20px auto';
   container.style.padding = '0 15px';
@@ -35,19 +38,21 @@ document.addEventListener("DOMContentLoaded", async function () {
     const indexUrl = `/data/${indexType}_index.json`;
     
     const indexRes = await fetch(`${indexUrl}?t=${Date.now()}`);
-    if (!indexRes.ok) throw new Error(`فشل تحميل فهرس البيانات.`);
+    if (!indexRes.ok) throw new Error(`فشل تحميل فهرس البيانات (خطأ ${indexRes.status}).`);
 
     const masterIndex = await indexRes.json();
     const propertyInfo = masterIndex.find(p => String(p.id) === String(propertyId));
 
-    if (!propertyInfo) throw new Error(`العقار بالرقم "${propertyId}" غير موجود في الفهرس.`);
+    if (!propertyInfo) {
+      throw new Error(`العقار بالرقم "${propertyId}" غير موجود في الفهرس.`);
+    }
 
     const propertyRes = await fetch(`${propertyInfo.path}?t=${Date.now()}`);
     if (!propertyRes.ok) throw new Error(`فشل تحميل بيانات العقار.`);
     
     const propertyData = await propertyRes.json();
     
-    // استدعاء دوال العرض والتصميم الأصلية والكاملة
+    // استدعاء دوال العرض والتصميم النهائية والكاملة
     updateSeoTags(propertyData, propertyId); 
     renderPropertyDetails(propertyData, container, propertyId);
 
@@ -57,11 +62,27 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 });
 
-// --- الجزء الثاني: دوال العرض والتصميم القديمة والكاملة الخاصة بك ---
 
-/**
- * SEO: تحديث وسوم SEO و JSON-LD ديناميكيًا (من كودك الأصلي)
- */
+// --- الجزء الثاني: الدوال النهائية والاحترافية (من كودك الأصلي مع تحسينات) ---
+
+function showErrorState(container, message) {
+    container.innerHTML = `<div class="error-state" style="padding: 40px; text-align: center;"><h3>❌ خطأ</h3><p>${message}</p></div>`;
+}
+
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    const toast = document.getElementById("copy-toast");
+    if (toast) {
+      toast.style.visibility = 'visible';
+      toast.style.opacity = '1';
+      setTimeout(() => { 
+        toast.style.visibility = 'hidden';
+        toast.style.opacity = '0';
+      }, 2500);
+    }
+  });
+}
+
 function updateSeoTags(prop, propertyId) {
   const priceForDisplay = prop.price_display || prop.price || 'غير محدد';
   const areaForDisplay = prop.area_display || prop.area || 'غير محددة';
@@ -98,9 +119,6 @@ function updateSeoTags(prop, propertyId) {
   schemaScript.textContent = JSON.stringify(schema, null, 2);
 }
 
-/**
- * عرض محتوى العقار بالتصميم الكامل (من كودك الأصلي)
- */
 function renderPropertyDetails(prop, container, propertyId) {
   const whatsapp = prop.whatsapp || "201147758857";
   const pageURL = new URL(`/property/${propertyId}`, window.location.origin).href;
@@ -141,20 +159,7 @@ function renderPropertyDetails(prop, container, propertyId) {
          ← العودة للقائمة
       </a>
     </footer>
-    <div id="copy-toast" class="toast">تم نسخ الرابط بنجاح ✓</div>
+    // ✨ الإصلاح النهائي لمشكلة رسالة النسخ
+    <div id="copy-toast" class="toast" style="visibility: hidden; opacity: 0; transition: all 0.3s ease;">تم نسخ الرابط بنجاح ✓</div>
   `;
-}
-
-function copyToClipboard(text) {
-  navigator.clipboard.writeText(text).then(() => {
-    const toast = document.getElementById("copy-toast");
-    if (toast) {
-      toast.classList.add('show');
-      setTimeout(() => { toast.classList.remove('show'); }, 2000);
-    }
-  });
-}
-
-function showErrorState(container, message) {
-    container.innerHTML = `<p class="error-message">❌ ${message}</p>`;
-}
+  }
