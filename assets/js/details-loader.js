@@ -159,7 +159,6 @@ function renderPropertyDetails(prop, container, propertyId) {
          ← العودة للقائمة
       </a>
     </footer>
-    // ✨ الإصلاح النهائي لمشكلة رسالة النسخ
     <div id="copy-toast" class="toast" style="visibility: hidden; opacity: 0; transition: all 0.3s ease;">تم نسخ الرابط بنجاح ✓</div>
   `;
   }
