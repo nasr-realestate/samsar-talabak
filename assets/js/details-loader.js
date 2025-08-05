@@ -1,14 +1,17 @@
 /**
- * نظام تحميل تفاصيل العقار (النسخة النهائية الكاملة v6.0)
- * تتضمن هذه النسخة التصميم الكامل والوظائف التفاعلية.
+ * نظام تحميل تفاصيل العقار (النسخة النهائية والمدمجة v7.0)
+ * يجمع هذا الكود بين محرك جلب البيانات الجديد والتصميم الأصلي الكامل.
  */
 
+// --- الجزء الأول: محرك جلب البيانات الجديد والناجح ---
 document.addEventListener("DOMContentLoaded", async function () {
   const container = document.getElementById("property-details");
-  if (!container) {
-    console.error("خطأ فادح: الحاوية #property-details غير موجودة.");
-    return;
-  }
+  if (!container) { return; }
+
+  // ✨ إصلاح مشكلة الحجم الكبير عن طريق تحديد عرض أقصى للحاوية
+  container.style.maxWidth = '960px';
+  container.style.margin = '20px auto';
+  container.style.padding = '0 15px';
 
   let propertyId = null;
   try {
@@ -32,23 +35,21 @@ document.addEventListener("DOMContentLoaded", async function () {
     const indexUrl = `/data/${indexType}_index.json`;
     
     const indexRes = await fetch(`${indexUrl}?t=${Date.now()}`);
-    if (!indexRes.ok) throw new Error(`فشل تحميل فهرس البيانات (خطأ ${indexRes.status}).`);
+    if (!indexRes.ok) throw new Error(`فشل تحميل فهرس البيانات.`);
 
     const masterIndex = await indexRes.json();
     const propertyInfo = masterIndex.find(p => String(p.id) === String(propertyId));
 
-    if (!propertyInfo) {
-      throw new Error(`العقار بالرقم "${propertyId}" غير موجود في الفهرس.`);
-    }
+    if (!propertyInfo) throw new Error(`العقار بالرقم "${propertyId}" غير موجود في الفهرس.`);
 
     const propertyRes = await fetch(`${propertyInfo.path}?t=${Date.now()}`);
     if (!propertyRes.ok) throw new Error(`فشل تحميل بيانات العقار.`);
     
     const propertyData = await propertyRes.json();
     
-    // استدعاء الدوال الكاملة والنهائية
-    updateSeoTags_Full(propertyData, propertyId); 
-    renderPropertyDetails_Full(propertyData, container, propertyId);
+    // استدعاء دوال العرض والتصميم الأصلية والكاملة
+    updateSeoTags(propertyData, propertyId); 
+    renderPropertyDetails(propertyData, container, propertyId);
 
   } catch (err) {
     console.error("Error in data fetching chain:", err);
@@ -56,61 +57,63 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 });
 
-// --- الدوال المساعدة ---
+// --- الجزء الثاني: دوال العرض والتصميم القديمة والكاملة الخاصة بك ---
 
-function showErrorState(container, message) {
-  container.innerHTML = `
-    <div class="error-state" style="padding: 40px; text-align: center;">
-      <div class="error-icon" style="font-size: 3rem;">⚠️</div>
-      <h3>حدث خطأ</h3>
-      <p style="color: #ccc;">${message}</p>
-      <a href="/" style="color:white; text-decoration: none; background: #333; padding: 10px 20px; border-radius: 20px; margin-top: 20px; display: inline-block;">العودة للرئيسية</a>
-    </div>
-  `;
+/**
+ * SEO: تحديث وسوم SEO و JSON-LD ديناميكيًا (من كودك الأصلي)
+ */
+function updateSeoTags(prop, propertyId) {
+  const priceForDisplay = prop.price_display || prop.price || 'غير محدد';
+  const areaForDisplay = prop.area_display || prop.area || 'غير محددة';
+  const pageTitle = `${prop.title || 'عرض عقاري'} - سمسار طلبك`;
+  const description = `تفاصيل عقار: ${prop.title || ''}. المساحة: ${areaForDisplay}، السعر: ${priceForDisplay}. ${(prop.description || '').substring(0, 160)}...`;
+  const pageURL = new URL(`/property/${propertyId}`, window.location.origin).href;
+
+  document.title = pageTitle;
+  
+  document.querySelector('meta[name="description"]')?.setAttribute('content', description);
+  document.querySelector('meta[property="og:title"]')?.setAttribute('content', pageTitle);
+  document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
+  document.querySelector('meta[property="og:url"]')?.setAttribute('content', pageURL);
+  
+  const schemaPrice = (prop.price_min !== undefined) ? prop.price_min : (prop.price || "0").replace(/[^0-9]/g, '');
+  const schemaArea = (prop.area_min !== undefined) ? prop.area_min : (prop.area || "0").replace(/[^0-9]/g, '');
+
+  const schema = {
+    "@context": "https://schema.org", "@type": "RealEstateListing", "name": prop.title,
+    "description": prop.description || prop.more_details, "url": pageURL,
+    "offers": { "@type": "Offer", "price": schemaPrice, "priceCurrency": "EGP" },
+    "floorSize": { "@type": "QuantitativeValue", "value": schemaArea, "unitText": "متر مربع" },
+    "numberOfRooms": prop.rooms, "numberOfBathroomsTotal": prop.bathrooms,
+    "address": prop.location || "مدينة نصر, القاهرة, مصر", "datePosted": prop.date,
+  };
+  
+  let schemaScript = document.getElementById('schema-json');
+  if (!schemaScript) {
+      schemaScript = document.createElement('script');
+      schemaScript.id = 'schema-json';
+      schemaScript.type = 'application/ld+json';
+      document.head.appendChild(schemaScript);
+  }
+  schemaScript.textContent = JSON.stringify(schema, null, 2);
 }
 
 /**
- * ✨✨✨ دالة نسخ الرابط النهائية ✨✨✨
+ * عرض محتوى العقار بالتصميم الكامل (من كودك الأصلي)
  */
-function copyToClipboard(text) {
-  navigator.clipboard.writeText(text).then(() => {
-    const toast = document.getElementById("copy-toast");
-    if (toast) {
-      toast.style.visibility = 'visible';
-      toast.style.opacity = '1';
-      setTimeout(() => { 
-        toast.style.visibility = 'hidden';
-        toast.style.opacity = '0';
-      }, 3000);
-    }
-  }).catch(err => {
-    console.error('فشل في نسخ الرابط:', err);
-    alert('فشل في نسخ الرابط');
-  });
-}
-
-/**
- * ✨✨✨ دالة العرض النهائية والكاملة ✨✨✨
- */
-function renderPropertyDetails_Full(prop, container, propertyId) {
+function renderPropertyDetails(prop, container, propertyId) {
   const whatsapp = prop.whatsapp || "201147758857";
   const pageURL = new URL(`/property/${propertyId}`, window.location.origin).href;
-  
   const priceToRender = prop.price_display || prop.price || "غير محدد";
   const areaToRender = prop.area_display || prop.area || 'غير محددة';
-  const description = prop.description || 'لا يوجد وصف متاح';
-  const moreDetails = prop.more_details || '';
-  
+
   container.innerHTML = `
     <header class="details-header">
       <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار سمسار طلبك" class="brand-logo">
       <h1>${prop.title || "تفاصيل العرض"}</h1>
     </header>
-    
     <div class="property-id-badge">رقم العقار: ${propertyId}</div>
-
     <p class="details-price">💰 ${priceToRender}</p>
-
     <section class="details-grid">
       <div class="detail-item"><strong>📏 المساحة:</strong> ${areaToRender}</div>
       <div class="detail-item"><strong>🛏️ عدد الغرف:</strong> ${prop.rooms ?? 'غير محدد'}</div>
@@ -121,63 +124,37 @@ function renderPropertyDetails_Full(prop, container, propertyId) {
       <div class="detail-item"><strong>🎨 التشطيب:</strong> ${prop.finish || 'غير محدد'}</div>
       <div class="detail-item"><strong>🧭 الاتجاه:</strong> ${prop.direction || 'غير محدد'}</div>
     </section>
-
     <section class="details-description">
       <h2>📝 الوصف</h2>
-      <p>${description}</p>
-      ${moreDetails ? `<h2>📌 تفاصيل إضافية</h2><p>${moreDetails}</p>` : ''}
+      <p>${prop.description || 'لا يوجد وصف'}</p>
+      ${prop.more_details ? `<h2>📌 تفاصيل إضافية</h2><p>${prop.more_details}</p>` : ''}
     </section>
-
     <p class="details-date">📅 <strong>تاريخ الإضافة:</strong> ${prop.date || 'غير متوفر'}</p>
-
     <footer class="details-actions">
-      <a href="https://wa.me/${whatsapp}?text=أريد الاستفسار عن ${encodeURIComponent(prop.title || '')} - رقم العقار: ${propertyId}" 
-         target="_blank" class="action-btn whatsapp-btn">
-        <span class="btn-icon">💬</span> تواصل عبر واتساب
+      <a href="https://wa.me/${whatsapp}?text=أريد الاستفسار عن ${encodeURIComponent(prop.title || '')} - رقم العقار: ${propertyId}" target="_blank" class="action-btn whatsapp-btn">
+        تواصل عبر واتساب
       </a>
       <button onclick="copyToClipboard('${pageURL}')" class="action-btn copy-btn" title="انسخ رابط العرض">
-        <span class="btn-icon">📤</span> مشاركة الرابط
+        📤
       </button>
-      <a href="/properties-filtered.html" class="action-btn back-btn">
-        <span class="btn-icon">←</span> العودة للقائمة
+       <a href="/properties-filtered.html" class="action-btn back-btn">
+         ← العودة للقائمة
       </a>
     </footer>
-    
-    <div id="copy-toast" class="toast" style="visibility: hidden; opacity: 0; transition: visibility 0s 0.3s, opacity 0.3s linear;">تم نسخ الرابط بنجاح ✓</div>
+    <div id="copy-toast" class="toast">تم نسخ الرابط بنجاح ✓</div>
   `;
 }
 
-
-/**
- * ✨✨✨ دالة SEO النهائية والكاملة ✨✨✨
- */
-function updateSeoTags_Full(prop, propertyId) {
-    const priceForDisplay = prop.price_display || prop.price || 'غير محدد';
-    const areaForDisplay = prop.area_display || prop.area || 'غير محددة';
-
-    const pageTitle = `${prop.title || 'عرض عقاري'} - سمسار طلبك`;
-    const description = `تفاصيل عقار: ${prop.title || ''}. المساحة: ${areaForDisplay}، السعر: ${priceForDisplay}. ${(prop.description || '').substring(0, 160)}...`;
-    
-    const pageURL = new URL(`/property/${propertyId}`, window.location.origin).href;
-
-    document.title = pageTitle;
-    
-    // تحديث الوسوم الموجودة أو إنشاؤها إذا لم تكن موجودة
-    let descriptionMeta = document.querySelector('meta[name="description"]');
-    if (!descriptionMeta) {
-        descriptionMeta = document.createElement('meta');
-        descriptionMeta.name = 'description';
-        document.head.appendChild(descriptionMeta);
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    const toast = document.getElementById("copy-toast");
+    if (toast) {
+      toast.classList.add('show');
+      setTimeout(() => { toast.classList.remove('show'); }, 2000);
     }
-    descriptionMeta.content = description;
+  });
+}
 
-    let ogTitleMeta = document.querySelector('meta[property="og:title"]');
-    if (!ogTitleMeta) {
-        ogTitleMeta = document.createElement('meta');
-        ogTitleMeta.setAttribute('property', 'og:title');
-        document.head.appendChild(ogTitleMeta);
-    }
-    ogTitleMeta.content = pageTitle;
-    
-    // ... يمكنك إضافة باقي وسوم الميتا هنا بنفس الطريقة (og:description, og:url, etc.)
+function showErrorState(container, message) {
+    container.innerHTML = `<p class="error-message">❌ ${message}</p>`;
 }
