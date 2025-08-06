@@ -1,9 +1,8 @@
 /**
- * نظام تحميل تفاصيل الطلب (الإصدار النهائي والمصحح v8.1)
- * هذا الكود هو النسخة الموحدة والمتوافقة مع نظام العروض الناجح.
+ * نظام تحميل تفاصيل الطلب (الإصدار النهائي v9.0 - مطابق لمنطق العروض الناجح)
  */
 
-// --- الجزء الأول: محرك جلب البيانات الموحد والناجح ---
+// --- الجزء الأول: محرك جلب البيانات الناجح (مكيف للطلبات) ---
 document.addEventListener("DOMContentLoaded", async function () {
   const container = document.getElementById("request-details");
   if (!container) { 
@@ -11,7 +10,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     return; 
   }
 
-  // تطبيق نمط لضمان عدم كون الصفحة كبيرة جدًا (يمكنك تعديله أو حذفه إذا كان لديك CSS خاص)
   container.style.maxWidth = '960px';
   container.style.margin = '20px auto';
   container.style.padding = '0 15px';
@@ -20,6 +18,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   try {
     const path = window.location.pathname;
     const parts = path.split('/').filter(Boolean);
+    // تم التعديل هنا ليتناسب مع رابط الطلبات
     if (parts[0] === 'request' && parts.length > 1) {
       requestId = parts[1];
     }
@@ -34,13 +33,14 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
   
   try {
-    // ✨✨✨ هذا هو السطر الوحيد الذي تم تغييره. تم تصحيح المسار من "properties" إلى "requests" ✨✨✨
+    // تم التعديل هنا ليقرأ من فهرس الطلبات
     const indexUrl = `/data/requests_index.json`;
     
     const indexRes = await fetch(`${indexUrl}?t=${Date.now()}`);
     if (!indexRes.ok) throw new Error(`فشل تحميل فهرس الطلبات (خطأ ${indexRes.status}).`);
 
     const masterIndex = await indexRes.json();
+    // تم التعديل هنا ليبحث عن الطلب
     const requestInfo = masterIndex.find(r => String(r.id) === String(requestId));
 
     if (!requestInfo) {
@@ -52,6 +52,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     
     const requestData = await requestRes.json();
     
+    // استدعاء الدوال الكاملة والنهائية (مكيفة للطلبات)
     updateSeoTags(requestData, requestId); 
     renderRequestDetails(requestData, container, requestId);
 
@@ -90,10 +91,30 @@ function updateSeoTags(req, requestId) {
   const pageURL = new URL(`/request/${requestId}`, window.location.origin).href;
 
   document.title = pageTitle;
+  
   document.querySelector('meta[name="description"]')?.setAttribute('content', description);
   document.querySelector('meta[property="og:title"]')?.setAttribute('content', pageTitle);
   document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
   document.querySelector('meta[property="og:url"]')?.setAttribute('content', pageURL);
+  
+  const schemaBudget = (req.budget_min !== undefined) ? req.budget_min : (req.budget || "0").replace(/[^0-9]/g, '');
+
+  const schema = {
+    "@context": "https://schema.org", "@type": "Demand", "name": req.title,
+    "description": req.description || req.more_details, "url": pageURL,
+    "priceSpecification": { "@type": "PriceSpecification", "price": schemaBudget, "priceCurrency": "EGP" },
+    "itemOffered": { "@type": "Product", "name": req.title || "عقار مطلوب" },
+    "validFrom": req.date,
+  };
+  
+  let schemaScript = document.getElementById('schema-json');
+  if (!schemaScript) {
+      schemaScript = document.createElement('script');
+      schemaScript.id = 'schema-json';
+      schemaScript.type = 'application/ld+json';
+      document.head.appendChild(schemaScript);
+  }
+  schemaScript.textContent = JSON.stringify(schema, null, 2);
 }
 
 function renderRequestDetails(req, container, requestId) {
@@ -138,4 +159,4 @@ function renderRequestDetails(req, container, requestId) {
     </footer>
     <div id="copy-toast" class="toast" style="visibility: hidden; opacity: 0; transition: all 0.3s ease;">تم نسخ الرابط بنجاح ✓</div>
   `;
-        }
+}
