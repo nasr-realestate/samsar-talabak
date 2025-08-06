@@ -41,7 +41,8 @@ layout: default
     const urlParams = new URLSearchParams(window.location.search);
     const propertyId = urlParams.get('id');
 
-    if (propertyId) {
+    // إذا كان id رقمًا صحيحًا، حوّله إلى مسار مختصر مثل /property/204
+    if (propertyId && /^\d+$/.test(propertyId)) {
       setTimeout(() => {
         window.location.href = `{{ '/' | relative_url }}property/${propertyId}`;
       }, 1500);
