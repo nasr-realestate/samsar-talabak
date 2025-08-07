@@ -6,11 +6,11 @@ permalink: /privacy-policy.html
 ---
 
 <!-- SEO: Open Graph Meta Tags -->
-<meta property="og:title" content="سياسة الخصوصية - سمسار طلبك">
-<meta property="og:description" content="تعرف على كيفية جمع وحماية بياناتك عند استخدام موقع سمسار طلبك في مدينة نصر.">
+<meta property="og:title" content="{{ page.title }}">
+<meta property="og:description" content="{{ page.description }}">
 <meta property="og:type" content="article">
 <meta property="og:url" content="{{ page.url | absolute_url }}">
-<meta property="og:image" content="https://i.postimg.cc/Vk8Nn1xZ/me.jpg">
+<meta property="og:image" content="{{ '/assets/img/logo.png' | absolute_url }}"> <!-- ✨ تم التحديث لاستخدام رابط ديناميكي -->
 
 <!-- 1. رأس الصفحة الموحد -->
 <header class="page-header">
@@ -20,7 +20,6 @@ permalink: /privacy-policy.html
 
 <!-- 2. المحتوى الرئيسي للصفحة -->
 <main class="content-wrapper">
-  <!-- SEO: استخدام <article> هو الأنسب للمحتوى المقالي -->
   <article class="content-section text-content">
     
     <h2>مقدمة</h2>
@@ -55,12 +54,14 @@ permalink: /privacy-policy.html
     </ul>
 
     <h2>تواصل معنا</h2>
-    <p>إذا كان لديك أي أسئلة أو استفسارات بخصوص سياسة الخصوصية، لا تتردد في التواصل معنا عبر صفحة <a href="/samsar-talabak/contact-us.html">تواصل معنا</a>.</p>
+    <!-- ✨✨✨ الإصلاح الحاسم هنا ✨✨✨ -->
+    <p>إذا كان لديك أي أسئلة أو استفسارات بخصوص سياسة الخصوصية، لا تتردد في التواصل معنا عبر صفحة <a href="{{ '/contact-us.html' | relative_url }}">تواصل معنا</a>.</p>
 
   </article>
 
   <!-- زر العودة -->
   <div class="center-btn">
-    <a href="{{ site.baseurl }}/" class="back-btn">→ العودة للصفحة الرئيسية</a>
+    <!-- ✨ تم استخدام فلتر Jekyll لضمان صحة الرابط -->
+    <a href="{{ '/' | relative_url }}" class="back-btn">→ العودة للصفحة الرئيسية</a>
   </div>
 </main>
