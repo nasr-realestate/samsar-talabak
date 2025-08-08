@@ -1,37 +1,38 @@
 ---
 layout: default
-title: "إضافة عقار (تجربة بسيطة)"
-permalink: /add-property-test.html
+title: "أضف عقارك (تجربة بسيطة)"
+permalink: /add-your-property.html
 ---
 
 <header class="page-header">
   <h1>تجربة إرسال بسيطة</h1>
+  <p>هذا الفورم للتأكد من أن Netlify يستقبل البيانات بشكل صحيح.</p>
 </header>
 
 <main class="content-wrapper">
   <section class="content-section">
     
     <!-- فورم بسيط جدًا باسم جديد وفريد -->
-    <form name="property-submission-final" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+    <form name="property-submission-final-v2" method="POST" data-netlify="true" netlify-honeypot="bot-field">
       
-      <input type="hidden" name="form-name" value="property-submission-final" />
+      <input type="hidden" name="form-name" value="property-submission-final-v2" />
       <p style="display: none;"><label>Don’t fill this out: <input name="bot-field" /></label></p>
       
-      <div>
-        <label for="title">عنوان العقار:</label>
-        <input type="text" id="title" name="title" required>
+      <div style="margin-bottom: 1.5rem;">
+        <label for="title" style="display: block; margin-bottom: 0.5rem; color: #ccc;">عنوان العقار:</label>
+        <input type="text" id="title" name="title" required style="width: 100%; padding: 12px; background-color: #2a2a2a; border: 1px solid #444; color: white; border-radius: 8px; font-size: 1rem;">
       </div>
       
-      <div style="margin-top: 20px;">
-        <label for="price">السعر:</label>
-        <input type="text" id="price" name="price" required>
+      <div style="margin-bottom: 1.5rem;">
+        <label for="price" style="display: block; margin-bottom: 0.5rem; color: #ccc;">السعر:</label>
+        <input type="text" id="price" name="price" required style="width: 100%; padding: 12px; background-color: #2a2a2a; border: 1px solid #444; color: white; border-radius: 8px; font-size: 1rem;">
       </div>
       
-      <div style="margin-top: 20px;">
-        <button type="submit">إرسال تجريبي</button>
+      <div style="margin-top: 2rem;">
+        <button type="submit" style="padding: 12px 25px; background-color: #00ff88; border: none; color: black; font-weight: bold; cursor: pointer; border-radius: 25px; font-size: 1.1rem;">إرسال تجريبي</button>
       </div>
       
     </form>
     
   </section>
-</main>```
+</main>
