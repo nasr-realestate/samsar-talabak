@@ -1,197 +1,38 @@
 ---
 layout: default
-title: "أضف عقارك - سمسار طلبك"
-description: "لديك عقار مميز في مدينة نصر؟ قدمه الآن بسهولة عبر الفورم المخصص ليصل إلى آلاف العملاء الجادين."
+title: "أضف عقارك (تجربة بسيطة)"
 permalink: /add-your-property.html
 ---
 
 <header class="page-header">
-  <h1>أضف عقارك بسهولة واحترافية</h1>
-  <p>🏡 املأ الحقول التالية بدقة، ودعنا نهتم بالباقي!</p>
+  <h1>تجربة إرسال بسيطة</h1>
+  <p>هذا الفورم للتأكد من أن Netlify يستقبل البيانات بشكل صحيح.</p>
 </header>
 
 <main class="content-wrapper">
   <section class="content-section">
     
-    <form name="property-submission-v3" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/success" class="property-form">
+    <!-- ✨ تم تحديث action ليوجه إلى صفحة النجاح المخصصة -->
+    <form name="property-submission-final-v2" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/form-success.html">
       
-      <input type="hidden" name="form-name" value="property-submission-v3" />
+      <input type="hidden" name="form-name" value="property-submission-final-v2" />
       <p style="display: none;"><label>Don’t fill this out: <input name="bot-field" /></label></p>
       
-      <div class="form-grid">
-        <!-- ============================================ -->
-        <!-- === القسم الأول: البيانات الأساسية للعرض === -->
-        <!-- ============================================ -->
-        <div class="form-group full-width">
-          <h2><span class="step-circle">1</span>البيانات الأساسية (لجذب العميل)</h2>
-        </div>
-
-        <div class="form-group full-width">
-          <label for="title">عنوان الإعلان (مهم جدًا وجذاب)</label>
-          <input type="text" id="title" name="title" placeholder="مثال: شقة 180م² للبيع بواجهة بحرية في عباس العقاد" required>
-        </div>
-
-        <div class="form-group">
-          <label for="price_display">السعر المعروض (كما سيظهر للعميل)</label>
-          <input type="text" id="price_display" name="price_display" placeholder="مثال: 2,500,000 جنيه (قابل للتفاوض)" required>
-        </div>
-        
-        <div class="form-group">
-          <label for="area_display">المساحة المعروضة (مع أي ملاحظات)</label>
-          <input type="text" id="area_display" name="area_display" placeholder="مثال: 180 متر مربع (صافي 175)" required>
-        </div>
-
-        <div class="form-group">
-            <label for="location">الموقع التفصيلي</label>
-            <input type="text" id="location" name="location" placeholder="مثال: شارع الطيران، بجوار فندق سونستا، مدينة نصر" required>
-        </div>
-
-        <div class="form-group">
-            <label for="ref_id">الرقم المرجعي (اختياري)</label>
-            <input type="text" id="ref_id" name="ref_id" placeholder="مثال: 108 (اتركه فارغًا ليتم إنشاؤه تلقائيًا)">
-        </div>
-
-        <!-- ============================================ -->
-        <!-- === القسم الثاني: تفاصيل العقار الفنية === -->
-        <!-- ============================================ -->
-        <div class="form-group full-width">
-          <h2><span class="step-circle">2</span>التفاصيل الفنية (للفلترة والبحث)</h2>
-        </div>
-        
-        <div class="form-group">
-          <label for="price_min">السعر (أرقام فقط للفرز)</label>
-          <input type="number" id="price_min" name="price_min" placeholder="2500000" required>
-        </div>
-        
-        <div class="form-group">
-          <label for="area_min">المساحة (أرقام فقط للفرز)</label>
-          <input type="number" id="area_min" name="area_min" placeholder="180" required>
-        </div>
-
-        <div class="form-group">
-          <label for="rooms">عدد الغرف</label>
-          <input type="number" id="rooms" name="rooms" placeholder="3" min="1">
-        </div>
-
-        <div class="form-group">
-          <label for="bathrooms">عدد الحمامات</label>
-          <input type="number" id="bathrooms" name="bathrooms" placeholder="2" min="1">
-        </div>
-
-        <div class="form-group">
-          <label for="floor">الدور</label>
-          <input type="text" id="floor" name="floor" placeholder="مثال: 6 أو أرضي">
-        </div>
-
-        <div class="form-group">
-          <label for="finish">حالة التشطيب</label>
-          <input type="text" id="finish" name="finish" placeholder="مثال: سوبر لوكس">
-        </div>
-
-        <div class="form-group">
-            <label for="elevator">مصعد</label>
-            <select id="elevator" name="elevator">
-                <option value="true">نعم</option>
-                <option value="false" selected>لا</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="garage">جراج</label>
-            <select id="garage" name="garage">
-                <option value="true">نعم</option>
-                <option value="false" selected>لا</option>
-            </select>
-        </div>
-
-        <!-- ============================================ -->
-        <!-- === القسم الثالث: الوصف والتسويق === -->
-        <!-- ============================================ -->
-        <div class="form-group full-width">
-          <h2><span class="step-circle">3</span>الوصف والملاحظات (لإبراز القيمة)</h2>
-        </div>
-
-        <div class="form-group full-width">
-            <label for="summary">ملخص تسويقي جذاب (جملة واحدة تظهر في القائمة)</label>
-            <input type="text" id="summary" name="summary" placeholder="مثال: فرصة استثمارية بعائد شهري مضمون في قلب مدينة نصر.">
-        </div>
-
-        <div class="form-group full-width">
-            <label for="description">الوصف الرئيسي (يظهر في صفحة التفاصيل)</label>
-            <textarea id="description" name="description" rows="4" placeholder="اكتب هنا الوصف الأساسي للعقار..." required></textarea>
-        </div>
-
-        <div class="form-group full-width">
-            <label for="more_details">تفاصيل إضافية (ملاحظات، حالة الملكية، إلخ.)</label>
-            <textarea id="more_details" name="more_details" rows="3" placeholder="اكتب هنا أي تفاصيل إضافية مثل حالة الملكية، نظام السداد، إلخ..."></textarea>
-        </div>
+      <div style="margin-bottom: 1.5rem;">
+        <label for="title" style="display: block; margin-bottom: 0.5rem; color: #ccc;">عنوان العقار:</label>
+        <input type="text" id="title" name="title" required style="width: 100%; padding: 12px; background-color: #2a2a2a; border: 1px solid #444; color: white; border-radius: 8px; font-size: 1rem;">
       </div>
       
-      <div class="form-submit">
-        <button type="submit" class="submit-btn">✨ إرسال ومراجعة العرض</button>
+      <div style="margin-bottom: 1.5rem;">
+        <label for="price" style="display: block; margin-bottom: 0.5rem; color: #ccc;">السعر:</label>
+        <input type="text" id="price" name="price" required style="width: 100%; padding: 12px; background-color: #2a2a2a; border: 1px solid #444; color: white; border-radius: 8px; font-size: 1rem;">
+      </div>
+      
+      <div style="margin-top: 2rem;">
+        <button type="submit" style="padding: 12px 25px; background-color: #00ff88; border: none; color: black; font-weight: bold; cursor: pointer; border-radius: 25px; font-size: 1.1rem;">إرسال تجريبي</button>
       </div>
       
     </form>
+    
   </section>
 </main>
-
-<!-- أنماط CSS مخصصة للفورم (متوافقة مع ملفك الرئيسي) -->
-<style>
-  .step-circle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    background-color: var(--color-primary);
-    color: var(--color-text-on-primary);
-    border-radius: 50%;
-    font-weight: bold;
-    margin-left: 10px;
-    font-size: 1rem;
-    line-height: 1;
-  }
-  .property-form { display: flex; flex-direction: column; gap: 2.5rem; }
-  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 2rem; }
-  .form-group { display: flex; flex-direction: column; position: relative; }
-  .form-group.full-width { grid-column: 1 / -1; }
-  .form-group h2 { 
-    font-size: 1.6rem;
-    color: var(--color-primary); 
-    margin: 0; 
-    padding-bottom: 0.75rem; 
-    border-bottom: 1px solid var(--color-border);
-    display: flex;
-    align-items: center;
-  }
-  .form-group label { margin-bottom: 0.75rem; color: var(--color-text-secondary); font-weight: 600; font-size: 1.05rem; }
-  .property-form input, .property-form select, .property-form textarea {
-    background-color: var(--color-surface-2);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    padding: 14px 18px;
-    color: var(--color-text-primary);
-    font-size: 1rem;
-    font-family: 'Tajawal', sans-serif;
-    transition: all 0.2s ease-in-out;
-  }
-  .property-form input:focus, .property-form select:focus, .property-form textarea:focus {
-    outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 15px var(--color-primary-shadow-light);
-  }
-  .form-submit { text-align: center; margin-top: 1rem; }
-  .submit-btn {
-    background: linear-gradient(45deg, var(--color-primary), var(--color-primary-dark));
-    color: var(--color-text-on-primary); border: none; padding: 1rem 3rem;
-    border-radius: 50px; font-size: 1.2rem; font-weight: bold; cursor: pointer;
-    transition: all 0.3s ease; box-shadow: 0 8px 25px var(--color-primary-shadow-strong);
-  }
-  .submit-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 30px var(--color-primary-shadow-hover);
-  }
-  @media (max-width: 768px) {
-    .form-grid { grid-template-columns: 1fr; }
-  }
-  </style>
