@@ -1,169 +1,271 @@
 ---
 layout: default
 title: "أضف عقارك - سمسار طلبك"
-description: "لديك عقار مميز في مدينة نصر؟ قدمه الآن بسهولة عبر الفورم المخصص ليصل إلى آلاف العملاء الجادين."
+description: "تجربة جديدة لإضافة عقارك. اتبع الخطوات السهلة والسريعة لعرض عقارك على آلاف العملاء."
 permalink: /add-your-property.html
 ---
 
-<header class="page-header">
-  <h1>أضف عقارك بسهولة</h1>
-  <p>🏡 املأ البيانات التالية بدقة، وسنقوم بمراجعتها وعرضها في أقرب وقت</p>
-</header>
-
-<main class="content-wrapper">
-  <section class="content-section">
-    
-    <!-- ✨ الفورم الكامل والاحترافي باسم نهائي وموجه لصفحة النجاح -->
-    <form name="property-submission-v3" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/form-success.html">
-      
-      <input type="hidden" name="form-name" value="property-submission-v3" />
-      <p style="display: none;"><label>Don’t fill this out: <input name="bot-field" /></label></p>
-      
-      <div class="form-grid">
-        <!-- ============================================ -->
-        <!-- === القسم الأول: البيانات الأساسية للعرض === -->
-        <!-- ============================================ -->
-        <div class="form-group full-width">
-          <h2>البيانات الأساسية (كما ستظهر للعميل)</h2>
-        </div>
-
-        <div class="form-group full-width">
-          <label for="title">عنوان الإعلان (مهم جدًا وجذاب)</label>
-          <input type="text" id="title" name="title" placeholder="مثال: شقة 180م² للبيع بواجهة بحرية في عباس العقاد" required>
-        </div>
-
-        <div class="form-group">
-          <label for="price_display">السعر المعروض (نصي)</label>
-          <input type="text" id="price_display" name="price_display" placeholder="مثال: 2,500,000 جنيه (قابل للتفاوض)" required>
-        </div>
-        
-        <div class="form-group">
-          <label for="area_display">المساحة المعروضة (نصي)</label>
-          <input type="text" id="area_display" name="area_display" placeholder="مثال: 180 متر مربع (صافي 175)" required>
-        </div>
-
-        <div class="form-group">
-            <label for="location">الموقع التفصيلي</label>
-            <input type="text" id="location" name="location" placeholder="مثال: شارع الطيران، بجوار فندق سونستا، مدينة نصر" required>
-        </div>
-
-        <div class="form-group">
-            <label for="ref_id">الرقم المرجعي (اختياري)</label>
-            <input type="text" id="ref_id" name="ref_id" placeholder="مثال: 108 (اتركه فارغًا ليتم إنشاؤه تلقائيًا)">
-        </div>
-
-        <!-- ============================================ -->
-        <!-- === القسم الثاني: تفاصيل العقار الفنية === -->
-        <!-- ============================================ -->
-        <div class="form-group full-width">
-          <h2>التفاصيل الفنية (للفلترة والبحث)</h2>
-        </div>
-        
-        <div class="form-group">
-          <label for="price_min">السعر (أرقام فقط)</label>
-          <input type="number" id="price_min" name="price_min" placeholder="2500000" required>
-        </div>
-        
-        <div class="form-group">
-          <label for="area_min">المساحة (أرقام فقط)</label>
-          <input type="number" id="area_min" name="area_min" placeholder="180" required>
-        </div>
-
-        <div class="form-group">
-          <label for="rooms">عدد الغرف</label>
-          <input type="number" id="rooms" name="rooms" placeholder="3">
-        </div>
-
-        <div class="form-group">
-          <label for="bathrooms">عدد الحمامات</label>
-          <input type="number" id="bathrooms" name="bathrooms" placeholder="2">
-        </div>
-
-        <div class="form-group">
-          <label for="floor">الدور</label>
-          <input type="text" id="floor" name="floor" placeholder="مثال: 6 أو أرضي">
-        </div>
-
-        <div class="form-group">
-          <label for="finish">حالة التشطيب</label>
-          <input type="text" id="finish" name="finish" placeholder="مثال: سوبر لوكس">
-        </div>
-
-        <div class="form-group">
-            <label for="elevator">مصعد</label>
-            <select id="elevator" name="elevator">
-                <option value="true">نعم</option>
-                <option value="false" selected>لا</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="garage">جراج</label>
-            <select id="garage" name="garage">
-                <option value="true">نعم</option>
-                <option value="false" selected>لا</option>
-            </select>
-        </div>
-
-        <!-- ============================================ -->
-        <!-- === القسم الثالث: الوصف والتسويق === -->
-        <!-- ============================================ -->
-        <div class="form-group full-width">
-          <h2>الوصف والملاحظات</h2>
-        </div>
-
-        <div class="form-group full-width">
-            <label for="summary">ملخص تسويقي جذاب (جملة واحدة)</label>
-            <input type="text" id="summary" name="summary" placeholder="مثال: فرصة استثمارية بعائد شهري مضمون في قلب مدينة نصر.">
-        </div>
-
-        <div class="form-group full-width">
-            <label for="description">الوصف الرئيسي</label>
-            <textarea id="description" name="description" rows="4" placeholder="اكتب هنا الوصف الأساسي للعقار..." required></textarea>
-        </div>
-
-        <div class="form-group full-width">
-            <label for="more_details">تفاصيل إضافية</label>
-            <textarea id="more_details" name="more_details" rows="3" placeholder="اكتب هنا أي تفاصيل إضافية مثل حالة الملكية، نظام السداد، إلخ..."></textarea>
-        </div>
-      </div>
-      
-      <div class="form-submit">
-        <button type="submit" class="submit-btn">✨ إرسال العرض الآن</button>
-      </div>
-      
-    </form>
-  </section>
-</main>
-
-<!-- (أنماط CSS تبقى كما هي) -->
+<!-- ================================== -->
+<!-- === 🎨 CSS: أنماط الفورم الذكي === -->
+<!-- ================================== -->
 <style>
-  .property-form { display: flex; flex-direction: column; gap: 2rem; }
-  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-  .form-group { display: flex; flex-direction: column; }
-  .form-group.full-width { grid-column: 1 / -1; }
-  .form-group h2 { color: var(--color-primary); margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--color-border); }
-  .form-group label { margin-bottom: 0.5rem; color: var(--color-text-secondary); font-weight: 600; }
-  .property-form input, .property-form select, .property-form textarea {
-    background-color: var(--color-surface-2); border: 1px solid var(--color-border);
-    border-radius: 8px; padding: 12px 15px; color: var(--color-text-primary);
-    font-size: 1rem; font-family: 'Tajawal', sans-serif; transition: all 0.2s ease-in-out;
+  .smart-form-container {
+    background: var(--color-surface-1);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    border: 1px solid var(--color-border);
+    max-width: 800px; /* تحديد عرض الفورم */
+    margin: 2rem auto; /* توسيط الفورم */
   }
-  .property-form input:focus, .property-form select:focus, .property-form textarea:focus {
-    outline: none; border-color: var(--color-primary);
-    box-shadow: 0 0 15px var(--color-primary-shadow-light);
+
+  /* --- شريط التقدم --- */
+  .progress-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    position: relative;
   }
-  .form-submit { text-align: center; margin-top: 1rem; }
-  .submit-btn {
-    background: linear-gradient(45deg, var(--color-primary), var(--color-primary-dark));
-    color: var(--color-text-on-primary); border: none; padding: 1rem 3rem;
-    border-radius: 50px; font-size: 1.2rem; font-weight: bold; cursor: pointer;
-    transition: all 0.3s ease; box-shadow: 0 8px 25px var(--color-primary-shadow-strong);
+  .progress-bar::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background-color: var(--color-border);
+    transform: translateY(-50%);
+    z-index: 1;
   }
-  .submit-btn:hover {
-    transform: translateY(-3px); box-shadow: 0 12px 30px var(--color-primary-shadow-hover);
+  .progress-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: 4px;
+    background-color: var(--color-primary);
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 0%;
+    transition: width 0.4s ease-in-out;
   }
-  @media (max-width: 768px) {
-    .form-grid { grid-template-columns: 1fr; }
+  .progress-step {
+    position: relative;
+    z-index: 3;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--color-surface-2);
+    border: 3px solid var(--color-border);
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    transition: all 0.4s ease;
+  }
+  .progress-step.active {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-text-on-primary);
+    transform: scale(1.1);
+  }
+
+  /* --- خطوات الفورم --- */
+  .form-step {
+    display: none; /* إخفاء كل الخطوات بشكل افتراضي */
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  .form-step.active {
+    display: block; /* إظهار الخطوة النشطة فقط */
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .form-step h2 {
+    color: var(--color-primary);
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+  }
+  .form-grid { /* نفس تصميمك السابق */ }
+  .form-group { /* نفس تصميمك السابق */ }
+
+  /* --- أزرار التنقل --- */
+  .form-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2.5rem;
+  }
+  .nav-btn {
+    background-color: var(--color-surface-2);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+  .nav-btn.next-btn {
+    background-color: var(--color-primary);
+    color: var(--color-text-on-primary);
+    border-color: var(--color-primary);
+  }
+  .nav-btn:hover {
+    transform: translateY(-2px);
+  }
+  .nav-btn:disabled {
+    background-color: var(--color-border);
+    cursor: not-allowed;
+    opacity: 0.5;
   }
 </style>
+
+<!-- ================================== -->
+<!-- === 🧱 HTML: هيكل الفورم الذكي === -->
+<!-- ================================== -->
+<header class="page-header">
+  <h1>تجربة جديدة لإضافة عقارك</h1>
+  <p>🏡 اتبع الخطوات السهلة والسريعة لعرض عقارك على آلاف العملاء</p>
+</header>
+
+<div class="smart-form-container">
+  <!-- شريط التقدم -->
+  <div class="progress-bar">
+    <div class="progress-line"></div>
+    <div class="progress-step active" data-step="1">1</div>
+    <div class="progress-step" data-step="2">2</div>
+    <div class="progress-step" data-step="3">3</div>
+  </div>
+
+  <!-- الفورم نفسه -->
+  <form id="smart-form" name="smart-property-submission" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/form-success.html">
+    <input type="hidden" name="form-name" value="smart-property-submission" />
+    <p style="display: none;"><label>Don’t fill this out: <input name="bot-field" /></label></p>
+
+    <!-- الخطوة 1: الأساسيات -->
+    <div class="form-step active" data-step="1">
+      <h2>الخطوة 1: لنبدأ بالأساسيات</h2>
+      <div class="form-grid">
+        <div class="form-group full-width">
+          <label for="title">عنوان الإعلان (مهم وجذاب)</label>
+          <input type="text" id="title" name="title" placeholder="مثال: شقة 180م² للبيع بواجهة بحرية" required>
+        </div>
+        <div class="form-group">
+          <label for="price_display">السعر المعروض</label>
+          <input type="text" id="price_display" name="price_display" placeholder="مثال: 2,500,000 جنيه" required>
+        </div>
+        <div class="form-group">
+          <label for="area_display">المساحة المعروضة</label>
+          <input type="text" id="area_display" name="area_display" placeholder="مثال: 180 متر مربع" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- الخطوة 2: التفاصيل الفنية -->
+    <div class="form-step" data-step="2">
+      <h2>الخطوة 2: أخبرنا بالمزيد من التفاصيل</h2>
+      <div class="form-grid">
+        <div class="form-group"><label for="rooms">عدد الغرف</label><input type="number" id="rooms" name="rooms" placeholder="3" required></div>
+        <div class="form-group"><label for="bathrooms">عدد الحمامات</label><input type="number" id="bathrooms" name="bathrooms" placeholder="2" required></div>
+        <div class="form-group"><label for="floor">الدور</label><input type="text" id="floor" name="floor" placeholder="مثال: 6 أو أرضي" required></div>
+        <div class="form-group"><label for="finish">حالة التشطيب</label><input type="text" id="finish" name="finish" placeholder="مثال: سوبر لوكس" required></div>
+        <div class="form-group"><label for="elevator">مصعد</label><select id="elevator" name="elevator"><option value="true">نعم</option><option value="false" selected>لا</option></select></div>
+        <div class="form-group"><label for="garage">جراج</label><select id="garage" name="garage"><option value="true">نعم</option><option value="false" selected>لا</option></select></div>
+      </div>
+    </div>
+
+    <!-- الخطوة 3: اللمسات الأخيرة -->
+    <div class="form-step" data-step="3">
+      <h2>الخطوة 3: اللمسات الأخيرة</h2>
+      <div class="form-grid">
+        <div class="form-group full-width"><label for="location">الموقع التفصيلي</label><input type="text" id="location" name="location" placeholder="مثال: شارع الطيران، مدينة نصر" required></div>
+        <div class="form-group full-width"><label for="description">الوصف الرئيسي</label><textarea id="description" name="description" rows="4" placeholder="اكتب هنا الوصف الأساسي للعقار..." required></textarea></div>
+      </div>
+    </div>
+
+    <!-- أزرار التنقل -->
+    <div class="form-navigation">
+      <button type="button" class="nav-btn prev-btn" style="display: none;">→ السابق</button>
+      <button type="button" class="nav-btn next-btn">التالي ←</button>
+      <button type="submit" class="nav-btn submit-btn" style="display: none;">✨ إرسال العرض الآن</button>
+    </div>
+  </form>
+</div>
+
+<!-- ================================== -->
+<!-- === ⚙️ JS: منطق الفورم الذكي === -->
+<!-- ================================== -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const submitBtn = document.querySelector('.submit-btn');
+    const formSteps = document.querySelectorAll('.form-step');
+    const progressSteps = document.querySelectorAll('.progress-step');
+    const progressLine = document.querySelector('.progress-line');
+    
+    let currentStep = 1;
+
+    const updateTotalSteps = () => {
+        // تحديث شريط التقدم
+        progressSteps.forEach((step, index) => {
+            if (index < currentStep) {
+                step.classList.add('active');
+            } else {
+                step.classList.remove('active');
+            }
+        });
+        progressLine.style.width = `${((currentStep - 1) / (formSteps.length - 1)) * 100}%`;
+
+        // إظهار وإخفاء الأزرار
+        prevBtn.style.display = currentStep > 1 ? 'inline-block' : 'none';
+        nextBtn.style.display = currentStep < formSteps.length ? 'inline-block' : 'none';
+        submitBtn.style.display = currentStep === formSteps.length ? 'inline-block' : 'none';
+
+        // تفعيل وتعطيل زر "التالي"
+        validateStep();
+    };
+
+    const validateStep = () => {
+        const currentFormStep = document.querySelector(`.form-step[data-step="${currentStep}"]`);
+        const inputs = currentFormStep.querySelectorAll('input[required], select[required], textarea[required]');
+        let isStepValid = true;
+        inputs.forEach(input => {
+            if (!input.value.trim()) {
+                isStepValid = false;
+            }
+        });
+        nextBtn.disabled = !isStepValid;
+    };
+
+    const navigateToStep = (stepNumber) => {
+        currentStep = stepNumber;
+        formSteps.forEach(step => {
+            step.classList.toggle('active', parseInt(step.dataset.step) === currentStep);
+        });
+        updateTotalSteps();
+    };
+
+    nextBtn.addEventListener('click', () => {
+        if (currentStep < formSteps.length) {
+            navigateToStep(currentStep + 1);
+        }
+    });
+
+    prevBtn.addEventListener('click', () => {
+        if (currentStep > 1) {
+            navigateToStep(currentStep - 1);
+        }
+    });
+
+    // إضافة مستمع لكل حقل للتحقق من الصحة فورًا
+    document.getElementById('smart-form').querySelectorAll('input, select, textarea').forEach(input => {
+        input.addEventListener('input', validateStep);
+    });
+
+    // استدعاء أولي للتحقق
+    updateTotalSteps();
+});
+</script>
