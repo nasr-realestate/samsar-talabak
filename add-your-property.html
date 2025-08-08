@@ -1,81 +1,137 @@
 ---
 layout: default
-title: "أضف عقارك أو طلبك عبر واتساب"
-description: "أرسل تفاصيل عقارك المعروض أو طلبك العقاري عبر الواتساب وسيقوم فريق سمسार طلبك بإضافته إلى الموقع خلال دقائق بعد المراجعة."
+title: "أضف عقارك - سمسار طلبك"
+description: "لديك عقار مميز في مدينة نصر؟ قدمه الآن بسهولة عبر الفورم المخصص ليصل إلى آلاف العملاء الجادين."
+permalink: /add-property.html
 ---
 
-<!-- SEO: Open Graph Meta Tags -->
-<meta name="robots" content="noindex, follow"> <!-- noindex جيد لهذه الصفحة لأنها إجرائية وليست محتوى رئيسي -->
-<meta property="og:title" content="أضف عقارك أو طلبك - سمسار طلبك">
-<meta property="og:description" content="أرسل التفاصيل عبر واتساب وسيتم عرضها على الموقع بعد المراجعة.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="{{ page.url | absolute_url }}">
-<meta property="og:image" content="https://i.postimg.cc/Vk8Nn1xZ/me.jpg">
-
-<!-- 1. رأس الصفحة الموحد -->
 <header class="page-header">
-  <h1>📝 أضف عقارك أو طلبك بسهولة</h1>
-  <p>سواء كنت تعرض عقارًا للبيع أو تبحث عن طلب، أرسل التفاصيل عبر واتساب وسيتم نشرها في دقائق.</p>
+  <h1>لديك عقار؟ قدمه الآن</h1>
+  <p>🏡 املأ البيانات التالية لعرض عقارك على شبكتنا الواسعة من العملاء</p>
 </header>
 
-<!-- 2. المحتوى الرئيسي للصفحة -->
 <main class="content-wrapper">
-  
-  <section class="content-section text-center">
-    <p class="lead-text">
-      انضم إلى أكثر من <strong>100+ عميل</strong> أضافوا عروضهم وطلباتهم بنجاح.<br>
-      اضغط على الزر التالي وأرسل لنا التفاصيل مباشرة.
-    </p>
-
-    <a class="whatsapp-btn-large" href="https://wa.me/201147758857?text=مرحبًا، أرغب في إضافة عقار أو طلب على موقع سمسار طلبك.">
-      <i class="fab fa-whatsapp"></i>
-      <span>اضغط هنا للإرسال عبر واتساب</span>
-    </a>
-  </section>
-
   <section class="content-section">
-    <h2 class="section-title">📋 المعلومات المطلوبة</h2>
-    <div class="info-grid required-info-grid">
-      <div class="info-item">
-        <div class="info-icon">📍</div>
-        <h3>الموقع</h3>
-        <p>مثال: مدينة نصر، شارع مصطفى النحاس.</p>
+    
+    <!-- ✨✨✨ هذا هو الفورم الذي سيتصل بـ Netlify ✨✨✨ -->
+    <!-- لاحظ إضافة netlify في وسم <form> -->
+    <form name="add-property" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="property-form">
+      
+      <!-- حقل خفي لمنع السبام (مهم جدًا) -->
+      <input type-="hidden" name="form-name" value="add-property" />
+      <p style="display: none;">
+        <label>Don’t fill this out if you’re human: <input name="bot-field" /></label>
+      </p>
+      
+      <div class="form-grid">
+        <!-- معلومات التواصل (خاصة بك) -->
+        <div class="form-group full-width">
+          <h2>1. معلومات التواصل الخاصة بك</h2>
+        </div>
+        <div class="form-group">
+          <label for="name">الاسم</label>
+          <input type="text" id="name" name="name" placeholder="اسمك الكريم" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">رقم الواتساب</label>
+          <input type="tel" id="phone" name="phone" placeholder="01xxxxxxxxx" required>
+        </div>
+        
+        <!-- تفاصيل العقار الأساسية -->
+        <div class="form-group full-width">
+          <h2>2. تفاصيل العقار الأساسية</h2>
+        </div>
+        <div class="form-group">
+          <label for="property-title">عنوان الإعلان</label>
+          <input type="text" id="property-title" name="property-title" placeholder="مثال: شقة 180م للبيع بموقع مميز" required>
+        </div>
+        <div class="form-group">
+          <label for="property-type">نوع العقار</label>
+          <select id="property-type" name="property-type" required>
+            <option value="" disabled selected>اختر نوع العقار...</option>
+            <option value="شقة للبيع">شقة للبيع</option>
+            <option value="شقة للإيجار">شقة للإيجار</option>
+            <option value="محل تجاري">محل تجاري</option>
+            <option value="مكتب إداري">مكتب إداري</option>
+            <option value="مقر إداري">مقر إداري</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="price">السعر المطلوب</label>
+          <input type="text" id="price" name="price" placeholder="مثال: 2,500,000 جنيه" required>
+        </div>
+        <div class="form-group">
+          <label for="area">المساحة (م²)</label>
+          <input type="number" id="area" name="area" placeholder="مثال: 180" required>
+        </div>
+        
+        <!-- تفاصيل إضافية -->
+        <div class="form-group full-width">
+          <h2>3. تفاصيل إضافية</h2>
+        </div>
+        <div class="form-group">
+          <label for="rooms">عدد الغرف</label>
+          <input type="number" id="rooms" name="rooms" placeholder="3">
+        </div>
+        <div class="form-group">
+          <label for="bathrooms">عدد الحمامات</label>
+          <input type="number" id="bathrooms" name="bathrooms" placeholder="2">
+        </div>
+        <div class="form-group full-width">
+            <label for="description">وصف كامل للعقار</label>
+            <textarea id="description" name="description" rows="6" placeholder="اكتب هنا كل تفاصيل العقار: الموقع الدقيق، حالة التشطيب، المميزات، أي تفاصيل أخرى..." required></textarea>
+        </div>
       </div>
-      <div class="info-item">
-        <div class="info-icon">📏</div>
-        <h3>المساحة</h3>
-        <p>بالمتر المربع (صافي أو إجمالي).</p>
+      
+      <div class="form-submit">
+        <button type="submit" class="submit-btn">✨ إرسال العرض الآن</button>
       </div>
-      <div class="info-item">
-        <div class="info-icon">💰</div>
-        <h3>السعر / الميزانية</h3>
-        <p>السعر المطلوب أو الميزانية المتاحة.</p>
-      </div>
-      <div class="info-item">
-        <div class="info-icon">🛏️</div>
-        <h3>التفاصيل</h3>
-        <p>عدد الغرف، الحمامات، الدور، التشطيب.</p>
-      </div>
-      <div class="info-item">
-        <div class="info-icon">📸</div>
-        <h3>الصور</h3>
-        <p>صور واضحة للعقار (إن وجدت).</p>
-      </div>
-      <div class="info-item">
-        <div class="info-icon">🎯</div>
-        <h3>الهدف</h3>
-        <p>هل هو للبيع، للإيجار، أم طلب شراء؟</p>
-      </div>
-    </div>
+      
+    </form>
   </section>
-
-  <section class="content-section text-center">
-    <h2 class="section-title">📱 أو امسح الكود</h2>
-    <p>افتح كاميرا جوالك وامسح الكود التالي لمراسلتنا مباشرة عبر واتساب.</p>
-    <div class="qr-code">
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://wa.me/201147758857" alt="QR Code for WhatsApp contact">
-    </div>
-    <p class="note">⏱️ <strong>خدمة سريعة ومجانية:</strong> يتم مراجعة التفاصيل وإضافتها خلال أقل من <strong>30 دقيقة</strong>!</p>
-  </section>
-  
 </main>
+
+<!-- أنماط CSS مخصصة للفورم -->
+<style>
+  .property-form { display: flex; flex-direction: column; gap: 2rem; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .form-group { display: flex; flex-direction: column; }
+  .form-group.full-width { grid-column: 1 / -1; }
+  .form-group h2 { color: var(--color-primary); margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--color-border); }
+  .form-group label { margin-bottom: 0.5rem; color: var(--color-text-secondary); font-weight: 600; }
+  .property-form input, .property-form select, .property-form textarea {
+    background-color: var(--color-surface-2);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 12px 15px;
+    color: var(--color-text-primary);
+    font-size: 1rem;
+    font-family: 'Tajawal', sans-serif;
+    transition: all 0.2s ease-in-out;
+  }
+  .property-form input:focus, .property-form select:focus, .property-form textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 15px var(--color-primary-shadow-light);
+  }
+  .form-submit { text-align: center; margin-top: 1rem; }
+  .submit-btn {
+    background: linear-gradient(45deg, var(--color-primary), var(--color-primary-dark));
+    color: var(--color-text-on-primary);
+    border: none;
+    padding: 1rem 3rem;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px var(--color-primary-shadow-strong);
+  }
+  .submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px var(--color-primary-shadow-hover);
+  }
+  @media (max-width: 768px) {
+    .form-grid { grid-template-columns: 1fr; }
+  }
+</style>
