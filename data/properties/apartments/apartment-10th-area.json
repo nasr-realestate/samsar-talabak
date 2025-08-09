@@ -7,12 +7,12 @@
   "floor": 3,
   "elevator": null,
   "garage": null,
-  "finish": "ترا سوبر لوكس",
+  "finish": "الترا سوبر لوكس",
   "view": null,
-  "location": "أول شارع موازي لشارع شل أوت ومحور شنزو آبي – مدينة نصر",
-  "description": "شقة حديثة بتشطيب راقٍ وجاهزة للسكن، بمساحة مريحة وتصميم داخلي عملي في عمارة هادئة ومبنية عام 2013.",
+  "location": "أول ومحور شنرو آبي - مدينة نصر",
+  "description": "عمارة هادئة ومبنية عام 2013",
   "date": "2025-07-01",
   "images": [],
-  "page_url": "/property-10th-area.html"
+  "page_url": "/property-10th-area.html",
   "story": "price_drop"
 }
