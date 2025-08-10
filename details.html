@@ -1,50 +1,40 @@
 ---
 layout: default
+title: "تفاصيل العرض"
+description: "تفاصيل عرض عقاري مقدم عبر سمسار طلبك في مدينة نصر."
 ---
 
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تفاصيل العقار - سمسار طلبك</title>
-  <link rel="stylesheet" href="{{ '/assets/css/details-styles.css' | relative_url }}">
-  <script src="{{ '/assets/js/details-loader.js' | relative_url }}" defer></script>
-  <style>
-    /* أنماط التحميل والخطأ هنا ... (نفس الأنماط السابقة) */
-  </style>
-</head>
-<body>
-  <div id="property-details">
-    <div class="loading-container">
-      <div class="loading-spinner"></div>
-      <div class="loading-text">جاري تحميل تفاصيل العقار...</div>
-      <p class="loading-subtext">يرجى الانتظار قليلاً</p>
-    </div>
-  </div>
+<!--
+  ملاحظة: معظم وسوم الميتا الخاصة بالـ SEO يتم إنشاؤها وتحديثها الآن
+  بشكل ديناميكي بواسطة ملف details-loader.js لضمان الدقة.
+-->
 
-  <script>
-    // استخراج معلمة id من الرابط
-    const urlParams = new URLSearchParams(window.location.search);
-    const propertyId = urlParams.get('id');
-    
-    // إذا كان هناك id، قم بتحويل المستخدم إلى الرابط القصير
-    if (propertyId) {
-      // تحويل فوري مع رسالة ترحيب
-      document.getElementById('property-details').innerHTML = `
-        <div class="loading-container">
-          <div class="loading-spinner"></div>
-          <div class="loading-text">جارٍ تحويلك إلى الرابط الجديد...</div>
-          <p class="loading-subtext">نقوم بتحديث نظام الروابط لتحسين تجربتك</p>
-        </div>
-      `;
-      
-      // تأخير بسيط لتحسين تجربة المستخدم
-      setTimeout(() => {
-        window.location.href = `{{ '/' | relative_url }}property/${propertyId}`;
-      }, 1500);
-    }
-    // إذا لم يكن هناك id، سيتولى details-loader.js تحميل التفاصيل من الرابط القصير
-  </script>
-</body>
-</html>
+<!-- 
+  هذا الوسم ضروري لتعمل دالة Schema.org بشكل صحيح.
+  لا تحذفه.
+-->
+<script type="application/ld+json" id="schema-json"></script>
+
+
+<!-- 
+  هذه هي الحاوية الرئيسية التي سيعمل عليها الجافا سكريبت.
+  الـ ID الخاص بها "property-details" هو أهم شيء.
+-->
+<main id="property-details" class="details-container">
+  <!-- 
+    رسالة التحميل الأولية التي سيقوم الجافا سكريبت باستبدالها.
+    لقد قمنا بتصميمها لتكون متوافقة مع شكل الموقع.
+  -->
+  <div class="loading-container" style="text-align: center; padding: 40px;">
+    <div class="loading-spinner" style="width: 50px; height: 50px; border: 5px solid #333; border-top: 5px solid #00ff88; border-radius: 50%; margin: 0 auto 20px; animation: spin 1s linear infinite;"></div>
+    <p class="loading-message" style="color: #ccc;">⏳ جاري تحميل تفاصيل العرض...</p>
+  </div>
+  <style>@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>
+</main>
+
+
+<!-- 
+  هذا هو السطر الذي يقوم باستدعاء وتشغيل كل المنطق البرمجي.
+  تأكد من أنه موجود وأن المسار صحيح.
+-->
+<script src="{{ '/assets/js/details-loader.js' | relative_url }}" defer></script>
