@@ -1,9 +1,10 @@
 {
-  "name": "samsar-talabak-og-image",
+  "name": "samsar-og-image-generator",
   "version": "1.0.0",
+  "description": "Dependencies for Netlify Functions to generate OG images.",
   "dependencies": {
-    "satori": "^0.10.0",
-    "@resvg/resvg-js": "^2.4.1",
-    "node-fetch": "^2.6.7"
+    "satori": "^0.10.11",
+    "@resvg/resvg-js": "^2.6.0",
+    "node-fetch": "^2.7.0"
   }
 }
