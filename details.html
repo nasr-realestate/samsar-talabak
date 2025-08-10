@@ -1,44 +1,40 @@
----
+data/properties/apartments/shqa-180m-10th-district-sherrawi.jsonnetlify/functions/og-image.jsProperty not found---
 layout: default
 title: "تفاصيل العرض"
 description: "تفاصيل عرض عقاري مقدم عبر سمسار طلبك في مدينة نصر."
 ---
 
-<!-- 
-  ملاحظة: معظم وسوم الميتا الخاصة بالـ SEO يتم إنشاؤها وتحديثها
-  ديناميكيًا بواسطة ملف details-loader.js.
+<!--
+  ملاحظة: معظم وسوم الميتا الخاصة بالـ SEO يتم إنشاؤها وتحديثها الآن
+  بشكل ديناميكي بواسطة ملف details-loader.js لضمان الدقة.
 -->
 
-<!-- Schema.org JSON-LD -->
+<!-- 
+  هذا الوسم ضروري لتعمل دالة Schema.org بشكل صحيح.
+  لا تحذفه.
+-->
 <script type="application/ld+json" id="schema-json"></script>
 
+
+<!-- 
+  هذه هي الحاوية الرئيسية التي سيعمل عليها الجافا سكريبت.
+  الـ ID الخاص بها "property-details" هو أهم شيء.
+-->
 <main id="property-details" class="details-container">
-  <!-- حالة التحميل -->
-  <div id="loading-state" class="loading-container" style="text-align: center; padding: 40px;">
+  <!-- 
+    رسالة التحميل الأولية التي سيقوم الجافا سكريبت باستبدالها.
+    لقد قمنا بتصميمها لتكون متوافقة مع شكل الموقع.
+  -->
+  <div class="loading-container" style="text-align: center; padding: 40px;">
     <div class="loading-spinner" style="width: 50px; height: 50px; border: 5px solid #333; border-top: 5px solid #00ff88; border-radius: 50%; margin: 0 auto 20px; animation: spin 1s linear infinite;"></div>
     <p class="loading-message" style="color: #ccc;">⏳ جاري تحميل تفاصيل العرض...</p>
   </div>
-
-  <!-- حالة عدم العثور -->
-  <div id="not-found" style="display:none; text-align:center; padding: 40px; color: red;">
-    ⚠️ لم يتم العثور على هذا العرض.
-  </div>
-
-  <!-- محتوى التفاصيل -->
-  <div id="property-content" style="display:none;">
-    <h1 id="property-title"></h1>
-    <img id="property-image" src="" alt="صورة العقار" style="max-width:100%; height:auto; margin:20px 0;">
-    <p id="property-description"></p>
-    <ul id="property-details-list"></ul>
-  </div>
-
-  <style>
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-  </style>
+  <style>@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>
 </main>
 
-<!-- استدعاء الجافاسكريبت -->
+
+<!-- 
+  هذا هو السطر الذي يقوم باستدعاء وتشغيل كل المنطق البرمجي.
+  تأكد من أنه موجود وأن المسار صحيح.
+-->
 <script src="{{ '/assets/js/details-loader.js' | relative_url }}" defer></script>
