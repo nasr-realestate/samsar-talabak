@@ -1,40 +1,139 @@
----
-layout: default
-title: "إرسال رابط سريع - أداة سمسار طلبك"
-permalink: /send-link.html
----
-
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
+  <meta charset="UTF-8">
+  <title>أداة الإرسال السريع | سمسار طلبك</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* (أنماط CSS تبقى كما هي) */
-    .site-header, .site-footer { display: none !important; }
-    :root { /* ... */ } body { /* ... */ } .container { /* ... */ } h1 { /* ... */ }
-    .subtitle { /* ... */ } .form-group { /* ... */ } .form-group label { /* ... */ }
-    input[type="tel"], textarea { /* ... */ }
-    input[type="tel"]:focus, textarea:focus { /* ... */ }
-    .submit-btn { /* ... */ }
-    .submit-btn:hover { /* ... */ }
+    /* إعادة ضبط أساسية */
+    body, h1, p, div, input, textarea, button {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    body {
+      background-color: #ffffff; /* خلفية بيضاء كما في الصورة */
+      color: #333333; /* لون نص داكن */
+      padding: 1.5rem;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* الروابط العلوية */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #eeeeee;
+    }
+    .top-nav a {
+      text-decoration: none;
+      color: #007bff;
+      font-weight: 700;
+    }
+
+    /* العناوين الرئيسية */
+    .main-title {
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .subtitle {
+      text-align: center;
+      color: #555555;
+      font-size: 1.1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    /* تصميم الفورم */
+    .form-group {
+      margin-bottom: 2rem;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 0.75rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .input-wrapper {
+      position: relative;
+    }
+    .input-wrapper::before {
+      content: 'مثال:';
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #aaaaaa;
+      font-size: 1rem;
+    }
+    input[type="tel"] {
+      width: 100%;
+      border: 2px solid #dddddd;
+      border-radius: 8px;
+      padding: 15px;
+      padding-left: 140px; /* مساحة لكلمة "مثال" والرقم */
+      font-size: 1.2rem;
+      text-align: left; /* محاذاة الرقم لليسار */
+    }
+    textarea {
+      width: 100%;
+      border: 2px solid #dddddd;
+      border-radius: 8px;
+      padding: 15px;
+      font-size: 1rem;
+      line-height: 1.6;
+      resize: vertical; /* السماح بتغيير الارتفاع */
+    }
+    .submit-btn {
+      width: 100%;
+      background-color: #f0f0f0;
+      color: #333;
+      border: 2px solid #dddddd;
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .submit-btn:hover {
+      background-color: #e0e0e0;
+      border-color: #cccccc;
+    }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <h1>أداة الإرسال السريع</h1>
+    <nav class="top-nav">
+      <a href="/index.html">سمسار طلبك</a>
+      <div>
+        <a href="/properties-filtered.html" style="margin-left: 1rem;">ابحث عن عقار</a>
+        <a href="/add-your-property.html">لدي عقار</a>
+      </div>
+    </nav>
+    
+    <h1 class="main-title">أداة الإرسال السريع</h1>
     <p class="subtitle">🚀 أرسل رسالتك الاحترافية لأي رقم واتساب غير مسجل بسرعة</p>
 
-    <!-- ✨✨✨ تم إضافة هذا الحقل الجديد ✨✨✨ -->
     <div class="form-group">
-      <label for="sender-phone">1. رقم الواتساب الخاص بك (المرسل):</label>
-      <input type="tel" id="sender-phone" placeholder="اكتب رقمك هنا" value="201147758857">
+      <label for="receiver-phone">1. الصق رقم هاتف العميل هنا:</label>
+      <div class="input-wrapper">
+        <input type="tel" id="receiver-phone" placeholder="01234567890" autofocus>
+      </div>
     </div>
 
     <div class="form-group">
-      <label for="receiver-phone">2. الصق رقم هاتف العميل هنا (المستقبل):</label>
-      <input type="tel" id="receiver-phone" placeholder="مثال: 01234567890" autofocus>
-    </div>
-
-    <div class="form-group">
-      <label for="default-message">3. الرسالة التي سيتم تجهيزها:</label>
+      <label for="default-message">2. الرسالة التي سيتم تجهيزها:</label>
       <textarea id="default-message" rows="14">شكرًا لاتصالك، وسامحنا إن مكناش قدرنا نرد فورًا 🙏
 
 علشان نقدر نخدمك بأفضل شكل، تعاملنا الأساسي بيكون على واتساب – هنحتاج نعرف بعض التفاصيل:
@@ -42,7 +141,7 @@ permalink: /send-link.html
 ✅ هل بتدور على: شقة / محل / مكتب / مقر إداري؟
 ✅ نوع العملية: بيع؟ شراء؟ إيجار؟
 ✅ المنطقة المطلوبة أو المعروضة؟
-✅ أي تفاصيل إทธิار إضافية تهمك؟ 💬
+✅ أي تفاصيل إضافية تهمك؟ 💬
 
 💡 ممكن كمان تتصفح:
 🔹 صفحة الطلبات: 
@@ -66,38 +165,26 @@ https://aqarnasr.netlify.app/add-your-property.html
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // ✨ تم تحديث أسماء المتغيرات
-        const senderInput = document.getElementById('sender-phone');
         const receiverInput = document.getElementById('receiver-phone');
         const messageInput = document.getElementById('default-message');
         const sendBtn = document.getElementById('send-btn');
 
-        // ✨ حفظ رقم المرسل في ذاكرة المتصفح
-        senderInput.value = localStorage.getItem('samsarSenderPhone') || '201147758857';
-        senderInput.addEventListener('input', () => {
-            localStorage.setItem('samsarSenderPhone', senderInput.value);
-        });
-
         const processAndSend = () => {
-            // ✨ استخدام رقم المرسل والمستقبل
-            let senderPhone = senderInput.value.replace(/[^0-9]/g, '');
-            let receiverPhone = receiverInput.value.replace(/[^0-9]/g, '');
+            let phoneNumber = receiverInput.value.replace(/[^0-9]/g, '');
 
-            if (!receiverPhone) {
-                alert('الرجاء إدخال رقم هاتف العميل (المستقبل).');
+            if (!phoneNumber) {
+                alert('الرجاء إدخال رقم هاتف صحيح.');
                 return;
             }
 
-            // (منطق تنظيف الرقم يبقى كما هو)
-            if (receiverPhone.startsWith('0')) {
-                receiverPhone = '2' + receiverPhone;
-            } else if (!receiverPhone.startsWith('20')) {
-                receiverPhone = '20' + receiverPhone;
+            if (phoneNumber.startsWith('0')) {
+                phoneNumber = '2' + phoneNumber;
+            } else if (!phoneNumber.startsWith('20')) {
+                phoneNumber = '20' + phoneNumber;
             }
 
             const message = encodeURIComponent(messageInput.value);
-            // ✨ بناء الرابط الصحيح (لاحظ أنه لا يستخدم رقم المرسل مباشرة)
-            const whatsappUrl = `https://wa.me/${receiverPhone}?text=${message}`;
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
 
             window.open(whatsappUrl, '_blank');
         };
@@ -114,3 +201,4 @@ https://aqarnasr.netlify.app/add-your-property.html
   </script>
 
 </body>
+</html>
