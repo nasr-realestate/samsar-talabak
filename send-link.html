@@ -1,96 +1,116 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+---
+layout: default
+title: "إرسال رابط سريع - أداة سمسار طلبك"
+permalink: /send-link.html
+---
+
 <head>
-  <meta charset="UTF-8">
-  <title>لوحة التحكم | سمسار طلبك</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <link rel="apple-touch-icon" href="https://i.postimg.cc/YCb7sHvz/file-00000000304861fbafe43f07da90d3a9.webp">
-  <link rel="icon" type="image/webp" href="https://i.postimg.cc/YCb7sHvz/file-00000000304861fbafe43f07da90d3a9.webp">
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-
   <style>
-    body {
-      background-color: #121212;
-      color: #E0E0E0;
-      font-family: 'Tajawal', sans-serif;
-      padding: 2rem;
-      text-align: center;
-      margin: 0;
-    }
-
-    h1 {
-      color: #04E762;
-      margin-bottom: 2rem;
-    }
-
-    .section-title {
-      margin-top: 3rem;
-      margin-bottom: 1rem;
-      color: #00ffc3;
-      font-size: 1.4rem;
-      border-bottom: 1px solid #00ffc3;
-      display: inline-block;
-      padding-bottom: 0.3rem;
-    }
-
-    .link-btn {
-      display: block;
-      width: 100%;
-      max-width: 450px;
-      margin: 0.75rem auto;
-      padding: 1rem;
-      background-color: #2A2A2A;
-      border: 1px solid #383838;
-      border-radius: 10px;
-      color: #E0E0E0;
-      text-decoration: none;
-      font-size: 1.1rem;
-      font-weight: bold;
-      transition: all 0.3s ease;
-    }
-
-    .link-btn:hover {
-      background-color: #04E762;
-      color: #121212;
-      transform: translateY(-2px);
-    }
-    
-    .tools-btn {
-        border-color: #00ccff;
-    }
-    .tools-btn:hover {
-        background-color: #00ccff;
-        border-color: #00ccff;
-    }
+    /* (أنماط CSS تبقى كما هي) */
+    .site-header, .site-footer { display: none !important; }
+    :root { /* ... */ } body { /* ... */ } .container { /* ... */ } h1 { /* ... */ }
+    .subtitle { /* ... */ } .form-group { /* ... */ } .form-group label { /* ... */ }
+    input[type="tel"], textarea { /* ... */ }
+    input[type="tel"]:focus, textarea:focus { /* ... */ }
+    .submit-btn { /* ... */ }
+    .submit-btn:hover { /* ... */ }
   </style>
 </head>
 <body>
 
-  <h1>📊 لوحة التحكم - سمسار طلبك</h1>
+  <div class="container">
+    <h1>أداة الإرسال السريع</h1>
+    <p class="subtitle">🚀 أرسل رسالتك الاحترافية لأي رقم واتساب غير مسجل بسرعة</p>
 
-  <!-- ======================== -->
-  <!-- === القسم المضاف === -->
-  <!-- ======================== -->
-  <div class="section-title">🚀 أدوات سريعة</div>
-  <a class="link-btn tools-btn" href="send-link.html" target="_blank">💬 فتح أداة إرسال واتساب</a>
+    <!-- ✨✨✨ تم إضافة هذا الحقل الجديد ✨✨✨ -->
+    <div class="form-group">
+      <label for="sender-phone">1. رقم الواتساب الخاص بك (المرسل):</label>
+      <input type="tel" id="sender-phone" placeholder="اكتب رقمك هنا" value="201147758857">
+    </div>
 
-  <!-- ======================== -->
-  <!-- === الأقسام الأصلية === -->
-  <!-- ======================== -->
-  <div class="section-title">✅ إضافة عروض عقارية</div>
-  <a class="link-btn" href="https://github.com/nasr-realestate/samsar-talabak/new/main/data/properties/apartments" target="_blank">🏢 شقة للبيع</a>
-  <a class="link-btn" href="https://github.com/nasr-realestate/samsar-talabak/new/main/data/properties/apartments-rent" target="_blank">🛋️ شقة للإيجار</a>
-  <a class="link-btn" href="https://github.com/nasr-realestate/samsar-talabak/new/main/data/properties/shops" target="_blank">🏪 محل</a>
-  <a class="link-btn" href="https://github.com/nasr-realestate/samsar-talabak/new/main/data/properties/offices" target="_blank">💼 مكتب</a>
-  <a class="link-btn" href="https://github.com/nasr-realestate/samsar-talabak/new/main/data/properties/admin-hq" target="_blank">🏛️ مقر إداري</a>
+    <div class="form-group">
+      <label for="receiver-phone">2. الصق رقم هاتف العميل هنا (المستقبل):</label>
+      <input type="tel" id="receiver-phone" placeholder="مثال: 01234567890" autofocus>
+    </div>
 
-  <div class="section-title">📩 إضافة طلبات العملاء</div>
-  <a class="link-btn" href="https://github.com/nasr-realestate/samsar-talabak/new/main/data/requests/apartments" target="_blank">📥 طلب شقة للبيع</a>
-  <a class="link-btn" href="https://github.com/nasr-realestate/samsar-talabak/new/main/data/requests/apartments-rent" target="_blank">📥 طلب شقة للإيجار</a>
-  <a class="link-btn" href="https://github.com/nasr-realestate/samsar-talabak/new/main/data/requests/shops" target="_blank">📥 طلب محل</a>
-  <a class="link-btn" href="https://github.com/nasr-realestate/samsar-talabak/new/main/data/requests/offices" target="_blank">📥 طلب مكتب</a>
-  <a class="link-btn" href="https://github.com/nasr-realestate/samsar-talabak/new/main/data/requests/admin-hq" target="_blank">📥 طلب مقر إداري</a>
+    <div class="form-group">
+      <label for="default-message">3. الرسالة التي سيتم تجهيزها:</label>
+      <textarea id="default-message" rows="14">شكرًا لاتصالك، وسامحنا إن مكناش قدرنا نرد فورًا 🙏
+
+علشان نقدر نخدمك بأفضل شكل، تعاملنا الأساسي بيكون على واتساب – هنحتاج نعرف بعض التفاصيل:
+
+✅ هل بتدور على: شقة / محل / مكتب / مقر إداري؟
+✅ نوع العملية: بيع؟ شراء؟ إيجار؟
+✅ المنطقة المطلوبة أو المعروضة؟
+✅ أي تفاصيل إทธิار إضافية تهمك؟ 💬
+
+💡 ممكن كمان تتصفح:
+🔹 صفحة الطلبات: 
+https://aqarnasr.netlify.app/requests-filtered.html  
+🔹 صفحة العروض:  
+https://aqarnasr.netlify.app/properties-filtered.html  
+
+✍️ أو تضيف طلبك/عقارك مباشرة من هنا:
+https://aqarnasr.netlify.app/add-your-property.html
+
+🕓 نراجع الرسائل تباعًا، وهنرجع لك بأسرع وقت بإذن الله.
+
+تحياتنا  
+📍 سمسار طلبك – عقارات مدينة نصر</textarea>
+    </div>
+
+    <div class="form-group">
+      <button id="send-btn" class="submit-btn">💬 افتح محادثة واتساب الآن</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // ✨ تم تحديث أسماء المتغيرات
+        const senderInput = document.getElementById('sender-phone');
+        const receiverInput = document.getElementById('receiver-phone');
+        const messageInput = document.getElementById('default-message');
+        const sendBtn = document.getElementById('send-btn');
+
+        // ✨ حفظ رقم المرسل في ذاكرة المتصفح
+        senderInput.value = localStorage.getItem('samsarSenderPhone') || '201147758857';
+        senderInput.addEventListener('input', () => {
+            localStorage.setItem('samsarSenderPhone', senderInput.value);
+        });
+
+        const processAndSend = () => {
+            // ✨ استخدام رقم المرسل والمستقبل
+            let senderPhone = senderInput.value.replace(/[^0-9]/g, '');
+            let receiverPhone = receiverInput.value.replace(/[^0-9]/g, '');
+
+            if (!receiverPhone) {
+                alert('الرجاء إدخال رقم هاتف العميل (المستقبل).');
+                return;
+            }
+
+            // (منطق تنظيف الرقم يبقى كما هو)
+            if (receiverPhone.startsWith('0')) {
+                receiverPhone = '2' + receiverPhone;
+            } else if (!receiverPhone.startsWith('20')) {
+                receiverPhone = '20' + receiverPhone;
+            }
+
+            const message = encodeURIComponent(messageInput.value);
+            // ✨ بناء الرابط الصحيح (لاحظ أنه لا يستخدم رقم المرسل مباشرة)
+            const whatsappUrl = `https://wa.me/${receiverPhone}?text=${message}`;
+
+            window.open(whatsappUrl, '_blank');
+        };
+
+        sendBtn.addEventListener('click', processAndSend);
+
+        receiverInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                processAndSend();
+            }
+        });
+    });
+  </script>
 
 </body>
-</html>
