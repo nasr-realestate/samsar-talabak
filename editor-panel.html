@@ -1,93 +1,85 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <title>لوحة التحكم | سمسار طلبك</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- أيقونة عند إضافة الموقع إلى الشاشة الرئيسية -->
-  <link rel="apple-touch-icon" href="https://i.postimg.cc/YCb7sHvz/file-00000000304861fbafe43f07da90d3a9.webp">
-  <link rel="icon" type="image/webp" href="https://i.postimg.cc/YCb7sHvz/file-00000000304861fbafe43f07da90d3a9.webp">
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+---
+layout: default
+title: "لوحة التحكم - سمسar طلبك"
+permalink: /dashboard.html 
+---
 
-  <style>
-    body {
-      background-color: #121212;
-      color: #E0E0E0;
-      font-family: 'Tajawal', sans-serif;
-      padding: 1rem;
-      margin: 0;
-    }
-    .container {
-      max-width: 600px;
-      margin: 1rem auto;
-      text-align: center;
-    }
-    h1 {
-      color: #04E762;
-      margin-bottom: 2rem;
-      font-size: 2rem;
-    }
-    .section-title {
-      margin-top: 2.5rem;
-      margin-bottom: 1rem;
-      color: #00ffc3;
-      font-size: 1.4rem;
-      border-bottom: 1px solid #00ffc3;
-      display: inline-block;
-      padding-bottom: 0.3rem;
-    }
-    .link-btn {
-      display: flex; /* Updated for alignment */
-      align-items: center;
-      justify-content: center;
-      gap: 0.75rem;
-      width: 100%;
-      margin: 0.75rem auto;
-      padding: 1rem;
-      background-color: #2A2A2A;
-      border: 1px solid #383838;
-      border-radius: 10px;
-      color: #E0E0E0;
-      text-decoration: none;
-      font-size: 1.1rem;
-      font-weight: bold;
-      transition: all 0.3s ease;
-    }
-    .link-btn:hover {
-      background-color: #04E762;
-      border-color: #04E762;
-      color: #121212;
-      transform: translateY(-2px);
-    }
-    /* ✨ زر الأدوات السريعة بلون مختلف */
-    .tools-btn {
-        background-color: #2a2a2a;
-        border-color: #00ccff;
-    }
-    .tools-btn:hover {
-        background-color: #00ccff;
-        border-color: #00ccff;
-        color: #121212;
-    }
-  </style>
+<head>
+    <meta charset="UTF-8">
+    <title>لوحة التحكم | سمسار طلبك</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" href="https://i.postimg.cc/YCb7sHvz/file-00000000304861fbafe43f07da90d3a9.webp">
+    <link rel="icon" type="image/webp" href="https://i.postimg.cc/YCb7sHvz/file-00000000304861fbafe43f07da90d3a9.webp">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #121212;
+            color: #E0E0E0;
+            font-family: 'Tajawal', sans-serif;
+            padding: 1rem;
+            margin: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 1rem auto;
+            text-align: center;
+        }
+        h1 {
+            color: #04E762;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+        .section-title {
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: #00ffc3;
+            font-size: 1.4rem;
+            border-bottom: 1px solid #00ffc3;
+            display: inline-block;
+            padding-bottom: 0.3rem;
+        }
+        .link-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            width: 100%;
+            margin: 0.75rem auto;
+            padding: 1rem;
+            background-color: #2A2A2A;
+            border: 1px solid #383838;
+            border-radius: 10px;
+            color: #E0E0E0;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .link-btn:hover {
+            background-color: #04E762;
+            border-color: #04E762;
+            color: #121212;
+            transform: translateY(-2px);
+        }
+        .tools-btn {
+            border-color: #00ccff;
+        }
+        .tools-btn:hover {
+            background-color: #00ccff;
+            border-color: #00ccff;
+        }
+    </style>
 </head>
 <body>
 
   <div class="container">
-    <h1>📊 لوحة التحكم - سمسar طلبك</h1>
+    <h1>📊 لوحة التحكم - سمسار طلبك</h1>
 
-    <!-- ============================================= -->
-    <!-- === ✨ القسم الجديد: الأدوات السريعة ✨ === -->
-    <!-- ============================================= -->
     <div class="section-title">🚀 أدوات سريعة</div>
-    <a class="link-btn tools-btn" href="/send-link.html" target="_blank">
+    <a class="link-btn tools-btn" href="{{ '/send-link.html' | relative_url }}" target="_blank">
         💬 فتح أداة إرسال واتساب
     </a>
 
-    <!-- ============================================= -->
-    <!-- === قسم إضافة العروض === -->
-    <!-- ============================================= -->
     <div class="section-title">✅ إضافة عروض عقارية</div>
     <a class="link-btn" href="https://github.com/nasr-realestate/samsar-talabak/new/main/data/properties/apartments" target="_blank">🏢 شقة للبيع</a>
     <a class="link-btn" href="https://github.com/nasr-realestate/samsar-talabak/new/main/data/properties/apartments-rent" target="_blank">🛋️ شقة للإيجار</a>
@@ -95,9 +87,6 @@
     <a class="link-btn" href="https://github.com/nasr-realestate/samsar-talabak/new/main/data/properties/offices" target="_blank">💼 مكتب</a>
     <a class="link-btn" href="https://github.com/nasr-realestate/samsar-talabak/new/main/data/properties/admin-hq" target="_blank">🏛️ مقر إداري</a>
 
-    <!-- ============================================= -->
-    <!-- === قسم إضافة الطلبات === -->
-    <!-- ============================================= -->
     <div class="section-title">📩 إضافة طلبات العملاء</div>
     <a class="link-btn" href="https://github.com/nasr-realestate/samsar-talabak/new/main/data/requests/apartments" target="_blank">📥 طلب شقة للبيع</a>
     <a class="link-btn" href="https://github.com/nasr-realestate/samsar-talabak/new/main/data/requests/apartments-rent" target="_blank">📥 طلب شقة للإيجار</a>
@@ -107,4 +96,3 @@
   </div>
 
 </body>
-</html>
