@@ -1,4 +1,5 @@
-const satori = require("satori");
+// ✨✨✨ تم تعديل طريقة الاستيراد في السطر الأول ليصبح متوافقًا ✨✨✨
+const satori = require("satori").default;
 const { Resvg } = require("@resvg/resvg-js");
 const fs = require("fs");
 const path = require("path");
@@ -30,7 +31,6 @@ exports.handler = async function(event) {
             props: {
               style: { display: "flex", alignItems: "center", gap: "18px" },
               children: [
-                // ✨✨✨ تم استبدال صورة اللوجو بأيقونة CSS ✨✨✨
                 {
                   type: "div",
                   props: {
