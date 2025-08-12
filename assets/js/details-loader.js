@@ -1,7 +1,8 @@
 /**
- * نظام تحميل تفاصيل العقار (الإصدار النهائي v9.1 - مع تفعيل الصور التلقائية)
+ * نظام تحميل تفاصيل العقار (الإصدار النهائي v9.2 - مع تفعيل المصنع الداخلي للصور)
  */
 
+// --- الجزء الأول: محرك جلب البيانات الناجح (من كودك) ---
 document.addEventListener("DOMContentLoaded", async function () {
   const container = document.getElementById("property-details");
   if (!container) { 
@@ -32,7 +33,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   
   try {
     const indexUrl = `/data/properties_index.json`;
-    
     const indexRes = await fetch(`${indexUrl}?t=${Date.now()}`);
     if (!indexRes.ok) throw new Error(`فشل تحميل فهرس البيانات (خطأ ${indexRes.status}).`);
 
@@ -57,6 +57,9 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 });
 
+
+// --- الجزء الثاني: الدوال النهائية والاحترافية مع الترقية ---
+
 function showErrorState(container, message) {
     container.innerHTML = `<div class="error-state" style="padding: 40px; text-align: center;"><h3>❌ خطأ</h3><p>${message}</p></div>`;
 }
@@ -75,26 +78,20 @@ function copyToClipboard(text) {
   });
 }
 
-// 👇👇👇 هذه هي الدالة النهائية التي تقوم بكل العمل 👇👇👇
+// 👇👇👇 هذه هي الدالة الوحيدة التي تم تحديثها بالمنطق الجديد والناجح 👇👇👇
 function updateSeoTags(prop, propertyId) {
   const pageTitle = `${prop.title || 'عرض عقاري'} - سمسار طلبك`;
   const description = `تفاصيل عقار: ${prop.title || ''}. ${(prop.summary || prop.description || '').substring(0, 160)}...`;
   const pageURL = new URL(`/property/${propertyId}`, window.location.origin).href;
 
-  // 1. استخراج البيانات "النظيفة" من بطاقة الـ JSON
-  const imageTitle = (prop.title || 'عرض عقاري مميز').substring(0, 60);
-  const imagePrice = prop.price_clean || prop.price_display || '';
-  const imageArea = prop.area_clean || prop.area_display || '';
+  // 1. استخراج البيانات "النظيفة" وتشفيرها
+  const imageTitle = encodeURIComponent((prop.title || 'عرض عقاري مميز').substring(0, 60));
+  const imagePrice = encodeURIComponent(prop.price_clean || prop.price_display || '');
+  const imageArea = encodeURIComponent(prop.area_clean || prop.area_display || '');
   
-  // 2. تشفير البيانات بشكل آمن لتكون صالحة للاستخدام في الرابط
-  const encodedTitle = encodeURIComponent(imageTitle);
-  const encodedPrice = encodeURIComponent(imagePrice);
-  const encodedArea = encodeURIComponent(imageArea);
+  // 2. بناء رابط يستدعي "المصنع الداخلي" الناجح
+  const autoShareImage = `/.netlify/functions/og-image?title=${imageTitle}&price=${imagePrice}&area=${imageArea}`;
   
-  // 3. بناء رابط الصورة الذي يستدعي "المصنع" مع البيانات الحقيقية للعقار
-  const autoShareImage = `/.netlify/functions/og-image?title=${encodedTitle}&price=${encodedPrice}&area=${encodedArea}`;
-  
-  // 4. استخدام الصورة التلقائية، أو استخدام صورة حقيقية مخصصة إذا أضفت حقل "share_image"
   const shareImage = prop.share_image || autoShareImage;
   
   document.title = pageTitle;
@@ -104,7 +101,6 @@ function updateSeoTags(prop, propertyId) {
   document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
   document.querySelector('meta[property="og:url"]')?.setAttribute('content', pageURL);
   
-  // 5. وضع رابط الصورة النهائي في الصفحة
   let ogImageMeta = document.querySelector('meta[property="og:image"]');
   if (!ogImageMeta) {
       ogImageMeta = document.createElement('meta');
@@ -116,14 +112,27 @@ function updateSeoTags(prop, propertyId) {
   // (باقي كود Schema.org يبقى كما هو)
   const schemaPrice = (prop.price_min !== undefined) ? prop.price_min : (prop.price || "0").replace(/[^0-9]/g, '');
   const schemaArea = (prop.area_min !== undefined) ? prop.area_min : (prop.area || "0").replace(/[^0-9]/g, '');
-  const schema = { /* ... */ };
+
+  const schema = {
+    "@context": "https://schema.org", "@type": "RealEstateListing", "name": prop.title,
+    "description": prop.description || prop.more_details, "url": pageURL,
+    "offers": { "@type": "Offer", "price": schemaPrice, "priceCurrency": "EGP" },
+    "floorSize": { "@type": "QuantitativeValue", "value": schemaArea, "unitText": "متر مربع" },
+    "numberOfRooms": prop.rooms, "numberOfBathroomsTotal": prop.bathrooms,
+    "address": prop.location || "مدينة نصر, القاهرة, مصر", "datePosted": prop.date,
+  };
+  
   let schemaScript = document.getElementById('schema-json');
-  if (!schemaScript) { /* ... */ }
+  if (!schemaScript) {
+      schemaScript = document.createElement('script');
+      schemaScript.id = 'schema-json';
+      schemaScript.type = 'application/ld+json';
+      document.head.appendChild(schemaScript);
+  }
   schemaScript.textContent = JSON.stringify(schema, null, 2);
 }
 
 function renderPropertyDetails(prop, container, propertyId) {
-  // (هذه الدالة تبقى كما هي في نسختها الناجحة الكاملة)
   const whatsapp = prop.whatsapp || "201147758857";
   const pageURL = new URL(`/property/${propertyId}`, window.location.origin).href;
   const priceToRender = prop.price_display || prop.price || "غير محدد";
@@ -166,4 +175,4 @@ function renderPropertyDetails(prop, container, propertyId) {
     </footer>
     <div id="copy-toast" class="toast" style="visibility: hidden; opacity: 0; transition: all 0.3s ease;">تم نسخ الرابط بنجاح ✓</div>
   `;
-      }
+}
