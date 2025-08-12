@@ -1,6 +1,10 @@
 [build]
   command = "bash build.sh"
   publish = "_site"
+  functions = "netlify/functions"
+
+[functions."og-image"]
+  included_files = ["assets/fonts/**"]
 
 [[redirects]]
   from = "/property/:id"
