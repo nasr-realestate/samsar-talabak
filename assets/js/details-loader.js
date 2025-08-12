@@ -1,5 +1,6 @@
 /**
- * نظام تحميل تفاصيل العقار (الإصدار الاحترافي والمستقر v8.3 - مع الصور التلقائية)
+ * نظام تحميل تفاصيل العقار (الإصدار الاحترافي والمستقر v8.0 - النسخة الآمنة)
+ * هذه هي النسخة الناجحة التي تعرض اسم الملف كرقم للعقار.
  */
 
 // --- الجزء الأول: محرك جلب البيانات الناجح ---
@@ -80,24 +81,12 @@ function copyToClipboard(text) {
   });
 }
 
-// 👇👇👇 هذه هي الدالة الوحيدة التي تم تحديثها 👇👇👇
 function updateSeoTags(prop, propertyId) {
-  const pageTitle = `${prop.title || 'عرض عقاري'} - سمسar طلبك`;
-  const description = `تفاصيل عقار: ${prop.title || ''}. ${(prop.summary || prop.description || '').substring(0, 160)}...`;
+  const priceForDisplay = prop.price_display || prop.price || 'غير محدد';
+  const areaForDisplay = prop.area_display || prop.area || 'غير محددة';
+  const pageTitle = `${prop.title || 'عرض عقاري'} - سمسار طلبك`;
+  const description = `تفاصيل عقار: ${prop.title || ''}. المساحة: ${areaForDisplay}، السعر: ${priceForDisplay}. ${(prop.description || '').substring(0, 160)}...`;
   const pageURL = new URL(`/property/${propertyId}`, window.location.origin).href;
-
-  // --- الجزء الخاص بتوليد الصورة التلقائية ---
-  // 1. استخراج البيانات الأساسية للصورة مع تشفيرها للرابط
-  const imageTitle = encodeURIComponent((prop.title || '').substring(0, 60)); 
-  const imagePrice = encodeURIComponent(prop.price_display || '');
-  const imageArea = encodeURIComponent(prop.area_display || '');
-  
-  // 2. بناء رابط الصورة التلقائي باستخدام خدمة Vercel
-  // تأكد من أن رابط موقعك (subdomain) صحيح
-  const autoShareImage = `https://og-image.vercel.app/${imageTitle}?price=${imagePrice}&area=${imageArea}&site_name=aqarnasr.netlify.app`;
-  
-  // 3. استخدام الصورة التلقائية، أو استخدام صورة مخصصة إذا أضفت حقل "share_image" في الـ JSON
-  const shareImage = prop.share_image || autoShareImage;
 
   document.title = pageTitle;
   
@@ -106,16 +95,6 @@ function updateSeoTags(prop, propertyId) {
   document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
   document.querySelector('meta[property="og:url"]')?.setAttribute('content', pageURL);
   
-  // تحديث وسم صورة المشاركة بالرابط النهائي (تلقائي أو مخصص)
-  let ogImageMeta = document.querySelector('meta[property="og:image"]');
-  if (!ogImageMeta) {
-      ogImageMeta = document.createElement('meta');
-      ogImageMeta.setAttribute('property', 'og:image');
-      document.head.appendChild(ogImageMeta);
-  }
-  ogImageMeta.setAttribute('content', shareImage);
-  
-  // (باقي كود Schema.org يبقى كما هو)
   const schemaPrice = (prop.price_min !== undefined) ? prop.price_min : (prop.price || "0").replace(/[^0-9]/g, '');
   const schemaArea = (prop.area_min !== undefined) ? prop.area_min : (prop.area || "0").replace(/[^0-9]/g, '');
 
@@ -181,4 +160,4 @@ function renderPropertyDetails(prop, container, propertyId) {
     </footer>
     <div id="copy-toast" class="toast" style="visibility: hidden; opacity: 0; transition: all 0.3s ease;">تم نسخ الرابط بنجاح ✓</div>
   `;
-      }
+                      }
