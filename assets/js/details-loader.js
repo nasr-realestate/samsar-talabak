@@ -1,9 +1,7 @@
 /**
- * نظام تحميل تفاصيل العقار (الإصدار الاحترافي والمستقر v8.0 - النسخة الآمنة)
- * هذه هي النسخة الناجحة التي تعرض اسم الملف كرقم للعقار.
+ * نظام تحميل تفاصيل العقار (الإصدار النهائي v9.3 - مع المصنع الداخلي للصور والخطوط العربية)
  */
 
-// --- الجزء الأول: محرك جلب البيانات الناجح ---
 document.addEventListener("DOMContentLoaded", async function () {
   const container = document.getElementById("property-details");
   if (!container) { 
@@ -19,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   try {
     const path = window.location.pathname;
     const parts = path.split('/').filter(Boolean);
-    if ((parts[0] === 'property' || parts[0] === 'request') && parts.length > 1) {
+    if (parts[0] === 'property' && parts.length > 1) {
       propertyId = parts[1];
     }
   } catch (e) {
@@ -34,7 +32,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   
   try {
     const indexUrl = `/data/properties_index.json`;
-    
     const indexRes = await fetch(`${indexUrl}?t=${Date.now()}`);
     if (!indexRes.ok) throw new Error(`فشل تحميل فهرس البيانات (خطأ ${indexRes.status}).`);
 
@@ -50,7 +47,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     
     const propertyData = await propertyRes.json();
     
-    // استدعاء الدوال الكاملة والنهائية
     updateSeoTags(propertyData, propertyId); 
     renderPropertyDetails(propertyData, container, propertyId);
 
@@ -59,9 +55,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     showErrorState(container, err.message);
   }
 });
-
-
-// --- الجزء الثاني: الدوال النهائية والاحترافية التي كانت تعمل بنجاح ---
 
 function showErrorState(container, message) {
     container.innerHTML = `<div class="error-state" style="padding: 40px; text-align: center;"><h3>❌ خطأ</h3><p>${message}</p></div>`;
@@ -82,18 +75,32 @@ function copyToClipboard(text) {
 }
 
 function updateSeoTags(prop, propertyId) {
-  const priceForDisplay = prop.price_display || prop.price || 'غير محدد';
-  const areaForDisplay = prop.area_display || prop.area || 'غير محددة';
   const pageTitle = `${prop.title || 'عرض عقاري'} - سمسار طلبك`;
-  const description = `تفاصيل عقار: ${prop.title || ''}. المساحة: ${areaForDisplay}، السعر: ${priceForDisplay}. ${(prop.description || '').substring(0, 160)}...`;
+  const description = `تفاصيل عقار: ${prop.title || ''}. ${(prop.summary || prop.description || '').substring(0, 160)}...`;
   const pageURL = new URL(`/property/${propertyId}`, window.location.origin).href;
 
+  const imageTitle = encodeURIComponent((prop.title || 'عرض عقاري مميز').substring(0, 60));
+  const imagePrice = encodeURIComponent(prop.price_clean || prop.price_display || '');
+  const imageArea = encodeURIComponent(prop.area_clean || prop.area_display || '');
+  
+  const autoShareImage = `/.netlify/functions/og-image?title=${imageTitle}&price=${imagePrice}&area=${imageArea}`;
+  
+  const shareImage = prop.share_image || autoShareImage;
+  
   document.title = pageTitle;
   
   document.querySelector('meta[name="description"]')?.setAttribute('content', description);
   document.querySelector('meta[property="og:title"]')?.setAttribute('content', pageTitle);
   document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
   document.querySelector('meta[property="og:url"]')?.setAttribute('content', pageURL);
+  
+  let ogImageMeta = document.querySelector('meta[property="og:image"]');
+  if (!ogImageMeta) {
+      ogImageMeta = document.createElement('meta');
+      ogImageMeta.setAttribute('property', 'og:image');
+      document.head.appendChild(ogImageMeta);
+  }
+  ogImageMeta.setAttribute('content', shareImage);
   
   const schemaPrice = (prop.price_min !== undefined) ? prop.price_min : (prop.price || "0").replace(/[^0-9]/g, '');
   const schemaArea = (prop.area_min !== undefined) ? prop.area_min : (prop.area || "0").replace(/[^0-9]/g, '');
@@ -160,4 +167,4 @@ function renderPropertyDetails(prop, container, propertyId) {
     </footer>
     <div id="copy-toast" class="toast" style="visibility: hidden; opacity: 0; transition: all 0.3s ease;">تم نسخ الرابط بنجاح ✓</div>
   `;
-                      }
+}
