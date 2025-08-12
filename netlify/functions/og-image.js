@@ -1,22 +1,23 @@
-const satori = require("satori").default;
-const { Resvg } = require("@resvg/resvg-js");
 const fs = require("fs");
 const path = require("path");
-// ✨ استيراد المكتبة الجديدة
-const { html } = require("satori-html");
 
 const WIDTH = 1200;
 const HEIGHT = 630;
-const TAJAWAL_FONT = fs.readFileSync(path.resolve("./assets/fonts/Tajawal-Bold.ttf"));
 
 exports.handler = async function(event) {
   try {
+    // استخدام Dynamic Import لحل مشكلة ES Module
+    const { default: satori } = await import("satori");
+    const { html } = await import("satori-html");
+    const { Resvg } = await import("@resvg/resvg-js");
+
+    const TAJAWAL_FONT = fs.readFileSync(path.resolve("./assets/fonts/Tajawal-Bold.ttf"));
+
     const q = event.queryStringParameters || {};
-    const title = q.title || "عرض عقاري مميز";
-    const price = q.price || "السعر عند الطلب";
-    const area = q.area || "مساحة مناسبة";
+    const title = (q.title || "عرض عقاري مميز").slice(0, 120);
+    const price = (q.price || "السعر عند الطلب").slice(0, 40);
+    const area = (q.area || "مساحة مناسبة").slice(0, 30);
     
-    // ✨ استخدام "html" لتحويل تصميمنا إلى الصيغة التي تفهمها satori
     const markup = html`
       <div style="width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding: 48px; background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); color: #f1f1f1; font-family: 'Tajawal'; border: 1px solid #333;">
         <div style="display: flex; align-items: center; gap: 18px;">
