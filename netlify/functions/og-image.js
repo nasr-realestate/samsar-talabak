@@ -1,4 +1,3 @@
-// ✨✨✨ تم تعديل طريقة الاستيراد في السطر الأول ليصبح متوافقًا ✨✨✨
 const satori = require("satori").default;
 const { Resvg } = require("@resvg/resvg-js");
 const fs = require("fs");
@@ -56,16 +55,21 @@ exports.handler = async function(event) {
                   props: {
                     style: { display: "flex", gap: "28px", marginTop: 40 },
                     children: [
+                      // ✨✨✨ الإصلاح موجود في هذين العنصرين ✨✨✨
                       {
                         type: "div",
-                        props: { style: { background: "rgba(255,255,255,0.05)", padding: "18px 26px", borderRadius: 14, minWidth: "250px" }, children: [
+                        props: { 
+                          style: { display: "flex", flexDirection: "column", alignItems: "center", background: "rgba(255,255,255,0.05)", padding: "18px 26px", borderRadius: 14, minWidth: "250px" }, 
+                          children: [
                           { type: "div", props: { style: { fontSize: 24, color: "#ccc" }, children: "السعر" } },
                           { type: "div", props: { style: { fontSize: 36, fontWeight: 800, color: "#fff" }, children: price } },
                         ]}
                       },
                       {
                         type: "div",
-                        props: { style: { background: "rgba(255,255,255,0.05)", padding: "18px 26px", borderRadius: 14, minWidth: "250px" }, children: [
+                        props: { 
+                          style: { display: "flex", flexDirection: "column", alignItems: "center", background: "rgba(255,255,255,0.05)", padding: "18px 26px", borderRadius: 14, minWidth: "250px" }, 
+                          children: [
                           { type: "div", props: { style: { fontSize: 24, color: "#ccc" }, children: "المساحة" } },
                           { type: "div", props: { style: { fontSize: 36, fontWeight: 800, color: "#fff" }, children: area } },
                         ]}
