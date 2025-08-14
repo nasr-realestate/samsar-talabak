@@ -1,0 +1,22 @@
+{
+  "ref_id": 999,
+  "title": "بطاقة اختبار نظام الصور الديناميكية",
+  "price_display": "5,000,000 جنيه",
+  "price_clean": "5 مليون جنيه",
+  "area_display": "200 م²",
+  "area_clean": "200 متر",
+  "price_min": 5000000,
+  "area_min": 200,
+  "rooms": 3,
+  "bathrooms": 2,
+  "floor": 5,
+  "elevator": true,
+  "garage": true,
+  "finish": "سوبر لوكس",
+  "direction": "بحري",
+  "summary": "هذه بطاقة مخصصة لاختبار نظام توليد الصور عند المشاركة.",
+  "description": "إذا ظهرت الصورة عند مشاركة هذا الرابط، فهذا يعني أن النظام يعمل بشكل سليم.",
+  "more_details": "تأكد من أن كل الملفات (og-image.js, details-loader.js, package.json, netlify.toml) محدثة بآخر نسخة.",
+  "location": "مدينة نصر",
+  "date": "2025-08-08"
+}
