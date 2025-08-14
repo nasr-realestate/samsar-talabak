@@ -1,7 +1,6 @@
 /**
- * نظام تحميل تفاصيل العقار (الإصدار النهائي v9.3 - مع المصنع الداخلي للصور والخطوط العربية)
+ * نظام تحميل تفاصيل العقار (الإصدار النهائي الكامل v9.4 - إعادة ضبط نهائية)
  */
-
 document.addEventListener("DOMContentLoaded", async function () {
   const container = document.getElementById("property-details");
   if (!container) { 
@@ -37,10 +36,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     const masterIndex = await indexRes.json();
     const propertyInfo = masterIndex.find(p => String(p.id) === String(propertyId));
-
-    if (!propertyInfo) {
-      throw new Error(`العقار بالرقم "${propertyId}" غير موجود في الفهرس.`);
-    }
+    if (!propertyInfo) throw new Error(`العقار بالرقم "${propertyId}" غير موجود في الفهرس.`);
 
     const propertyRes = await fetch(`${propertyInfo.path}?t=${Date.now()}`);
     if (!propertyRes.ok) throw new Error(`فشل تحميل بيانات العقار.`);
@@ -84,11 +80,9 @@ function updateSeoTags(prop, propertyId) {
   const imageArea = encodeURIComponent(prop.area_clean || prop.area_display || '');
   
   const autoShareImage = `/.netlify/functions/og-image?title=${imageTitle}&price=${imagePrice}&area=${imageArea}`;
-  
   const shareImage = prop.share_image || autoShareImage;
   
   document.title = pageTitle;
-  
   document.querySelector('meta[name="description"]')?.setAttribute('content', description);
   document.querySelector('meta[property="og:title"]')?.setAttribute('content', pageTitle);
   document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
@@ -167,4 +161,4 @@ function renderPropertyDetails(prop, container, propertyId) {
     </footer>
     <div id="copy-toast" class="toast" style="visibility: hidden; opacity: 0; transition: all 0.3s ease;">تم نسخ الرابط بنجاح ✓</div>
   `;
-}
+    }
