@@ -1,20 +1,16 @@
 # =========================================================
-# ===    ملف الإعدادات النهائي لموقع سمسار طلبك (V2)      ===
+# ===    ملف الإعدادات النهائي لموقع سمسار طلبك (V3)      ===
 # =========================================================
 
 # --- معلومات الموقع الأساسية ---
 title: "سمسار طلبك"
 description: "شقق تمليك في مدينة نصر - عروض حصرية وأسعار تنافسية"
+url: "https://aqarnasr.netlify.app"
+baseurl: ""
 lang: "ar"
 email: "elraikonly@outlook.sa"
 
-# --- إعدادات النشر والروابط (مهم جدًا) ---
-# ✨ تم وضع رابط موقعك الصحيح هنا
-url: "https://aqarnasr.netlify.app"
-baseurl: "" # يجب أن يبقى فارغًا دائمًا على Netlify
-
 # --- إعدادات المحتوى والبناء ---
-data_source: data # إعداد خاص بـ Jekyll
 markdown: kramdown
 kramdown:
   input: GFM
@@ -24,20 +20,33 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 
-# --- ✨✨✨ الإصلاح الحاسم لخريطة الموقع (Sitemap) ✨✨✨ ---
-# هذا الجزء يخبر إضافة الخريطة بوجود بياناتك الديناميكية
+# --- ✨✨✨ الإصلاح الحاسم والنهائي لخريطة الموقع (Sitemap) ✨✨✨ ---
+# هذا الجزء يخبر Jekyll بمعاملة بياناتنا كمجموعات من الصفحات القابلة للأرشفة
 collections:
   properties:
+    output: true
+    permalink: /property/:name
   requests:
+    output: true
+    permalink: /request/:name
 
 # --- إعدادات SEO ---
 google_site_verification: "ozxUgrS2657mo8HYSvgjhYSeYv1FCcc8ig_3wjmSoGA"
-seo:
-  title: "سمسار طلبك - أفضل عروض العقارات في مدينة نصر"
-  description: "استكشف أفضل الشقق المعروضة للبيع والإيجار في مدينة نصر مع عروض حصرية وأسعار تنافسية."
 
 # --- إعدادات افتراضية للمحتوى ---
 defaults:
+  -
+    scope:
+      path: ""
+      type: "properties"
+    values:
+      layout: "default" # يمكنك إنشاء layout خاص بهم لاحقًا
+  -
+    scope:
+      path: ""
+      type: "requests"
+    values:
+      layout: "default"
   -
     scope:
       path: ""
@@ -45,23 +54,13 @@ defaults:
     values:
       layout: "default"
       lang: "ar"
-  -
-    scope:
-      path: ""
-      type: "posts"
-    values:
-      lang: "ar"
 
 # --- الملفات والمجلدات التي يتم تضمينها أو استبعادها ---
 include:
-  - _data # ضروري لتعمل ملفات الفهارس
+  - _data
 
 exclude:
   - node_modules
   - Gemfile
   - Gemfile.lock
   - README.md
-
-# --- إعدادات التصفح (Pagination) ---
-paginate: 10
-paginate_path: "/page:num/"
