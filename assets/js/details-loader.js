@@ -1,5 +1,6 @@
 /**
- * نظام تحميل تفاصيل العقار (الإصدار النهائي v10.0 - مع صور Cloudinary الديناميكية)
+ * نظام تحميل تفاصيل العقار (الإصدار 10.1 - مع صور Cloudinary ديناميكية احترافية)
+ * التحسينات: دمج صورة العقار داخل بطاقة المشاركة، إضافة خط احتياطي، تحسينات طفيفة.
  */
 
 document.addEventListener("DOMContentLoaded", async function () {
@@ -9,6 +10,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     return; 
   }
 
+  // (يمكنك إزالة هذه الأسطر إذا كان التنسيق يتم عبر CSS)
   container.style.maxWidth = '960px';
   container.style.margin = '20px auto';
   container.style.padding = '0 15px';
@@ -31,6 +33,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
   
   try {
+    // استخدام ?t= لمنع التخزين المؤقت (caching) لملف الفهرس
     const indexUrl = `/data/properties_index.json`;
     const indexRes = await fetch(`${indexUrl}?t=${Date.now()}`);
     if (!indexRes.ok) throw new Error(`فشل تحميل فهرس البيانات (خطأ ${indexRes.status}).`);
@@ -71,29 +74,45 @@ function copyToClipboard(text) {
   });
 }
 
-// 👇👇👇 هذه هي الدالة النهائية مع كل بياناتك الصحيحة 👇👇👇
+// Helper function to encode string to Base64 for the Cloudinary fetch transformation
+function btoaSafe(string) {
+    return window.btoa(unescape(encodeURIComponent(string)));
+}
+
+// 👇👇👇 هذه هي الدالة النهائية والمحسّنة 👇👇👇
 function updateSeoTags(prop, propertyId) {
   const pageTitle = `${prop.title || 'عرض عقاري'} - سمسار طلبك`;
   const description = `تفاصيل عقار: ${prop.title || ''}. ${(prop.summary || prop.description || '').substring(0, 160)}...`;
   const pageURL = new URL(`/property/${propertyId}`, window.location.origin).href;
 
-  // --- ✨✨✨ منطق Cloudinary لتوليد الصور (بالبيانات الصحيحة) ✨✨✨
+  // --- ✨✨✨ منطق Cloudinary لتوليد الصور (نسخة احترافية) ✨✨✨
 
   // 1. بياناتك من حساب Cloudinary
   const CLOUD_NAME = "dmm4lqbcf";
   const BASE_IMAGE_PUBLIC_ID = "og-background-template";
+  const DEFAULT_PROPERTY_IMAGE_ID = "default_property_image"; // <-- ارفع صورة افتراضية بهذا الاسم
 
   // 2. تجهيز النصوص للكتابة على الصورة
   const titleText = (prop.title || '').substring(0, 50);
   const priceText = prop.price_clean || prop.price_display || '';
   const areaText = prop.area_clean || prop.area_display || '';
 
-  // 3. بناء رابط الصورة الديناميكي من Cloudinary
+  // 3. ✨ جديد: تجهيز طبقة صورة العقار نفسه
+  // نستخدم أول صورة من 'images' أو صورة افتراضية من Cloudinary
+  const propertyImageURL = (prop.images && prop.images.length > 0) 
+      ? new URL(prop.images[0], window.location.origin).href
+      : `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${DEFAULT_PROPERTY_IMAGE_ID}`;
+  
+  // تحويلة Cloudinary لجلب الصورة وتغيير حجمها ووضعها في المكان المناسب
+  const imageOverlay = `l_fetch:${btoaSafe(propertyImageURL)}/w_1100,h_600,c_fill,g_north_west,x_50,y_50`;
+
+  // 4. بناء رابط الصورة الديناميكي من Cloudinary
   const autoShareImage = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/` +
-    `l_text:Tajawal_64_bold:${encodeURIComponent(titleText)},co_rgb:00ff88,w_1100,c_fit,g_north_east,x_50,y_50/` +
-    `l_text:Tajawal_48_bold:${encodeURIComponent(priceText)},co_rgb:ffffff,w_500,c_fit,g_south_west,x_50,y_120/` +
-    `l_text:Tajawal_48_bold:${encodeURIComponent(areaText)},co_rgb:ffffff,w_500,c_fit,g_south_west,x_50,y_50/` +
-    `${BASE_IMAGE_PUBLIC_ID}.png`; // ✨ تأكد من امتداد الملف الصحيح (.png)
+    `${imageOverlay}/` + // <-- إضافة طبقة صورة العقار
+    `l_text:Tajawal_64_bold_Arial_64_bold:${encodeURIComponent(titleText)},co_rgb:ffffff,w_1100,c_fit,g_south_east,x_50,y_200/` +
+    `l_text:Tajawal_48_bold_Arial_48_bold:${encodeURIComponent(priceText)},co_rgb:00ff88,w_500,c_fit,g_south_west,x_50,y_120/` +
+    `l_text:Tajawal_48_bold_Arial_48_bold:${encodeURIComponent(areaText)},co_rgb:ffffff,w_500,c_fit,g_south_west,x_50,y_50/` +
+    `${BASE_IMAGE_PUBLIC_ID}.png`;
 
   const shareImage = prop.share_image || autoShareImage;
   
@@ -111,12 +130,10 @@ function updateSeoTags(prop, propertyId) {
       document.head.appendChild(ogImageMeta);
   }
   ogImageMeta.setAttribute('content', shareImage);
-  
-  // (باقي كود Schema.org يبقى كما هو)
 }
 
+// (دالة renderPropertyDetails تبقى كما هي تمامًا)
 function renderPropertyDetails(prop, container, propertyId) {
-  // (هذه الدالة تبقى كما هي في نسختها الناجحة الكاملة)
   const whatsapp = prop.whatsapp || "201147758857";
   const pageURL = new URL(`/property/${propertyId}`, window.location.origin).href;
   const priceToRender = prop.price_display || prop.price || "غير محدد";
@@ -159,4 +176,4 @@ function renderPropertyDetails(prop, container, propertyId) {
     </footer>
     <div id="copy-toast" class="toast" style="visibility: hidden; opacity: 0; transition: all 0.3s ease;">تم نسخ الرابط بنجاح ✓</div>
   `;
-        }
+}
