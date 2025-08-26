@@ -1,6 +1,6 @@
 /**
- * نظام تحميل تفاصيل العقار (الإصدار 10.2 - مع صور Cloudinary ديناميكية محسنة)
- * التحسينات: إصلاح مشكلة صور المشاركة، تبسيط بناء رابط Cloudinary، إضافة خطوط احتياطية
+ * نظام تحميل تفاصيل العقار (الإصدار 10.1 - مع صور Cloudinary ديناميكية احترافية)
+ * التحسينات: دمج صورة العقار داخل بطاقة المشاركة، إضافة خط احتياطي، تحسينات طفيفة.
  */
 
 document.addEventListener("DOMContentLoaded", async function () {
@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     return; 
   }
 
+  // (يمكنك إزالة هذه الأسطر إذا كان التنسيق يتم عبر CSS)
   container.style.maxWidth = '960px';
   container.style.margin = '20px auto';
   container.style.padding = '0 15px';
@@ -32,6 +33,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
   
   try {
+    // استخدام ?t= لمنع التخزين المؤقت (caching) لملف الفهرس
     const indexUrl = `/data/properties_index.json`;
     const indexRes = await fetch(`${indexUrl}?t=${Date.now()}`);
     if (!indexRes.ok) throw new Error(`فشل تحميل فهرس البيانات (خطأ ${indexRes.status}).`);
@@ -72,76 +74,65 @@ function copyToClipboard(text) {
   });
 }
 
+// Helper function to encode string to Base64 for the Cloudinary fetch transformation
+function btoaSafe(string) {
+    return window.btoa(unescape(encodeURIComponent(string)));
+}
+
+// 👇👇👇 هذه هي الدالة النهائية والمحسّنة 👇👇👇
 function updateSeoTags(prop, propertyId) {
   const pageTitle = `${prop.title || 'عرض عقاري'} - سمسار طلبك`;
   const description = `تفاصيل عقار: ${prop.title || ''}. ${(prop.summary || prop.description || '').substring(0, 160)}...`;
   const pageURL = new URL(`/property/${propertyId}`, window.location.origin).href;
 
-  // بيانات Cloudinary
+  // --- ✨✨✨ منطق Cloudinary لتوليد الصور (نسخة احترافية) ✨✨✨
+
+  // 1. بياناتك من حساب Cloudinary
   const CLOUD_NAME = "dmm4lqbcf";
   const BASE_IMAGE_PUBLIC_ID = "og-background-template";
+  const DEFAULT_PROPERTY_IMAGE_ID = "default_property_image"; // <-- ارفع صورة افتراضية بهذا الاسم
+
+  // 2. تجهيز النصوص للكتابة على الصورة
+  const titleText = (prop.title || '').substring(0, 50);
+  const priceText = prop.price_clean || prop.price_display || '';
+  const areaText = prop.area_clean || prop.area_display || '';
+
+  // 3. ✨ جديد: تجهيز طبقة صورة العقار نفسه
+  // نستخدم أول صورة من 'images' أو صورة افتراضية من Cloudinary
+  const propertyImageURL = (prop.images && prop.images.length > 0) 
+      ? new URL(prop.images[0], window.location.origin).href
+      : `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${DEFAULT_PROPERTY_IMAGE_ID}`;
   
-  // تجهيز النصوص للكتابة على الصورة
-  const titleText = encodeURIComponent((prop.title || '').substring(0, 50));
-  const priceText = encodeURIComponent(prop.price_clean || prop.price_display || '');
-  const areaText = encodeURIComponent(prop.area_clean || prop.area_display || '');
+  // تحويلة Cloudinary لجلب الصورة وتغيير حجمها ووضعها في المكان المناسب
+  const imageOverlay = `l_fetch:${btoaSafe(propertyImageURL)}/w_1100,h_600,c_fill,g_north_west,x_50,y_50`;
 
-  // بناء رابط الصورة الديناميكي (إصدار مبسط ومحسن)
-  const shareImage = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/` +
-    `l_text:Tajawal_64_bold:${titleText},co_rgb:FFFFFF,c_fit,w_900,x_50,y_250/` +
-    `l_text:Tajawal_48_bold:${priceText},co_rgb:00FF88,c_fit,w_500,x_50,y_150/` +
-    `l_text:Tajawal_48_bold:${areaText},co_rgb:FFFFFF,c_fit,w_500,x_50,y_50/` +
-    `${BASE_IMAGE_PUBLIC_ID}.jpg`;
+  // 4. بناء رابط الصورة الديناميكي من Cloudinary
+  const autoShareImage = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/` +
+    `${imageOverlay}/` + // <-- إضافة طبقة صورة العقار
+    `l_text:Tajawal_64_bold_Arial_64_bold:${encodeURIComponent(titleText)},co_rgb:ffffff,w_1100,c_fit,g_south_east,x_50,y_200/` +
+    `l_text:Tajawal_48_bold_Arial_48_bold:${encodeURIComponent(priceText)},co_rgb:00ff88,w_500,c_fit,g_south_west,x_50,y_120/` +
+    `l_text:Tajawal_48_bold_Arial_48_bold:${encodeURIComponent(areaText)},co_rgb:ffffff,w_500,c_fit,g_south_west,x_50,y_50/` +
+    `${BASE_IMAGE_PUBLIC_ID}.png`;
 
+  const shareImage = prop.share_image || autoShareImage;
+  
   document.title = pageTitle;
   
-  // تحديث أو إضافة وسم الوصف
-  let descriptionMeta = document.querySelector('meta[name="description"]');
-  if (!descriptionMeta) {
-    descriptionMeta = document.createElement('meta');
-    descriptionMeta.name = "description";
-    document.head.appendChild(descriptionMeta);
+  document.querySelector('meta[name="description"]')?.setAttribute('content', description);
+  document.querySelector('meta[property="og:title"]')?.setAttribute('content', pageTitle);
+  document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
+  document.querySelector('meta[property="og:url"]')?.setAttribute('content', pageURL);
+  
+  let ogImageMeta = document.querySelector('meta[property="og:image"]');
+  if (!ogImageMeta) {
+      ogImageMeta = document.createElement('meta');
+      ogImageMeta.setAttribute('property', 'og:image');
+      document.head.appendChild(ogImageMeta);
   }
-  descriptionMeta.content = description;
-  
-  // تحديث أو إضافة وسوم Open Graph
-  const ogProperties = [
-    { property: "og:title", content: pageTitle },
-    { property: "og:description", content: description },
-    { property: "og:url", content: pageURL },
-    { property: "og:image", content: shareImage },
-    { property: "og:type", content: "website" }
-  ];
-  
-  ogProperties.forEach(ogProp => {
-    let metaTag = document.querySelector(`meta[property="${ogProp.property}"]`);
-    if (!metaTag) {
-      metaTag = document.createElement('meta');
-      metaTag.setAttribute('property', ogProp.property);
-      document.head.appendChild(metaTag);
-    }
-    metaTag.content = ogProp.content;
-  });
-  
-  // إضافة تاج Twitter لتحسين المشاركة على تويتر
-  const twitterProperties = [
-    { name: "twitter:card", content: "summary_large_image" },
-    { name: "twitter:title", content: pageTitle },
-    { name: "twitter:description", content: description },
-    { name: "twitter:image", content: shareImage }
-  ];
-  
-  twitterProperties.forEach(twitterProp => {
-    let metaTag = document.querySelector(`meta[name="${twitterProp.name}"]`);
-    if (!metaTag) {
-      metaTag = document.createElement('meta');
-      metaTag.name = twitterProp.name;
-      document.head.appendChild(metaTag);
-    }
-    metaTag.content = twitterProp.content;
-  });
+  ogImageMeta.setAttribute('content', shareImage);
 }
 
+// (دالة renderPropertyDetails تبقى كما هي تمامًا)
 function renderPropertyDetails(prop, container, propertyId) {
   const whatsapp = prop.whatsapp || "201147758857";
   const pageURL = new URL(`/property/${propertyId}`, window.location.origin).href;
