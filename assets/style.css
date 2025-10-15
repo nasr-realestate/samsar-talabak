@@ -98,7 +98,7 @@ main {
 /* === 🏠 تنسيقات الصفحة الرئيسية (Homepage) 🏠 === */
 /* ========================================================= */
 body.homepage {
-  background: url('https://i.postimg.cc/FsVQnvrS/20251014-224946.jpg') center center / cover no-repeat fixed;
+  background: url('https://i.postimg.cc/hGCGwykc/20251015-164325.webp') center center / cover no-repeat fixed;
 }
 .home-hero {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
