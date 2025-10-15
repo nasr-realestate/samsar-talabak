@@ -102,7 +102,7 @@ body.homepage {
 }
 .home-hero {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  min-height: 80vh; background-color: rgba(0, 0, 0, 0.75);
+  min-height: 80vh; background-color: transparent;
   color: #f1f1f1; text-align: center; padding: 2rem;
 }
 .home-hero h1 {
