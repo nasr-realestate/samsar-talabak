@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أداة إرسال واتساب السريعة</title>
+    <title>أداة إرسال واتساب محسّنة</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap' );
 
@@ -52,7 +52,7 @@
             border: 1px solid #ccc;
             border-radius: 6px;
             font-size: 16px;
-            box-sizing: border-box; /* To include padding in width */
+            box-sizing: border-box;
             transition: border-color 0.3s, box-shadow 0.3s;
         }
 
@@ -95,7 +95,7 @@
 
     <div class="input-group">
         <label for="phoneNumber">رقم هاتف العميل:</label>
-        <input type="tel" id="phoneNumber" class="input-field" placeholder="مثال: 201012345678+ (بالصيغة الدولية)">
+        <input type="tel" id="phoneNumber" class="input-field" placeholder="الصق الرقم المصري هنا مباشرة (مثال: 01012345678)">
     </div>
 
     <div class="input-group">
@@ -105,11 +105,10 @@
 
     <button class="btn" onclick="sendMessage()">🚀 إرسال عبر واتساب</button>
 
-    <p class="info-text">اضغط على زر الإرسال لفتح واتساب مباشرة مع الرسالة جاهزة.</p>
+    <p class="info-text">الأداة تضيف كود الدولة (+20) تلقائيًا للأرقام المصرية.</p>
 </div>
 
 <script>
-    // الرسالة الجاهزة مع بعض التعديلات المقترحة
     const defaultMessage = `شكرًا لاتصالك، وسامحنا إن مكناش قدرنا نرد فورًا 🙏
 
 علشان نقدر نخدمك بأفضل شكل، تعاملنا الأساسي بيكون على واتساب – هنحتاج نعرف بعض التفاصيل:
@@ -131,33 +130,46 @@ https://aqarnasr.netlify.app/add-your-property.html
 تحياتنا  
 📍 سمسار طلبك – عقارات مدينة نصر`;
 
-    // وضع الرسالة الجاهزة في حقل النص عند تحميل الصفحة
     document.getElementById('messageText' ).value = defaultMessage;
 
-    // دالة لإرسال الرسالة عبر واتساب
+    function formatPhoneNumber(number) {
+        // إزالة كل ما هو ليس رقمًا (مثل المسافات، الأقواس، الشرطات)
+        let cleaned = number.replace(/\D/g, '');
+
+        // إذا كان الرقم يبدأ بـ 01 (رقم مصري محلي)
+        if (cleaned.startsWith('01') && cleaned.length === 11) {
+            // إزالة الصفر من البداية وإضافة كود الدولة
+            return '20' + cleaned.substring(1);
+        }
+        // إذا كان الرقم يبدأ بـ 20 (صيغة دولية لمصر بالفعل)
+        else if (cleaned.startsWith('20') && cleaned.length === 12) {
+            return cleaned;
+        }
+        // إذا كان الرقم يبدأ بـ +20
+        else if (number.startsWith('+20')) {
+             return cleaned;
+        }
+        // لأي حالة أخرى، افترض أنه رقم دولي وأعده كما هو بعد تنظيفه
+        return cleaned;
+    }
+
     function sendMessage() {
-        let phoneNumber = document.getElementById('phoneNumber').value;
+        const rawPhoneNumber = document.getElementById('phoneNumber').value;
         const messageText = document.getElementById('messageText').value;
 
-        // إزالة أي رموز غير الأرقام وعلامة + من البداية
-        phoneNumber = phoneNumber.replace(/[^0-9+]/g, '');
-        
-        // التحقق من أن الرقم والرسالة غير فارغين
-        if (!phoneNumber || !messageText) {
+        if (!rawPhoneNumber || !messageText) {
             alert("يرجى إدخال رقم الهاتف ونص الرسالة!");
             return;
         }
 
-        // التحقق من أن الرقم يبدأ بـ +
-        if (!phoneNumber.startsWith('+')) {
-            alert("الرجاء إدخال الرقم بالصيغة الدولية الصحيحة (يجب أن يبدأ بـ '+').");
+        const formattedNumber = formatPhoneNumber(rawPhoneNumber);
+
+        if (!formattedNumber) {
+            alert("الرقم الذي أدخلته غير صالح. يرجى التحقق منه.");
             return;
         }
 
-        // إنشاء الرابط لفتح واتساب مع الرقم والرسالة
-        const whatsappURL = "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(messageText );
-
-        // فتح الرابط في نافذة جديدة
+        const whatsappURL = "https://wa.me/" + formattedNumber + "?text=" + encodeURIComponent(messageText );
         window.open(whatsappURL, '_blank');
     }
 </script>
