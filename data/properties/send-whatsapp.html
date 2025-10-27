@@ -1,166 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أداة إرسال واتساب السريعة</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap' );
-
-        body {
-            font-family: 'Cairo', sans-serif;
-            background-color: #f0f2f5;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 550px;
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            border-top: 5px solid #075E54;
-        }
-
-        h2 {
-            text-align: center;
-            color: #128C7E;
-            margin-bottom: 25px;
-            font-weight: 700;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: bold;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 16px;
-            box-sizing: border-box; /* To include padding in width */
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-
-        .input-field:focus {
-            border-color: #25D366;
-            box-shadow: 0 0 5px rgba(37, 211, 102, 0.5);
-            outline: none;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(45deg, #25D366, #128C7E);
-            border: none;
-            border-radius: 6px;
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-        }
-
-        .info-text {
-            text-align: center;
-            color: #666;
-            font-size: 13px;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <h2>أداة التواصل مع سمسار طلبك</h2>
-
-    <div class="input-group">
-        <label for="phoneNumber">رقم هاتف العميل:</label>
-        <input type="tel" id="phoneNumber" class="input-field" placeholder="مثال: 201012345678+ (بالصيغة الدولية)">
-    </div>
-
-    <div class="input-group">
-        <label for="messageText">نص الرسالة:</label>
-        <textarea id="messageText" class="input-field" rows="10"></textarea>
-    </div>
-
-    <button class="btn" onclick="sendMessage()">🚀 إرسال عبر واتساب</button>
-
-    <p class="info-text">اضغط على زر الإرسال لفتح واتساب مباشرة مع الرسالة جاهزة.</p>
-</div>
-
-<script>
-    // الرسالة الجاهزة مع بعض التعديلات المقترحة
-    const defaultMessage = `شكرًا لاتصالك، وسامحنا إن مكناش قدرنا نرد فورًا 🙏
-
-علشان نقدر نخدمك بأفضل شكل، تعاملنا الأساسي بيكون على واتساب – هنحتاج نعرف بعض التفاصيل:
-
-✅ هل بتدور على: شقة / محل / مكتب / مقر إداري؟
-✅ نوع العملية: بيع؟ شراء؟ إيجار؟
-✅ المنطقة المطلوبة أو المعروضة؟
-✅ أي تفاصيل إضافية تهمك؟ 💬
-
-💡 ممكن كمان تتصفح:
-🔹 صفحة الطلبات: https://aqarnasr.netlify.app/requests-filtered.html  
-🔹 صفحة العروض: https://aqarnasr.netlify.app/properties-filtered.html  
-
-✍️ أو تضيف طلبك/عقارك مباشرة من هنا:
-https://aqarnasr.netlify.app/add-your-property.html
-
-🕓 نراجع الرسائل تباعًا، وهنرجع لك بأسرع وقت بإذن الله.
-
-تحياتنا  
-📍 سمسار طلبك – عقارات مدينة نصر`;
-
-    // وضع الرسالة الجاهزة في حقل النص عند تحميل الصفحة
-    document.getElementById('messageText' ).value = defaultMessage;
-
-    // دالة لإرسال الرسالة عبر واتساب
-    function sendMessage() {
-        let phoneNumber = document.getElementById('phoneNumber').value;
-        const messageText = document.getElementById('messageText').value;
-
-        // إزالة أي رموز غير الأرقام وعلامة + من البداية
-        phoneNumber = phoneNumber.replace(/[^0-9+]/g, '');
-        
-        // التحقق من أن الرقم والرسالة غير فارغين
-        if (!phoneNumber || !messageText) {
-            alert("يرجى إدخال رقم الهاتف ونص الرسالة!");
-            return;
-        }
-
-        // التحقق من أن الرقم يبدأ بـ +
-        if (!phoneNumber.startsWith('+')) {
-            alert("الرجاء إدخال الرقم بالصيغة الدولية الصحيحة (يجب أن يبدأ بـ '+').");
-            return;
-        }
-
-        // إنشاء الرابط لفتح واتساب مع الرقم والرسالة
-        const whatsappURL = "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(messageText );
-
-        // فتح الرابط في نافذة جديدة
-        window.open(whatsappURL, '_blank');
-    }
-</script>
-
-</body>
-</html>
