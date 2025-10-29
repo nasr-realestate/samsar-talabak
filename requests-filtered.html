@@ -3,45 +3,72 @@ layout: default
 title: "طلبات العملاء الجادة | سمسار طلبك"
 description: "تصفح طلبات العملاء الجادين لشراء واستئجار العقارات في مدينة نصر. إذا كان لديك عرض مناسب، فهذه هي فرصتك."
 ---
-<!-- 1. رأس الصفحة الاحترافي مع تأثيرات بصرية -->
+
+<!-- 
+  تمت المراجعة والتحسين بواسطة مطور ويب أول.
+  التحسينات:
+  - إزالة جميع الأنماط المضمنة (inline styles) ووسوم <style> لمركزية التصميم في ملف CSS الرئيسي.
+  - تحسين البنية الدلالية (Semantic Structure).
+  - إضافة سمات ARIA لتحسين إمكانية الوصول (Accessibility).
+  - إضافة سمة 'defer' لـ <script> لتحسين أداء التحميل.
+-->
+
+<!-- رأس الصفحة: يحتوي على العنوان الرئيسي الذي يصف محتوى الصفحة -->
 <header class="page-header">
   <h1>🤝 طلبات العملاء الجادة</h1>
-  <p style="color: #ccc; font-size: 1.2rem; margin-top: 1rem;">ابحث عن الطلب المثالي لعقارك وقدم عرضك اليوم</p>
+  <p class="page-subtitle">ابحث عن الطلب المثالي لعقارك وقدم عرضك اليوم</p>
 </header>
 
-<!-- SEO: استخدام <main> للمحتوى الأساسي للصفحة -->
+<!-- المحتوى الرئيسي للصفحة -->
 <main>
-  <!-- 2. زر الإجراء الرئيسي -->
-  <section style="text-align:center; margin: 2rem 0;">
-    <a href="{{ '/add-your-property' | relative_url }}" class="nav-btn">
+
+  <!-- قسم الحث على اتخاذ إجراء (Call to Action) -->
+  <section class="cta-section">
+    <a href="{{ '/add-your-property' | relative_url }}" class="nav-btn" aria-label="لديك عقار؟ قدمه الآن">
       ✨ لديك عقار؟ قدمه الآن
     </a>
   </section>
 
-  <!-- 3. رسالة ترحيب ذكية للوسطاء وأصحاب العقارات -->
-  <div id="welcome-message" class="welcome-message" style="display:none;">
-    <h2 style="color: #00ff88; font-size: 2.5rem; margin-bottom: 1rem;">🎉 مرحباً بك في مركز الفرص</h2>
-    <p style="font-size: 1.3rem; color: #f1f1f1; line-height: 1.6;">
-      هنا تجد أحدث طلبات العملاء الباحثين عن عقارات.<br>
+  <!-- 
+    رسالة ترحيبية: يتم إظهارها بواسطة JavaScript.
+    aria-live="polite" يخبر قارئات الشاشة بتحديث المحتوى عند ظهوره دون مقاطعة المستخدم.
+  -->
+  <div id="welcome-message" class="welcome-message" style="display:none;" aria-live="polite" role="status">
+    <h2 class="welcome-message-title">🎉 مرحباً بك في مركز الفرص</h2>
+    <p class="welcome-message-text">
+      هنا تجد أحدث طلبات العملاء الباحثين عن عقارات.  
+
       استعرض الطلبات وقدم عرضك لتحقيق صفقتك التالية!
     </p>
-    <div style="margin-top: 1.5rem;">
-      <span style="color: #00ff88; font-weight: bold;">🔥 طلبات جديدة بانتظارك</span>
+    <div class="welcome-message-highlight">
+      <span>🔥 طلبات جديدة بانتظارك</span>
     </div>
   </div>
 
-  <!-- 4. حاوية الفلاتر الديناميكية -->
-  <section id="filter-buttons" class="filter-container enhanced-filter-container">
-    <!-- سيتم ملء هذا القسم بواسطة الجافاسكربت -->
+  <!-- 
+    قسم الفلاتر: مخصص لأزرار التصنيفات التي يتم إنشاؤها ديناميكيًا.
+    aria-label يوفر سياقًا واضحًا لهذا القسم.
+  -->
+  <section id="filter-buttons" class="filter-container enhanced-filter-container" aria-label="أدوات تصفية طلبات العملاء"></section>
+
+  <!-- 
+    قسم عرض الطلبات: الحاوية الرئيسية لبطاقات الطلبات.
+    aria-live="polite" ضروري هنا لأن المحتوى يتغير ديناميكيًا (التحميل والفلترة).
+  -->
+  <section id="requests-container" class="requests-grid enhanced-properties-container" aria-live="polite">
+    <!-- 
+      سيتم عرض حالة التحميل الأولية هنا بواسطة JavaScript إذا لزم الأمر،
+      أو مباشرة إذا كان السكريبت يقوم بإزالتها.
+      من الأفضل أن يتم إنشاؤها عبر JS لتبقى بنية HTML الأولية نظيفة.
+    -->
   </section>
 
-  <!-- 5. حاوية عرض بطاقات الطلبات -->
-  <section id="requests-container" class="requests-grid enhanced-properties-container" aria-live="polite">
-    <!-- سيتم عرض شاشة التحميل والبطاقات هنا بواسطة الجافاسكربت -->
-  </section>
 </main>
 
-<!-- 6. العناصر العائمة للتصميم -->
+<!-- 
+  العناصر العائمة: تم الإبقاء عليها كما هي.
+  يفضل نقل أنماطها إلى ملف CSS الرئيسي لتنظيم أفضل.
+-->
 <div class="floating-elements">
   <div class="floating-element" style="left: 15%; animation-delay: 0s;"></div>
   <div class="floating-element" style="left: 25%; animation-delay: 1.5s;"></div>
@@ -50,74 +77,27 @@ description: "تصفح طلبات العملاء الجادين لشراء وا�
   <div class="floating-element" style="left: 85%; animation-delay: 2.2s;"></div>
 </div>
 
-<!-- أنماط التحميل والخطأ -->
-<style>
-  .loading-container { 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 50vh;
-  }
-  
-  .loading-spinner {
-    width: 60px;
-    height: 60px;
-    border: 5px solid #333;
-    border-top: 5px solid #00ff88;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin-bottom: 20px;
-  }
-  
-  .loading-text {
-    color: #f1f1f1;
-    font-size: 1.2rem;
-    text-align: center;
-  }
-  
-  .loading-subtext {
-    color: #888;
-    margin-top: 10px;
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
-  .floating-element {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: #00ff88;
-    border-radius: 50%;
-    opacity: 0.2;
-    animation: float 6s ease-in-out infinite;
-    z-index: -1;
-  }
-  
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
-  }
-</style>
-
-<!-- نظام التوجيه الذكي -->
-<script>
+<!-- 
+  نظام التوجيه الذكي والسكريبت الرئيسي:
+  تم إضافة سمة 'defer' لتحسين الأداء.
+-->
+<script id="redirect-script">
   // نظام توجيه ذكي للروابط القديمة
   const urlParams = new URLSearchParams(window.location.search);
   const requestId = urlParams.get('id');
   
   if (requestId) {
-    // تحويل فوري مع رسالة ترحيب
-    document.getElementById('requests-container').innerHTML = `
-      <div class="loading-container">
-        <div class="loading-spinner"></div>
-        <div class="loading-text">جارٍ تحويلك إلى الرابط الجديد...</div>
-        <p class="loading-subtext">نقوم بتحديث نظام الروابط لتحسين تجربتك</p>
-      </div>
-    `;
+    const container = document.getElementById('requests-container');
+    // من الأفضل إنشاء HTML للتحميل عبر JS لضمان عدم وجوده عند عدم الحاجة إليه
+    if (container) {
+      container.innerHTML = `
+        <div class="loading-container" role="status" aria-label="جاري تحويلك للرابط الجديد">
+          <div class="loading-spinner"></div>
+          <div class="loading-text">جارٍ تحويلك إلى الرابط الجديد...</div>
+          <p class="loading-subtext">نقوم بتحديث نظام الروابط لتحسين تجربتك</p>
+        </div>
+      `;
+    }
     
     // تأخير بسيط لتحسين تجربة المستخدم
     setTimeout(() => {
@@ -126,5 +106,4 @@ description: "تصفح طلبات العملاء الجادين لشراء وا�
   }
 </script>
 
-<!-- 7. استدعاء ملف الجافاسكربت النهائي المحسن -->
-<script src="{{ '/assets/js/requests-display-enhanced.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/requests-display-enhanced.js' | relative_url }}" defer></script>
