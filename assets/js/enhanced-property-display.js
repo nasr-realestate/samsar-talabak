@@ -1,7 +1,5 @@
-<script>
 /**
- * 🏢 سمسار طلبك - نظام عرض العقارات المحسن (النسخة النهائية الكاملة v3.5 - إضافة منطق البحث)
- * - v3.5: بحث فوري + تظليل النتائج + حفظ واسترجاع الاستعلام من URL/localStorage + اختصارات لوحة المفاتيح
+ * 🏢 سمسار طلبك - نظام عرض العقارات المحسن (النسخة النهائية الكاملة v3.4 - إضافة تمييز القسم)
  */
 
 class EnhancedPropertyDisplay {
@@ -16,20 +14,14 @@ class EnhancedPropertyDisplay {
     this.touchStartY = 0;
     this.touchEndY = 0;
     this.isHighlightedSection = false; // ⭐ إضافة جديدة لتتبع حالة التمييز
-
-    // 🔎 حالة البحث
-    this.searchQuery = '';
-    this.searchInput = null;
-    this.searchCountEl = null;
-
+    
     this.config = {
       animationDuration: 300,
       cacheExpiry: 5 * 60 * 1000,
       loadingDelay: 800,
       welcomeDisplayTime: 7000,
       maxRetries: 3,
-      retryDelay: 1000,
-      searchDebounce: 250
+      retryDelay: 1000
     };
 
     this.categories = {
@@ -52,19 +44,13 @@ class EnhancedPropertyDisplay {
       this.handleWelcomeMessage();
       this.createFilterButtons();
       this.createDateFilter();
-
-      // 🔎 إنشاء شريط البحث (خفيف)
-      this.createSearchBar();
-      // استعادة البحث من URL/localStorage قبل التحميل الافتراضي
-      this.restoreSearchFromURL();
-
       this.setupPerformanceMonitoring();
       this.setupAccessibility();
       
       // ⭐⭐ الإضافة الجديدة: التحقق من معلمة القسم في URL ⭐⭐
       this.checkSectionHighlight();
       
-      // تحميل الفئة الافتراضية (مع الأخذ في الاعتبار التمييز والبحث)
+      // تحميل الفئة الافتراضية (مع الأخذ في الاعتبار التمييز)
       this.loadDefaultCategory();
     } catch (error) {
       console.error('خطأ في تهيئة التطبيق:', error);
@@ -140,16 +126,6 @@ class EnhancedPropertyDisplay {
     window.addEventListener('error', (event) => {
       console.error('خطأ JavaScript:', event.error);
       this.showNotification('حدث خطأ تقني', 'error');
-    });
-
-    // ⌨️ اختصارات للوصول للبحث بسرعة
-    document.addEventListener('keydown', (e) => {
-      const targetIsInput = ['INPUT', 'TEXTAREA'].includes((e.target.tagName || ''));
-      // "/" أو Ctrl+K للتركيز
-      if (!targetIsInput && (e.key === '/' || (e.ctrlKey && e.key.toLowerCase() === 'k'))) {
-        e.preventDefault();
-        if (this.searchInput) this.searchInput.focus();
-      }
     });
   }
 
@@ -285,67 +261,6 @@ class EnhancedPropertyDisplay {
     selectElement.addEventListener('change', (e) => this.handleDateFilterChange(e.target.value));
   }
 
-  // 🔎 شريط البحث الخفيف
-  createSearchBar() {
-    const wrap = document.createElement('div');
-    wrap.className = 'search-bar-wrapper';
-    wrap.innerHTML = `
-      <div class="search-field">
-        <span class="search-icon">🔎</span>
-        <input id="properties-search" class="search-input" type="search" placeholder="ابحث بعنوان، موقع، وصف، سعر، مساحة..." autocomplete="off" aria-label="بحث عن عقار" />
-        <button class="search-clear" title="مسح البحث" aria-label="مسح">×</button>
-        <span class="search-count" title="عدد النتائج">0</span>
-      </div>
-      `;
-    this.filterContainer.appendChild(wrap);
-    this.searchInput = wrap.querySelector('#properties-search');
-    const clearBtn = wrap.querySelector('.search-clear');
-    this.searchCountEl = wrap.querySelector('.search-count');
-
-    const debounced = this.debounce((val) => this.handleSearchChange(val), this.config.searchDebounce);
-    this.searchInput.addEventListener('input', (e) => debounced(e.target.value));
-    this.searchInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        this.clearSearch();
-      }
-    });
-    clearBtn.addEventListener('click', () => this.clearSearch());
-  }
-
-  clearSearch() {
-    if (!this.searchInput) return;
-    this.searchInput.value = '';
-    this.handleSearchChange('');
-    this.searchInput.blur();
-  }
-
-  restoreSearchFromURL() {
-    const url = new URL(window.location.href);
-    const q = url.searchParams.get('q') || localStorage.getItem('lastSearchQuery') || '';
-    this.searchQuery = q.trim();
-    if (this.searchInput) this.searchInput.value = this.searchQuery;
-  }
-
-  updateURLQueryParam(key, value) {
-    const url = new URL(window.location.href);
-    if (value && value.length) url.searchParams.set(key, value);
-    else url.searchParams.delete(key);
-    window.history.replaceState({}, '', url);
-  }
-
-  async handleSearchChange(newValue) {
-    this.searchQuery = (newValue || '').trim();
-    localStorage.setItem('lastSearchQuery', this.searchQuery);
-    this.updateURLQueryParam('q', this.searchQuery);
-
-    const cachedData = this.getCachedData(this.currentCategory);
-    if (cachedData) {
-      await this.displayProperties(cachedData, this.currentCategory);
-      this.scrollToTop();
-    }
-  }
-
   async handleDateFilterChange(newFilterValue) {
     this.currentDateFilter = newFilterValue;
     const cachedData = this.getCachedData(this.currentCategory);
@@ -441,10 +356,7 @@ class EnhancedPropertyDisplay {
         if (!Array.isArray(files) || files.length === 0) return [];
         const propertyPromises = files.map(filename => this.fetchPropertyData(category, filename));
         const properties = await Promise.allSettled(propertyPromises);
-        return properties
-          .filter(result => result.status === 'fulfilled')
-          .map(result => result.value)
-          .filter(property => property !== null);
+        return properties.filter(result => result.status === 'fulfilled').map(result => result.value).filter(property => property !== null);
       } catch (error) {
         retries++;
         if (retries >= this.config.maxRetries) throw error;
@@ -475,13 +387,10 @@ class EnhancedPropertyDisplay {
     }
   }
   
-  // 🔎 فلترة + فرز (يشمل البحث)
   applyFiltersAndSorting(properties) {
     let processedProperties = [...properties];
     const now = new Date();
     const oneDay = 1000 * 60 * 60 * 24;
-
-    // 1) فلتر التاريخ
     if (this.currentDateFilter === 'last_week' || this.currentDateFilter === 'last_month') {
       const daysToFilter = this.currentDateFilter === 'last_week' ? 7 : 30;
       processedProperties = processedProperties.filter(p => {
@@ -493,48 +402,20 @@ class EnhancedPropertyDisplay {
         } catch { return false; }
       });
     }
-
-    // 2) البحث النصي الخفيف
-    processedProperties = this.applySearch(processedProperties);
-
-    // 3) الفرز (الأحدث أولاً ما لم يكن "كل الأوقات")
     if (this.currentDateFilter !== 'all') {
-      processedProperties.sort((a, b) => {
-        try { return new Date(b.date) - new Date(a.date); } catch { return 0; }
-      });
+        processedProperties.sort((a, b) => {
+            try { return new Date(b.date) - new Date(a.date); } catch { return 0; }
+        });
     }
-
     return processedProperties;
   }
-
-  // 🔎 تنفيذ البحث على العناصر
-  applySearch(items) {
-    const q = (this.searchQuery || '').trim();
-    if (!q) return items;
-
-    const tokens = this.getSearchTokens(q);
-    if (tokens.length === 0) return items;
-
-    return items.filter(p => {
-      const combined = [
-        p.title, p.summary, p.description, p.location,
-        p.price_display, p.price, p.area_display, p.area
-      ].filter(Boolean).join(' ');
-      const norm = this.normalizeArabic(combined);
-      return tokens.every(tok => norm.includes(tok));
-    });
-  }
-
+  
   async displayProperties(properties, category) {
     if (!Array.isArray(properties)) {
       this.showErrorMessage('بيانات غير صحيحة');
       return;
     }
     const filteredProperties = this.applyFiltersAndSorting(properties);
-
-    // تحديث عداد النتائج
-    this.updateSearchCount(filteredProperties.length);
-
     if (filteredProperties.length === 0) {
       this.showEmptyState(category, properties.length > 0);
       return;
@@ -570,11 +451,6 @@ class EnhancedPropertyDisplay {
     const areaToRender = this.escapeHtml(property.area_display || property.area || "غير محددة");
     const descriptionText = property.summary || property.description;
 
-    // 🔎 تظليل الكلمات المطابقة إن وجدت
-    const titleHTML = this.highlightText(this.escapeHtml(property.title));
-    const descHTML  = this.highlightText(this.escapeHtml(descriptionText || ''));
-    const locHTML   = property.location ? this.highlightText(this.escapeHtml(property.location)) : '';
-
     card.innerHTML = `
       <div class="property-header">
         <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار سمسار طلبك" class="property-logo" loading="lazy">
@@ -587,14 +463,14 @@ class EnhancedPropertyDisplay {
           <button class="share-btn" title="مشاركة"><span class="share-icon">📤</span></button>
         </div>
       </div>
-      <h3 class="property-title">${titleHTML}</h3>
+      <h3 class="property-title">${this.escapeHtml(property.title)}</h3>
       <div class="property-details">
-        <div class="property-detail"><span class="detail-icon">💰</span><span class="detail-label">السعر:</span><span class="detail-value price-highlight">${this.highlightText(priceToRender)}</span></div>
-        <div class="property-detail"><span class="detail-icon">📏</span><span class="detail-label">المساحة:</span><span class="detail-value">${this.highlightText(areaToRender)}</span></div>
+        <div class="property-detail"><span class="detail-icon">💰</span><span class="detail-label">السعر:</span><span class="detail-value price-highlight">${priceToRender}</span></div>
+        <div class="property-detail"><span class="detail-icon">📏</span><span class="detail-label">المساحة:</span><span class="detail-value">${areaToRender}</span></div>
         <div class="property-detail"><span class="detail-icon">📅</span><span class="detail-label">تاريخ الإضافة:</span><span class="detail-value">${this.escapeHtml(property.date || "غير متوفر")}</span></div>
-        ${property.location ? `<div class="property-detail"><span class="detail-icon">📍</span><span class="detail-label">الموقع:</span><span class="detail-value">${locHTML}</span></div>` : ''}
+        ${property.location ? `<div class="property-detail"><span class="detail-icon">📍</span><span class="detail-label">الموقع:</span><span class="detail-value">${this.escapeHtml(property.location)}</span></div>` : ''}
       </div>
-      <div class="property-description"><p>${descHTML}</p></div>
+      <div class="property-description"><p>${this.escapeHtml(descriptionText)}</p></div>
       <div class="property-footer">
         <a href="${detailPage}" class="view-details-btn"><span class="btn-icon">👁️</span><span class="btn-text">عرض التفاصيل الكاملة</span><span class="btn-arrow">←</span></a>
         <div class="property-stats">
@@ -723,14 +599,10 @@ class EnhancedPropertyDisplay {
   showEmptyState(category, isAfterFilter = false) {
     const categoryInfo = this.categories[category];
     let message = `<p>لم يتم العثور على عقارات في فئة "${categoryInfo.label}"</p>`;
-    if (this.searchQuery) {
-      message = `<p>لا توجد نتائج مطابقة لعبارة البحث: "<strong>${this.escapeHtml(this.searchQuery)}</strong>"<br>جرّب كلمات أقل أو مختلفة.</p><button class="refresh-btn" id="clear-search-btn">🧹 مسح البحث</button>`;
-    } else if (isAfterFilter) {
+    if (isAfterFilter) {
       message = `<p>لا توجد نتائج تطابق معايير الفرز الحالية.<br>جرب اختيار "كل الأوقات".</p>`;
     }
-    this.container.innerHTML = `<div class="empty-state"><div class="empty-icon">${this.searchQuery ? '🧐' : (isAfterFilter ? '🧐' : categoryInfo.icon)}</div><h3>${this.searchQuery ? 'لا توجد نتائج للبحث' : (isAfterFilter ? 'لا توجد نتائج مطابقة' : 'لا توجد عروض حالياً')}</h3>${message}</div>`;
-    const btn = document.getElementById('clear-search-btn');
-    if (btn) btn.addEventListener('click', () => this.clearSearch());
+    this.container.innerHTML = `<div class="empty-state"><div class="empty-icon">${isAfterFilter ? '🧐' : categoryInfo.icon}</div><h3>${isAfterFilter ? 'لا توجد نتائج مطابقة' : 'لا توجد عروض حالياً'}</h3>${message}<button class="refresh-btn" onclick="location.reload()">🔄 تحديث الصفحة</button></div>`;
   }
 
   showErrorMessage(message) {
@@ -845,56 +717,6 @@ class EnhancedPropertyDisplay {
     return div.innerHTML;
   }
 
-  // 🔎 تظليل مطابقات البحث داخل النص HTML الآمن
-  highlightText(escapedHtml) {
-    const q = (this.searchQuery || '').trim();
-    if (!q) return escapedHtml;
-    const tokens = this.getSearchTokens(q).filter(t => t.length > 1);
-    if (!tokens.length) return escapedHtml;
-
-    let result = escapedHtml;
-    tokens.forEach(tok => {
-      const reg = new RegExp(`(${this.escapeRegExp(tok)})`, 'gi');
-      result = result.replace(reg, `<mark class="hl">$1</mark>`);
-    });
-    return result;
-  }
-
-  escapeRegExp(str) {
-    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  }
-
-  // 🔎 تحويل الجملة إلى رموز بعد تطبيع النص العربي
-  getSearchTokens(q) {
-    const norm = this.normalizeArabic(q);
-    const raw = norm.split(/\s+/).filter(Boolean);
-    const stop = new Set([
-      'في','من','على','الى','إلى','عن','مع','و','يا','هذا','هذه','ذلك','تلك','هناك','هنا','ال','او','أو','ثم','كما',
-      'قد','تم','هو','هي','هم','هن','ما','لم','لن','إن','أن','كان','كانت','يكون','كل','أين','أكثر','أقل','جدا',
-      'بين','بن','ب','ل','غير','بدون'
-    ]);
-    const tokens = [];
-    raw.forEach(t => { if (!stop.has(t) && !tokens.includes(t)) tokens.push(t); });
-    return tokens;
-  }
-
-  // 🔎 تطبيع بسيط للعربية (إزالة التشكيل والتمطيط وتوحيد بعض الحروف + أرقام عربية)
-  normalizeArabic(s) {
-    if (typeof s !== 'string') return '';
-    const arabicDigits = '٠١٢٣٤٥٦٧٨٩';
-    return s
-      .toLowerCase()
-      .replace(/[\u064B-\u065F\u0670\u06D6-\u06ED]/g, '')   // التشكيل والعلامات
-      .replace(/\u0640/g, '')                               // التطويل
-      .replace(/[إأآا]/g, 'ا')
-      .replace(/ى/g, 'ي')
-      .replace(/ؤ/g, 'و')
-      .replace(/ئ/g, 'ي')
-      .replace(/ة/g, 'ه')
-      .replace(/[^\p{L}\p{N}\s]/gu, ' ')                    // ترميز موحد
-      .replace(/[٠-٩]/g, d => String(arabicDigits.indexOf(d))); // أرقام عربية إلى إنجليزية
-  }
-
   getTimeAgo(dateString) {
     if (!dateString) return 'غير محدد';
     try {
@@ -947,16 +769,11 @@ class EnhancedPropertyDisplay {
   getFavorites() {
     try { return JSON.parse(localStorage.getItem('favorites') || '[]'); } catch { return []; }
   }
-
-  // 🔎 عداد النتائج بجانب حقل البحث
-  updateSearchCount(n) {
-    if (this.searchCountEl) this.searchCountEl.textContent = String(n);
-  }
 }
 
 const propertyDisplay = new EnhancedPropertyDisplay();
 
-// الكود الإضافي الخاص بالأنماط يبقى كما هو مع إضافة أنماط التمييز + شريط البحث
+// الكود الإضافي الخاص بالأنماط يبقى كما هو مع إضافة أنماط التمييز
 const additionalStyles = `
   <style>
     .notification{position:fixed;top:20px;right:20px;background:#1e1e1e;border:1px solid #333;border-radius:12px;padding:1rem;box-shadow:0 10px 30px rgba(0,0,0,.3);z-index:10000;transform:translateX(400px);opacity:0;transition:all .3s cubic-bezier(.4,0,.2,1);max-width:350px}.notification.show{transform:translateX(0);opacity:1}.notification-content{display:flex;align-items:center;gap:10px;color:#f1f1f1}.notification-close{background:0 0;border:0;color:#888;cursor:pointer;font-size:1.2rem;margin-left:auto}.notification-success{border-color:#00ff88}.notification-error{border-color:#ff6b6b}.notification-warning{border-color:#ffa500}.notification-info{border-color:#00ccff}.property-category-badge{font-size:.8rem;padding:.2rem .5rem;border-radius:15px;color:#000;font-weight:700}.property-actions{display:flex;gap:8px;margin-left:auto}.favorite-btn,.share-btn{background:rgba(255,255,255,.1);border:0;border-radius:50%;width:35px;height:35px;cursor:pointer;transition:all .3s ease;display:flex;align-items:center;justify-content:center}.favorite-btn:hover,.share-btn:hover{background:rgba(0,255,136,.2);transform:scale(1.1)}.property-stats{display:flex;gap:15px;font-size:.9rem;color:#888}.stat-item{display:flex;align-items:center;gap:5px}.property-card.last-viewed{border-color:#f59e0b;box-shadow:0 0 35px rgba(245,158,11,.4);transform:translateY(-10px) scale(1.02)!important;transition: all 0.3s ease-in-out;}.property-card.last-viewed:hover{border-color:#f59e0b;box-shadow:0 15px 40px rgba(245,158,11,.5)}.date-filter-wrapper{display:flex;align-items:center;gap:10px;background:#2a2a2a;padding:8px 15px;border-radius:25px;border:2px solid #444;transition:all .3s ease}.date-filter-wrapper:hover{border-color:#00ff88;box-shadow:0 5px 15px rgba(0,255,136,.15)}.date-filter-label{color:#ccc;font-weight:600;font-size:.9rem}.date-filter-select{background:0 0;border:0;color:#00ff88;font-weight:700;font-size:1rem;cursor:pointer;-webkit-appearance:none;-moz-appearance:none;appearance: none;padding-right:15px;background-image:url("data:image/svg+xml;utf8,<svg fill='%2300ff88' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");background-repeat:no-repeat;background-position:right center}.date-filter-select:focus{outline:0}.date-filter-select option{background:#1e1e1e;color:#f1f1f1}.empty-state,.error-state{text-align:center;padding:4rem 2rem;color:#888}.empty-icon,.error-icon{font-size:4rem;margin-bottom:1rem}.refresh-btn,.retry-btn,.contact-btn{background:linear-gradient(45deg,#00ff88,#00cc6a);color:#000;border:0;padding:.8rem 1.5rem;border-radius:25px;cursor:pointer;font-weight:700;margin:.5rem;transition:all .3s ease}.refresh-btn:hover,.retry-btn:hover,.contact-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,255,136,.3)}@media (max-width:768px){.notification{right:10px;left:10px;max-width:none}.property-header{flex-wrap:wrap;gap:10px}.property-actions{order:3;width:100%;justify-content:center}}.loading-container{text-align:center;padding:4rem 2rem;color:#f1f1f1}.loading-spinner-enhanced{width:60px;height:60px;border:4px solid #333;border-top:4px solid #00ff88;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 2rem}.loading-progress{width:200px;height:4px;background:#333;border-radius:2px;margin:2rem auto;overflow:hidden}.loading-progress-bar{height:100%;background:linear-gradient(45deg,#00ff88,#00cc6a);border-radius:2px;transition:width .3s ease}@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}@keyframes ripple{to{transform:scale(4);opacity:0}}
@@ -1028,17 +845,6 @@ const additionalStyles = `
       50% { transform: scale(1.1); opacity: 1; }
       100% { transform: scale(0.8); opacity: 0.7; }
     }
-
-    /* 🔎 أنماط شريط البحث وتظليل النتائج */
-    .search-bar-wrapper{display:flex;align-items:center;gap:8px;background:#202020;border:2px solid #2f2f2f;border-radius:14px;padding:6px 10px;margin-inline-start:auto}
-    .search-field{display:flex;align-items:center;gap:8px}
-    .search-icon{opacity:.8}
-    .search-input{background:transparent;border:0;color:#e9e9e9;min-width:220px;outline:0}
-    .search-input::placeholder{color:#8a8a8a}
-    .search-clear{background:transparent;border:0;color:#aaa;cursor:pointer;font-size:18px;line-height:1}
-    .search-clear:hover{color:#fff;transform:scale(1.1)}
-    .search-count{background:#2a2a2a;color:#00ff88;border:1px solid #2f2f2f;border-radius:10px;padding:2px 8px;font-size:.85rem;font-weight:700}
-    mark.hl{background:#fffd8a;color:#222;padding:0 .15em;border-radius:4px}
   </style>
 `;
 if (!document.getElementById('enhanced-requests-styles')) {
@@ -1046,4 +852,3 @@ if (!document.getElementById('enhanced-requests-styles')) {
 }
 
 window.EnhancedPropertyDisplay = EnhancedPropertyDisplay;
-</script>
