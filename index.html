@@ -5,15 +5,26 @@ description: "ابدأ رحلتك العقارية الآن مع أفضل وسي
 body_class: "homepage"
 ---
 
-<!-- ===================== GOOGLE TAG MANAGER ===================== -->
+{%- comment -%}
+  نسخة مطورة احترافياً من الصفحة الرئيسية — خيار 2 (Visual Upgrade):
+  - تحافظ على كل الوظائف: GTM, Schema, روابط الصفحات، رقم التواصل
+  - تحسين الأداء، الوصول (a11y)، وتجربة المستخدم (أنيميشن، parallax خفيف، أزرار محسنة)
+{%- endcomment -%}
+
+<!-- ===================== PRECONNECT & PRELOAD ===================== -->
+<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+<link rel="preload" href="{{ '/assets/img/logo.png' | absolute_url }}" as="image">
+
+<!-- ===================== GOOGLE TAG MANAGER (async + noscript) ===================== -->
 <script>
 (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+j=d.createElement(s);dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;j.defer=true;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-MHPZ8NP');
 </script>
-<!-- =============================================================== -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MHPZ8NP"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- ======================== META & SEO ========================== -->
 <meta name="robots" content="index, follow">
@@ -30,9 +41,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta name="twitter:image" content="{{ '/assets/img/logo.png' | absolute_url }}">
 <link rel="canonical" href="{{ page.url | absolute_url }}">
 <link rel="sitemap" type="application/xml" title="Sitemap" href="{{ '/sitemap.xml' | relative_url }}">
-<!-- =============================================================== -->
 
-<!-- ========== STRUCTURED DATA / SCHEMA.ORG(JSON-LD) ============= -->
+<!-- ========== STRUCTURED DATA / SCHEMA.ORG (JSON-LD) ============= -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -53,321 +63,283 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     "telephone": "+201147758857",
     "contactType": "Customer Service",
     "areaServed": "EG",
-    "availableLanguage": "Arabic"
+    "availableLanguage": ["Arabic","English"]
   }
 }
 </script>
-<!-- =============================================================== -->
 
 <!-- ===================== PAGE MAIN CONTENT ======================= -->
-<main>
-  <section class="home-hero">
-    <div class="hero-content">
-      <h1 class="hero-title">مرحبًا بك في <span class="brand-glow">سمسار طلبك</span></h1>
+<main id="main" role="main" class="site-main">
+  <header class="hero-viewport" aria-hidden="false">
+    <div class="hero-layer hero-bg" role="img" aria-label="خلفية مدينة نصر - سمسار طلبك"></div>
+
+    <div class="hero-inner">
+      <div class="brand">
+        <img src="{{ '/assets/img/logo.png' | absolute_url }}" alt="لوجو سمسار طلبك" class="brand-logo" width="120" height="120" loading="lazy">
+        <h1 class="hero-title">مرحبًا بك في <span class="brand-glow">سمسار طلبك</span></h1>
+      </div>
+
       <p class="hero-subtitle">ابدأ رحلتك العقارية الآن — سواء كنت تبحث عن شقة أو لديك عرض مميز!</p>
 
-      <div class="hero-buttons">
-        <a href="{{ '/properties-filtered.html?highlight=apartments' | relative_url }}" 
-           class="btn btn-primary magnetic-btn" 
+      <div class="hero-cta" role="group" aria-label="روابط سريعة">
+        <a href="{{ '/properties-filtered.html?highlight=apartments' | relative_url }}"
+           class="btn btn-primary magnetic-btn"
            aria-label="تصفح عروض العقارات المتاحة"
            data-magnetic>
-          <span class="btn-content">
-            <span class="btn-icon">🏠</span>
-            <span class="btn-text">عروض العقارات</span>
-          </span>
-          <span class="btn-shine"></span>
+          <span class="btn-icon" aria-hidden="true">🏠</span>
+          <span class="btn-text">عروض العقارات</span>
         </a>
-        
-        <a href="{{ '/requests-filtered.html?highlight=apartments' | relative_url }}" 
-           class="btn btn-secondary magnetic-btn" 
+
+        <a href="{{ '/requests-filtered.html?highlight=apartments' | relative_url }}"
+           class="btn btn-secondary magnetic-btn"
            aria-label="اكتشف طلبات العملاء للعقارات"
            data-magnetic>
-          <span class="btn-content">
-            <span class="btn-icon">📩</span>
-            <span class="btn-text">طلبات العملاء</span>
-          </span>
-          <span class="btn-shine"></span>
+          <span class="btn-icon" aria-hidden="true">📩</span>
+          <span class="btn-text">طلبات العملاء</span>
+        </a>
+      </div>
+
+      <div class="contact-snippet" aria-hidden="false">
+        <a href="https://wa.me/201147758857" class="contact-whatsapp" aria-label="اتصل عبر واتساب">
+          💬 تواصل الآن: +20 114 775 8857
         </a>
       </div>
     </div>
 
-    <!-- عناصر ديكور إبداعية -->
-    <div class="hero-particles">
-      <div class="particle particle-1"></div>
-      <div class="particle particle-2"></div>
-      <div class="particle particle-3"></div>
-      <div class="particle particle-4"></div>
-      <div class="particle particle-5"></div>
+    <!-- Parallax particles + decorative -->
+    <div class="hero-effects" aria-hidden="true">
+      <div class="particle p1"></div>
+      <div class="particle p2"></div>
+      <div class="particle p3"></div>
+      <div class="particle p4"></div>
     </div>
-  </section>
+  </header>
 </main>
+
 <!-- =============================================================== -->
 
-<!-- ===================== CREATIVE ENHANCEMENTS ======================= -->
+<!-- ===================== IMPROVED STYLES ======================= -->
 <style>
-/* تحسينات إبداعية تضاف للأنماط الحالية */
-.home-hero {
-  position: relative;
-  overflow: hidden;
+:root{
+  --accent-green: #00b04f; /* يربط بالهوية الخضراء */
+  --accent-teal: #0083b0;
+  --dark: #0b0b0b;
+  --muted: #6b7280;
+  --glass: rgba(255,255,255,0.06);
+  --radius: 14px;
+  --max-width: 1200px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color-scheme: light dark;
 }
 
-.hero-content {
-  position: relative;
-  z-index: 2;
+/* Reset بسيط */
+*{box-sizing:border-box}
+body.homepage{margin:0;background:#f8fafc;color:var(--dark);line-height:1.45}
+a{color:inherit;text-decoration:none}
+
+/* HERO VIEWPORT */
+.hero-viewport{
+  position:relative;
+  min-height:72vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  padding:3rem 1.25rem;
 }
 
-.hero-title {
-  position: relative;
-  animation: titleReveal 1.2s ease-out;
+/* Parallax background layer */
+.hero-bg{
+  position:absolute;
+  inset:0;
+  background-image: linear-gradient(180deg, rgba(2,6,23,0.20), rgba(255,255,255,0.02)), url('{{ "/assets/img/hero-nasrcity.jpg" | absolute_url }}');
+  background-size:cover;
+  background-position:center;
+  transform: translateZ(-1px) scale(1.12);
+  filter: saturate(0.95) contrast(1.02);
+  will-change: transform;
+  z-index:0;
+  opacity:0.9;
 }
 
-.brand-glow {
-  background: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  position: relative;
-  display: inline-block;
+/* inner content */
+.hero-inner{
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-width:var(--max-width);
+  margin:0 auto;
+  text-align:center;
+  padding:2rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0.00), rgba(255,255,255,0.00));
+  border-radius: 12px;
 }
 
-.brand-glow::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
-  transform: scaleX(0);
-  transform-origin: right;
-  animation: lineReveal 1s ease-out 0.5s forwards;
+/* brand */
+.brand{display:flex;flex-direction:column;align-items:center;gap:.6rem}
+.brand-logo{border-radius:12px;box-shadow:0 8px 30px rgba(2,6,23,0.12);background:var(--glass);padding:6px}
+.hero-title{font-size:clamp(1.6rem, 3.5vw, 2.6rem);margin:0;font-weight:700}
+.brand-glow{
+  background: linear-gradient(135deg, var(--accent-green) 0%, var(--accent-teal) 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  display:inline-block;
+  position:relative;
 }
 
-.hero-subtitle {
-  animation: subtitleReveal 1.5s ease-out 0.3s both;
+/* subtitle */
+.hero-subtitle{
+  margin:1rem 0 1.5rem;
+  font-size:1.05rem;color:var(--muted);
+  max-width:820px;margin-left:auto;margin-right:auto;
+  opacity:.98;
 }
 
-/* تحسينات الأزرار */
-.hero-buttons .btn {
-  position: relative;
-  overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-  border: none;
-  transform-style: preserve-3d;
-  perspective: 1000px;
+/* CTA buttons */
+.hero-cta{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:.6rem;padding:0.8rem 1.25rem;border-radius:999px;font-weight:600;
+  box-shadow:0 6px 20px rgba(2,6,23,0.08);backdrop-filter: blur(4px);
+  transform-origin:center center;transition:transform .35s cubic-bezier(.2,.9,.23,1), box-shadow .25s ease;
+  user-select:none;
+}
+.btn:focus{outline:3px solid rgba(0,176,79,0.18);outline-offset:3px}
+.btn-icon{font-size:1.15rem}
+.btn-text{font-size:0.98rem}
+
+/* Primary */
+.btn-primary{
+  background: linear-gradient(90deg,var(--accent-green), var(--accent-teal));
+  color:white;
+  border: 1px solid rgba(255,255,255,0.08);
+  transform: translateY(0);
+}
+.btn-primary:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 18px 40px rgba(2,6,23,0.17)}
+
+/* Secondary */
+.btn-secondary{
+  background:transparent;color:var(--dark);border:1px solid rgba(11,11,11,0.06);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
+}
+.btn-secondary:hover{transform:translateY(-4px) scale(1.01);box-shadow:0 12px 30px rgba(2,6,23,0.08)}
+
+/* contact snippet */
+.contact-snippet{margin-top:1.25rem}
+.contact-whatsapp{font-weight:600;background:rgba(0,176,79,0.06);padding:0.4rem 0.8rem;border-radius:999px;display:inline-block;color:var(--accent-green)}
+
+/* Particles / Effects */
+.hero-effects{position:absolute;inset:0;pointer-events:none;z-index:1}
+.particle{position:absolute;border-radius:50%;opacity:.55;filter:blur(10px);mix-blend-mode:screen}
+.p1{width:140px;height:140px;left:6%;top:12%;background:radial-gradient(circle,#00b4db22,transparent);animation:floatA 8s ease-in-out infinite}
+.p2{width:90px;height:90px;right:8%;top:22%;background:radial-gradient(circle,#00b04f22,transparent);animation:floatB 10s ease-in-out infinite}
+.p3{width:110px;height:110px;left:20%;bottom:14%;background:radial-gradient(circle,#ffd16622,transparent);animation:floatC 12s ease-in-out infinite}
+.p4{width:70px;height:70px;right:18%;bottom:20%;background:radial-gradient(circle,#8ecae622,transparent);animation:floatD 9s ease-in-out infinite}
+
+/* Animations */
+@keyframes floatA {0%{transform:translateY(0) scale(1)}50%{transform:translateY(-18px) scale(1.05)}100%{transform:translateY(0) scale(1)}}
+@keyframes floatB {0%{transform:translateY(0) rotate(0)}50%{transform:translateY(-12px) rotate(18deg)}100%{transform:translateY(0) rotate(0)}}
+@keyframes floatC {0%{transform:translateY(0)}50%{transform:translateY(-22px)}100%{transform:translateY(0)}}
+@keyframes floatD {0%{transform:translateY(0)}50%{transform:translateY(-10px)}100%{transform:translateY(0)}}
+
+/* Parallax subtle movement for background on scroll */
+@supports (perspective: 1px){
+  .hero-bg{transition: transform 0.2s linear}
 }
 
-.btn-content {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: transform 0.3s ease;
+/* small screens */
+@media (max-width:768px){
+  .hero-viewport{min-height:62vh;padding:2rem 1rem}
+  .hero-title{font-size:1.7rem}
+  .hero-subtitle{font-size:0.96rem}
+  .btn{padding:0.65rem 1rem}
+  .brand-logo{width:84px;height:84px}
 }
 
-.btn-shine {
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.4),
-    transparent
-  );
-  transition: left 0.8s ease;
-  z-index: 1;
-}
-
-.hero-buttons .btn:hover .btn-shine {
-  left: 100%;
-}
-
-.hero-buttons .btn:hover .btn-content {
-  transform: translateY(-1px);
-}
-
-.hero-buttons .btn:hover .btn-icon {
-  animation: iconBounce 0.6s ease;
-}
-
-/* تأثير المغناطيسية */
-.magnetic-btn {
-  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.magnetic-btn:hover {
-  transform: translateY(-3px) scale(1.02);
-}
-
-/* جسيمات متحركة */
-.hero-particles {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.particle {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 180, 219, 0.1) 0%, transparent 70%);
-  animation: floatParticle 6s ease-in-out infinite;
-}
-
-.particle-1 {
-  width: 120px;
-  height: 120px;
-  top: 10%;
-  left: 5%;
-  animation-delay: 0s;
-}
-
-.particle-2 {
-  width: 80px;
-  height: 80px;
-  top: 70%;
-  right: 10%;
-  animation-delay: 1.5s;
-}
-
-.particle-3 {
-  width: 60px;
-  height: 60px;
-  bottom: 20%;
-  left: 15%;
-  animation-delay: 3s;
-}
-
-.particle-4 {
-  width: 100px;
-  height: 100px;
-  top: 30%;
-  right: 5%;
-  animation-delay: 4.5s;
-}
-
-.particle-5 {
-  width: 70px;
-  height: 70px;
-  bottom: 10%;
-  right: 20%;
-  animation-delay: 6s;
-}
-
-/* الأنيميشنات */
-@keyframes titleReveal {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes subtitleReveal {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes lineReveal {
-  0% {
-    transform: scaleX(0);
-  }
-  100% {
-    transform: scaleX(1);
-  }
-}
-
-@keyframes floatParticle {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  33% {
-    transform: translateY(-20px) rotate(120deg);
-  }
-  66% {
-    transform: translateY(10px) rotate(240deg);
-  }
-}
-
-@keyframes iconBounce {
-  0%, 20%, 50%, 80%, 100% {
-    transform: scale(1);
-  }
-  40% {
-    transform: scale(1.2);
-  }
-  60% {
-    transform: scale(1.1);
-  }
-}
-
-/* تأثيرات إضافية للخلفية */
-.home-hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(0, 180, 219, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(0, 131, 176, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* تحسينات للشاشات الصغيرة */
-@media (max-width: 768px) {
-  .hero-particles .particle {
-    opacity: 0.3;
-  }
-  
-  .magnetic-btn:hover {
-    transform: translateY(-2px) scale(1.01);
-  }
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .particle, .hero-bg, .btn, .hero-inner { animation: none !important; transition: none !important; transform: none !important; }
 }
 </style>
 
+<!-- ===================== IMPROVED JS (deferred, lightweight) ======================= -->
 <script>
-// تأثير المغناطيسية البسيط للأزرار
-document.addEventListener('DOMContentLoaded', function() {
-  const magneticBtns = document.querySelectorAll('.magnetic-btn');
-  
-  magneticBtns.forEach(btn => {
-    btn.addEventListener('mousemove', function(e) {
-      const rect = this.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      
-      const deltaX = (x - centerX) / centerX * 5;
-      const deltaY = (y - centerY) / centerY * 5;
-      
-      this.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+/* 
+  تحسينات JS:
+  - تأثير parallax بسيط عند تحريك الماوس وعلى التمرير (خلفية)
+  - تأثير magnetic محفوظ لكن محسّن
+  - يستخدم لوحات الأداء: event listeners خفيفة
+*/
+(function() {
+  // Parallax background on mousemove (desktop)
+  const bg = document.querySelector('.hero-bg');
+  const particles = document.querySelectorAll('.particle');
+
+  function onPointer(e) {
+    const bounds = document.documentElement.getBoundingClientRect();
+    const cx = bounds.width / 2;
+    const cy = bounds.height / 2;
+    const mx = (e.clientX - cx) / cx;
+    const my = (e.clientY - cy) / cy;
+
+    if (bg) {
+      bg.style.transform = `translate3d(${mx * 8}px, ${my * 6}px, 0) scale(1.09)`;
+    }
+    particles.forEach((p, i) => {
+      const depth = (i + 1) * 6;
+      p.style.transform = `translate3d(${mx * depth}px, ${my * depth * 0.6}px, 0)`;
     });
-    
-    btn.addEventListener('mouseleave', function() {
-      this.style.transform = 'translate(0, 0)';
+  }
+
+  // Magnetic button effect (optimized)
+  function initMagnetic() {
+    const buttons = document.querySelectorAll('.magnetic-btn');
+    buttons.forEach(btn => {
+      let rect;
+      btn.addEventListener('mousemove', (ev) => {
+        rect = rect || btn.getBoundingClientRect();
+        const x = ev.clientX - rect.left - rect.width / 2;
+        const y = ev.clientY - rect.top - rect.height / 2;
+        btn.style.transform = `translate(${x * 0.06}px, ${y * 0.06}px) scale(1.01)`;
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
+      });
     });
+  }
+
+  // Parallax on scroll for background (small subtle effect)
+  function onScroll() {
+    const sc = window.scrollY || window.pageYOffset;
+    if (bg) bg.style.transform = `translate3d(0, ${sc * 0.04}px, 0) scale(1.06)`;
+  }
+
+  // Init listeners (respect reduced motion)
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    window.addEventListener('mousemove', onPointer, {passive:true});
+    window.addEventListener('scroll', onScroll, {passive:true});
+  }
+
+  // DOM ready
+  document.addEventListener('DOMContentLoaded', function() {
+    initMagnetic();
   });
-});
+
+  // Performance: throttle resize to recalc rects (if needed)
+  let resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      // any recalculations can go here
+    }, 200);
+  });
+})();
 </script>
+
+<!-- ===================== NOTES for deployment ===================== -->
+<!--
+  - تأكد أن الصورة /assets/img/hero-nasrcity.jpg موجودة (صورة خلفية عالية الجودة - يمكن استبدالها).
+  - الشعار موجود في /assets/img/logo.png (مستخدم في preload).
+  - GTM: المعرف محفوظ كما في النسخة الأصلية (GTM-MHPZ8NP).
+  - تم الحفاظ على روابط الصفحات: properties-filtered.html و requests-filtered.html
+  - رقم التواصل الرسمي: +201147758857 (مضمّن داخل Schema و رابط واتساب)
+-->
