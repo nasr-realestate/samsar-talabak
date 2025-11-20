@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سمسار طلبك | فيديو برومو - نسخة النيون المثيرة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ألوان النيون */
+        :root {
+            --neon-green: #39ff14; /* أخضر نيون فسفوري */
+            --neon-blue: #00ffff; /* أزرق سماوي نيون */
+            --neon-pink: #ff1493; /* وردي نيون */
+            --dark-bg: #000000; /* خلفية سوداء */
+            --duration: 8s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', sans-serif;
+            background: var(--dark-bg); /* خلفية سوداء */
+            color: var(--neon-green);
+            overflow: hidden;
+            height: 100vh;
+            line-height: 1.5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scene {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 5vh 5vw;
+            background-color: var(--dark-bg);
+        }
+
+        .scene.active {
+            opacity: 1;
+        }
+
+        /* تأثير النيون على النصوص */
+        .neon-glow {
+            text-shadow: 
+                0 0 5px var(--neon-green),
+                0 0 10px var(--neon-green),
+                0 0 20px var(--neon-green),
+                0 0 40px var(--neon-green),
+                0 0 80px var(--neon-green);
+        }
+
+        .text-content {
+            max-width: 90vw; /* زيادة العرض الأقصى */
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo {
+            width: 180px; /* تكبير الشعار */
+            height: auto;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: scale(0.5);
+            animation: zoomInRotate 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; /* حركة ديناميكية جديدة */
+            animation-delay: 0.2s;
+            filter: drop-shadow(0 0 10px var(--neon-blue)); /* ظل نيون للشعار */
+        }
+
+        .main-title {
+            font-size: 5rem; /* تكبير الخط الرئيسي */
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            color: var(--neon-blue); /* لون مختلف */
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1.5s ease forwards;
+            text-shadow: 
+                0 0 5px var(--neon-blue),
+                0 0 10px var(--neon-blue),
+                0 0 20px var(--neon-blue);
+        }
+
+        .highlight-text {
+            color: var(--neon-pink); /* لون مختلف */
+            font-weight: 700;
+            font-size: 3.5rem; /* تكبير الخط */
+            margin: 1.5rem 0;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: pulseScale 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards; /* حركة ديناميكية جديدة */
+            animation-delay: 0.5s;
+            text-shadow: 
+                0 0 5px var(--neon-pink),
+                0 0 10px var(--neon-pink);
+        }
+
+        .description {
+            font-size: 2.5rem; /* تكبير الخط */
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateX(-100%);
+            animation: slideInFromLeft 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            animation-delay: 1s;
+            line-height: 1.6;
+            color: var(--neon-green);
+        }
+
+        .accent {
+            color: var(--neon-blue);
+            font-weight: 800;
+            text-shadow: 0 0 5px var(--neon-blue);
+        }
+
+        .tagline {
+            font-size: 2rem; /* تكبير الخط */
+            font-style: italic;
+            margin-top: 2rem;
+            opacity: 0;
+            transform: translateX(100%);
+            animation: slideInFromRight 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            animation-delay: 1.5s;
+            color: var(--neon-pink);
+            text-shadow: 0 0 3px var(--neon-pink);
+        }
+
+        .contact-info {
+            font-size: 2.5rem; /* تكبير الخط */
+            margin-top: 3rem;
+            padding: 1rem 2rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--neon-green);
+            color: var(--neon-green);
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 0 15px var(--neon-green);
+            opacity: 0;
+            transform: scale(0.5);
+            animation: popIn 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+            animation-delay: 2s;
+            text-shadow: 0 0 5px var(--neon-green);
+        }
+
+        /* حركات ديناميكية جديدة */
+        @keyframes zoomInRotate {
+            0% { opacity: 0; transform: scale(0.5) rotate(-30deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+
+        @keyframes pulseScale {
+            0% { opacity: 0; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInFromLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInFromRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .logo { width: 120px; }
+            .main-title { font-size: 3rem; }
+            .highlight-text { font-size: 2.5rem; }
+            .description { font-size: 1.8rem; }
+            .tagline { font-size: 1.5rem; }
+            .contact-info { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <!-- المشهد 1: البداية مع الشعار -->
+        <div class="scene scene-1 active">
+            <div class="text-content">
+                <img src="https://i.postimg.cc/Y9c5f6K1/ed53e000_aacd_11f0_8000_6ff54186278f.png" alt="شعار سمسار طلبك" class="logo">
+                <h1 class="main-title">سمسار طلبك</h1>
+                <p class="description neon-glow">وسيطك العقاري <span class="accent">المُتخصص</span> في مدينة نصر</p>
+                <p class="tagline">لأن بيت أحلامك يستحق الأفضل</p>
+            </div>
+        </div>
+
+        <!-- المشهد 2 -->
+        <div class="scene scene-2">
+            <div class="text-content">
+                <p class="highlight-text">مع <span class="accent">سمسار طلبك</span></p>
+                <p class="description neon-glow">هتلاقي <span class="accent">شقتك</span> أو <span class="accent">محلك</span> أو <span class="accent">مكتبك</span></p>
+                <p class="description neon-glow">في مدينة نصر <span class="accent">بأسهل وأسرع طريقة</span></p>
+            </div>
+        </div>
+
+        <!-- المشهد 3 -->
+        <div class="scene scene-3">
+            <div class="text-content">
+                <p class="description neon-glow">بنقدّم لك <span class="accent">خيارات حقيقية</span></p>
+                <p class="description neon-glow"><span class="accent">بأسعار منافسة</span></p>
+                <p class="description neon-glow">ونتّعامل <span class="accent">بشفافية كاملة</span></p>
+                <p class="tagline">من أول مكالمة لحد استلام وحدتك</p>
+            </div>
+        </div>
+
+        <!-- المشهد 4 -->
+        <div class="scene scene-4">
+            <div class="text-content">
+                <p class="description neon-glow">هدفنا إنك <span class="accent">تختار الصح</span></p>
+                <p class="description neon-glow">بدون ضياع وقت</p>
+                <p class="description neon-glow">ونعرّفك على <span class="accent">أفضل الفرص</span></p>
+                <p class="description neon-glow">المناسبة <span class="accent">لميزانيتك واحتياجك</span></p>
+            </div>
+        </div>
+
+        <!-- المشهد 5 -->
+        <div class="scene scene-5">
+            <div class="text-content">
+                <p class="description neon-glow">سواء لل<span class="accent">شراء</span> أو <span class="accent">إيجار</span></p>
+                <p class="highlight-text">سمسار طلبك…</p>
+                <p class="description neon-glow">خليك مطمئن إن اختيارك العقاري في <span class="accent">إيد أمينة</span></p>
+            </div>
+        </div>
+
+        <!-- المشهد 6: النهاية مع الشعار ومعلومات الاتصال -->
+        <div class="scene scene-6">
+            <div class="text-content">
+                <img src="https://i.postimg.cc/Y9c5f6K1/ed53e000_aacd_11f0_8000_6ff54186278f.png" alt="شعار سمسار طلبك" class="logo">
+                <h1 class="main-title">سمسار طلبك</h1>
+                <p class="description neon-glow">ابدأ رحلتك العقارية الآن</p>
+                <div class="contact-info">
+                    <i class="fas fa-phone"></i> +20 114 775 8857
+                </div>
+                <p class="tagline">وسيطك العقاري المفضل في مدينة نصر</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class PromoVideo {
+            constructor() {
+                this.scenes = document.querySelectorAll('.scene');
+                this.totalScenes = this.scenes.length;
+                this.sceneDuration = 8000; // 8 ثواني لكل مشهد
+                this.currentScene = 0;
+                this.sceneTimeoutId = null;
+                
+                this.init();
+            }
+
+            init() {
+                this.showScene(0);
+                this.startAutoPlay();
+            }
+
+            startAutoPlay() {
+                this.sceneTimeoutId = setTimeout(() => this.nextScene(), this.sceneDuration);
+            }
+
+            nextScene() {
+                this.currentScene++;
+                
+                if (this.currentScene < this.totalScenes) {
+                    this.showScene(this.currentScene);
+                    this.startAutoPlay(); // جدولة المشهد التالي
+                } else {
+                    this.complete();
+                }
+            }
+
+            showScene(index) {
+                this.scenes.forEach(scene => scene.classList.remove('active'));
+                if (index < this.totalScenes) {
+                    this.scenes[index].classList.add('active');
+                }
+            }
+
+            complete() {
+                // بعد انتهاء المشهد الأخير، ننتظر 3 ثواني ثم نعيد التشغيل التلقائي
+                setTimeout(() => {
+                    this.currentScene = 0;
+                    this.showScene(0);
+                    this.startAutoPlay();
+                }, 3000);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // تأخير بسيط قبل البدء لضمان تحميل جميع العناصر
+            setTimeout(() => {
+                new PromoVideo();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
