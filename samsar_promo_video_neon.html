@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سمسار طلبك | فيديو برومو - نسخة النيون المثيرة</title>
+    <title>سمسار طلبك | Clean Recording</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ألوان النيون */
         :root {
-            --neon-green: #39ff14; /* أخضر نيون فسفوري */
-            --neon-blue: #00ffff; /* أزرق سماوي نيون */
-            --neon-pink: #ff1493; /* وردي نيون */
-            --dark-bg: #000000; /* خلفية سوداء */
-            --duration: 8s;
+            --gold: #d4af37;
+            --gold-shine: #fffeb3;
+            --bg-dark: #050505;
+            --accent-blue: #4285f4;
+            --text-white: #ffffff;
         }
 
         * {
@@ -22,325 +24,387 @@
         }
 
         body {
-            font-family: 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', sans-serif;
-            background: var(--dark-bg); /* خلفية سوداء */
-            color: var(--neon-green);
+            font-family: 'Cairo', sans-serif;
+            background-color: #000000; /* خلفية سوداء بالكامل للتسجيل النظيف */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
-            height: 100vh;
-            line-height: 1.5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        .video-container {
+        /* ====================
+           إطار الفيديو (Canvas)
+           ==================== */
+        .video-frame {
             position: relative;
-            width: 100%;
-            height: 100vh;
+            width: 54vh;
+            height: 96vh;
+            max-width: 500px;
+            background: radial-gradient(circle at 50% 30%, #1e1e2f, #0a0a12);
+            border: 4px solid var(--gold);
+            border-radius: 25px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8); /* ظل لتمييز الإطار عن الخلفية */
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 10;
         }
 
+        /* ====================
+           الخلفية والزينة
+           ==================== */
+        .ambient-light {
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(66, 133, 244, 0.08) 0%, transparent 60%);
+            top: -25%;
+            left: -25%;
+            animation: breathe 6s infinite ease-in-out;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .corner-decor {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border: 2px solid var(--gold);
+            z-index: 10;
+            opacity: 0.6;
+        }
+        .c-top { top: 15px; right: 15px; border-left: none; border-bottom: none; border-radius: 0 10px 0 0; }
+        .c-bottom { bottom: 15px; left: 15px; border-right: none; border-top: none; border-radius: 0 0 0 10px; }
+
+        /* ====================
+           المشاهد (Scenes)
+           ==================== */
         .scene {
             position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            flex-direction: column;
+            padding: 30px;
             text-align: center;
-            padding: 5vh 5vw;
-            background-color: var(--dark-bg);
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            z-index: 5;
         }
 
         .scene.active {
             opacity: 1;
+            transform: scale(1);
         }
 
-        /* تأثير النيون على النصوص */
-        .neon-glow {
-            text-shadow: 
-                0 0 5px var(--neon-green),
-                0 0 10px var(--neon-green),
-                0 0 20px var(--neon-green),
-                0 0 40px var(--neon-green),
-                0 0 80px var(--neon-green);
+        /* ====================
+           العناصر المشتركة
+           ==================== */
+        .logo-container {
+            width: 130px;
+            height: 130px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(5px);
+            border-radius: 50%;
+            padding: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            animation: floatLogo 4s ease-in-out infinite;
         }
 
-        .text-content {
-            max-width: 90vw; /* زيادة العرض الأقصى */
-            position: relative;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .logo {
-            width: 180px; /* تكبير الشعار */
-            height: auto;
-            margin-bottom: 2rem;
-            opacity: 0;
-            transform: scale(0.5);
-            animation: zoomInRotate 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; /* حركة ديناميكية جديدة */
-            animation-delay: 0.2s;
-            filter: drop-shadow(0 0 10px var(--neon-blue)); /* ظل نيون للشعار */
+        .logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
         }
 
-        .main-title {
-            font-size: 5rem; /* تكبير الخط الرئيسي */
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            color: var(--neon-blue); /* لون مختلف */
-            opacity: 0;
-            transform: translateY(50px);
-            animation: fadeInUp 1.5s ease forwards;
-            text-shadow: 
-                0 0 5px var(--neon-blue),
-                0 0 10px var(--neon-blue),
-                0 0 20px var(--neon-blue);
-        }
-
-        .highlight-text {
-            color: var(--neon-pink); /* لون مختلف */
-            font-weight: 700;
-            font-size: 3.5rem; /* تكبير الخط */
-            margin: 1.5rem 0;
-            opacity: 0;
-            transform: scale(0.8);
-            animation: pulseScale 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards; /* حركة ديناميكية جديدة */
-            animation-delay: 0.5s;
-            text-shadow: 
-                0 0 5px var(--neon-pink),
-                0 0 10px var(--neon-pink);
-        }
-
-        .description {
-            font-size: 2.5rem; /* تكبير الخط */
-            margin-bottom: 1.5rem;
-            opacity: 0;
-            transform: translateX(-100%);
-            animation: slideInFromLeft 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-            animation-delay: 1s;
-            line-height: 1.6;
-            color: var(--neon-green);
-        }
-
-        .accent {
-            color: var(--neon-blue);
+        h1 {
+            font-size: 2.8rem;
+            line-height: 1.3;
+            color: var(--text-white);
             font-weight: 800;
-            text-shadow: 0 0 5px var(--neon-blue);
+            margin-bottom: 10px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
-        .tagline {
-            font-size: 2rem; /* تكبير الخط */
-            font-style: italic;
-            margin-top: 2rem;
+        .gold-text {
+            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #ccc;
+            font-weight: 400;
+            margin-top: 10px;
+        }
+
+        /* ====================
+           بطاقات الزجاج
+           ==================== */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 15px 20px;
+            width: 100%;
+            margin: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transform: translateY(20px);
             opacity: 0;
-            transform: translateX(100%);
-            animation: slideInFromRight 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-            animation-delay: 1.5s;
-            color: var(--neon-pink);
-            text-shadow: 0 0 3px var(--neon-pink);
         }
 
-        .contact-info {
-            font-size: 2.5rem; /* تكبير الخط */
-            margin-top: 3rem;
-            padding: 1rem 2rem;
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid var(--neon-green);
-            color: var(--neon-green);
-            border-radius: 10px;
-            display: inline-block;
-            box-shadow: 0 0 15px var(--neon-green);
+        .glass-card i {
+            font-size: 1.5rem;
+        }
+
+        /* ====================
+           تصميم شريط بحث جوجل
+           ==================== */
+        .google-search-container {
+            background: white;
+            border-radius: 50px;
+            padding: 12px 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            margin-top: 30px;
+            transform: scale(0.8);
             opacity: 0;
-            transform: scale(0.5);
-            animation: popIn 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
-            animation-delay: 2s;
-            text-shadow: 0 0 5px var(--neon-green);
+            position: relative;
+            direction: ltr; /* لضبط اتجاه الأيقونة والنص بشكل صحيح كشريط بحث */
         }
 
-        /* حركات ديناميكية جديدة */
-        @keyframes zoomInRotate {
-            0% { opacity: 0; transform: scale(0.5) rotate(-30deg); }
-            100% { opacity: 1; transform: scale(1) rotate(0deg); }
+        /* SVG Code embedding for guaranteed display */
+        .google-icon-svg {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
         }
 
-        @keyframes pulseScale {
-            0% { opacity: 0; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.1); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .search-text {
+            font-family: Arial, sans-serif;
+            color: #333;
+            font-size: 1.2rem;
+            flex-grow: 1;
+            text-align: left;
+            position: relative;
+            margin-left: 10px;
         }
         
-        @keyframes slideInFromLeft {
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2rem;
+            background-color: #333;
+            vertical-align: middle;
+            animation: blink 1s infinite;
+            margin-left: 2px;
         }
 
-        @keyframes slideInFromRight {
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        .search-lens-icon {
+            color: #4285f4;
+            font-size: 1.2rem;
+            margin-left: auto;
+        }
+
+        .click-hand {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.5rem;
+            color: white;
+            text-shadow: 0 2px 5px black;
+            opacity: 0;
+            z-index: 20;
+        }
+
+        /* ====================
+           Animations Keyframes
+           ==================== */
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        @keyframes floatLogo {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes slideUpFade {
+            to { transform: translateY(0); opacity: 1; }
         }
 
         @keyframes popIn {
-            from {
-                opacity: 0;
-                transform: scale(0.5);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+            0% { transform: scale(0.5); opacity: 0; }
+            80% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
-        @media (max-width: 768px) {
-            .logo { width: 120px; }
-            .main-title { font-size: 3rem; }
-            .highlight-text { font-size: 2.5rem; }
-            .description { font-size: 1.8rem; }
-            .tagline { font-size: 1.5rem; }
-            .contact-info { font-size: 1.8rem; }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
+        
+        @keyframes handTap {
+            0% { transform: translate(-50%, 0) scale(1); }
+            100% { transform: translate(-50%, -10px) scale(0.9); }
+        }
+
+        .anim-delay-1 { animation: slideUpFade 0.6s 0.2s forwards; }
+        .anim-delay-2 { animation: slideUpFade 0.6s 0.4s forwards; }
+        .anim-delay-3 { animation: slideUpFade 0.6s 0.6s forwards; }
+        .anim-pop-search { animation: popIn 0.8s 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        .anim-hand { animation: slideUpFade 0.5s 1.5s forwards, handTap 0.8s 2s infinite alternate; }
+
     </style>
 </head>
 <body>
-    <div class="video-container">
-        <!-- المشهد 1: البداية مع الشعار -->
-        <div class="scene scene-1 active">
-            <div class="text-content">
-                <img src="https://i.postimg.cc/Y9c5f6K1/ed53e000_aacd_11f0_8000_6ff54186278f.png" alt="شعار سمسار طلبك" class="logo">
-                <h1 class="main-title">سمسار طلبك</h1>
-                <p class="description neon-glow">وسيطك العقاري <span class="accent">المُتخصص</span> في مدينة نصر</p>
-                <p class="tagline">لأن بيت أحلامك يستحق الأفضل</p>
+
+    <div class="video-frame">
+        <div class="ambient-light"></div>
+        <div class="corner-decor c-top"></div>
+        <div class="corner-decor c-bottom"></div>
+
+        <!-- ===========================
+             المشهد 1: المقدمة
+        =========================== -->
+        <div class="scene active">
+            <div class="logo-container">
+                <img src="https://i.postimg.cc/Y9c5f6K1/ed53e000-aacd-11f0-8000-6ff54186278f.png" alt="Logo" class="logo-img">
+            </div>
+            <h1>سمسار <br><span class="gold-text">طلبك</span></h1>
+            <p class="subtitle anim-delay-1" style="opacity: 0; transform: translateY(20px);">
+                الوجهة الأولى للعقارات في <br> <b>مدينة نصر</b>
+            </p>
+        </div>
+
+        <!-- ===========================
+             المشهد 2: المشكلة (سؤال)
+        =========================== -->
+        <div class="scene">
+            <div style="font-size: 4rem; color: var(--gold); margin-bottom: 1rem;">
+                <i class="fas fa-question-circle"></i>
+            </div>
+            <h1 style="font-size: 2.5rem;">بتدور على <br> شقة أو محل؟</h1>
+            <div class="glass-card anim-delay-1">
+                <i class="far fa-clock" style="color: #ff6b6b;"></i>
+                <span>الوقت ضيق؟</span>
+            </div>
+            <div class="glass-card anim-delay-2">
+                <i class="fas fa-map-signs" style="color: #feca57;"></i>
+                <span>الخيارات محيرة؟</span>
             </div>
         </div>
 
-        <!-- المشهد 2 -->
-        <div class="scene scene-2">
-            <div class="text-content">
-                <p class="highlight-text">مع <span class="accent">سمسار طلبك</span></p>
-                <p class="description neon-glow">هتلاقي <span class="accent">شقتك</span> أو <span class="accent">محلك</span> أو <span class="accent">مكتبك</span></p>
-                <p class="description neon-glow">في مدينة نصر <span class="accent">بأسهل وأسرع طريقة</span></p>
-            </div>
-        </div>
-
-        <!-- المشهد 3 -->
-        <div class="scene scene-3">
-            <div class="text-content">
-                <p class="description neon-glow">بنقدّم لك <span class="accent">خيارات حقيقية</span></p>
-                <p class="description neon-glow"><span class="accent">بأسعار منافسة</span></p>
-                <p class="description neon-glow">ونتّعامل <span class="accent">بشفافية كاملة</span></p>
-                <p class="tagline">من أول مكالمة لحد استلام وحدتك</p>
-            </div>
-        </div>
-
-        <!-- المشهد 4 -->
-        <div class="scene scene-4">
-            <div class="text-content">
-                <p class="description neon-glow">هدفنا إنك <span class="accent">تختار الصح</span></p>
-                <p class="description neon-glow">بدون ضياع وقت</p>
-                <p class="description neon-glow">ونعرّفك على <span class="accent">أفضل الفرص</span></p>
-                <p class="description neon-glow">المناسبة <span class="accent">لميزانيتك واحتياجك</span></p>
-            </div>
-        </div>
-
-        <!-- المشهد 5 -->
-        <div class="scene scene-5">
-            <div class="text-content">
-                <p class="description neon-glow">سواء لل<span class="accent">شراء</span> أو <span class="accent">إيجار</span></p>
-                <p class="highlight-text">سمسار طلبك…</p>
-                <p class="description neon-glow">خليك مطمئن إن اختيارك العقاري في <span class="accent">إيد أمينة</span></p>
-            </div>
-        </div>
-
-        <!-- المشهد 6: النهاية مع الشعار ومعلومات الاتصال -->
-        <div class="scene scene-6">
-            <div class="text-content">
-                <img src="https://i.postimg.cc/Y9c5f6K1/ed53e000_aacd_11f0_8000_6ff54186278f.png" alt="شعار سمسار طلبك" class="logo">
-                <h1 class="main-title">سمسار طلبك</h1>
-                <p class="description neon-glow">ابدأ رحلتك العقارية الآن</p>
-                <div class="contact-info">
-                    <i class="fas fa-phone"></i> +20 114 775 8857
+        <!-- ===========================
+             المشهد 3: الحل (القيمة)
+        =========================== -->
+        <div class="scene">
+            <h1 style="font-size: 2.2rem; margin-bottom: 20px;">إحنا بنضمنلك</h1>
+            
+            <div class="glass-card anim-delay-1" style="border-right: 4px solid var(--gold);">
+                <i class="fas fa-handshake" style="color: var(--gold);"></i>
+                <div style="text-align: right;">
+                    <strong>أمانة وشفافية</strong>
+                    <p style="font-size: 0.8rem; color:#aaa">تعامل واضح من أول خطوة</p>
                 </div>
-                <p class="tagline">وسيطك العقاري المفضل في مدينة نصر</p>
+            </div>
+            
+            <div class="glass-card anim-delay-2" style="border-right: 4px solid var(--accent-blue);">
+                <i class="fas fa-rocket" style="color: var(--accent-blue);"></i>
+                <div style="text-align: right;">
+                    <strong>سرعة في التنفيذ</strong>
+                    <p style="font-size: 0.8rem; color:#aaa">مش هنضيع وقتك</p>
+                </div>
+            </div>
+
+            <div class="glass-card anim-delay-3" style="border-right: 4px solid #2ecc71;">
+                <i class="fas fa-tag" style="color: #2ecc71;"></i>
+                <div style="text-align: right;">
+                    <strong>أفضل الأسعار</strong>
+                    <p style="font-size: 0.8rem; color:#aaa">قيمة حقيقية مقابل سعر</p>
+                </div>
             </div>
         </div>
+
+        <!-- ===========================
+             المشهد 4: الختام (بحث جوجل)
+        =========================== -->
+        <div class="scene">
+            <div class="logo-container" style="width: 100px; height: 100px;">
+                <img src="https://i.postimg.cc/Y9c5f6K1/ed53e000-aacd-11f0-8000-6ff54186278f.png" alt="Logo" class="logo-img">
+            </div>
+            <h1>اختار <span class="gold-text">صح</span></h1>
+            <p class="subtitle">ابحث عنا الآن</p>
+
+            <!-- شريط بحث جوجل -->
+            <div class="google-search-container anim-pop-search">
+                <!-- أيقونة جوجل (SVG مدمج لضمان الظهور) -->
+                <svg class="google-icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                </svg>
+                
+                <div class="search-text">
+                    سمسار طلبك<span class="typing-cursor"></span>
+                </div>
+                
+                <i class="fas fa-search search-lens-icon"></i>
+            </div>
+
+            <!-- يد النقر -->
+            <div class="click-hand anim-hand">
+                <i class="fas fa-mouse-pointer"></i>
+            </div>
+        </div>
+
     </div>
 
     <script>
-        class PromoVideo {
-            constructor() {
-                this.scenes = document.querySelectorAll('.scene');
-                this.totalScenes = this.scenes.length;
-                this.sceneDuration = 8000; // 8 ثواني لكل مشهد
-                this.currentScene = 0;
-                this.sceneTimeoutId = null;
-                
-                this.init();
-            }
+        const scenes = document.querySelectorAll('.scene');
+        let currentScene = 0;
+        const sceneDuration = 5000; // 5 ثواني لكل مشهد
 
-            init() {
-                this.showScene(0);
-                this.startAutoPlay();
-            }
-
-            startAutoPlay() {
-                this.sceneTimeoutId = setTimeout(() => this.nextScene(), this.sceneDuration);
-            }
-
-            nextScene() {
-                this.currentScene++;
-                
-                if (this.currentScene < this.totalScenes) {
-                    this.showScene(this.currentScene);
-                    this.startAutoPlay(); // جدولة المشهد التالي
-                } else {
-                    this.complete();
-                }
-            }
-
-            showScene(index) {
-                this.scenes.forEach(scene => scene.classList.remove('active'));
-                if (index < this.totalScenes) {
-                    this.scenes[index].classList.add('active');
-                }
-            }
-
-            complete() {
-                // بعد انتهاء المشهد الأخير، ننتظر 3 ثواني ثم نعيد التشغيل التلقائي
-                setTimeout(() => {
-                    this.currentScene = 0;
-                    this.showScene(0);
-                    this.startAutoPlay();
-                }, 3000);
-            }
+        function playSlideshow() {
+            // إخفاء الحالي
+            scenes[currentScene].classList.remove('active');
+            
+            // الانتقال للتالي
+            currentScene = (currentScene + 1) % scenes.length;
+            
+            // إعادة تفعيل الأنيميشن
+            const scene = scenes[currentScene];
+            const html = scene.innerHTML;
+            scene.innerHTML = ''; 
+            scene.classList.add('active');
+            
+            setTimeout(() => {
+                scene.innerHTML = html;
+            }, 10);
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            // تأخير بسيط قبل البدء لضمان تحميل جميع العناصر
-            setTimeout(() => {
-                new PromoVideo();
-            }, 1000);
-        });
+        // تشغيل العرض
+        setInterval(playSlideshow, sceneDuration);
     </script>
 </body>
-</html>
+    </html>
