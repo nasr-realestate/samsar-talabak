@@ -1,512 +1,397 @@
----
-layout: default
-title: "سمسار طلبك | عقارات مدينة نصر"
-description: "ابدأ رحلتك العقارية الآن مع أفضل وسيط عقاري في مدينة نصر. شقق ومحلات ومكاتب بأسعار منافسة وشفافية كاملة."
-body_class: "homepage"
----
-
-<!-- ===================== PRECONNECT & PRELOAD ===================== -->
-<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
-
-<!-- ===================== GOOGLE TAG MANAGER ===================== -->
-<script>
-(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s);dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;j.defer=true;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-MHPZ8NP');
-</script>
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MHPZ8NP"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-
-<!-- ======================== META & SEO ========================== -->
-<meta name="robots" content="index, follow">
-<meta name="author" content="سمسار طلبك">
-<meta property="og:title" content="{{ page.title }}">
-<meta property="og:description" content="{{ page.description }}">
-<meta property="og:type" content="website">
-<meta property="og:url" content="{{ page.url | absolute_url }}">
-<meta property="og:site_name" content="{{ site.title }}">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="{{ page.title }}">
-<meta name="twitter:description" content="{{ page.description }}">
-<link rel="canonical" href="{{ page.url | absolute_url }}">
-<link rel="sitemap" type="application/xml" title="Sitemap" href="{{ '/sitemap.xml' | relative_url }}">
-
-<!-- ========== STRUCTURED DATA / SCHEMA.ORG (JSON-LD) ============= -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "RealEstateAgent",
-  "name": "{{ site.title }}",
-  "url": "{{ site.url }}",
-  "telephone": "+201147758857",
-  "email": "{{ site.email }}",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Nasr City",
-    "addressRegion": "Cairo",
-    "addressCountry": "EG"
-  },
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "telephone": "+201147758857",
-    "contactType": "Customer Service",
-    "areaServed": "EG",
-    "availableLanguage": ["Arabic","English"]
-  }
-}
-</script>
-
-<!-- ===================== PAGE MAIN CONTENT ======================= -->
-<main id="main" role="main" class="site-main">
-  <header class="hero-viewport" aria-hidden="false">
-    <div class="hero-layer hero-bg" role="img" aria-label="خلفية مدينة نصر - سمسار طلبك"></div>
-
-    <div class="hero-inner">
-      <div class="brand">
-        <h1 class="hero-title">
-          <span class="animate-text" data-delay="0.2">مرحبًا بك في</span>
-          <span class="brand-glow animate-text" data-delay="0.4">سمسار طلبك</span>
-        </h1>
-        <div class="brand-subtitle animate-text" data-delay="0.6">وسيطك العقاري المفضل في مدينة نصر</div>
-      </div>
-
-      <p class="hero-subtitle animate-text" data-delay="0.8">ابدأ رحلتك العقارية الآن — سواء كنت تبحث عن شقة أو لديك عرض مميز!</p>
-
-      <div class="hero-cta" role="group" aria-label="روابط سريعة">
-        <a href="{{ '/properties-filtered.html?highlight=apartments' | relative_url }}"
-           class="btn btn-primary magnetic-btn animate-text" data-delay="1.0"
-           aria-label="تصفح عروض العقارات المتاحة"
-           data-magnetic>
-          <span class="btn-icon" aria-hidden="true">🏠</span>
-          <span class="btn-text">عروض العقارات</span>
-        </a>
-
-        <a href="{{ '/requests-filtered.html?highlight=apartments' | relative_url }}"
-           class="btn btn-secondary magnetic-btn animate-text" data-delay="1.2"
-           aria-label="اكتشف طلبات العملاء للعقارات"
-           data-magnetic>
-          <span class="btn-icon" aria-hidden="true">📩</span>
-          <span class="btn-text">طلبات العملاء</span>
-        </a>
-      </div>
-
-      <div class="contact-snippet animate-text" data-delay="1.4" aria-hidden="false">
-        <a href="https://wa.me/201147758857" class="contact-whatsapp" aria-label="اتصل عبر واتساب">
-          💬 تواصل الآن: +20 114 775 8857
-        </a>
-      </div>
-    </div>
-
-    <!-- Parallax particles + decorative -->
-    <div class="hero-effects" aria-hidden="true">
-      <div class="particle p1"></div>
-      <div class="particle p2"></div>
-      <div class="particle p3"></div>
-      <div class="particle p4"></div>
-    </div>
-  </header>
-</main>
-
-<!-- ===================== IMPROVED STYLES - WHITE THEME ======================= -->
-<style>
-:root{
-  --accent-green: #00b04f;
-  --accent-teal: #0083b0;
-  --dark: #1a1a1a;
-  --muted: #4a5568;
-  --light-bg: #ffffff;
-  --glass: rgba(255,255,255,0.15);
-  --radius: 14px;
-  --max-width: 1200px;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-}
-
-/* Reset */
-*{box-sizing:border-box; margin:0; padding:0;}
-body.homepage{background:var(--light-bg);color:var(--dark);line-height:1.6;overflow-x:hidden;}
-a{color:inherit;text-decoration:none}
-
-/* HERO VIEWPORT - WHITE THEME */
-.hero-viewport{
-  position:relative;
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-  padding:2rem 1.25rem;
-  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-}
-
-/* Background layer - subtle pattern */
-.hero-bg{
-  position:absolute;
-  inset:0;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(0, 176, 79, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(0, 131, 176, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.8) 0%, transparent 50%);
-  opacity: 0.8;
-  z-index:0;
-}
-
-/* Inner content */
-.hero-inner{
-  position:relative;
-  z-index:2;
-  width:100%;
-  max-width:var(--max-width);
-  margin:0 auto;
-  text-align:center;
-  padding:3rem 2rem;
-}
-
-/* Brand styling */
-.brand{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:1rem;
-  margin-bottom:2rem;
-}
-
-.hero-title{
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 700;
-  line-height: 1.2;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.brand-subtitle{
-  font-size:1.25rem;
-  color:var(--accent-teal);
-  font-weight:500;
-  opacity:0.9;
-}
-
-.brand-glow{
-  background: linear-gradient(135deg, var(--accent-green) 0%, var(--accent-teal) 100%);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip: text;
-  display:inline-block;
-  position:relative;
-}
-
-/* Subtitle */
-.hero-subtitle{
-  margin:1.5rem 0 2.5rem;
-  font-size:1.2rem;
-  color:var(--muted);
-  max-width:680px;
-  margin-left:auto;
-  margin-right:auto;
-  line-height:1.6;
-}
-
-/* CTA buttons */
-.hero-cta{
-  display:flex;
-  gap:1.5rem;
-  justify-content:center;
-  flex-wrap:wrap;
-  margin-bottom:2rem;
-}
-
-.btn{
-  display:inline-flex;
-  align-items:center;
-  gap:.75rem;
-  padding:1rem 2rem;
-  border-radius:50px;
-  font-weight:600;
-  font-size:1rem;
-  box-shadow:0 8px 25px rgba(0,0,0,0.1);
-  backdrop-filter: blur(10px);
-  transform-origin:center;
-  transition:all 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2);
-  user-select:none;
-  border:none;
-  cursor:pointer;
-}
-
-.btn:focus{
-  outline:3px solid rgba(0,176,79,0.3);
-  outline-offset:3px;
-}
-
-.btn-icon{
-  font-size:1.2rem;
-  transition: transform 0.3s ease;
-}
-
-.btn:hover .btn-icon{
-  transform: scale(1.1);
-}
-
-/* Primary button */
-.btn-primary{
-  background: linear-gradient(135deg, var(--accent-green), var(--accent-teal));
-  color:white;
-  border: 2px solid transparent;
-}
-
-.btn-primary:hover{
-  transform:translateY(-5px) scale(1.05);
-  box-shadow:0 15px 35px rgba(0,176,79,0.25);
-}
-
-/* Secondary button */
-.btn-secondary{
-  background:white;
-  color:var(--dark);
-  border:2px solid var(--accent-teal);
-  position:relative;
-  overflow:hidden;
-}
-
-.btn-secondary:hover{
-  transform:translateY(-5px);
-  box-shadow:0 12px 30px rgba(0,131,176,0.15);
-  color:var(--accent-teal);
-}
-
-/* Contact snippet */
-.contact-snippet{
-  margin-top:2rem;
-}
-
-.contact-whatsapp{
-  font-weight:600;
-  background:rgba(0,176,79,0.1);
-  padding:0.75rem 1.5rem;
-  border-radius:50px;
-  display:inline-flex;
-  align-items:center;
-  gap:0.5rem;
-  color:var(--accent-green);
-  border:1px solid rgba(0,176,79,0.2);
-  transition:all 0.3s ease;
-}
-
-.contact-whatsapp:hover{
-  background:rgba(0,176,79,0.15);
-  transform:translateY(-2px);
-  box-shadow:0 5px 15px rgba(0,176,79,0.2);
-}
-
-/* Particles - subtle accent */
-.hero-effects{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  z-index:1;
-}
-
-.particle{
-  position:absolute;
-  border-radius:50%;
-  opacity:0.4;
-  filter:blur(20px);
-  mix-blend-mode:multiply;
-}
-
-.p1{
-  width:200px;
-  height:200px;
-  left:10%;
-  top:20%;
-  background:radial-gradient(circle, rgba(0,180,79,0.1) 0%, transparent 70%);
-  animation:floatA 15s ease-in-out infinite;
-}
-
-.p2{
-  width:150px;
-  height:150px;
-  right:10%;
-  top:30%;
-  background:radial-gradient(circle, rgba(0,131,176,0.1) 0%, transparent 70%);
-  animation:floatB 18s ease-in-out infinite;
-}
-
-.p3{
-  width:180px;
-  height:180px;
-  left:20%;
-  bottom:20%;
-  background:radial-gradient(circle, rgba(255,209,102,0.1) 0%, transparent 70%);
-  animation:floatC 20s ease-in-out infinite;
-}
-
-.p4{
-  width:120px;
-  height:120px;
-  right:20%;
-  bottom:25%;
-  background:radial-gradient(circle, rgba(142,202,230,0.1) 0%, transparent 70%);
-  animation:floatD 16s ease-in-out infinite;
-}
-
-/* Text animation classes */
-.animate-text{
-  opacity:0;
-  transform:translateY(30px);
-  animation:fadeUpIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}
-
-@keyframes fadeUpIn{
-  from{
-    opacity:0;
-    transform:translateY(30px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-}
-
-/* Floating animations */
-@keyframes floatA{
-  0%, 100%{ transform:translateY(0) rotate(0deg); }
-  50%{ transform:translateY(-20px) rotate(5deg); }
-}
-
-@keyframes floatB{
-  0%, 100%{ transform:translateY(0) rotate(0deg); }
-  50%{ transform:translateY(-15px) rotate(-5deg); }
-}
-
-@keyframes floatC{
-  0%, 100%{ transform:translateY(0) scale(1); }
-  50%{ transform:translateY(-25px) scale(1.05); }
-}
-
-@keyframes floatD{
-  0%, 100%{ transform:translateY(0); }
-  50%{ transform:translateY(-10px); }
-}
-
-/* Responsive design */
-@media (max-width:768px){
-  .hero-viewport{
-    min-height:90vh;
-    padding:1rem;
-  }
-  
-  .hero-inner{
-    padding:2rem 1rem;
-  }
-  
-  .hero-title{
-    font-size:clamp(1.8rem, 6vw, 2.5rem);
-  }
-  
-  .brand-subtitle{
-    font-size:1.1rem;
-  }
-  
-  .hero-subtitle{
-    font-size:1rem;
-    margin:1rem 0 2rem;
-  }
-  
-  .hero-cta{
-    gap:1rem;
-    flex-direction:column;
-    align-items:center;
-  }
-  
-  .btn{
-    padding:0.875rem 1.75rem;
-    width:100%;
-    max-width:280px;
-    justify-content:center;
-  }
-  
-  .particle{
-    display:none; /* Hide particles on mobile for performance */
-  }
-}
-
-/* Respect reduced motion */
-@media (prefers-reduced-motion: reduce){
-  .particle, .btn, .animate-text, .hero-bg{
-    animation:none!important;
-    transition:none!important;
-  }
-  
-  .animate-text{
-    opacity:1;
-    transform:none;
-  }
-}
-</style>
-
-<!-- ===================== ENHANCED ANIMATIONS JS ======================= -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Text animation with staggered delays
-  const animateElements = document.querySelectorAll('.animate-text');
-  
-  animateElements.forEach(element => {
-    const delay = element.getAttribute('data-delay') || 0;
-    element.style.animationDelay = delay + 's';
-  });
-
-  // Magnetic button effect
-  function initMagneticButtons() {
-    const buttons = document.querySelectorAll('.magnetic-btn');
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سمسار طلبك | الرئيسية</title>
+    <!-- استيراد خطوط وأيقونات -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    buttons.forEach(btn => {
-      let rect;
-      
-      btn.addEventListener('mousemove', (e) => {
-        rect = rect || btn.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
+    <style>
+        :root {
+            --gold: #d4af37;
+            --gold-glow: #ffeb3b;
+            --dark-bg: #050505;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --text-white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark-bg);
+            height: 100vh;
+            overflow: hidden; /* لمنع التمرير أثناء العرض */
+            color: var(--text-white);
+        }
+
+        /* ========================
+           الخلفية المتحركة الدائمة
+           ======================== */
+        .cinematic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #000000 100%);
+            z-index: -2;
+        }
+
+        .animated-overlay {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: rotateBg 120s linear infinite;
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        /* ========================
+           زر التخطي (Skip)
+           ======================== */
+        .skip-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: rgba(255,255,255,0.7);
+            padding: 8px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            z-index: 1000;
+            font-family: 'Cairo', sans-serif;
+            transition: 0.3s;
+        }
+        .skip-btn:hover {
+            background: var(--gold);
+            color: #000;
+            border-color: var(--gold);
+        }
+
+        /* ========================
+           الحاوية الرئيسية للمشاهد
+           ======================== */
+        .stage-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .scene {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease, transform 1s ease;
+            transform: scale(1.1);
+            padding: 20px;
+        }
+
+        .scene.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        .scene.exit {
+            opacity: 0;
+            transform: scale(0.9) translateY(-20px);
+        }
+
+        /* ========================
+           تنسيقات النصوص والعناصر
+           ======================== */
+        .brand-logo {
+            width: 150px;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 0 15px var(--gold));
+            animation: float 4s ease-in-out infinite;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 900;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+
+        p {
+            font-size: 1.5rem;
+            color: #ccc;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .gold-text { color: var(--gold); }
+        .white-text { color: var(--text-white); }
+
+        /* أيقونات الخدمات */
+        .services-grid {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .service-item {
+            background: var(--glass-bg);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            width: 160px;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUpItem 0.5s forwards;
+        }
+
+        .service-item i {
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========================
+           المشهد الأخير (القائمة)
+           ======================== */
+        .final-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 500px;
+            margin-top: 40px;
+        }
+
+        .action-btn {
+            background: linear-gradient(45deg, #111, #222);
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            padding: 20px 30px;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .action-btn:hover {
+            background: var(--gold);
+            color: #000;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(90deg, #d4af37, #fce205);
+            color: #000;
+            border: none;
+        }
         
-        btn.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px) scale(1.02)`;
-      });
-      
-      btn.addEventListener('mouseleave', () => {
-        btn.style.transform = 'translate(0, 0) scale(1)';
-      });
-    });
-  }
+        .action-btn.primary:hover {
+            background: linear-gradient(90deg, #fff, #eee);
+        }
 
-  // Subtle parallax effect for background
-  function initParallax() {
-    const bg = document.querySelector('.hero-bg');
-    
-    if (!bg) return;
-    
-    window.addEventListener('scroll', () => {
-      const scrolled = window.pageYOffset;
-      const rate = scrolled * -0.5;
-      bg.style.transform = `translate3d(0, ${rate}px, 0)`;
-    });
-    
-    // Mouse move parallax
-    window.addEventListener('mousemove', (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 20;
-      const y = (e.clientY / window.innerHeight - 0.5) * 20;
-      bg.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-    });
-  }
+        .btn-icon {
+            font-size: 1.8rem;
+        }
 
-  // Initialize all effects
-  initMagneticButtons();
-  
-  // Only init parallax if user doesn't prefer reduced motion
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    initParallax();
-  }
+        .glow-effect {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+        
+        .action-btn:hover .glow-effect {
+            left: 100%;
+        }
 
-  // Add loading class to body for initial animation
-  document.body.classList.add('loaded');
-});
-</script>
+        /* ========================
+           Animations
+           ======================== */
+        @keyframes rotateBg { 100% { transform: rotate(360deg); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes slideUpItem { to { opacity: 1; transform: translateY(0); } }
+
+        /* استجابة للموبايل */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.8rem; }
+            .services-grid { gap: 15px; }
+            .service-item { width: 130px; padding: 15px; }
+            .action-btn { font-size: 1.2rem; padding: 15px 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- خلفية الموقع -->
+    <div class="cinematic-bg"></div>
+    <div class="animated-overlay"></div>
+
+    <!-- زر التخطي (يظهر في البداية ويختفي في النهاية) -->
+    <button class="skip-btn" id="skipBtn" onclick="skipIntro()">تخطي العرض <i class="fas fa-forward"></i></button>
+
+    <div class="stage-container">
+        
+        <!-- المشهد 1: الترحيب -->
+        <div class="scene active" id="scene-0">
+            <img src="https://i.postimg.cc/Y9c5f6K1/ed53e000-aacd-11f0-8000-6ff54186278f.png" alt="شعار" class="brand-logo">
+            <h1>أهلاً بك في <br> <span class="gold-text">سمسار طلبك</span></h1>
+            <p>بوابتك العقارية الأولى في مدينة نصر</p>
+        </div>
+
+        <!-- المشهد 2: السكني -->
+        <div class="scene" id="scene-1">
+            <h2>ابحث عن منزلك المثالي</h2>
+            <div class="services-grid">
+                <div class="service-item" style="animation-delay: 0.1s">
+                    <i class="fas fa-building"></i>
+                    <div>شقق تمليك</div>
+                </div>
+                <div class="service-item" style="animation-delay: 0.3s">
+                    <i class="fas fa-key"></i>
+                    <div>شقق إيجار</div>
+                </div>
+            </div>
+            <p style="margin-top: 20px;">تشطيبات فاخرة.. ومساحات متنوعة</p>
+        </div>
+
+        <!-- المشهد 3: التجاري -->
+        <div class="scene" id="scene-2">
+            <h2>استثمر في مشروعك</h2>
+            <div class="services-grid">
+                <div class="service-item" style="animation-delay: 0.1s">
+                    <i class="fas fa-store"></i>
+                    <div>محلات تجارية</div>
+                </div>
+                <div class="service-item" style="animation-delay: 0.3s">
+                    <i class="fas fa-briefcase"></i>
+                    <div>مكاتب إدارية</div>
+                </div>
+            </div>
+            <p style="margin-top: 20px;">في أرقى المواقع التجارية بمدينة نصر</p>
+        </div>
+
+        <!-- المشهد 4 (الأخير): القائمة الرئيسية -->
+        <div class="scene" id="scene-3">
+            <img src="https://i.postimg.cc/Y9c5f6K1/ed53e000-aacd-11f0-8000-6ff54186278f.png" alt="شعار" class="brand-logo" style="width: 100px; margin-bottom: 1rem;">
+            <h1>ماذا تريد اليوم؟</h1>
+            
+            <div class="final-menu">
+                <!-- زر عرض العقارات -->
+                <a href="#properties-page" class="action-btn primary" onclick="alert('سيتم توجيهك لصفحة العقارات')">
+                    <span>تصفح العروض المتاحة</span>
+                    <i class="fas fa-search-location btn-icon"></i>
+                    <div class="glow-effect"></div>
+                </a>
+
+                <!-- زر طلبات العملاء -->
+                <a href="#request-page" class="action-btn" onclick="alert('سيتم توجيهك لصفحة طلب العقار')">
+                    <span>سجّل طلبك الخاص</span>
+                    <i class="fas fa-pen-fancy btn-icon"></i>
+                    <div class="glow-effect"></div>
+                </a>
+
+                 <!-- أزرار إضافية صغيرة -->
+                 <div style="display: flex; gap: 10px; justify-content: center; margin-top: 10px;">
+                     <a href="#" style="color: #aaa; text-decoration: none; font-size: 0.9rem;"><i class="fab fa-whatsapp"></i> تواصل معنا</a>
+                     <span style="color: #444;">|</span>
+                     <a href="#" style="color: #aaa; text-decoration: none; font-size: 0.9rem;"><i class="fas fa-phone"></i> اتصل الآن</a>
+                 </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const scenes = document.querySelectorAll('.scene');
+        const skipBtn = document.getElementById('skipBtn');
+        let currentScene = 0;
+        let slideInterval;
+        
+        // زمن كل مشهد قبل الانتقال (بالمللي ثانية)
+        // المشهد الأخير لا يحتاج زمن لأنه سيتوقف
+        const durations = [4000, 4000, 4000]; 
+
+        function showScene(index) {
+            // إزالة الكلاس النشط من الجميع
+            scenes.forEach((scene, i) => {
+                scene.classList.remove('active');
+                if(i < index) scene.classList.add('exit');
+            });
+
+            // تفعيل المشهد الحالي
+            scenes[index].classList.add('active');
+            scenes[index].classList.remove('exit');
+
+            // إذا وصلنا للمشهد الأخير (القائمة)
+            if (index === scenes.length - 1) {
+                stopShow();
+                return;
+            }
+
+            // جدولة المشهد التالي
+            slideInterval = setTimeout(() => {
+                showScene(index + 1);
+            }, durations[index]);
+        }
+
+        function stopShow() {
+            clearTimeout(slideInterval);
+            skipBtn.style.display = 'none'; // إخفاء زر التخطي
+        }
+
+        // وظيفة زر التخطي
+        function skipIntro() {
+            clearTimeout(slideInterval);
+            showScene(scenes.length - 1); // الذهاب فوراً للمشهد الأخير
+        }
+
+        // بدء العرض عند التحميل
+        window.onload = () => {
+            setTimeout(() => {
+                showScene(0);
+            }, 500);
+        };
+    </script>
+</body>
+</html>
