@@ -1,405 +1,90 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سمسار طلبك | الرئيسية</title>
-    <!-- استيراد خطوط وأيقونات -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;500;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+---
+layout: default
+title: "سمسار طلبك | بوابتك العقارية الأولى في مدينة نصر"
+description: "وسيطك العقاري الموثوق في مدينة نصر. تصفح أحدث الشقق للبيع والإيجار، والمحلات التجارية، أو أضف عقارك معنا. خبرة، مصداقية، وسرعة في التنفيذ."
+image: "https://images.unsplash.com/photo-1600596542815-2a4d9f6facb8?q=80&w=2069&auto=format&fit=crop"
+body_class: "homepage"
+---
+
+<!-- =========================================================
+     الواجهة السينمائية (SEO Friendly Hero Section)
+     ========================================================= -->
+<section class="home-hero">
+  
+  <!-- اللوجو المتحرك -->
+  <div class="hero-logo-container" style="margin-bottom: 2rem; animation: float 6s ease-in-out infinite;">
+    <img src="{{ '/assets/img/logo.png' | relative_url }}" alt="شعار سمسار طلبك" style="width: 150px; filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.4));">
+  </div>
+
+  <!-- العنوان الرئيسي (H1 مهم جداً للسيو) -->
+  <h1>
+    أهلاً بك في <br>
+    <span style="color: var(--color-primary);">سمسار طلبك</span>
+  </h1>
+
+  <!-- الوصف التعريفي -->
+  <p>
+    بوابتك العقارية الأولى في مدينة نصر <br>
+    <span style="font-size: 0.9em; opacity: 0.8; margin-top: 10px; display: inline-block;">شفافية • سرعة • أفضل سعر</span>
+  </p>
+
+  <!-- أزرار الخدمات الرئيسية -->
+  <div class="hero-buttons">
     
-    <style>
-        :root {
-            --gold: #d4af37;
-            --gold-glow: #ffeb3b;
-            --dark-bg: #050505;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --text-white: #ffffff;
-        }
+    <!-- زر عرض العقارات (ذهبي) -->
+    <a href="{{ '/properties-filtered.html?highlight=apartments' | relative_url }}" class="nav-btn properties" aria-label="تصفح العقارات المتاحة">
+      <i class="fas fa-search-location" style="margin-left: 10px;"></i>
+      تصفح العروض المتاحة
+    </a>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <!-- زر طلبات العملاء (شفاف) -->
+    <a href="{{ '/requests-filtered.html?highlight=apartments' | relative_url }}" class="nav-btn requests" aria-label="طلبات العقارات">
+      <i class="fas fa-clipboard-list" style="margin-left: 10px;"></i>
+      طلبات العملاء
+    </a>
 
-        body {
-            font-family: 'Cairo', sans-serif;
-            background-color: var(--dark-bg);
-            height: 100vh;
-            overflow: hidden; /* لمنع التمرير أثناء العرض */
-            color: var(--text-white);
-        }
+  </div>
 
-        /* ========================
-           الخلفية المتحركة الدائمة
-           ======================== */
-        .cinematic-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #000000 100%);
-            z-index: -2;
-        }
-
-        .animated-overlay {
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            animation: rotateBg 120s linear infinite;
-            z-index: -1;
-            opacity: 0.6;
-        }
-
-        /* ========================
-           زر التخطي (Skip)
-           ======================== */
-        .skip-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.3);
-            color: rgba(255,255,255,0.7);
-            padding: 8px 20px;
-            border-radius: 30px;
-            cursor: pointer;
-            z-index: 1000;
-            font-family: 'Cairo', sans-serif;
-            transition: 0.3s;
-        }
-        .skip-btn:hover {
-            background: var(--gold);
-            color: #000;
-            border-color: var(--gold);
-        }
-
-        /* ========================
-           الحاوية الرئيسية للمشاهد
-           ======================== */
-        .stage-container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .scene {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 1s ease, transform 1s ease;
-            transform: scale(1.1);
-            padding: 20px;
-        }
-
-        .scene.active {
-            opacity: 1;
-            visibility: visible;
-            transform: scale(1);
-        }
-
-        .scene.exit {
-            opacity: 0;
-            transform: scale(0.9) translateY(-20px);
-        }
-
-        /* ========================
-           تنسيقات النصوص والعناصر
-           ======================== */
-        .brand-logo {
-            width: 150px;
-            margin-bottom: 2rem;
-            filter: drop-shadow(0 0 15px var(--gold));
-            animation: float 4s ease-in-out infinite;
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            font-weight: 900;
-        }
-
-        h2 {
-            font-size: 2.5rem;
-            color: var(--gold);
-            margin-bottom: 1.5rem;
-        }
-
-        p {
-            font-size: 1.5rem;
-            color: #ccc;
-            max-width: 600px;
-            line-height: 1.6;
-        }
-
-        .gold-text { color: var(--gold); }
-        .white-text { color: var(--text-white); }
-
-        /* أيقونات الخدمات */
-        .services-grid {
-            display: flex;
-            gap: 30px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .service-item {
-            background: var(--glass-bg);
-            padding: 20px;
-            border-radius: 15px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            width: 160px;
-            transform: translateY(20px);
-            opacity: 0;
-            animation: slideUpItem 0.5s forwards;
-        }
-
-        .service-item i {
-            font-size: 2.5rem;
-            color: var(--gold);
-            margin-bottom: 10px;
-        }
-
-        /* ========================
-           المشهد الأخير (القائمة)
-           ======================== */
-        .final-menu {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            width: 100%;
-            max-width: 500px;
-            margin-top: 40px;
-        }
-
-        .action-btn {
-            background: linear-gradient(45deg, #111, #222);
-            border: 2px solid var(--gold);
-            color: var(--gold);
-            padding: 20px 30px;
-            border-radius: 50px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            cursor: pointer;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-        }
-
-        .action-btn:hover {
-            background: var(--gold);
-            color: #000;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
-        }
-
-        .action-btn.primary {
-            background: linear-gradient(90deg, #d4af37, #fce205);
-            color: #000;
-            border: none;
-        }
-        
-        .action-btn.primary:hover {
-            background: linear-gradient(90deg, #fff, #eee);
-        }
-
-        .btn-icon {
-            font-size: 1.8rem;
-        }
-
-        .glow-effect {
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: 0.5s;
-        }
-        
-        .action-btn:hover .glow-effect {
-            left: 100%;
-        }
-
-        /* ========================
-           Animations
-           ======================== */
-        @keyframes rotateBg { 100% { transform: rotate(360deg); } }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        @keyframes slideUpItem { to { opacity: 1; transform: translateY(0); } }
-
-        /* استجابة للموبايل */
-        @media (max-width: 768px) {
-            h1 { font-size: 2.2rem; }
-            h2 { font-size: 1.8rem; }
-            .services-grid { gap: 15px; }
-            .service-item { width: 130px; padding: 15px; }
-            .action-btn { font-size: 1.2rem; padding: 15px 25px; }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- خلفية الموقع -->
-    <div class="cinematic-bg"></div>
-    <div class="animated-overlay"></div>
-
-    <!-- زر التخطي (يظهر في البداية ويختفي في النهاية) -->
-    <button class="skip-btn" id="skipBtn" onclick="skipIntro()">تخطي العرض <i class="fas fa-forward"></i></button>
-
-    <div class="stage-container">
-        
-        <!-- المشهد 1: الترحيب -->
-        <div class="scene active" id="scene-0">
-            <img src="https://i.postimg.cc/Y9c5f6K1/ed53e000-aacd-11f0-8000-6ff54186278f.png" alt="شعار" class="brand-logo">
-            <h1>أهلاً بك في <br> <span class="gold-text">سمسار طلبك</span></h1>
-            <p>بوابتك العقارية الأولى في مدينة نصر</p>
-        </div>
-
-        <!-- المشهد 2: السكني -->
-        <div class="scene" id="scene-1">
-            <h2>ابحث عن منزلك المثالي</h2>
-            <div class="services-grid">
-                <div class="service-item" style="animation-delay: 0.1s">
-                    <i class="fas fa-building"></i>
-                    <div>شقق تمليك</div>
-                </div>
-                <div class="service-item" style="animation-delay: 0.3s">
-                    <i class="fas fa-key"></i>
-                    <div>شقق إيجار</div>
-                </div>
-            </div>
-            <p style="margin-top: 20px;">تشطيبات فاخرة.. ومساحات متنوعة</p>
-        </div>
-
-        <!-- المشهد 3: التجاري -->
-        <div class="scene" id="scene-2">
-            <h2>استثمر في مشروعك</h2>
-            <div class="services-grid">
-                <div class="service-item" style="animation-delay: 0.1s">
-                    <i class="fas fa-store"></i>
-                    <div>محلات تجارية</div>
-                </div>
-                <div class="service-item" style="animation-delay: 0.3s">
-                    <i class="fas fa-briefcase"></i>
-                    <div>مكاتب إدارية</div>
-                </div>
-            </div>
-            <p style="margin-top: 20px;">في أرقى المواقع التجارية بمدينة نصر</p>
-        </div>
-
-        <!-- المشهد 4 (الأخير): القائمة الرئيسية -->
-        <div class="scene" id="scene-3">
-            <img src="https://i.postimg.cc/Y9c5f6K1/ed53e000-aacd-11f0-8000-6ff54186278f.png" alt="شعار" class="brand-logo" style="width: 100px; margin-bottom: 1rem;">
-            <h1>ماذا تريد اليوم؟</h1>
-            
-            <div class="final-menu">
-                <!-- زر عرض العقارات -->
-                <a href="properties-filtered.html" class="action-btn primary" onclick="alert('سيتم توجيهك لصفحة العقارات')">
-                    <span>تصفح العروض المتاحة</span>
-                    <i class="fas fa-search-location btn-icon"></i>
-                    <div class="glow-effect"></div>
-                </a>
-
-                <!-- زر طلبات العملاء -->
-                <a href="requests-filtered.html" class="action-btn" onclick="alert('سيتم توجيهك لصفحة طلب العقار')">
-                    <span>سجّل طلبك الخاص</span>
-                    <i class="fas fa-pen-fancy btn-icon"></i>
-                    <div class="glow-effect"></div>
-                </a>
-
-                 <!-- أزرار إضافية صغيرة -->
-                 <div style="display: flex; gap: 15px; justify-content: center; margin-top: 15px;">
-                     <!-- زر الواتساب -->
-                     <a href="https://wa.me/201147758857?text=السلام%20عليكم%20استفسار%20بخصوص%20العقارات" target="_blank" style="color: #aaa; text-decoration: none; font-size: 1rem; transition: 0.3s;" onmouseover="this.style.color='#25D366'" onmouseout="this.style.color='#aaa'">
-                         <i class="fab fa-whatsapp" style="font-size: 1.2rem;"></i> واتساب
-                     </a>
-                     
-                     <span style="color: #444;">|</span>
-                     
-                     <!-- زر الاتصال -->
-                     <a href="tel:+201147758857" style="color: #aaa; text-decoration: none; font-size: 1rem; transition: 0.3s;" onmouseover="this.style.color='#d4af37'" onmouseout="this.style.color='#aaa'">
-                         <i class="fas fa-phone" style="font-size: 1.2rem;"></i> اتصل بنا
-                     </a>
-                 </div>
-            </div>
-        </div>
-
+  <!-- قسم إضافي سريع: أيقونات الخدمات (لتعزيز الشكل الجمالي والسيو) -->
+  <div class="services-preview" style="display: flex; gap: 30px; justify-content: center; margin-top: 4rem; flex-wrap: wrap;">
+    <div style="text-align: center; color: var(--color-text-secondary);">
+      <i class="fas fa-key" style="font-size: 2rem; color: var(--color-primary); margin-bottom: 10px;"></i>
+      <div style="font-size: 0.9rem;">شقق إيجار</div>
     </div>
+    <div style="text-align: center; color: var(--color-text-secondary);">
+      <i class="fas fa-home" style="font-size: 2rem; color: var(--color-primary); margin-bottom: 10px;"></i>
+      <div style="font-size: 0.9rem;">شقق تمليك</div>
+    </div>
+    <div style="text-align: center; color: var(--color-text-secondary);">
+      <i class="fas fa-store" style="font-size: 2rem; color: var(--color-primary); margin-bottom: 10px;"></i>
+      <div style="font-size: 0.9rem;">تجاري وإداري</div>
+    </div>
+  </div>
 
-    <script>
-        const scenes = document.querySelectorAll('.scene');
-        const skipBtn = document.getElementById('skipBtn');
-        let currentScene = 0;
-        let slideInterval;
-        
-        // زمن كل مشهد قبل الانتقال (بالمللي ثانية)
-        // المشهد الأخير لا يحتاج زمن لأنه سيتوقف
-        const durations = [4000, 4000, 4000]; 
+</section>
 
-        function showScene(index) {
-            // إزالة الكلاس النشط من الجميع
-            scenes.forEach((scene, i) => {
-                scene.classList.remove('active');
-                if(i < index) scene.classList.add('exit');
-            });
+<!-- =========================================================
+     CSS إضافي خاص بحركات هذه الصفحة فقط
+     ========================================================= -->
+<style>
+  /* حركة الطفو للوجو */
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
 
-            // تفعيل المشهد الحالي
-            scenes[index].classList.add('active');
-            scenes[index].classList.remove('exit');
+  /* حركة ظهور النصوص المتتابعة */
+  .home-hero h1, .home-hero p, .hero-buttons {
+    animation: fadeInUp 1s ease-out forwards;
+    opacity: 0;
+  }
+  .home-hero h1 { animation-delay: 0.2s; }
+  .home-hero p { animation-delay: 0.5s; }
+  .hero-buttons { animation-delay: 0.8s; }
+  .services-preview { animation: fadeInUp 1s ease-out forwards; opacity: 0; animation-delay: 1.2s; }
 
-            // إذا وصلنا للمشهد الأخير (القائمة)
-            if (index === scenes.length - 1) {
-                stopShow();
-                return;
-            }
-
-            // جدولة المشهد التالي
-            slideInterval = setTimeout(() => {
-                showScene(index + 1);
-            }, durations[index]);
-        }
-
-        function stopShow() {
-            clearTimeout(slideInterval);
-            skipBtn.style.display = 'none'; // إخفاء زر التخطي
-        }
-
-        // وظيفة زر التخطي
-        function skipIntro() {
-            clearTimeout(slideInterval);
-            showScene(scenes.length - 1); // الذهاب فوراً للمشهد الأخير
-        }
-
-        // بدء العرض عند التحميل
-        window.onload = () => {
-            setTimeout(() => {
-                showScene(0);
-            }, 500);
-        };
-    </script>
-</body>
-</html>
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
