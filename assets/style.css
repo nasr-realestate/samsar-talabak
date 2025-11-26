@@ -375,3 +375,43 @@ body.homepage .home-hero {
   border-color: var(--color-primary);
   transform: translateY(-5px);
   }
+/* =========================================================
+ * 🛠️ إصلاحات أحجام الصور (Images Fix)
+ * ألصق هذا في نهاية ملف style.css
+ * ========================================================= */
+
+/* 1. منع الصور من الخروج عن الشاشة في كل الموقع */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* 2. تصغير الشعار في الصفحة الرئيسية (كان يظهر عملاقاً) */
+.hero-logo-container img {
+    max-width: 160px !important; /* حجم مثالي للموبايل */
+    width: 160px; /* تأكيد العرض */
+    height: auto;
+}
+
+/* 3. تصغير الشعار في القائمة العلوية (Navbar) */
+.navbar-logo img {
+    max-height: 50px;
+    width: auto;
+}
+
+/* 4. ضبط صور العقارات داخل صفحة التفاصيل */
+.details-container img {
+    border-radius: 15px;
+    margin: 20px auto;
+    display: block;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    border: 1px solid var(--color-border);
+}
+
+/* 5. تحسين خلفية الهيرو (الصورة العقارية) */
+.home-hero {
+    /* يضمن أن الخلفية تغطي المساحة ولا تتكرر */
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+}
