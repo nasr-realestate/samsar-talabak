@@ -1,9 +1,9 @@
 /* =========================================================
  * 🏢 سمسار طلبك - الإصدار الذهبي الفاخر (Gold Edition)
- * متوافق تماماً مع الصفحة الرئيسية السينمائية
+ * متوافق تماماً مع هيكلية Jekyll و SEO
  * ========================================================= */
 
-/* 1. استيراد خط القاهرة (Cairo) لتوحيد الهوية مع الصفحة الرئيسية */
+/* 1. استيراد خط القاهرة (Cairo) */
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap');
 
 :root {
@@ -13,7 +13,7 @@
   --color-primary-dark: #b38f1d; /* ذهبي داكن للظلال */
   --color-secondary-dark: #998a00;
 
-  /* --- 🌑 الخلفيات السينمائية (أسود ملكي) --- */
+  /* --- 🌑 الخلفيات (Royal Black) --- */
   --color-background: #050505;   /* أسود حالك */
   --color-surface-1: #0a0a0a;    /* رمادي أسود داكن جداً */
   --color-surface-2: #141414;    /* لون البطاقات */
@@ -35,26 +35,50 @@
   --shadow-interactive: 0 10px 40px rgba(0, 0, 0, 0.8);
 }
 
-/* === 🌍 الإعدادات العامة (تحديث الخط) === */
+/* === 🌍 الإعدادات العامة === */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+
 body {
   background-color: var(--color-background);
   color: var(--color-text-primary);
-  font-family: 'Cairo', sans-serif; /* تم التوحيد */
+  font-family: 'Cairo', sans-serif; /* تم التحديث لخط القاهرة */
   line-height: 1.6;
   direction: rtl;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  overflow-x: hidden; /* لمنع أي تمرير عرضي غير مقصود */
 }
-main { flex-grow: 1; }
+
+main { flex-grow: 1; position: relative; z-index: 2; }
+
+/* ========================================================= */
+/* === 🎥 الخلفيات السينمائية (جديد) 🎥 === */
+/* ========================================================= */
+.cinematic-bg {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at 50% 30%, #1e1e2f 0%, #000000 70%);
+    z-index: -2;
+}
+
+.animated-overlay {
+    position: fixed;
+    top: -50%; left: -50%; width: 200%; height: 200%;
+    /* نمط زخرفي خفيف جداً */
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    animation: rotateBg 120s linear infinite;
+    z-index: -1;
+    opacity: 0.5;
+}
+@keyframes rotateBg { 100% { transform: rotate(360deg); } }
 
 /* ========================================================= */
 /* === 🧭 شريط التنقل العلوي (Luxury Navbar) 🧭 === */
 /* ========================================================= */
 .navbar {
-  background-color: rgba(5, 5, 5, 0.95); /* أسود شبه شفاف */
+  background-color: rgba(5, 5, 5, 0.9); /* أسود شفاف */
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   padding: 1rem 2rem;
@@ -64,16 +88,21 @@ main { flex-grow: 1; }
   position: sticky;
   top: 0;
   z-index: 1000;
-  border-bottom: 1px solid var(--color-border-light); /* خط ذهبي رفيع */
+  border-bottom: 1px solid var(--color-border-light);
 }
 .navbar-logo a {
   text-decoration: none; 
   color: var(--color-primary);
   font-size: 1.6rem; 
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  font-weight: 800;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.3));
 }
+.navbar-logo a:hover {
+  color: #fff;
+  filter: drop-shadow(0 0 15px var(--color-primary));
+}
+
 .navbar-links { display: flex; gap: 1rem; }
 
 .nav-link {
@@ -84,104 +113,149 @@ main { flex-grow: 1; }
   font-size: 0.95rem;
 }
 
-/* الزر النشط (ذهبي) */
+/* تحديث ألوان الأزرار للذهبي */
 .nav-link.properties {
-  background: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
-  color: #000; /* نص أسود للقراءة */
-  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+  background: linear-gradient(45deg, var(--color-primary), var(--color-primary-dark));
+  color: #000; /* نص أسود لتباين أفضل */
+  box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
 }
-/* زر الطلبات (شفاف بحدود) */
 .nav-link.requests {
   background: transparent;
   border: 1px solid var(--color-border);
   color: var(--color-text-secondary);
 }
+
+.nav-link:hover { transform: translateY(-3px); }
+.nav-link.properties:hover {
+  box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
+}
 .nav-link.requests:hover {
   border-color: var(--color-primary);
   color: var(--color-primary);
-  background: rgba(212, 175, 55, 0.05);
 }
 
+/* ========================================================= */
+/* === 🏠 تنسيقات الصفحة الرئيسية (Home Hero) 🏠 === */
+/* ========================================================= */
+/* ملاحظة: الخلفية الآن يتم التحكم فيها بواسطة .cinematic-bg
+   لكن سنحافظ على التنسيق القديم كطبقة إضافية إذا لزم الأمر */
+body.homepage .home-hero {
+  /* تدرج لوني خفيف فوق الخلفية السينمائية */
+  background: radial-gradient(circle, transparent 0%, rgba(0,0,0,0.8) 100%);
+}
+
+.home-hero {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 80vh; text-align: center; padding: 2rem;
+  position: relative; z-index: 1;
+}
+
+.home-hero h1 {
+  font-size: 3.5rem; font-weight: 900;
+  /* الذهبي المتدرج */
+  background: linear-gradient(45deg, var(--color-primary), #fffeb3);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  text-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+  margin-bottom: 1rem;
+  animation: text-glow 4s ease-in-out infinite alternate;
+}
+@keyframes text-glow {
+  from { filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.3)); }
+  to { filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.6)); }
+}
+
+.home-hero p {
+  font-size: 1.5rem; color: var(--color-text-secondary);
+  margin-bottom: 3rem; max-width: 700px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+/* أزرار الهيرو */
+.hero-buttons { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
+.hero-buttons a {
+  text-decoration: none; font-weight: bold; font-size: 1.2rem;
+  border-radius: 50px; padding: 1.2rem 3rem;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border: 1px solid transparent;
+}
+
+/* الزر الأول (ذهبي) */
+.hero-buttons a:first-child { 
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  color: #000;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
+/* الزر الثاني (حدود) */
+.hero-buttons a:last-child { 
+  background: rgba(0,0,0,0.5); 
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.hero-buttons a:hover { transform: translateY(-5px); }
+.hero-buttons a:first-child:hover { box-shadow: 0 10px 40px rgba(212, 175, 55, 0.5); }
+.hero-buttons a:last-child:hover { background: var(--color-primary); color: #000; }
+
+/* ========================================================= */
 /* === 🌟 رأس الصفحات الداخلية (Header) === */
+/* ========================================================= */
 .page-header {
-  background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.8));
   padding: 4rem 1rem; text-align: center; 
   border-bottom: 1px solid var(--color-border-light);
   margin-bottom: 3rem; position: relative; overflow: hidden;
 }
-/* نمط زخرفي ذهبي خفيف في الخلفية */
-.page-header::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  background-image: radial-gradient(var(--color-border-light) 1px, transparent 1px);
-  background-size: 30px 30px;
-  opacity: 0.3;
-  pointer-events: none;
-}
 .page-header h1 {
   font-size: 3rem; 
-  color: var(--color-primary);
-  margin: 0;
-  text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
-  font-weight: 900;
+  background: linear-gradient(45deg, var(--color-primary), #fff);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin: 0; font-weight: 800;
 }
 .page-header p {
-  color: var(--color-text-secondary); font-size: 1.3rem; margin-top: 1rem;
+  color: var(--color-text-secondary); font-size: 1.2rem; margin-top: 1rem;
 }
 
-/* === 🎯 الفلاتر (Filters) === */
+/* === 🎯 الفلاتر === */
 .filter-container {
   display: flex; justify-content: center; flex-wrap: wrap;
   gap: 1rem; margin: 2rem 0; padding: 0 1rem;
 }
 .filter-btn {
-  padding: 0.8rem 2rem; 
-  background: transparent; 
-  color: var(--color-text-secondary);
-  border: 1px solid var(--color-border); 
-  border-radius: 50px; cursor: pointer;
-  transition: all 0.3s ease; font-weight: 600; font-family: 'Cairo';
+  padding: 0.8rem 1.8rem; background: var(--color-surface-2); color: var(--color-text-secondary);
+  border: 1px solid var(--color-border); border-radius: 50px; cursor: pointer;
+  transition: all 0.3s ease; font-weight: 600;
 }
 .filter-btn:hover, .filter-btn.active {
   background: var(--color-primary);
-  color: #000; 
-  border-color: var(--color-primary);
-  box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+  color: #000; border-color: var(--color-primary);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
 }
 
 /* === 🏙️ شبكة العقارات === */
 .properties-grid, .requests-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2.5rem; max-width: 1200px; margin: 0 auto; padding: 1rem;
+  gap: 2rem; max-width: 1200px; margin: 0 auto; padding: 1rem;
 }
 
-/* === 💳 بطاقة العقار (التحول الأكبر للفخامة) === */
+/* === 💳 بطاقة العقار (نسخة الفخامة) === */
 .property-card {
-  background-color: var(--color-surface-2);
+  background: var(--color-surface-2); 
   border: 1px solid var(--color-border-light);
-  border-radius: 20px; 
-  padding: 0; /* إزالة الحواف الداخلية للصورة */
+  border-radius: 20px; padding: 1.5rem;
   transition: all 0.4s ease;
   cursor: pointer; position: relative; overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   display: flex; flex-direction: column;
 }
 .property-card:hover {
   transform: translateY(-10px); 
   border-color: var(--color-primary);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.6), 0 0 20px rgba(212, 175, 55, 0.1);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 15px rgba(212, 175, 55, 0.1);
 }
-
-/* تحسين صور البطاقات إذا وجدت */
-.property-card img {
-  width: 100%; height: 200px; object-fit: cover;
-  border-bottom: 2px solid var(--color-primary);
-}
-
-/* محتوى البطاقة */
-.card-content-padding { padding: 1.5rem; } /* كلاس مساعد */
 
 .property-header {
   display: flex; align-items: center; gap: 15px; margin-bottom: 1rem;
-  padding: 1.5rem 1.5rem 0 1.5rem; /* تعديل المسافات */
+  padding-bottom: 1rem; border-bottom: 1px solid var(--color-border);
 }
 .property-logo {
   width: 50px; height: 50px; border-radius: 50%;
@@ -189,115 +263,115 @@ main { flex-grow: 1; }
   box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
 }
 .property-title {
-  color: var(--color-text-primary); font-size: 1.4rem; font-weight: 800;
+  color: var(--color-text-primary); font-size: 1.4rem; font-weight: 700;
   margin: 0; line-height: 1.3;
 }
-.property-title span { color: var(--color-primary); } /* تمييز كلمات معينة */
+/* تمييز السعر أو الجزء المهم بالذهبي */
+.property-title span, .highlight-text { color: var(--color-primary); }
 
-.property-details { display: grid; gap: 0.8rem; padding: 0 1.5rem; margin: 1rem 0; }
+.property-details { display: grid; gap: 0.8rem; margin: 1.5rem 0; }
 .property-detail {
   display: flex; align-items: center; gap: 10px; padding: 0.6rem;
-  background: rgba(255, 255, 255, 0.03); border-radius: 8px;
-  border-right: 2px solid var(--color-primary); /* تغيير اتجاه الحدود للعربية */
+  background: rgba(255, 255, 255, 0.03); border-radius: 10px;
+  border-right: 3px solid var(--color-primary); /* يمين لأن الموقع عربي */
+  border-left: none;
 }
-.detail-icon { color: var(--color-primary); font-size: 1.1rem; }
-.detail-label { color: var(--color-text-secondary); font-size: 0.9rem; }
-.detail-value { color: #fff; font-weight: bold; margin-right: auto; }
+.detail-icon { font-size: 1.2rem; width: 25px; text-align: center; color: var(--color-primary); }
+.detail-label { font-weight: 600; color: var(--color-text-secondary); min-width: 80px; }
+.detail-value { color: var(--color-text-primary); flex: 1; font-weight: bold; }
 
 .property-description {
-  margin: 1rem 1.5rem; padding: 1rem;
-  background: rgba(0,0,0,0.3); border-radius: 10px;
-  color: #aaa; font-size: 0.95rem; border: 1px solid #222;
+  background: rgba(0, 0, 0, 0.3); padding: 1rem; border-radius: 10px;
+  margin: 1rem 0; border: 1px solid var(--color-border);
+  color: #aaa; line-height: 1.6; flex-grow: 1; font-size: 0.95rem;
 }
 
-/* زر التفاصيل داخل البطاقة */
-.view-details-btn {
-  display: block; margin: 1.5rem; text-align: center;
-  background: transparent; 
-  border: 1px solid var(--color-primary);
-  color: var(--color-primary);
-  padding: 10px; border-radius: 50px;
-  transition: 0.3s;
-}
-.view-details-btn:hover {
-  background: var(--color-primary);
-  color: #000;
-  box-shadow: 0 0 15px var(--color-primary);
-}
-
-/* === 📄 صفحة التفاصيل (Details Page) === */
+/* === 📄 صفحة التفاصيل === */
 .details-container {
   max-width: 900px; margin: 40px auto; padding: 2.5rem;
   background: var(--color-surface-2); 
   border: 1px solid var(--color-border-light);
-  border-radius: 25px; 
-  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
-.details-header h1 { color: var(--color-primary); font-weight: 900; }
+.details-header h1 { font-size: 2.2rem; color: var(--color-primary); }
 .details-price {
+  font-size: 1.8rem; color: #000; font-weight: bold;
+  margin-bottom: 1.5rem; text-align: center; 
   background: linear-gradient(90deg, var(--color-primary), #b38f1d);
-  color: #000; padding: 10px 20px; border-radius: 15px;
-  display: inline-block; font-weight: bold; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+  padding: 0.8rem; border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(212, 175, 55, 0.2);
 }
-
-/* الأزرار الكبيرة في صفحة التفاصيل */
+.detail-item {
+  background: #000; padding: 1rem; border: 1px solid #333;
+  border-radius: 10px; border-right: 3px solid var(--color-primary);
+  border-left: none; color: #fff;
+}
+.details-description h2 {
+  font-size: 1.6rem; color: var(--color-primary);
+  border-bottom: 1px solid var(--color-border);
+}
 .action-btn {
-  border: 1px solid var(--color-primary);
-  background: transparent; color: var(--color-primary);
-  padding: 15px 30px; border-radius: 50px;
-  font-family: 'Cairo'; font-weight: bold; font-size: 1.1rem;
+  border: none; padding: 15px 25px; border-radius: 50px; 
+  font-weight: bold; font-size: 1.1rem;
 }
-.whatsapp-btn {
-  background: #25D366; color: white; border: none;
+.whatsapp-btn { 
+  background-color: #25D366; color: white; 
   box-shadow: 0 5px 15px rgba(37, 211, 102, 0.2);
 }
-.whatsapp-btn:hover { background: #1ebe5d; transform: translateY(-3px); }
+.whatsapp-btn:hover { background-color: #1ebe5d; transform: translateY(-3px); }
 
-.copy-btn:hover {
-  background: var(--color-primary); color: #000;
+.copy-btn {
+  background-color: transparent; border: 1px solid var(--color-primary);
+  color: var(--color-primary);
 }
-
-/* === ⏳ التحميل والخطأ === */
-@keyframes spin { to { transform: rotate(360deg); } }
-.loading-spinner {
-  border: 4px solid #333; border-top-color: var(--color-primary);
-  width: 50px; height: 50px;
-}
-.error-message {
-  border-color: var(--color-error); color: var(--color-error);
-  background: rgba(255, 77, 77, 0.1);
-}
+.copy-btn:hover { background: var(--color-primary); color: #000; }
 
 /* === 🦶 الفوتر (Footer) === */
 .site-footer {
   background-color: #000;
-  border-top: 1px solid #222;
+  color: var(--color-text-secondary);
   padding: 4rem 2rem;
+  border-top: 1px solid #222;
 }
 .footer-logo a { color: var(--color-primary); font-size: 2rem; }
+.footer-links a:hover { color: var(--color-primary); }
 .social-links a {
-  background: #111; color: #fff;
-  border: 1px solid #333;
+  background-color: #111; border: 1px solid #333;
+  color: #fff;
 }
 .social-links a:hover {
-  background: var(--color-primary); color: #000; border-color: var(--color-primary);
+  background-color: var(--color-primary); color: #000;
+  border-color: var(--color-primary);
 }
 .copyright a { color: var(--color-primary); }
 
-/* زر الرجوع */
 .back-btn {
   background: transparent; border: 1px solid var(--color-primary);
   color: var(--color-primary);
 }
-.back-btn:hover {
-  background: var(--color-primary); color: #000;
-}
+.back-btn:hover { background: var(--color-primary); color: #000; }
 
-/* === 📱 الموبايل === */
+/* === 📱 تحسينات الموبايل === */
 @media (max-width: 768px) {
   .navbar { padding: 1rem; }
-  .navbar-logo a { font-size: 1.3rem; }
-  .page-header h1 { font-size: 2rem; }
+  .home-hero h1 { font-size: 2.2rem; }
   .properties-grid { gap: 1.5rem; }
-  .property-card { margin-bottom: 1rem; }
+  .property-card { padding: 1rem; }
+  .hero-buttons a { width: 100%; text-align: center; }
 }
+
+/* === 📝 صفحة أضف عقارك === */
+.lead-text strong { color: var(--color-primary); }
+.whatsapp-btn-large {
+  background-color: #25D366; color: #fff;
+  border-radius: 50px; padding: 1.2rem 2rem;
+  box-shadow: 0 5px 20px rgba(37, 211, 102, 0.3);
+}
+.info-item {
+  background: var(--color-surface-2); border: 1px solid var(--color-border-light);
+}
+.info-icon { color: var(--color-primary); }
+.info-item:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-5px);
+  }
