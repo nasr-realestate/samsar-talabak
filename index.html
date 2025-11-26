@@ -1,22 +1,26 @@
 ---
 layout: default
 title: "سمسار طلبك | بوابتك العقارية الأولى في مدينة نصر"
-description: "وسيطك العقاري الموثوق في مدينة نصر. تصفح أحدث الشقق للبيع والإيجار، والمحلات التجارية، أو أضف عقارك معنا. خبرة، مصداقية، وسرعة في التنفيذ."
-image: "https://images.unsplash.com/photo-1600596542815-2a4d9f6facb8?q=80&w=2069&auto=format&fit=crop"
+description: "وسيطك العقاري الموثوق في مدينة نصر. تصفح أحدث الشقق للبيع والإيجار ببرج الزهراء والمناطق المميزة."
+# صورة المشاركة (برج الزهراء)
+image: "https://i.postimg.cc/rmJ8kVmK/صور_شقه_برج_الزهراء_الثانيه.webp"
 body_class: "homepage"
 ---
 
 <!-- =========================================================
-     الواجهة السينمائية (SEO Friendly Hero Section)
+     الواجهة السينمائية مع صورة الخلفية الخاصة بك
      ========================================================= -->
-<section class="home-hero">
+<section class="home-hero hero-background-image" 
+         style="background-image: linear-gradient(to bottom, rgba(5,5,5,0.8), rgba(5,5,5,0.9)), url('https://i.postimg.cc/rmJ8kVmK/صور_شقه_برج_الزهراء_الثانيه.webp');">
   
-  <!-- اللوجو المتحرك -->
+  <!-- اللوجو المتحرك (الرابط الجديد) -->
   <div class="hero-logo-container" style="margin-bottom: 2rem; animation: float 6s ease-in-out infinite;">
-    <img src="{{ '/assets/img/logo.png' | relative_url }}" alt="شعار سمسار طلبك" style="width: 150px; filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.4));">
+    <img src="https://i.postimg.cc/Y9c5f6K1/ed53e000_aacd_11f0_8000_6ff54186278f.png" 
+         alt="شعار سمسار طلبك" 
+         style="filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.4));">
   </div>
 
-  <!-- العنوان الرئيسي (H1 مهم جداً للسيو) -->
+  <!-- العنوان الرئيسي -->
   <h1>
     أهلاً بك في <br>
     <span style="color: var(--color-primary);">سمسار طلبك</span>
@@ -31,13 +35,13 @@ body_class: "homepage"
   <!-- أزرار الخدمات الرئيسية -->
   <div class="hero-buttons">
     
-    <!-- زر عرض العقارات (ذهبي) -->
+    <!-- زر عرض العقارات -->
     <a href="{{ '/properties-filtered.html?highlight=apartments' | relative_url }}" class="nav-btn properties" aria-label="تصفح العقارات المتاحة">
       <i class="fas fa-search-location" style="margin-left: 10px;"></i>
       تصفح العروض المتاحة
     </a>
 
-    <!-- زر طلبات العملاء (شفاف) -->
+    <!-- زر طلبات العملاء -->
     <a href="{{ '/requests-filtered.html?highlight=apartments' | relative_url }}" class="nav-btn requests" aria-label="طلبات العقارات">
       <i class="fas fa-clipboard-list" style="margin-left: 10px;"></i>
       طلبات العملاء
@@ -45,7 +49,7 @@ body_class: "homepage"
 
   </div>
 
-  <!-- قسم إضافي سريع: أيقونات الخدمات (لتعزيز الشكل الجمالي والسيو) -->
+  <!-- أيقونات الخدمات -->
   <div class="services-preview" style="display: flex; gap: 30px; justify-content: center; margin-top: 4rem; flex-wrap: wrap;">
     <div style="text-align: center; color: var(--color-text-secondary);">
       <i class="fas fa-key" style="font-size: 2rem; color: var(--color-primary); margin-bottom: 10px;"></i>
@@ -64,16 +68,14 @@ body_class: "homepage"
 </section>
 
 <!-- =========================================================
-     CSS إضافي خاص بحركات هذه الصفحة فقط
+     CSS للحركة
      ========================================================= -->
 <style>
-  /* حركة الطفو للوجو */
   @keyframes float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-15px); }
   }
 
-  /* حركة ظهور النصوص المتتابعة */
   .home-hero h1, .home-hero p, .hero-buttons {
     animation: fadeInUp 1s ease-out forwards;
     opacity: 0;
