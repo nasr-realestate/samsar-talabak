@@ -1,33 +1,47 @@
 <!-- 
-  تذييل الموقع (Footer)
-  أصبح الآن نظيفًا تمامًا من أي تنسيقات مدمجة.
-  يتم التحكم في تصميمه بالكامل من ملف style.css
+  تذييل الموقع (Footer) - النسخة الذهبية الفاخرة
 -->
 <footer class="site-footer">
   <div class="footer-content">
     
-    <div class="footer-logo">
-      <a href="{{ '/' | relative_url }}">
-        {{ site.title }}
-      </a>
+    <!-- القسم العلوي: الشعار والوصف -->
+    <div style="margin-bottom: 2rem;">
+      <div class="footer-logo">
+        <a href="{{ '/' | relative_url }}">
+          <!-- الشعار بفلتر ليظهر بشكل أنيق على الخلفية السوداء -->
+          <img src="https://i.postimg.cc/Y9c5f6K1/ed53e000_aacd_11f0_8000_6ff54186278f.png" alt="{{ site.title }}" style="width: 120px; filter: grayscale(100%) brightness(200%); opacity: 0.8;">
+        </a>
+      </div>
+      <p class="footer-description" style="max-width: 500px; margin: 1rem auto; color: #888;">
+        نخدمك في مدينة نصر وما حولها - بيع، شراء، وتأجير بأمان واحترافية.
+      </p>
     </div>
 
-    <p class="footer-description">نخدمك في مدينة نصر وما حولها - بيع، شراء، وتأجير بأمان واحترافية.</p>
-
-    <nav class="footer-links">
-      <a href="{{ '/privacy-policy.html' | relative_url }}">سياسة الخصوصية</a>
+    <!-- روابط الموقع -->
+    <div class="footer-links">
+      <a href="{{ '/properties-filtered.html' | relative_url }}">تصفح العقارات</a>
+      <a href="{{ '/requests-filtered.html' | relative_url }}">طلبات العملاء</a>
+      <a href="{{ '/add-your-property.html' | relative_url }}">أضف عقارك</a>
+      <a href="{{ '/about-us.html' | relative_url }}">من نحن</a>
       <a href="{{ '/contact-us.html' | relative_url }}">تواصل معنا</a>
-      <a href="{{ '/about-us.html' | relative_url }}">عنّا</a>
-    </nav>
-
-    <div class="social-links">
-      <a href="https://www.facebook.com/Tarekonly" target="_blank" title="فيسبوك"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://www.linkedin.com/company/smsar-talabk-madinat-nasr/" target="_blank" title="لينكدإن"><i class="fab fa-linkedin-in"></i></a>
-      <a href="https://maps.app.goo.gl/hr3dndj1dwMvXaNz5?g_st=ac" target="_blank" title="خرائط جوجل"><i class="fas fa-map-marker-alt"></i></a>
-      <a href="https://pin.it/4tCl3jl6r" target="_blank" title="Pinterest"><i class="fab fa-pinterest"></i></a>
+      <a href="{{ '/privacy-policy.html' | relative_url }}">الخصوصية</a>
     </div>
 
-    <p class="copyright">© {%- assign current_year = 'now' | date: "%Y" -%} {{ current_year }} <a href="{{ '/' | relative_url }}">{{ site.title }}</a>. جميع الحقوق محفوظة.</p>
+    <!-- أيقونات التواصل الاجتماعي (روابطك الخاصة) -->
+    <div class="social-links">
+      <a href="https://www.facebook.com/Tarekonly" target="_blank" title="فيسبوك" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.linkedin.com/company/smsar-talabk-madinat-nasr/" target="_blank" title="لينكدإن" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://maps.app.goo.gl/hr3dndj1dwMvXaNz5?g_st=ac" target="_blank" title="خرائط جوجل" aria-label="Google Maps"><i class="fas fa-map-marker-alt"></i></a>
+      <a href="https://pin.it/4tCl3jl6r" target="_blank" title="Pinterest" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
+    </div>
+
+    <!-- الحقوق -->
+    <div class="copyright">
+      <p>
+        جميع الحقوق محفوظة &copy; {{ 'now' | date: "%Y" }} 
+        <a href="{{ '/' | relative_url }}">{{ site.title }}</a>
+      </p>
+    </div>
 
   </div>
 </footer>
