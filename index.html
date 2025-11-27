@@ -1,26 +1,25 @@
 ---
 layout: default
 title: "سمسار طلبك | بوابتك العقارية الأولى في مدينة نصر"
-description: "وسيطك العقاري الموثوق في مدينة نصر. تصفح أحدث الشقق للبيع والإيجار ببرج الزهراء والمناطق المميزة."
-# صورة المشاركة (برج الزهراء)
-image: "https://i.postimg.cc/NFCBKdRt/شقه_برج_الزهراء_الرئيسيه.webp"
+description: "وسيطك العقاري الموثوق في مدينة نصر. تصفح أحدث الشقق للبيع والإيجار ببرج الزهراء والمناطق المميزة. نضمن لك الشفافية، السرعة، وأفضل سعر سوقي."
+image: "https://i.postimg.cc/rmJ8kVmK/صور_شقه_برج_الزهراء_الثانيه.webp"
 body_class: "homepage"
 ---
 
 <!-- =========================================================
-     الواجهة السينمائية مع صورة الخلفية الخاصة بك
+     1. الواجهة السينمائية (Hero Section)
      ========================================================= -->
 <section class="home-hero hero-background-image" 
-         style="background-image: linear-gradient(to bottom, rgba(5,5,5,0.8), rgba(5,5,5,0.9)), url('https://i.postimg.cc/rmJ8kVmK/صور_شقه_برج_الزهراء_الثانيه.webp');">
+         style="background-image: linear-gradient(to bottom, rgba(5,5,5,0.7), rgba(5,5,5,0.95)), url('https://i.postimg.cc/rmJ8kVmK/صور_شقه_برج_الزهراء_الثانيه.webp'); position: relative; padding-bottom: 6rem;">
   
-  <!-- اللوجو المتحرك (الرابط الجديد) -->
+  <!-- اللوجو المتحرك -->
   <div class="hero-logo-container" style="margin-bottom: 2rem; animation: float 6s ease-in-out infinite;">
     <img src="https://i.postimg.cc/Y9c5f6K1/ed53e000_aacd_11f0_8000_6ff54186278f.png" 
          alt="شعار سمسار طلبك" 
          style="filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.4));">
   </div>
 
-  <!-- العنوان الرئيسي -->
+  <!-- العنوان الرئيسي (H1 مهم جداً للسيو) -->
   <h1>
     أهلاً بك في <br>
     <span style="color: var(--color-primary);">سمسار طلبك</span>
@@ -32,16 +31,16 @@ body_class: "homepage"
     <span style="font-size: 0.9em; opacity: 0.8; margin-top: 10px; display: inline-block;">شفافية • سرعة • أفضل سعر</span>
   </p>
 
-  <!-- أزرار الخدمات الرئيسية -->
+  <!-- أزرار الخدمات الرئيسية (Call to Action) -->
   <div class="hero-buttons">
     
-    <!-- زر عرض العقارات -->
+    <!-- زر عرض العقارات (ذهبي) -->
     <a href="{{ '/properties-filtered.html?highlight=apartments' | relative_url }}" class="nav-btn properties" aria-label="تصفح العقارات المتاحة">
       <i class="fas fa-search-location" style="margin-left: 10px;"></i>
       تصفح العروض المتاحة
     </a>
 
-    <!-- زر طلبات العملاء -->
+    <!-- زر طلبات العملاء (شفاف) -->
     <a href="{{ '/requests-filtered.html?highlight=apartments' | relative_url }}" class="nav-btn requests" aria-label="طلبات العقارات">
       <i class="fas fa-clipboard-list" style="margin-left: 10px;"></i>
       طلبات العملاء
@@ -49,41 +48,97 @@ body_class: "homepage"
 
   </div>
 
-  <!-- أيقونات الخدمات -->
-  <div class="services-preview" style="display: flex; gap: 30px; justify-content: center; margin-top: 4rem; flex-wrap: wrap;">
+  <!-- ✨ الصندوق السحري: (تعبت من اللف؟) - لربط الموقع بالفيديو -->
+  <div class="pain-point-box" style="margin-top: 3.5rem; max-width: 600px; padding: 20px 30px; border: 1px solid var(--color-border-light); border-radius: 15px; background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+      <h3 style="color: var(--color-primary); font-size: 1.2rem; margin-bottom: 8px;">
+          <i class="far fa-question-circle"></i> تعبت من اللف وتفاوت الأسعار؟
+      </h3>
+      <p style="color: #ccc; font-size: 0.9rem; margin-bottom: 0; line-height: 1.5;">
+          نحن هنا لننهي حيرتك. نوفر عليك الوقت والجهد ونضمن لك عقارات تم التحقق منها بأسعار السوق الحقيقية.
+      </p>
+  </div>
+
+  <!-- أيقونات الخدمات السريعة (للمظهر الجمالي) -->
+  <div class="services-preview" style="display: flex; gap: 40px; justify-content: center; margin-top: 3rem; flex-wrap: wrap; opacity: 0.7;">
     <div style="text-align: center; color: var(--color-text-secondary);">
-      <i class="fas fa-key" style="font-size: 2rem; color: var(--color-primary); margin-bottom: 10px;"></i>
-      <div style="font-size: 0.9rem;">شقق إيجار</div>
+      <i class="fas fa-key" style="font-size: 1.5rem; color: var(--color-primary); margin-bottom: 8px;"></i>
+      <div style="font-size: 0.8rem;">شقق إيجار</div>
     </div>
     <div style="text-align: center; color: var(--color-text-secondary);">
-      <i class="fas fa-home" style="font-size: 2rem; color: var(--color-primary); margin-bottom: 10px;"></i>
-      <div style="font-size: 0.9rem;">شقق تمليك</div>
+      <i class="fas fa-home" style="font-size: 1.5rem; color: var(--color-primary); margin-bottom: 8px;"></i>
+      <div style="font-size: 0.8rem;">شقق تمليك</div>
     </div>
     <div style="text-align: center; color: var(--color-text-secondary);">
-      <i class="fas fa-store" style="font-size: 2rem; color: var(--color-primary); margin-bottom: 10px;"></i>
-      <div style="font-size: 0.9rem;">تجاري وإداري</div>
+      <i class="fas fa-store" style="font-size: 1.5rem; color: var(--color-primary); margin-bottom: 8px;"></i>
+      <div style="font-size: 0.8rem;">تجاري وإداري</div>
     </div>
   </div>
 
 </section>
 
 <!-- =========================================================
-     CSS للحركة
+     2. قسم الدسامة (أحدث الفرص والطلبات) - ديناميكي
      ========================================================= -->
+<section id="latest-opportunities" style="padding: 4rem 2rem; background: var(--color-surface-1); border-top: 1px solid #222; position: relative; z-index: 2;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        
+        <!-- عنوان القسم -->
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <h2 style="font-size: 2rem; color: var(--color-primary); margin-bottom: 10px; font-weight: 800;">
+                <i class="fas fa-bolt" style="color: var(--color-secondary);"></i> نبض السوق العقاري
+            </h2>
+            <p style="color: var(--color-text-secondary);">أحدث الفرص العقارية وطلبات الشراء، لحظة بلحظة</p>
+        </div>
+
+        <!-- الحاوية التي سيملاها الجافاسكربت (home-featured.js) -->
+        <div id="featured-container" class="properties-grid">
+            <!-- مؤشر التحميل (يختفي عند جلب البيانات) -->
+            <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #666;">
+                <div class="loading-spinner" style="border: 3px solid #333; border-top-color: var(--color-primary); width: 40px; height: 40px; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem auto;"></div>
+                <span>جاري الاتصال بالسوق...</span>
+            </div>
+        </div>
+
+        <!-- زر المزيد -->
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="{{ '/properties-filtered.html' | relative_url }}" class="nav-btn" style="background: transparent; border: 1px solid #444; color: #ccc; font-size: 0.9rem; padding: 12px 30px;">
+                استعراض كل الفرص المتاحة <i class="fas fa-arrow-left" style="margin-right: 5px;"></i>
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<!-- =========================================================
+     3. ملفات الجافاسكربت وتنسيقات الحركة
+     ========================================================= -->
+
+<!-- استدعاء سكريبت الصفحة الرئيسية (تأكد من إنشاء هذا الملف في assets/js/) -->
+<script src="{{ '/assets/js/home-featured.js' | relative_url }}"></script>
+
 <style>
+  /* 1. حركة الطفو للوجو */
   @keyframes float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-15px); }
   }
 
-  .home-hero h1, .home-hero p, .hero-buttons {
+  /* 2. أنيميشن التحميل */
+  @keyframes spin { 
+    to { transform: rotate(360deg); } 
+  }
+
+  /* 3. ترتيب ظهور العناصر (تسلسل زمني) */
+  .home-hero h1, .home-hero p, .hero-buttons, .pain-point-box, .services-preview {
     animation: fadeInUp 1s ease-out forwards;
     opacity: 0;
   }
+  
   .home-hero h1 { animation-delay: 0.2s; }
-  .home-hero p { animation-delay: 0.5s; }
-  .hero-buttons { animation-delay: 0.8s; }
-  .services-preview { animation: fadeInUp 1s ease-out forwards; opacity: 0; animation-delay: 1.2s; }
+  .home-hero p { animation-delay: 0.4s; }
+  .hero-buttons { animation-delay: 0.6s; }
+  .pain-point-box { animation-delay: 1.0s; } /* يظهر بعد الأزرار لتأكيد القرار */
+  .services-preview { animation-delay: 1.4s; }
 
   @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(30px); }
