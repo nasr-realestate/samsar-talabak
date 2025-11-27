@@ -1,24 +1,32 @@
 <!-- 
-  شريط التنقل العلوي (Navbar)
-  أصبح الآن نظيفًا تمامًا من أي تنسيقات مدمجة.
-  يتم التحكم في تصميمه بالكامل من ملف style.css
+  شريط التنقل العلوي (Navbar) - النسخة الذهبية
 -->
 <nav class="navbar">
+  <!-- الشعار -->
   <div class="navbar-logo">
     <a href="{{ '/' | relative_url }}">
-      {{ site.title }}
+      <img src="https://i.postimg.cc/Y9c5f6K1/ed53e000_aacd_11f0_8000_6ff54186278f.png" alt="{{ site.title }}">
     </a>
   </div>
 
+  <!-- الروابط -->
   <div class="navbar-links">
+    <!-- زر تصفح العقارات (ذهبي) -->
     <a href="{{ '/properties-filtered.html' | relative_url }}" class="nav-link properties">
-      <i class="fas fa-search"></i>
-      <span>أبحث عن عقار</span>
+      <i class="fas fa-home"></i>
+      <span>عقارات</span>
     </a>
 
+    <!-- زر الطلبات (شفاف) -->
     <a href="{{ '/requests-filtered.html' | relative_url }}" class="nav-link requests">
-      <i class="fas fa-bullhorn"></i>
-      <span>لدي عقار</span>
+      <i class="fas fa-clipboard-list"></i>
+      <span>طلبات</span>
+    </a>
+
+    <!-- زر أضف عقارك (إطار ذهبي) -->
+    <a href="{{ '/add-your-property.html' | relative_url }}" class="nav-link" style="border: 1px solid var(--color-primary); color: var(--color-primary);">
+      <i class="fas fa-plus-circle"></i>
+      <span>أضف عقارك</span>
     </a>
   </div>
 </nav>
