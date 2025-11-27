@@ -1,179 +1,163 @@
 /**
- * نظام تحميل تفاصيل العقار (الإصدار 10.1 - مع صور Cloudinary ديناميكية احترافية)
- * التحسينات: دمج صورة العقار داخل بطاقة المشاركة، إضافة خط احتياطي، تحسينات طفيفة.
+ * 🏢 سمسار طلبك - مدير تفاصيل العقار (النسخة الذهبية النصية)
+ * v11.0 - Pure Text Luxury
  */
 
 document.addEventListener("DOMContentLoaded", async function () {
-  const container = document.getElementById("property-details");
-  if (!container) { 
-    console.error("خطأ فادح: الحاوية #property-details غير موجودة في الصفحة.");
-    return; 
-  }
-
-  // (يمكنك إزالة هذه الأسطر إذا كان التنسيق يتم عبر CSS)
-  container.style.maxWidth = '960px';
-  container.style.margin = '20px auto';
-  container.style.padding = '0 15px';
-
-  let propertyId = null;
-  try {
-    const path = window.location.pathname;
-    const parts = path.split('/').filter(Boolean);
-    if (parts[0] === 'property' && parts.length > 1) {
-      propertyId = parts[1];
-    }
-  } catch (e) {
-    showErrorState(container, "الرابط المستخدم غير صالح.");
-    return;
-  }
-
-  if (!propertyId) {
-    showErrorState(container, `لم يتم تحديد مُعرّف في الرابط.`);
-    return;
-  }
+  const container = document.getElementById("details-container");
   
+  // 1. استخراج البيانات من الرابط
+  const urlParams = new URLSearchParams(window.location.search);
+  const category = urlParams.get('category'); // e.g., 'apartments'
+  const propertyId = urlParams.get('id');     // e.g., 'flat-01'
+
+  // التحقق من صحة الرابط
+  if (!category || !propertyId) {
+    showErrorState(container, "رابط العقار غير مكتمل أو غير صحيح.");
+    return;
+  }
+
   try {
-    // استخدام ?t= لمنع التخزين المؤقت (caching) لملف الفهرس
-    const indexUrl = `/data/properties_index.json`;
-    const indexRes = await fetch(`${indexUrl}?t=${Date.now()}`);
-    if (!indexRes.ok) throw new Error(`فشل تحميل فهرس البيانات (خطأ ${indexRes.status}).`);
-
-    const masterIndex = await indexRes.json();
-    const propertyInfo = masterIndex.find(p => String(p.id) === String(propertyId));
-    if (!propertyInfo) throw new Error(`العقار بالرقم "${propertyId}" غير موجود في الفهرس.`);
-
-    const propertyRes = await fetch(`${propertyInfo.path}?t=${Date.now()}`);
-    if (!propertyRes.ok) throw new Error(`فشل تحميل بيانات العقار.`);
+    // 2. محاولة جلب ملف العقار مباشرة
+    // المسار: /data/properties/apartments/flat-01.json
+    const fetchUrl = `/data/properties/${category}/${propertyId}.json`;
     
-    const propertyData = await propertyRes.json();
+    const response = await fetch(fetchUrl);
     
-    updateSeoTags(propertyData, propertyId); 
-    renderPropertyDetails(propertyData, container, propertyId);
+    if (!response.ok) {
+        throw new Error("لم يتم العثور على بيانات هذا العقار (404).");
+    }
+    
+    const propertyData = await response.json();
+    
+    // 3. تحديث عنوان المتصفح للسيو
+    document.title = `${propertyData.title || 'تفاصيل عقار'} | سمسار طلبك`;
+    
+    // 4. رسم التفاصيل
+    renderLuxuryDetails(propertyData, container, propertyId);
 
   } catch (err) {
-    console.error("Error in data fetching chain:", err);
-    showErrorState(container, err.message);
+    console.error("Details Error:", err);
+    showErrorState(container, "عذراً، هذا العقار غير متاح حالياً أو تم حذفه.");
   }
 });
 
-function showErrorState(container, message) {
-    container.innerHTML = `<div class="error-state" style="padding: 40px; text-align: center;"><h3>❌ خطأ</h3><p>${message}</p></div>`;
-}
-
-function copyToClipboard(text) {
-  navigator.clipboard.writeText(text).then(() => {
-    const toast = document.getElementById("copy-toast");
-    if (toast) {
-      toast.style.visibility = 'visible';
-      toast.style.opacity = '1';
-      setTimeout(() => { 
-        toast.style.visibility = 'hidden';
-        toast.style.opacity = '0';
-      }, 2500);
-    }
-  });
-}
-
-// Helper function to encode string to Base64 for the Cloudinary fetch transformation
-function btoaSafe(string) {
-    return window.btoa(unescape(encodeURIComponent(string)));
-}
-
-// 👇👇👇 هذه هي الدالة النهائية والمحسّنة 👇👇👇
-function updateSeoTags(prop, propertyId) {
-  const pageTitle = `${prop.title || 'عرض عقاري'} - سمسار طلبك`;
-  const description = `تفاصيل عقار: ${prop.title || ''}. ${(prop.summary || prop.description || '').substring(0, 160)}...`;
-  const pageURL = new URL(`/property/${propertyId}`, window.location.origin).href;
-
-  // --- ✨✨✨ منطق Cloudinary لتوليد الصور (نسخة احترافية) ✨✨✨
-
-  // 1. بياناتك من حساب Cloudinary
-  const CLOUD_NAME = "dmm4lqbcf";
-  const BASE_IMAGE_PUBLIC_ID = "og-background-template";
-  const DEFAULT_PROPERTY_IMAGE_ID = "default_property_image"; // <-- ارفع صورة افتراضية بهذا الاسم
-
-  // 2. تجهيز النصوص للكتابة على الصورة
-  const titleText = (prop.title || '').substring(0, 50);
-  const priceText = prop.price_clean || prop.price_display || '';
-  const areaText = prop.area_clean || prop.area_display || '';
-
-  // 3. ✨ جديد: تجهيز طبقة صورة العقار نفسه
-  // نستخدم أول صورة من 'images' أو صورة افتراضية من Cloudinary
-  const propertyImageURL = (prop.images && prop.images.length > 0) 
-      ? new URL(prop.images[0], window.location.origin).href
-      : `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${DEFAULT_PROPERTY_IMAGE_ID}`;
-  
-  // تحويلة Cloudinary لجلب الصورة وتغيير حجمها ووضعها في المكان المناسب
-  const imageOverlay = `l_fetch:${btoaSafe(propertyImageURL)}/w_1100,h_600,c_fill,g_north_west,x_50,y_50`;
-
-  // 4. بناء رابط الصورة الديناميكي من Cloudinary
-  const autoShareImage = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/` +
-    `${imageOverlay}/` + // <-- إضافة طبقة صورة العقار
-    `l_text:Tajawal_64_bold_Arial_64_bold:${encodeURIComponent(titleText)},co_rgb:ffffff,w_1100,c_fit,g_south_east,x_50,y_200/` +
-    `l_text:Tajawal_48_bold_Arial_48_bold:${encodeURIComponent(priceText)},co_rgb:00ff88,w_500,c_fit,g_south_west,x_50,y_120/` +
-    `l_text:Tajawal_48_bold_Arial_48_bold:${encodeURIComponent(areaText)},co_rgb:ffffff,w_500,c_fit,g_south_west,x_50,y_50/` +
-    `${BASE_IMAGE_PUBLIC_ID}.png`;
-
-  const shareImage = prop.share_image || autoShareImage;
-  
-  document.title = pageTitle;
-  
-  document.querySelector('meta[name="description"]')?.setAttribute('content', description);
-  document.querySelector('meta[property="og:title"]')?.setAttribute('content', pageTitle);
-  document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
-  document.querySelector('meta[property="og:url"]')?.setAttribute('content', pageURL);
-  
-  let ogImageMeta = document.querySelector('meta[property="og:image"]');
-  if (!ogImageMeta) {
-      ogImageMeta = document.createElement('meta');
-      ogImageMeta.setAttribute('property', 'og:image');
-      document.head.appendChild(ogImageMeta);
-  }
-  ogImageMeta.setAttribute('content', shareImage);
-}
-
-// (دالة renderPropertyDetails تبقى كما هي تمامًا)
-function renderPropertyDetails(prop, container, propertyId) {
-  const whatsapp = prop.whatsapp || "201147758857";
-  const pageURL = new URL(`/property/${propertyId}`, window.location.origin).href;
-  const priceToRender = prop.price_display || prop.price || "غير محدد";
-  const areaToRender = prop.area_display || prop.area || 'غير محددة';
-  const displayId = prop.ref_id || propertyId;
+// --- دالة الرسم (التصميم الذهبي) ---
+function renderLuxuryDetails(prop, container, id) {
+  // تجهيز البيانات
+  const price = prop.price_display || prop.price || "السعر عند الاتصال";
+  const title = prop.title || "عرض مميز";
+  const location = prop.location || "مدينة نصر";
+  const date = prop.date || "حديث";
+  const whatsappNumber = "201147758857"; // رقمك الثابت
 
   container.innerHTML = `
-    <header class="details-header">
-      <img src="https://i.postimg.cc/Vk8Nn1xZ/me.jpg" alt="شعار سمسار طلبك" class="brand-logo">
-      <h1>${prop.title || "تفاصيل العرض"}</h1>
-    </header>
-    <div class="property-id-badge">رقم العقار: ${displayId}</div>
-    <p class="details-price">💰 ${priceToRender}</p>
-    <section class="details-grid">
-      <div class="detail-item"><strong>📏 المساحة:</strong> ${areaToRender}</div>
-      <div class="detail-item"><strong>🛏️ عدد الغرف:</strong> ${prop.rooms ?? 'غير محدد'}</div>
-      <div class="detail-item"><strong>🛁 عدد الحمامات:</strong> ${prop.bathrooms ?? 'غير محدد'}</div>
-      <div class="detail-item"><strong>🏢 الدور:</strong> ${prop.floor ?? 'غير محدد'}</div>
-      <div class="detail-item"><strong>🛗 مصعد:</strong> ${prop.elevator ? 'نعم' : 'لا'}</div>
-      <div class="detail-item"><strong>🚗 جراج:</strong> ${prop.garage ? 'متوفر' : 'غير متوفر'}</div>
-      <div class="detail-item"><strong>🎨 التشطيب:</strong> ${prop.finish || 'غير محدد'}</div>
-      <div class="detail-item"><strong>🧭 الاتجاه:</strong> ${prop.direction || 'غير محدد'}</div>
-    </section>
-    <section class="details-description">
-      <h2>📝 الوصف</h2>
-      <p>${prop.description || 'لا يوجد وصف'}</p>
-      ${prop.more_details ? `<h2>📌 تفاصيل إضافية</h2><p>${prop.more_details}</p>` : ''}
-    </section>
-    <p class="details-date">📅 <strong>تاريخ الإضافة:</strong> ${prop.date || 'غير متوفر'}</p>
-    <footer class="details-actions">
-      <a href="https://wa.me/${whatsapp}?text=أريد الاستفسار عن ${encodeURIComponent(prop.title || '')} - رقم العقار: ${displayId}" target="_blank" class="action-btn whatsapp-btn">
-        تواصل عبر واتساب
-      </a>
-      <button onclick="copyToClipboard('${pageURL}')" class="action-btn copy-btn" title="انسخ رابط العرض">
-        📤
-      </button>
-       <a href="/properties-filtered.html" class="action-btn back-btn">
-         ← العودة للقائمة
-      </a>
-    </footer>
-    <div id="copy-toast" class="toast" style="visibility: hidden; opacity: 0; transition: all 0.3s ease;">تم نسخ الرابط بنجاح ✓</div>
+    <!-- رأس الصفحة: العنوان والموقع -->
+    <div class="details-header" style="flex-direction: column; align-items: flex-start; border-bottom: 1px solid var(--color-border); padding-bottom: 20px; margin-bottom: 30px;">
+      <div style="display:flex; justify-content:space-between; width:100%; align-items:flex-start; flex-wrap:wrap; gap:15px;">
+          
+          <div style="flex: 1;">
+              <div style="color: var(--color-primary); font-size: 0.9rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;">
+                  <i class="fas fa-certificate"></i> عرض موثوق
+              </div>
+              <h1 style="color: #fff; font-size: 2rem; margin: 0 0 10px 0; line-height: 1.3;">${title}</h1>
+              <p style="color: var(--color-text-secondary); font-size: 1.1rem;">
+                  <i class="fas fa-map-marker-alt" style="color: var(--color-primary);"></i> ${location}
+              </p>
+          </div>
+
+          <!-- السعر في مربع فخم -->
+          <div class="details-price" style="background: linear-gradient(135deg, var(--color-primary), #b38f1d); color: #000; padding: 15px 30px; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);">
+              <div style="font-size: 0.9rem; opacity: 0.8; font-weight: bold;">السعر المطلوب</div>
+              <div style="font-size: 1.5rem; font-weight: 900;">${price}</div>
+          </div>
+
+      </div>
+    </div>
+
+    <!-- شبكة المواصفات (Grid System) -->
+    <div class="details-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px;">
+        
+        ${prop.area ? `
+        <div class="detail-item" style="background: var(--color-surface-2); padding: 15px; border-radius: 10px; border: 1px solid var(--color-border-light); color: #fff;">
+            <i class="fas fa-ruler-combined" style="color: var(--color-primary); font-size: 1.2rem; margin-bottom: 5px; display: block;"></i>
+            <span style="color:#888; font-size:0.9rem;">المساحة</span>
+            <div style="font-size:1.2rem; font-weight:bold;">${prop.area}</div>
+        </div>` : ''}
+
+        ${prop.rooms ? `
+        <div class="detail-item" style="background: var(--color-surface-2); padding: 15px; border-radius: 10px; border: 1px solid var(--color-border-light); color: #fff;">
+            <i class="fas fa-bed" style="color: var(--color-primary); font-size: 1.2rem; margin-bottom: 5px; display: block;"></i>
+            <span style="color:#888; font-size:0.9rem;">الغرف</span>
+            <div style="font-size:1.2rem; font-weight:bold;">${prop.rooms}</div>
+        </div>` : ''}
+
+        ${prop.floor ? `
+        <div class="detail-item" style="background: var(--color-surface-2); padding: 15px; border-radius: 10px; border: 1px solid var(--color-border-light); color: #fff;">
+            <i class="fas fa-building" style="color: var(--color-primary); font-size: 1.2rem; margin-bottom: 5px; display: block;"></i>
+            <span style="color:#888; font-size:0.9rem;">الدور</span>
+            <div style="font-size:1.2rem; font-weight:bold;">${prop.floor}</div>
+        </div>` : ''}
+
+        ${prop.finish_type ? `
+        <div class="detail-item" style="background: var(--color-surface-2); padding: 15px; border-radius: 10px; border: 1px solid var(--color-border-light); color: #fff;">
+            <i class="fas fa-paint-roller" style="color: var(--color-primary); font-size: 1.2rem; margin-bottom: 5px; display: block;"></i>
+            <span style="color:#888; font-size:0.9rem;">التشطيب</span>
+            <div style="font-size:1.2rem; font-weight:bold;">${prop.finish_type}</div>
+        </div>` : ''}
+
+    </div>
+
+    <!-- الوصف النصي الكامل -->
+    <div class="details-description" style="background: #000; padding: 2rem; border-radius: 15px; border: 1px solid #333; margin-bottom: 30px;">
+        <h3 style="color: var(--color-primary); margin-bottom: 1rem; font-size: 1.4rem;">
+            <i class="fas fa-align-right"></i> تفاصيل ومميزات العقار
+        </h3>
+        <p style="color: #ccc; line-height: 1.8; white-space: pre-line; font-size: 1.05rem;">
+            ${prop.description || "لا يوجد وصف إضافي."}
+        </p>
+        
+        <!-- تفاصيل إضافية إن وجدت -->
+        ${prop.extra_details ? `
+        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px dashed #444;">
+            <strong style="color: #fff;">ملاحظات:</strong> <span style="color: #aaa;">${prop.extra_details}</span>
+        </div>` : ''}
+        
+        <div style="margin-top: 20px; font-size: 0.9rem; color: #666;">
+            <i class="far fa-clock"></i> تاريخ الإضافة: ${date} | رقم مرجعي: #${id}
+        </div>
+    </div>
+
+    <!-- أزرار الإجراءات (كبيرة وواضحة) -->
+    <div class="details-actions" style="display: flex; gap: 20px; flex-wrap: wrap;">
+        
+        <a href="https://wa.me/${whatsappNumber}?text=السلام عليكم، أستفسر عن العقار: ${title} (كود: ${id})" target="_blank" class="action-btn" style="flex: 2; background: #25D366; color: #fff; border: none; text-align: center; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.2);">
+            <i class="fab fa-whatsapp" style="margin-left: 10px; font-size: 1.4rem;"></i> تواصل واتساب
+        </a>
+
+        <a href="tel:+${whatsappNumber}" class="action-btn" style="flex: 1; background: transparent; border: 2px solid var(--color-primary); color: var(--color-primary); text-align: center; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">
+            <i class="fas fa-phone" style="margin-left: 10px;"></i> اتصال
+        </a>
+
+    </div>
+
+    <!-- زر العودة -->
+    <div style="text-align: center; margin-top: 3rem;">
+        <a href="/properties-filtered.html" class="back-btn" style="color: #888; text-decoration: none; border-bottom: 1px solid #444; padding-bottom: 5px; transition: 0.3s;">
+            <i class="fas fa-arrow-right"></i> العودة لقائمة العقارات
+        </a>
+    </div>
   `;
+}
+
+// --- دالة عرض الخطأ ---
+function showErrorState(container, message) {
+    container.innerHTML = `
+        <div class="error-state" style="text-align: center; padding: 5rem 2rem; color: #888;">
+            <i class="fas fa-search" style="font-size: 4rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+            <h3 style="color: var(--color-error); margin-bottom: 10px;">عذراً</h3>
+            <p style="font-size: 1.1rem;">${message}</p>
+            <a href="/" class="nav-btn" style="margin-top: 2rem; display: inline-block; border: 1px solid #444; color: #fff;">العودة للرئيسية</a>
+        </div>
+    `;
 }
