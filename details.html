@@ -1,95 +1,22 @@
 ---
 layout: default
+title: "تفاصيل العقار | سمسار طلبك"
+description: "استعراض كافة تفاصيل ومواصفات العقار"
 ---
 
-<!-- حاوية التفاصيل الفاخرة -->
-<div class="details-container">
-
-  <!-- رأس الصفحة: العنوان والسعر -->
-  <div class="details-header" style="flex-direction: column; align-items: flex-start;">
-    <h1 style="margin-bottom: 10px;">{{ page.title }}</h1>
-    <div style="display: flex; justify-content: space-between; width: 100%; align-items: center; flex-wrap: wrap;">
-        <span style="color: var(--color-text-secondary); font-size: 1.1rem;">
-            <i class="fas fa-map-marker-alt" style="color: var(--color-primary);"></i> {{ page.location }}
-        </span>
-        <!-- السعر بخلفية ذهبية -->
-        <div class="details-price">
-            {{ page.price }}
-        </div>
-    </div>
-  </div>
-
-  <!-- صورة العقار (إذا وجدت) -->
-  {% if page.image %}
-  <div style="margin-bottom: 2rem;">
-      <img src="{{ page.image | relative_url }}" alt="{{ page.title }}" style="width: 100%; border-radius: 15px; border: 1px solid var(--color-border); box-shadow: 0 5px 20px rgba(0,0,0,0.5);">
-  </div>
-  {% endif %}
-
-  <!-- شبكة المواصفات (المساحة، الغرف، إلخ) -->
-  <div class="details-grid">
-    {% if page.area %}
-    <div class="detail-item">
-        <i class="fas fa-ruler-combined" style="color: var(--color-primary); margin-left: 10px;"></i>
-         المساحة: <strong>{{ page.area }}</strong>
-    </div>
-    {% endif %}
-
-    {% if page.rooms %}
-    <div class="detail-item">
-        <i class="fas fa-bed" style="color: var(--color-primary); margin-left: 10px;"></i>
-         الغرف: <strong>{{ page.rooms }}</strong>
-    </div>
-    {% endif %}
-
-    {% if page.bathrooms %}
-    <div class="detail-item">
-        <i class="fas fa-bath" style="color: var(--color-primary); margin-left: 10px;"></i>
-         الحمامات: <strong>{{ page.bathrooms }}</strong>
-    </div>
-    {% endif %}
+<!-- 
+  حاوية التفاصيل (فارغة تماماً - سيقوم الجافاسكربت بملئها)
+  ID مهم جداً: details-container
+-->
+<div id="details-container" class="details-container" style="min-height: 600px; position: relative; padding-top: 2rem;">
     
-    {% if page.floor %}
-    <div class="detail-item">
-        <i class="fas fa-building" style="color: var(--color-primary); margin-left: 10px;"></i>
-         الدور: <strong>{{ page.floor }}</strong>
+    <!-- شاشة التحميل (تظهر ريثما يتم جلب البيانات) -->
+    <div style="text-align: center; padding: 6rem 2rem; color: var(--color-primary);">
+        <div class="loading-spinner" style="border: 3px solid #333; border-top-color: var(--color-primary); width: 60px; height: 60px; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1.5rem;"></div>
+        <h3 style="font-weight: normal; color: #fff;">جاري جلب تفاصيل العرض...</h3>
     </div>
-    {% endif %}
 
-    {% if page.finish_type %}
-    <div class="detail-item">
-        <i class="fas fa-paint-roller" style="color: var(--color-primary); margin-left: 10px;"></i>
-         التشطيب: <strong>{{ page.finish_type }}</strong>
-    </div>
-    {% endif %}
-  </div>
+</div>
 
-  <!-- الوصف النصي -->
-  <div class="details-description property-description" style="color: #ddd;">
-    <h2>تفاصيل العقار</h2>
-    {{ content }}
-  </div>
-
-  <!-- أزرار الإجراءات (تعديل جذري لتظهر بوضوح) -->
-  <div class="details-actions">
-    
-    <!-- زر الواتساب -->
-    <a href="https://wa.me/201147758857?text=مرحباً، أستفسر عن العقار: {{ page.title }}" target="_blank" class="action-btn whatsapp-btn">
-        <i class="fab fa-whatsapp" style="margin-left: 8px;"></i> تواصل واتساب
-    </a>
-
-    <!-- زر الاتصال -->
-    <a href="tel:+201147758857" class="action-btn" style="border: 2px solid var(--color-primary); color: var(--color-primary);">
-        <i class="fas fa-phone" style="margin-left: 8px;"></i> اتصال هاتفي
-    </a>
-
-  </div>
-  
-  <!-- زر العودة -->
-  <div class="text-center" style="margin-top: 2rem;">
-      <a href="{{ '/properties-filtered.html' | relative_url }}" class="back-btn" style="padding: 10px 30px; border-radius: 50px; text-decoration: none;">
-          <i class="fas fa-arrow-right"></i> عودة للعقارات
-      </a>
-  </div>
-
-  </div>
+<!-- ربط ملف الجافاسكربت الصحيح -->
+<script src="{{ '/assets/js/details-loader.js' | relative_url }}"></script>
