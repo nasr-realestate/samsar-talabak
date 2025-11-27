@@ -1,47 +1,118 @@
 <!-- 
-  تذييل الموقع (Footer) - النسخة الذهبية الفاخرة
+  تذييل الموقع (Footer) - النسخة الاحترافية (Grid Layout)
 -->
-<footer class="site-footer">
-  <div class="footer-content">
+<footer class="site-footer" style="padding: 4rem 2rem 2rem 2rem; border-top: 1px solid #222;">
+  <div class="footer-content" style="max-width: 1200px; margin: 0 auto;">
     
-    <!-- القسم العلوي: الشعار والوصف -->
-    <div style="margin-bottom: 2rem;">
-      <div class="footer-logo">
-        <a href="{{ '/' | relative_url }}">
-          <!-- الشعار بفلتر ليظهر بشكل أنيق على الخلفية السوداء -->
-          <img src="https://i.postimg.cc/Y9c5f6K1/ed53e000_aacd_11f0_8000_6ff54186278f.png" alt="{{ site.title }}" style="width: 120px; filter: grayscale(100%) brightness(200%); opacity: 0.8;">
-        </a>
+    <!-- شبكة الفوتر (3 أعمدة) -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; text-align: right;">
+      
+      <!-- العمود 1: عن الشركة -->
+      <div>
+        <div class="footer-logo" style="margin-bottom: 1.5rem;">
+          <a href="{{ '/' | relative_url }}">
+             <!-- الشعار بفلتر ليظهر بشكل أنيق -->
+            <img src="https://i.postimg.cc/Y9c5f6K1/ed53e000_aacd_11f0_8000_6ff54186278f.png" alt="{{ site.title }}" style="width: 140px; filter: grayscale(100%) brightness(200%); opacity: 0.9;">
+          </a>
+        </div>
+        <p style="color: #888; line-height: 1.8; font-size: 0.95rem;">
+          بوابتك العقارية الأولى في مدينة نصر. نقدم حلولاً عقارية متكاملة (بيع، شراء، إيجار) مبنية على الثقة، الشفافية، والخبرة الطويلة في السوق المصري.
+        </p>
       </div>
-      <p class="footer-description" style="max-width: 500px; margin: 1rem auto; color: #888;">
-        نخدمك في مدينة نصر وما حولها - بيع، شراء، وتأجير بأمان واحترافية.
-      </p>
-    </div>
 
-    <!-- روابط الموقع -->
-    <div class="footer-links">
-      <a href="{{ '/properties-filtered.html' | relative_url }}">تصفح العقارات</a>
-      <a href="{{ '/requests-filtered.html' | relative_url }}">طلبات العملاء</a>
-      <a href="{{ '/add-your-property.html' | relative_url }}">أضف عقارك</a>
-      <a href="{{ '/about-us.html' | relative_url }}">من نحن</a>
-      <a href="{{ '/contact-us.html' | relative_url }}">تواصل معنا</a>
-      <a href="{{ '/privacy-policy.html' | relative_url }}">الخصوصية</a>
-    </div>
+      <!-- العمود 2: روابط سريعة -->
+      <div>
+        <h3 style="color: var(--color-primary); font-size: 1.2rem; margin-bottom: 1.5rem; border-bottom: 2px solid #333; display: inline-block; padding-bottom: 10px;">روابط تهمك</h3>
+        <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px;">
+          <li><a href="{{ '/properties-filtered.html' | relative_url }}" style="text-decoration: none; color: #ccc; transition: 0.3s;"><i class="fas fa-angle-left" style="color: var(--color-primary); margin-left: 8px;"></i> تصفح العقارات</a></li>
+          <li><a href="{{ '/requests-filtered.html' | relative_url }}" style="text-decoration: none; color: #ccc; transition: 0.3s;"><i class="fas fa-angle-left" style="color: var(--color-primary); margin-left: 8px;"></i> طلبات العملاء</a></li>
+          <li><a href="{{ '/add-your-property.html' | relative_url }}" style="text-decoration: none; color: #ccc; transition: 0.3s;"><i class="fas fa-angle-left" style="color: var(--color-primary); margin-left: 8px;"></i> أضف عقارك مجاناً</a></li>
+          <li><a href="{{ '/contact-us.html' | relative_url }}" style="text-decoration: none; color: #ccc; transition: 0.3s;"><i class="fas fa-angle-left" style="color: var(--color-primary); margin-left: 8px;"></i> تواصل معنا</a></li>
+        </ul>
+      </div>
 
-    <!-- أيقونات التواصل الاجتماعي (روابطك الخاصة) -->
-    <div class="social-links">
-      <a href="https://www.facebook.com/Tarekonly" target="_blank" title="فيسبوك" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://www.linkedin.com/company/smsar-talabk-madinat-nasr/" target="_blank" title="لينكدإن" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-      <a href="https://maps.app.goo.gl/hr3dndj1dwMvXaNz5?g_st=ac" target="_blank" title="خرائط جوجل" aria-label="Google Maps"><i class="fas fa-map-marker-alt"></i></a>
-      <a href="https://pin.it/4tCl3jl6r" target="_blank" title="Pinterest" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
+      <!-- العمود 3: تابعنا (السوشيال ميديا بشكل جديد) -->
+      <div>
+        <h3 style="color: var(--color-primary); font-size: 1.2rem; margin-bottom: 1.5rem; border-bottom: 2px solid #333; display: inline-block; padding-bottom: 10px;">تواصل معنا</h3>
+        
+        <!-- أزرار السوشيال ميديا الجديدة -->
+        <div class="social-icons-grid" style="display: flex; gap: 15px; flex-wrap: wrap;">
+          
+          <!-- فيسبوك -->
+          <a href="https://www.facebook.com/Tarekonly" target="_blank" class="social-btn facebook" aria-label="فيسبوك">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+
+          <!-- لينكدإن -->
+          <a href="https://www.linkedin.com/company/smsar-talabk-madinat-nasr/" target="_blank" class="social-btn linkedin" aria-label="لينكدإن">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          
+          <!-- خرائط جوجل -->
+          <a href="https://maps.app.goo.gl/hr3dndj1dwMvXaNz5?g_st=ac" target="_blank" class="social-btn maps" aria-label="موقعنا">
+            <i class="fas fa-map-marker-alt"></i>
+          </a>
+
+          <!-- Pinterest -->
+          <a href="https://pin.it/4tCl3jl6r" target="_blank" class="social-btn pinterest" aria-label="Pinterest">
+            <i class="fab fa-pinterest"></i>
+          </a>
+
+        </div>
+
+        <p style="margin-top: 20px; color: #666; font-size: 0.9rem;">
+          <i class="fas fa-envelope" style="color: var(--color-primary); margin-left: 5px;"></i> الدعم الفني متاح 24/7
+        </p>
+      </div>
+
     </div>
 
     <!-- الحقوق -->
-    <div class="copyright">
+    <div class="copyright" style="text-align: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #222; color: #555;">
       <p>
         جميع الحقوق محفوظة &copy; {{ 'now' | date: "%Y" }} 
-        <a href="{{ '/' | relative_url }}">{{ site.title }}</a>
+        <a href="{{ '/' | relative_url }}" style="color: var(--color-primary); text-decoration: none; font-weight: bold;">{{ site.title }}</a>
       </p>
     </div>
 
   </div>
 </footer>
+
+<!-- 
+  CSS خاص لتجميل أزرار السوشيال ميديا في الفوتر 
+  (يمكنك وضعه في ملف style.css لاحقاً، لكنه يعمل هنا أيضاً)
+-->
+<style>
+  .social-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid #333;
+    color: #fff;
+    font-size: 1.2rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-decoration: none;
+  }
+
+  .social-btn:hover {
+    transform: translateY(-5px);
+    border-color: var(--color-primary);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+  }
+
+  /* ألوان خاصة عند التحويم */
+  .social-btn.facebook:hover { background: #1877F2; color: white; border-color: #1877F2; }
+  .social-btn.linkedin:hover { background: #0A66C2; color: white; border-color: #0A66C2; }
+  .social-btn.maps:hover { background: #34A853; color: white; border-color: #34A853; }
+  .social-btn.pinterest:hover { background: #E60023; color: white; border-color: #E60023; }
+
+  /* تحسين الروابط في القائمة */
+  .footer-links a:hover {
+    color: var(--color-primary) !important;
+    padding-right: 5px; /* حركة بسيطة لليمين */
+  }
+</style>
