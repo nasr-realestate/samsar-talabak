@@ -1,6 +1,6 @@
 /**
- * 🏠 سمسار طلبك - الصفحة الرئيسية (المخلط الذكي - روابط مصححة)
- * v2.0 - Fixed Routing for Details
+ * 🏠 سمسار طلبك - الصفحة الرئيسية (المخلط الذكي - الإصلاح النهائي للروابط)
+ * v3.0 - Fix Request Links
  */
 
 class HomeFeaturedDisplay {
@@ -13,17 +13,22 @@ class HomeFeaturedDisplay {
         if (!this.container) return;
         
         try {
+            // 1. جلب البيانات بالتوازي (عقارات + طلبات)
             const [properties, requests] = await Promise.all([
-                this.fetchLatestItems('properties', 'apartments'),
-                this.fetchLatestItems('requests', 'apartments')
+                this.fetchLatestItems('properties', 'apartments'), // نجلب شقق للبيع
+                this.fetchLatestItems('requests', 'apartments')    // نجلب طلبات شقق
             ]);
 
+            // 2. تجهيز البيانات والدمج
             const featuredProperties = properties.slice(0, 2).map(i => ({...i, type: 'offer'}));
             const featuredRequests = requests.slice(0, 1).map(i => ({...i, type: 'request'}));
             
             let mixedItems = [...featuredProperties, ...featuredRequests];
+
+            // ترتيب حسب التاريخ
             mixedItems.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
 
+            // 3. العرض
             this.renderItems(mixedItems);
 
         } catch (error) {
@@ -32,6 +37,7 @@ class HomeFeaturedDisplay {
         }
     }
 
+    // دالة الجلب (تم تحديثها لتمرير اسم القسم category)
     async fetchLatestItems(section, category) {
         try {
             const response = await fetch(`/data/${section}/${category}/index.json?t=${Date.now()}`);
@@ -43,7 +49,8 @@ class HomeFeaturedDisplay {
             const promises = latestFiles.map(filename => 
                 fetch(`/data/${section}/${category}/${filename}`)
                     .then(res => res.json())
-                    .then(data => ({ ...data, filename }))
+                    // 👇 هام جداً: هنا نضيف category للكائن لكي نستخدمه في الرابط لاحقاً
+                    .then(data => ({ ...data, filename, category })) 
                     .catch(() => null)
             );
 
@@ -73,16 +80,15 @@ class HomeFeaturedDisplay {
         });
     }
 
-    // 🏷️ تصميم بطاقة "عرض عقار" (تم تصحيح الرابط هنا)
+    // 🏷️ تصميم بطاقة "عرض عقار" (ذهبي)
     createOfferCard(property) {
         const card = document.createElement('div');
         card.className = 'property-card text-mode';
         card.style.borderTop = "4px solid var(--color-primary)"; 
         
-        // 🔴 التصحيح الجوهري هنا:
-        // استخراج ID نظيف وبناء الرابط الصحيح لصفحة التفاصيل الجديدة
         const cleanId = property.filename.replace('.json', '');
-        const targetUrl = `/details.html?id=${cleanId}`;
+        // بناء رابط التفاصيل للعروض
+        const targetUrl = `/details.html?id=${cleanId}&category=${property.category}`;
 
         card.onclick = () => window.location.href = targetUrl;
 
@@ -104,36 +110,31 @@ class HomeFeaturedDisplay {
                  <div style="grid-column:1/-1; color: var(--color-primary); font-weight:bold; font-size:1.1rem; background: linear-gradient(90deg, rgba(212,175,55,0.1), transparent); padding:5px; border-radius:5px;">
                     ${property.price_display || property.price}
                  </div>
-                 
-                 ${property.area ? `
-                 <div style="font-size:0.9rem; color:#ccc;">
-                    <i class="fas fa-ruler-combined" style="color:var(--color-primary)"></i> ${property.area}
-                 </div>` : ''}
-                 
-                 ${property.rooms ? `
-                 <div style="font-size:0.9rem; color:#ccc;">
-                    <i class="fas fa-bed" style="color:var(--color-primary)"></i> ${property.rooms} غرف
-                 </div>` : ''}
+                 ${property.area ? `<div style="font-size:0.9rem; color:#ccc;"><i class="fas fa-ruler-combined" style="color:var(--color-primary)"></i> ${property.area}</div>` : ''}
+                 ${property.rooms ? `<div style="font-size:0.9rem; color:#ccc;"><i class="fas fa-bed" style="color:var(--color-primary)"></i> ${property.rooms} غرف</div>` : ''}
             </div>
 
             <div style="margin-top:auto; border-top:1px solid #222; padding-top:10px;">
-                <!-- تصحيح رابط الزر أيضاً -->
                 <a href="${targetUrl}" style="color:#aaa; font-size:0.9rem; text-decoration:none;">التفاصيل <i class="fas fa-angle-left" style="color:var(--color-primary)"></i></a>
             </div>
         `;
         return card;
     }
 
-    // 📣 تصميم بطاقة "طلب عميل" (كما هي مؤقتاً)
+    // 📣 تصميم بطاقة "طلب عميل" (أزرق - تم إصلاح الرابط)
     createRequestCard(request) {
         const card = document.createElement('div');
         card.className = 'property-card text-mode';
         card.style.borderTop = "4px solid #0a84ff"; 
         card.style.background = "linear-gradient(145deg, #111, #161616)";
         
-        // رابط الطلبات (سنعدله لاحقاً عندما نصل لصفحة تفاصيل الطلب)
         const cleanId = request.filename.replace('.json', '');
-        card.onclick = () => window.location.href = `/request-details.html?id=${cleanId}`; // افتراض مؤقت
+        
+        // 💎💎 التصحيح هنا: إضافة category للرابط 💎💎
+        // نستخدم request.category الذي مررناه في دالة الجلب
+        const targetUrl = `/request-details.html?id=${cleanId}&category=${request.category}`;
+        
+        card.onclick = () => window.location.href = targetUrl;
 
         const timeAgo = this.getTimeAgo(request.date);
 
@@ -159,7 +160,7 @@ class HomeFeaturedDisplay {
             </div>
             
             <div style="margin-top:auto; text-align:left;">
-                <span style="font-size:0.8rem; color:#0a84ff;">لديك هذا العقار؟ <i class="fas fa-check-circle"></i></span>
+                <a href="${targetUrl}" style="font-size:0.8rem; color:#0a84ff; text-decoration:none;">لديك هذا العقار؟ <i class="fas fa-check-circle"></i></a>
             </div>
         `;
         return card;
