@@ -1,38 +1,19 @@
 ---
 layout: default
-title: "تفاصيل الطلب"
-description: "طلب عقاري مقدم عبر سمسار طلبك - مدينة نصر"
+title: "تفاصيل الطلب | سمسار طلبك"
+description: "تفاصيل ومواصفات العقار المطلوب من قبل العميل"
 ---
 
-<!-- SEO: وسوم سيتم تحديثها ديناميكيًا بواسطة جافاسكريبت -->
-<!-- ملاحظة: يفضل وضع هذه الوسوم داخل الـ <head> عبر ملف الـ layout -->
-<meta name="description" content="تفاصيل طلب عقاري من حيث المساحة، الميزانية، وعدد الغرف المطلوبة.">
-<meta property="og:title" content="تفاصيل الطلب - سمسار طلبك">
-<meta property="og:description" content="تفاصيل طلب عقاري من حيث المساحة، الميزانية، وعدد الغرف المطلوبة.">
-<meta property="og:type" content="article">
-<meta property="og:url" content=""> <!-- سيتم ملؤه بواسطة JS -->
+<!-- حاوية التفاصيل -->
+<div id="request-details-container" class="details-container" style="min-height: 600px; position: relative;">
+    
+    <!-- حالة التحميل -->
+    <div style="text-align: center; padding: 6rem 2rem; color: #0a84ff;">
+        <div class="loading-spinner" style="border: 3px solid #333; border-top-color: #0a84ff; width: 60px; height: 60px; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1.5rem;"></div>
+        <h3 style="font-weight: normal; color: #fff;">جاري تحميل بيانات الطلب...</h3>
+    </div>
 
-<!-- SEO: بيانات Schema.org JSON-LD ستُملأ هنا -->
-<script type="application/ld+json" id="schema-json"></script>
+</div>
 
-
-<!-- ✨ الإصلاح: تمت إزالة class="details-container" لتجنب أي تضارب مع الأنماط التي يضيفها JS -->
-<article id="request-details">
-  <!-- ✨ تم تحسين رسالة التحميل لتكون متوافقة مع التصميم -->
-  <div class="loading-container" style="text-align: center; padding: 40px;">
-    <div class="loading-spinner" style="width: 50px; height: 50px; border: 5px solid #333; border-top: 5px solid #00ccff; border-radius: 50%; margin: 0 auto 20px; animation: spin 1s linear infinite;"></div>
-    <p class="loading-message" style="color: #ccc;">⏳ جاري تحميل تفاصيل الطلب...</p>
-  </div>
-  <style>@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>
-</article>
-
-
-<!-- ملاحظة: زر العودة يتم إنشاؤه الآن ديناميكيًا داخل الجافا سكريبت لضمان التناسق -->
-
-
-<!-- ✨ الإصلاح: تم نقل منطق رسالة النسخ بالكامل إلى الجافا سكريبت لتوحيد السلوك -->
-
-
-<!-- ✨✨✨ الإصلاح الحاسم: تم تصحيح مسار استدعاء الجافا سكريبت ✨✨✨ -->
-<!-- تم استخدام فلتر Jekyll لضمان صحة الرابط دائمًا -->
-<script src="{{ '/assets/js/requests-details-script.js' | relative_url }}" defer></script>
+<!-- ربط ملف الجافاسكربت الخاص بتفاصيل الطلبات -->
+<script src="{{ '/assets/js/requests-details-script.js' | relative_url }}"></script>
