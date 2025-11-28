@@ -1,6 +1,6 @@
 /**
- * 🏠 سمسار طلبك - الصفحة الرئيسية (المخلط الذكي - الإصلاح النهائي للروابط)
- * v3.0 - Fix Request Links
+ * 🏠 سمسار طلبك - الصفحة الرئيسية (المخلط الذكي - النسخة النهائية)
+ * v4.0 - يجلب من آخر القائمة (الأحدث) + روابط صحيحة
  */
 
 class HomeFeaturedDisplay {
@@ -20,12 +20,14 @@ class HomeFeaturedDisplay {
             ]);
 
             // 2. تجهيز البيانات والدمج
+            // نأخذ أول عنصرين من العقارات (بعد أن قمنا بقلب القائمة في دالة الجلب)
             const featuredProperties = properties.slice(0, 2).map(i => ({...i, type: 'offer'}));
+            // نأخذ أول عنصر من الطلبات
             const featuredRequests = requests.slice(0, 1).map(i => ({...i, type: 'request'}));
             
             let mixedItems = [...featuredProperties, ...featuredRequests];
 
-            // ترتيب حسب التاريخ
+            // ترتيب نهائي دقيق حسب حقل التاريخ داخل الملف
             mixedItems.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
 
             // 3. العرض
@@ -37,19 +39,22 @@ class HomeFeaturedDisplay {
         }
     }
 
-    // دالة الجلب (تم تحديثها لتمرير اسم القسم category)
+    // دالة الجلب (تم تعديلها لتأخذ من آخر القائمة)
     async fetchLatestItems(section, category) {
         try {
             const response = await fetch(`/data/${section}/${category}/index.json?t=${Date.now()}`);
             if (!response.ok) return [];
             
             const files = await response.json();
-            const latestFiles = files.slice(0, 3);
+            
+            // 💎 التعديل الجوهري: نأخذ آخر 3 ملفات (الأحدث) ونعكسهم
+            // لأن الإضافة الجديدة تكون في ذيل ملف index.json
+            const latestFiles = files.slice(-3).reverse();
 
             const promises = latestFiles.map(filename => 
                 fetch(`/data/${section}/${category}/${filename}`)
                     .then(res => res.json())
-                    // 👇 هام جداً: هنا نضيف category للكائن لكي نستخدمه في الرابط لاحقاً
+                    // نمرر القسم (category) لاستخدامه في الرابط لاحقاً
                     .then(data => ({ ...data, filename, category })) 
                     .catch(() => null)
             );
@@ -63,7 +68,7 @@ class HomeFeaturedDisplay {
 
     renderItems(items) {
         if (items.length === 0) {
-            this.container.innerHTML = `<p style="text-align:center; grid-column:1/-1;">لا توجد بيانات حديثة.</p>`;
+            this.container.innerHTML = `<p style="text-align:center; grid-column:1/-1;">لا توجد بيانات حديثة لعرضها.</p>`;
             return;
         }
 
@@ -74,6 +79,7 @@ class HomeFeaturedDisplay {
                 ? this.createOfferCard(item) 
                 : this.createRequestCard(item);
             
+            // تأثير ظهور متتابع
             card.style.opacity = '0';
             card.style.animation = `fadeInUp 0.5s ease forwards ${index * 0.2}s`;
             this.container.appendChild(card);
@@ -87,7 +93,7 @@ class HomeFeaturedDisplay {
         card.style.borderTop = "4px solid var(--color-primary)"; 
         
         const cleanId = property.filename.replace('.json', '');
-        // بناء رابط التفاصيل للعروض
+        // بناء الرابط الصحيح (تفاصيل العروض)
         const targetUrl = `/details.html?id=${cleanId}&category=${property.category}`;
 
         card.onclick = () => window.location.href = targetUrl;
@@ -121,7 +127,7 @@ class HomeFeaturedDisplay {
         return card;
     }
 
-    // 📣 تصميم بطاقة "طلب عميل" (أزرق - تم إصلاح الرابط)
+    // 📣 تصميم بطاقة "طلب عميل" (أزرق)
     createRequestCard(request) {
         const card = document.createElement('div');
         card.className = 'property-card text-mode';
@@ -129,9 +135,7 @@ class HomeFeaturedDisplay {
         card.style.background = "linear-gradient(145deg, #111, #161616)";
         
         const cleanId = request.filename.replace('.json', '');
-        
-        // 💎💎 التصحيح هنا: إضافة category للرابط 💎💎
-        // نستخدم request.category الذي مررناه في دالة الجلب
+        // بناء الرابط الصحيح (تفاصيل الطلبات)
         const targetUrl = `/request-details.html?id=${cleanId}&category=${request.category}`;
         
         card.onclick = () => window.location.href = targetUrl;
