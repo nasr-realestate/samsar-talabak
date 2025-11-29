@@ -415,3 +415,80 @@ img {
     background-position: center center !important;
     background-repeat: no-repeat !important;
 }
+/* =========================================================
+ * 🛠️ الحزمة الإصلاحية الشاملة (الأزرار + المحاذاة)
+ * (الصق هذا في نهاية ملف style.css)
+ * ========================================================= */
+
+/* 1. إصلاح انزياح الموقع (Centering Fix) */
+html, body {
+    overflow-x: hidden !important; /* منع أي خروج عن العرض */
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative;
+}
+
+/* ضبط الحاويات الرئيسية لتكون في المنتصف تماماً */
+.navbar, 
+.page-header, 
+main, 
+.site-footer,
+.content-wrapper,
+.home-hero {
+    width: 100%;
+    max-width: 100vw; /* ضمان عدم تجاوز عرض الشاشة */
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box; /* حساب الحواف بدقة */
+}
+
+/* توازن المسافات الداخلية للحاويات */
+.content-wrapper, 
+.footer-content, 
+.properties-grid {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+/* 2. إصلاح شكل الأزرار (لتكون مستطيلة أنيقة على كل الهواتف) */
+.nav-btn, 
+.filter-btn, 
+.view-details-btn, 
+.action-btn, 
+.back-btn,
+.submit-btn,
+.refresh-btn {
+    /* حواف ناعمة ذكية وليست دائرية كبسولية */
+    border-radius: 10px !important; 
+    
+    /* ضبط الحجم الداخلي لمنع الانتفاخ */
+    padding: 10px 20px !important; 
+    
+    /* منع النص من تكبير الزر */
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+    
+    /* ضبط العرض */
+    display: inline-flex !important;
+    justify-content: center;
+    align-items: center;
+    min-width: 120px; /* عرض أدنى للحفاظ على الشكل */
+}
+
+/* استثناء: أزرار الواتساب والاتصال نتركها أكبر قليلاً */
+.details-actions .action-btn {
+    padding: 14px 20px !important;
+    font-size: 1.1rem !important;
+    border-radius: 12px !important;
+}
+
+/* تحسين الفلاتر في الموبايل */
+.filter-btn {
+    border-radius: 8px !important;
+    padding: 8px 16px !important;
+    font-size: 0.9rem !important;
+    min-width: auto; /* الفلاتر تأخذ حجم النص فقط */
+}
