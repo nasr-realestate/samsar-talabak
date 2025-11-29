@@ -1,66 +1,57 @@
 # =========================================================
-# ===    ملف الإعدادات النهائي لموقع سمسار طلبك (V3)      ===
+# ===    ملف إعدادات "المصنع العقاري" (النسخة الذهبية)   ===
 # =========================================================
 
-# --- معلومات الموقع الأساسية ---
+# --- 1. معلومات الموقع الأساسية (هويتك الرقمية) ---
 title: "سمسار طلبك"
-description: "شقق تمليك في مدينة نصر - عروض حصرية وأسعار تنافسية"
-url: "https://aqarnasr.netlify.app"
-baseurl: ""
+email: "footcai.555@gmail.com"
+description: "بوابتك العقارية الأولى في مدينة نصر. تصفح أحدث الشقق للبيع والإيجار، والمحلات التجارية، أو أضف عقارك معنا. مصداقية، سرعة، وأسعار تنافسية."
+baseurl: "" # اتركه فارغاً
+url: "https://aqarnasr.netlify.app" # رابط موقعك
 lang: "ar"
-email: "elraikonly@outlook.sa"
 
-# --- إعدادات المحتوى والبناء ---
+# --- 2. إعدادات المنطقة الزمنية (هام جداً لترتيب العقارات) ---
+timezone: Africa/Cairo
+
+# --- 3. بيانات المالك والسوشيال (لتعزيز الثقة لدى جوجل) ---
+author:
+  name: "طارق طنطاوي"
+  email: "footcai.555@gmail.com"
+logo: "/assets/img/logo.png" # مسار الشعار لبيانات السيو
+social:
+  name: "سمسار طلبك"
+  links:
+    - "https://www.facebook.com/Tarekonly"
+    - "https://wa.me/201147758857"
+
+# --- 4. إعدادات البناء والروابط ---
 markdown: kramdown
-kramdown:
-  input: GFM
+permalink: pretty  # يجعل الروابط نظيفة (بدون .html)
 
-# --- الإضافات (Plugins) ---
+# --- 5. الإضافات (Plugins) - عضلات الموقع ---
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 
-# --- ✨✨✨ الإصلاح الحاسم والنهائي لخريطة الموقع (Sitemap) ✨✨✨ ---
-# هذا الجزء يخبر Jekyll بمعاملة بياناتنا كمجموعات من الصفحات القابلة للأرشفة
-collections:
-  properties:
-    output: true
-    permalink: /property/:name
-  requests:
-    output: true
-    permalink: /request/:name
+# --- 6. الملفات المستبعدة (للحفاظ على نظافة الموقع النهائي) ---
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - .sass-cache
+  - .jekyll-cache
+  - build.sh
+  - README.md
 
-# --- إعدادات SEO ---
-google_site_verification: "ozxUgrS2657mo8HYSvgjhYSeYv1FCcc8ig_3wjmSoGA"
-
-# --- إعدادات افتراضية للمحتوى ---
+# --- 7. الإعدادات الافتراضية للصفحات ---
 defaults:
   -
     scope:
-      path: ""
-      type: "properties"
-    values:
-      layout: "default" # يمكنك إنشاء layout خاص بهم لاحقًا
-  -
-    scope:
-      path: ""
-      type: "requests"
+      path: "" # يطبق على كل الملفات
     values:
       layout: "default"
-  -
-    scope:
-      path: ""
-      type: "pages"
-    values:
-      layout: "default"
-      lang: "ar"
-
-# --- الملفات والمجلدات التي يتم تضمينها أو استبعادها ---
-include:
-  - _data
-
-exclude:
-  - node_modules
-  - Gemfile
-  - Gemfile.lock
-  - README.md
+      image: "/assets/img/logo.png" # صورة مشاركة افتراضية في حال نسيانها
