@@ -1,64 +1,63 @@
 #!/bin/bash
 set -e
 
-echo "--- 🛠️ STARTING ROBUST BASH BUILD (JQ EDITION) ---"
+echo "--- 🛠️ STARTING BUILD (NETLIFY EDITION) ---"
 
-# 1. تثبيت أداة معالجة JSON (ضروري جداً)
-echo "Installing dependencies..."
-apt-get update -y > /dev/null
-apt-get install -y jq > /dev/null
+# 1. توليد فهارس الأقسام (Sub-indexes)
+# نمر على كل المجلدات وننشئ ملف index.json يحتوي على قائمة الملفات
+echo "--> Generating Category Indexes..."
 
-# 2. دالة لإنشاء فهرس لأي مجلد
-generate_folder_index() {
-    target_dir="$1"
-    # التأكد من وجود المجلد
-    if [ ! -d "$target_dir" ]; then return; fi
+find data/properties data/requests -mindepth 1 -type d | while read dir; do
+    # نعد الملفات للتأكد
+    count=$(find "$dir" -maxdepth 1 -name "*.json" ! -name "index.json" | wc -l)
     
-    echo "Processing folder: $target_dir"
-    output_file="$target_dir/index.json"
-
-    # البحث عن ملفات json (ما عدا الاندكس) -> ترتيبها -> تحويلها لمصفوفة json سليمة
-    # هذا الأمر آمن 100% ضد الأخطاء اليدوية
-    find "$target_dir" -maxdepth 1 -name "*.json" ! -name "index.json" -printf "%f\n" | sort | jq -R . | jq -s . > "$output_file"
-}
-
-# 3. تشغيل الدالة على كل مجلدات العقارات والطلبات
-echo "--- Generating Sub-indexes ---"
-for dir in data/properties/* data/requests/*; do
-    if [ -d "$dir" ]; then
-        generate_folder_index "$dir"
+    if [ "$count" -gt 0 ]; then
+        echo "    Updating: $dir/index.json ($count files)"
+        # 1. البحث عن الملفات
+        # 2. الترتيب (sort) لضمان النظام
+        # 3. استخدام jq لتحويل القائمة إلى مصفوفة JSON سليمة 100%
+        find "$dir" -maxdepth 1 -name "*.json" ! -name "index.json" -printf '%f\n' | sort | jq -R . | jq -s . > "$dir/index.json"
+    else
+        # إذا المجلد فارغ، نضع مصفوفة فارغة
+        echo "[]" > "$dir/index.json"
     fi
 done
 
-# 4. توليد الفهارس الرئيسية (Master Indexes) لصفحات التفاصيل
-echo "--- Generating Master Indexes ---"
+# 2. توليد الفهارس الرئيسية (Master Indexes)
+# هذه الملفات هي التي تعتمد عليها صفحات التفاصيل
+echo "--> Generating Master Indexes..."
 
-# للعقارات
-find data/properties -name "*.json" ! -name "index.json" -print0 | \
-while IFS= read -r -d '' file; do
-    filename=$(basename "$file")
-    id="${filename%.*}"
-    parent_dir=$(dirname "$file")
-    category=$(basename "$parent_dir")
-    # إنشاء كائن JSON لكل ملف
-    jq -n --arg id "$id" --arg path "/$file" --arg cat "$category" \
-       '{id: $id, path: $path, category: $cat}'
-done | jq -s '.' > data/properties_index.json
-
-# للطلبات
-find data/requests -name "*.json" ! -name "index.json" -print0 | \
-while IFS= read -r -d '' file; do
-    filename=$(basename "$file")
-    id="${filename%.*}"
-    parent_dir=$(dirname "$file")
-    category=$(basename "$parent_dir")
+# دالة مساعدة لإنشاء الفهرس الرئيسي
+generate_master() {
+    base_dir=$1
+    output_file=$2
     
-    jq -n --arg id "$id" --arg path "/$file" --arg cat "$category" \
-       '{id: $id, path: $path, category: $cat}'
-done | jq -s '.' > data/requests_index.json
+    # نجمع كل ملفات JSON ونستخرج منها المعلومات لإنشاء خريطة كاملة
+    find "$base_dir" -name "*.json" ! -name "index.json" -print0 | while IFS= read -r -d '' file; do
+        filename=$(basename "$file")
+        id="${filename%.*}"      # الـ ID هو اسم الملف بدون الامتداد
+        parent=$(dirname "$file")
+        category=$(basename "$parent") # اسم المجلد (apartments, shops...)
+        
+        # إنشاء كائن JSON لهذا الملف
+        # المسار يبدأ بـ / ليكون صحيحاً في الموقع
+        jq -n \
+           --arg id "$id" \
+           --arg path "/$file" \
+           --arg cat "$category" \
+           '{id: $id, path: $path, category: $cat}'
+           
+    done | jq -s '.' > "$output_file" # تجميع الكل في مصفوفة واحدة
+    
+    echo "    ✅ Created $output_file"
+}
 
-# 5. بناء الموقع
-echo "--- Building Jekyll Site ---"
+# تشغيل الدالة للعقارات والطلبات
+generate_master "data/properties" "data/properties_index.json"
+generate_master "data/requests" "data/requests_index.json"
+
+# 3. بناء الموقع (Jekyll)
+echo "--> Building Jekyll Site..."
 bundle exec jekyll build
 
-echo "--- ✅ BUILD COMPLETE ---"
+echo "--- ✅ BUILD SUCCESS ---"
