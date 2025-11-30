@@ -1,94 +1,64 @@
 #!/bin/bash
 set -e
 
-echo "--- 🚀 STARTING ROBUST BUILD PROCESS (PYTHON POWERED) ---"
+echo "--- 🛠️ STARTING ROBUST BASH BUILD (JQ EDITION) ---"
 
-# نقوم بكتابة سكربت بايثون مؤقت للقيام بالمهمة الصعبة بدقة
-cat <<EOF > generate_indexes.py
-import os
-import json
-import glob
+# 1. تثبيت أداة معالجة JSON (ضروري جداً)
+echo "Installing dependencies..."
+apt-get update -y > /dev/null
+apt-get install -y jq > /dev/null
 
-# تحديد المسارات الرئيسية
-BASE_DIRS = ['data/properties', 'data/requests']
-master_list_props = []
-master_list_reqs = []
+# 2. دالة لإنشاء فهرس لأي مجلد
+generate_folder_index() {
+    target_dir="$1"
+    # التأكد من وجود المجلد
+    if [ ! -d "$target_dir" ]; then return; fi
+    
+    echo "Processing folder: $target_dir"
+    output_file="$target_dir/index.json"
 
-def process_folders():
-    for base_dir in BASE_DIRS:
-        if not os.path.exists(base_dir):
-            continue
-            
-        # الدخول لكل مجلد فرعي (apartments, offices, etc.)
-        for root, dirs, files in os.walk(base_dir):
-            # نتخطى المجلد الرئيسي نفسه، نريد المجلدات الفرعية فقط
-            if root == base_dir:
-                continue
-                
-            folder_name = os.path.basename(root)
-            print(f"--> Processing: {folder_name}")
-            
-            # 1. تجميع ملفات JSON الصالحة
-            json_files = []
-            for file in files:
-                if file.endswith('.json') and file != 'index.json':
-                    json_files.append(file)
-            
-            # 2. الترتيب (مهم جداً لظهور الأحدث)
-            json_files.sort()
-            
-            # 3. كتابة ملف index.json الخاص بالمجلد
-            if json_files:
-                with open(os.path.join(root, 'index.json'), 'w', encoding='utf-8') as f:
-                    json.dump(json_files, f, ensure_ascii=False)
-                print(f"    ✅ Created index with {len(json_files)} items")
-            
-            # 4. التجهيز للفهرس الرئيسي (لصفحات التفاصيل)
-            for file in json_files:
-                file_path = os.path.join(root, file)
-                # محاولة استخراج ID من الملف
-                file_id = file.replace('.json', '')
-                try:
-                    with open(file_path, 'r', encoding='utf-8') as f:
-                        data = json.load(f)
-                        if 'id' in data: file_id = str(data['id'])
-                except:
-                    pass
-                
-                # تحديد القائمة المناسبة (عروض أم طلبات)
-                item_data = {
-                    "id": file_id,
-                    "path": "/" + file_path.replace('\\\\', '/'), # تصحيح المسار
-                    "category": folder_name
-                }
-                
-                if 'requests' in base_dir:
-                    master_list_reqs.append(item_data)
-                else:
-                    master_list_props.append(item_data)
+    # البحث عن ملفات json (ما عدا الاندكس) -> ترتيبها -> تحويلها لمصفوفة json سليمة
+    # هذا الأمر آمن 100% ضد الأخطاء اليدوية
+    find "$target_dir" -maxdepth 1 -name "*.json" ! -name "index.json" -printf "%f\n" | sort | jq -R . | jq -s . > "$output_file"
+}
 
-# تشغيل المعالجة
-process_folders()
+# 3. تشغيل الدالة على كل مجلدات العقارات والطلبات
+echo "--- Generating Sub-indexes ---"
+for dir in data/properties/* data/requests/*; do
+    if [ -d "$dir" ]; then
+        generate_folder_index "$dir"
+    fi
+done
 
-# كتابة الفهارس الرئيسية
-print("--> Writing Master Indexes...")
-with open('data/properties_index.json', 'w', encoding='utf-8') as f:
-    json.dump(master_list_props, f, ensure_ascii=False)
+# 4. توليد الفهارس الرئيسية (Master Indexes) لصفحات التفاصيل
+echo "--- Generating Master Indexes ---"
 
-with open('data/requests_index.json', 'w', encoding='utf-8') as f:
-    json.dump(master_list_reqs, f, ensure_ascii=False)
+# للعقارات
+find data/properties -name "*.json" ! -name "index.json" -print0 | \
+while IFS= read -r -d '' file; do
+    filename=$(basename "$file")
+    id="${filename%.*}"
+    parent_dir=$(dirname "$file")
+    category=$(basename "$parent_dir")
+    # إنشاء كائن JSON لكل ملف
+    jq -n --arg id "$id" --arg path "/$file" --arg cat "$category" \
+       '{id: $id, path: $path, category: $cat}'
+done | jq -s '.' > data/properties_index.json
 
-print("✅ DONE: All indexes generated.")
-EOF
+# للطلبات
+find data/requests -name "*.json" ! -name "index.json" -print0 | \
+while IFS= read -r -d '' file; do
+    filename=$(basename "$file")
+    id="${filename%.*}"
+    parent_dir=$(dirname "$file")
+    category=$(basename "$parent_dir")
+    
+    jq -n --arg id "$id" --arg path "/$file" --arg cat "$category" \
+       '{id: $id, path: $path, category: $cat}'
+done | jq -s '.' > data/requests_index.json
 
-# تشغيل سكربت البايثون
-python3 generate_indexes.py
-
-# حذف السكربت المؤقت
-rm generate_indexes.py
-
-# بناء موقع Jekyll
-echo "--- 🏗️ Building Jekyll Site ---"
+# 5. بناء الموقع
+echo "--- Building Jekyll Site ---"
 bundle exec jekyll build
 
-echo "--- 🏁 BUILD FINISHED SUCCESSFULLY ---"
+echo "--- ✅ BUILD COMPLETE ---"
