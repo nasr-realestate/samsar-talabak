@@ -1,14 +1,12 @@
 # =========================================================
-# ===    قواعد التوجيه الذكي (Netlify Redirects)        ===
+# ===    قواعد التوجيه الذكي (Routing Rules)            ===
 # =========================================================
 
-# 1. الروابط الديناميكية (للعقارات والطلبات)
-# هذا يجعل الرابط يبدو: site.com/property/101 بدلاً من details.html?id=101
+# 1. الروابط الديناميكية (التفاصيل)
 /property/:id   /details.html?id=:id           200
 /request/:id    /request-details.html?id=:id   200
 
-# 2. الروابط الجميلة (Pretty URLs) للصفحات الثابتة
-# هذا يخفي .html من نهاية الروابط لتبدو احترافية
+# 2. الروابط النظيفة للصفحات الثابتة (لتعمل بدون .html)
 /about-us            /about-us.html            200
 /contact-us          /contact-us.html          200
 /add-your-property   /add-your-property.html   200
@@ -16,6 +14,5 @@
 /properties          /properties-filtered.html 200
 /requests            /requests-filtered.html   200
 
-# 3. قاعدة الأمان (404 Page)
-# أي رابط خاطئ يكتبه العميل، يتم تحويله لصفحة 404 (سننشئها لاحقاً إذا لم توجد)
+# 3. صفحة الخطأ (لأي رابط غير صحيح)
 /*    /404.html    404
