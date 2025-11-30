@@ -1,28 +1,24 @@
 # =========================================================
-# ===    إعدادات السيرفر المتقدمة (الأمان + السرعة)     ===
+# ===    إعدادات السيرفر (الأمان + تحديث البيانات)      ===
 # =========================================================
 
-# 1. إعدادات الأمان العامة (تطبق على كل الصفحات)
+# 1. الأمان العام
 /*
   X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: geolocation=(), camera=(), microphone=()
 
-# 2. ملف خريطة الموقع (Sitemap)
+# 2. ملف خريطة الموقع
 /sitemap.xml
   Content-Type: application/xml
-  Cache-Control: public, max-age=0, must-revalidate
 
-# 3. تسريع الموقع: تخزين الصور والخطوط لمدة طويلة (سنة كاملة)
-# هذا يجعل الموقع "يطير" للزوار المتكرרים
+# 3. تسريع الصور والخطوط (تخزين طويل الأمد)
 /assets/img/*
   Cache-Control: public, max-age=31536000, immutable
 /assets/fonts/*
   Cache-Control: public, max-age=31536000, immutable
 
-# 4. ضمان "نضارة" البيانات: عدم تخزين ملفات JSON
-# هذا يضمن أن العقار الجديد يظهر فوراً للزائر ولا يرى نسخة قديمة
+# 4. هام جداً: عدم تخزين البيانات لضمان ظهور العقارات الجديدة فوراً
 /data/*
   Cache-Control: public, max-age=0, must-revalidate
