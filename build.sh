@@ -1,37 +1,36 @@
 #!/bin/bash
 set -e
-echo "--- BUILD SCRIPT START (LUXURY EDITION) ---"
 
-# 1. تثبيت الأدوات اللازمة لمعالجة البيانات
-apt-get update -y > /dev/null && apt-get install -y jq > /dev/null
+echo "--- BUILDING INDEXES (SAFE MODE) ---"
 
-# 2. توليد فهارس الأقسام (Category Indexes)
-# التعديل الهام: أضفنا 'sort' لضمان ترتيب الملفات أبجدياً، مما يضمن استقرار العرض
-echo "Generating category indexes..."
+# 1. توليد فهارس الأقسام (بدون تثبيت برامج)
 find data/properties data/requests -mindepth 1 -type d | while read dir; do
-  INDEX_FILE="$dir/index.json"
-  # البحث عن الملفات -> ترتيبها -> دمجها بفاصلة
-  FILES_FOUND=$(find "$dir" -maxdepth 1 -type f -name '*.json' ! -name 'index.json' -printf '"%f"\n' | sort | paste -sd, -)
-  
-  if [ -n "$FILES_FOUND" ]; then 
-    echo "[$FILES_FOUND]" > "$INDEX_FILE"
-  else 
-    echo "[]" > "$INDEX_FILE"
-  fi
+    # نستخدم jq الموجود مسبقاً في Netlify
+    # هذا الأمر يجمع أسماء الملفات في مصفوفة JSON سليمة
+    find "$dir" -maxdepth 1 -name "*.json" ! -name "index.json" -printf '%f\n' | sort | jq -R . | jq -s . > "$dir/index.json"
 done
 
-# 3. توليد الفهرس الرئيسي الشامل (Master Indexes)
-# هذا الجزء ممتاز ومسؤول عن تشغيل صفحات التفاصيل بدقة
-echo "Generating master indexes..."
+# 2. توليد الفهرس الرئيسي (لصفحات التفاصيل)
+echo "Generating Master Index..."
+find data/properties -name "*.json" ! -name "index.json" -print0 | \
+while IFS= read -r -d '' file; do
+    filename=$(basename "$file")
+    id="${filename%.*}"
+    parent=$(dirname "$file")
+    cat=$(basename "$parent")
+    # إنشاء كائن JSON
+    jq -n --arg id "$id" --arg path "/$file" --arg cat "$cat" '{id:$id, path:$path, category:$cat}'
+done | jq -s '.' > data/properties_index.json
 
-# فهرس العقارات
-find data/properties -type f -name '*.json' ! -path '*/index.json' -print0 | xargs -0 -I {} jq -n --arg path "{}" '{id: ($path | split("/")[-1] | split(".")[0]), path: ("/" + $path)}' | jq -s '.' > data/properties_index.json
+find data/requests -name "*.json" ! -name "index.json" -print0 | \
+while IFS= read -r -d '' file; do
+    filename=$(basename "$file")
+    id="${filename%.*}"
+    parent=$(dirname "$file")
+    cat=$(basename "$parent")
+    jq -n --arg id "$id" --arg path "/$file" --arg cat "$cat" '{id:$id, path:$path, category:$cat}'
+done | jq -s '.' > data/requests_index.json
 
-# فهرس الطلبات
-find data/requests -type f -name '*.json' ! -path '*/index.json' -print0 | xargs -0 -I {} jq -n --arg path "{}" '{id: ($path | split("/")[-1] | split(".")[0]), path: ("/" + $path)}' | jq -s '.' > data/requests_index.json
-
-# 4. بناء الموقع
-echo "Running Jekyll build..."
+# 3. بناء الموقع
+echo "Jekyll Build..."
 bundle exec jekyll build
-
-echo "--- BUILD SCRIPT END ---"
