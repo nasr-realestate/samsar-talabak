@@ -1,20 +1,25 @@
 /**
- * 🏠 سمسار طلبك - الصفحة الرئيسية (نسخة المحقق - Debug Version)
- * v8.0 - تكشف الأخطاء وتعرض أي بيانات متاحة
+ * 🏠 سمسار طلبك - الرادار العميق (Deep Time Scanner)
+ * v9.0 - يعتمد على تاريخ الملف بدقة متناهية
  */
 
 class HomeGlobalScanner {
     constructor() {
         this.container = document.getElementById("featured-container");
         
-        // تعريف المصادر (تأكد أن هذه المجلدات موجودة فعلياً في data)
+        // جميع المصادر التي نريد مراقبتها
         this.sources = [
+            // العروض
             { section: 'properties', category: 'apartments', type: 'offer' },
             { section: 'properties', category: 'apartments-rent', type: 'offer' },
             { section: 'properties', category: 'offices', type: 'offer' },
             { section: 'properties', category: 'shops', type: 'offer' },
+            { section: 'properties', category: 'admin-hq', type: 'offer' },
+            // الطلبات
             { section: 'requests', category: 'apartments', type: 'request' },
-            { section: 'requests', category: 'offices', type: 'request' }
+            { section: 'requests', category: 'offices', type: 'request' },
+            { section: 'requests', category: 'shops', type: 'request' },
+            { section: 'requests', category: 'admin-hq', type: 'request' }
         ];
 
         this.init();
@@ -24,91 +29,103 @@ class HomeGlobalScanner {
         if (!this.container) return;
         
         try {
-            console.log("🚀 بدء فحص نبض السوق...");
-            
-            // جلب البيانات مع تسجيل النتائج
-            const promises = this.sources.map(source => this.fetchLatestFromSource(source));
+            // 1. جمع البيانات من كل المصادر
+            const promises = this.sources.map(source => this.scanFolderForLatest(source));
             const results = await Promise.all(promises);
             
-            // دمج النتائج
+            // دمج كل النتائج في قائمة واحدة ضخمة
             let allItems = results.flat().filter(item => item !== null);
-            console.log(`✅ تم العثور على إجمالي ${allItems.length} عنصر.`);
 
-            if (allItems.length === 0) {
-                this.showDebugMessage(); // عرض رسالة مساعدة في حال الفشل
-                return;
-            }
+            // 2. فصل العروض عن الطلبات
+            let allOffers = allItems.filter(item => item.sourceType === 'offer');
+            let allRequests = allItems.filter(item => item.sourceType === 'request');
 
-            // ترتيب زمني
-            allItems.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+            // 3. الترتيب الزمني الدقيق (الأحدث في الأعلى)
+            const sortByDate = (a, b) => new Date(b.date || 0) - new Date(a.date || 0);
+            
+            allOffers.sort(sortByDate);
+            allRequests.sort(sortByDate);
 
-            // أخذ العينة للعرض (أحدث 3)
-            // سنأخذ أول 3 عناصر بغض النظر عن نوعهم لضمان امتلاء الصفحة
-            const finalDisplayList = allItems.slice(0, 3);
+            // 4. اختيار الفائزين (أحدث 2 عرض + أحدث 1 طلب)
+            let finalSelection = [];
 
-            this.renderItems(finalDisplayList);
+            if (allOffers.length > 0) finalSelection.push(allOffers[0]);
+            if (allOffers.length > 1) finalSelection.push(allOffers[1]);
+            if (allRequests.length > 0) finalSelection.push(allRequests[0]);
+
+            // ترتيبهم مرة أخيرة للعرض المختلط
+            finalSelection.sort(sortByDate);
+
+            // 5. العرض
+            this.renderItems(finalDisplayList = finalSelection);
 
         } catch (error) {
-            console.error("Critical Error:", error);
-            this.container.innerHTML = `<p style="text-align:center; color:red;">حدث خطأ تقني. راجع الكونسول.</p>`;
+            console.error("Scanner Error:", error);
+            this.container.innerHTML = `<p style="text-align:center; color:#555;">جاري تحميل أحدث الفرص...</p>`;
         }
     }
 
-    async fetchLatestFromSource(source) {
-        const url = `/data/${source.section}/${source.category}/index.json?t=${Date.now()}`;
+    // دالة تمسح المجلد وتجلب "مجموعة" من الملفات وليس واحداً فقط
+    async scanFolderForLatest(source) {
         try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                console.warn(`⚠️ فشل الوصول للفهرس: ${url} (404 Not Found)`);
-                return [];
-            }
+            // جلب الفهرس
+            const response = await fetch(`/data/${source.section}/${source.category}/index.json?t=${Date.now()}`);
+            if (!response.ok) return [];
             
             const files = await response.json();
-            if (!files || files.length === 0) {
-                console.log(`ℹ️ المجلد فارغ: ${source.category}`);
-                return [];
-            }
+            if (!files || files.length === 0) return [];
 
-            // نأخذ آخر ملف (الأحدث)
-            const latestFilename = files[files.length - 1];
-            
-            // جلب تفاصيل الملف
-            const fileUrl = `/data/${source.section}/${source.category}/${latestFilename}`;
-            const fileRes = await fetch(fileUrl);
-            if (!fileRes.ok) {
-                console.error(`❌ الملف موجود في الفهرس لكنه غير موجود فعلياً: ${fileUrl}`);
-                return [];
-            }
+            // 💎 السر هنا: نأخذ آخر 4 ملفات من كل مجلد ونفحص تواريخهم
+            // (لأنك قد تضيف عدة ملفات في نفس القسم، نريد الأحدث بينهم)
+            const candidates = files.slice(-4); 
 
-            const data = await fileRes.json();
-            
-            // تحديد النوع للعرض
-            let displayType = source.type;
-            if (source.type === 'offer' && data.title && data.title.includes('إيجار')) {
-                displayType = 'rent';
-            }
+            const itemPromises = candidates.map(filename => 
+                fetch(`/data/${source.section}/${source.category}/${filename}?t=${Date.now()}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        // تحديد النوع الدقيق
+                        let displayType = source.type;
+                        if (source.type === 'offer' && data.title && data.title.includes('إيجار')) {
+                            displayType = 'rent';
+                        }
+                        
+                        return {
+                            ...data,
+                            filename,
+                            category: source.category,
+                            section: source.section,
+                            sourceType: source.type, // للتصنيف الداخلي (عرض/طلب)
+                            displayType: displayType // للعرض (ألوان)
+                        };
+                    })
+                    .catch(() => null)
+            );
 
-            return [{
-                ...data,
-                filename: latestFilename,
-                category: source.category,
-                section: source.section,
-                displayType: displayType
-            }];
+            return await Promise.all(itemPromises);
 
         } catch (e) {
-            console.error(`Error in ${source.category}:`, e);
             return [];
         }
     }
 
     renderItems(items) {
+        if (items.length === 0) {
+            this.container.innerHTML = `<div style="text-align:center; color:#555; padding:2rem;">لا توجد بيانات حديثة.</div>`;
+            return;
+        }
+
         this.container.innerHTML = '';
+        
         items.forEach((item, index) => {
             let card;
-            if (item.section === 'requests') card = this.createRequestCard(item);
-            else if (item.displayType === 'rent') card = this.createRentCard(item);
-            else card = this.createSaleCard(item);
+            
+            if (item.sourceType === 'request') {
+                card = this.createRequestCard(item);
+            } else if (item.displayType === 'rent') {
+                card = this.createRentCard(item);
+            } else {
+                card = this.createSaleCard(item);
+            }
             
             card.style.opacity = '0';
             card.style.animation = `fadeInUp 0.6s ease forwards ${index * 0.2}s`;
@@ -116,61 +133,77 @@ class HomeGlobalScanner {
         });
     }
 
-    showDebugMessage() {
-        this.container.innerHTML = `
-            <div style="grid-column:1/-1; text-align:center; padding:2rem; color:#888; direction:ltr;">
-                <i class="fas fa-bug" style="font-size:2rem; margin-bottom:10px;"></i><br>
-                <strong>Debug Mode:</strong> No items found.<br>
-                Possible reasons:<br>
-                1. index.json files are missing (Build script failed).<br>
-                2. Folders are empty.<br>
-                <small>Check Browser Console (F12) for details.</small>
-            </div>
-        `;
+    // --- القوالب (التصميم النصي الذهبي) ---
+
+    createSaleCard(property) {
+        return this.generateCardHTML(property, '#d4af37', 'fa-certificate', 'بيع', '/details.html');
     }
 
-    // --- قوالب البطاقات (نفس التصميم) ---
-    createSaleCard(p) { return this.generateCard(p, '#d4af37', 'fa-certificate', 'بيع', '/details.html'); }
-    createRentCard(p) { return this.generateCard(p, '#fce205', 'fa-key', 'إيجار', '/details.html'); }
-    createRequestCard(r) { 
-        const card = this.generateCard(r, '#0a84ff', 'fa-bullhorn', 'مطلوب', '/request-details.html');
+    createRentCard(property) {
+        return this.generateCardHTML(property, '#fce205', 'fa-key', 'إيجار', '/details.html');
+    }
+
+    createRequestCard(request) {
+        const card = this.generateCardHTML(request, '#0a84ff', 'fa-bullhorn', 'مطلوب', '/request-details.html');
         card.style.background = 'linear-gradient(145deg, #111, #161616)';
         return card;
     }
 
-    generateCard(item, color, icon, label, pageUrl) {
+    generateCardHTML(item, color, icon, label, pageUrl) {
         const card = document.createElement('div');
         card.className = 'property-card text-mode';
         card.style.borderTop = `4px solid ${color}`;
         
         const cleanId = item.filename.replace('.json', '');
         const targetUrl = `${pageUrl}?id=${cleanId}&category=${item.category}`;
+        
         card.onclick = () => window.location.href = targetUrl;
-
-        const val = item.budget ? `ميزانية: ${item.budget}` : (item.price_display || item.price);
+        const timeAgo = this.getTimeAgo(item.date);
+        
+        // عرض السعر أو الميزانية
+        const valueDisplay = item.budget ? `ميزانية: ${item.budget}` : (item.price_display || item.price);
 
         card.innerHTML = `
-            <div class="property-header" style="border-bottom:1px dashed #333; padding-bottom:10px; margin-bottom:15px;">
+            <div class="property-header" style="border-bottom: 1px dashed #333; padding-bottom: 10px; margin-bottom: 15px;">
                 <div style="display:flex; justify-content:space-between; font-size:0.8rem; margin-bottom:8px;">
-                    <span style="color:${color}; border:1px solid ${color}; padding:2px 8px; border-radius:10px;">
+                    <span style="color: ${color}; background: rgba(255, 255, 255, 0.05); padding: 2px 10px; border-radius: 10px; border: 1px solid ${color};">
                         <i class="fas ${icon}"></i> ${label}
                     </span>
-                    <span style="color:#666;">${this.getTimeAgo(item.date)}</span>
+                    <span style="color:#666;">${timeAgo}</span>
                 </div>
-                <h3 style="color:#fff; font-size:1.1rem; margin:5px 0;">${item.title}</h3>
+                <h3 style="color:#fff; font-size:1.1rem; margin:5px 0; line-height:1.4;">${item.title}</h3>
                 <p style="color:#888; font-size:0.9rem;">${item.location || 'مدينة نصر'}</p>
             </div>
-            <div class="property-details">
-                 <div style="color:${color}; font-weight:bold; font-size:1.1rem;">${val}</div>
+
+            <div class="property-details" style="margin-bottom:15px;">
+                 <div style="color:${color}; font-weight:bold; font-size:1.1rem; background: linear-gradient(90deg, rgba(255,255,255,0.05), transparent); padding:5px; border-radius:5px;">
+                    ${valueDisplay}
+                 </div>
+                 <div style="display:flex; gap:15px; margin-top:8px; font-size:0.9rem; color:#ccc;">
+                    ${item.area ? `<span><i class="fas fa-ruler"></i> ${item.area}</span>` : ''}
+                    ${item.rooms ? `<span><i class="fas fa-bed"></i> ${item.rooms}</span>` : ''}
+                 </div>
             </div>
-            <div style="margin-top:auto; padding-top:10px;">
-                <span style="color:#aaa; font-size:0.9rem;">التفاصيل <i class="fas fa-arrow-left" style="color:${color}"></i></span>
+
+            <div style="margin-top:auto; padding-top:10px; border-top:1px solid #222;">
+                <span style="color:#aaa; font-size:0.9rem;">
+                    ${label === 'مطلوب' ? 'لديك العقار؟' : 'التفاصيل'} 
+                    <i class="fas ${label === 'مطلوب' ? 'fa-check-circle' : 'fa-arrow-left'}" style="color:${color}"></i>
+                </span>
             </div>
         `;
         return card;
     }
 
-    getTimeAgo(d) { return d ? 'جديد' : ''; }
+    getTimeAgo(dateString) {
+        if (!dateString) return 'جديد';
+        const diff = new Date() - new Date(dateString);
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        if (days <= 0) return 'اليوم';
+        if (days === 1) return 'أمس';
+        if (days < 30) return `منذ ${days} يوم`;
+        return `منذ شهر`;
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => new HomeGlobalScanner());
