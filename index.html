@@ -1,10 +1,58 @@
 ---
 layout: default
-title: "سمسار طلبك | بوابتك العقارية الأولى في مدينة نصر"
-description: "وسيطك العقاري الموثوق في مدينة نصر. تصفح أحدث الشقق و المحلات والمكاتب الإداريه للبيع والإيجار. نضمن لك الشفافية، السرعة، وأفضل سعر سوقي."
+title: "سمسار طلبك | شقق للبيع والإيجار في مدينة نصر"
+description: "وسيطك العقاري الأول في مدينة نصر. تصفح أحدث الشقق للبيع والإيجار في المنطقة السادسة، الحي العاشر، وعباس العقاد. شفافية، سرعة، وبدون صور مضللة."
 image: "https://i.postimg.cc/rmJ8kVmK/صور_شقه_برج_الزهراء_الثانيه.webp"
 body_class: "homepage"
 ---
+
+<!-- =========================================================
+     SEO SCHEMA MARKUP (الهوية الرقمية الكاملة لجوجل)
+     ========================================================= -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "RealEstateAgent",
+  "name": "سمسار طلبك",
+  "founder": "طارق طنطاوي",
+  "image": "https://i.postimg.cc/rmJ8kVmK/صور_شقه_برج_الزهراء_الثانيه.webp",
+  "@id": "https://semsartalabk.com",
+  "url": "https://semsartalabk.com",
+  "telephone": "+201147758857",
+  "email": "samsar.talabak@mailo.com",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "16 Mohammed Hasan El-Gamal St, Al Mintaqah as Sādisah",
+    "addressLocality": "Nasr City",
+    "addressRegion": "Cairo",
+    "postalCode": "11371",
+    "addressCountry": "EG"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 30.0558, 
+    "longitude": 31.3439 
+  },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+      "Saturday",
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday"
+    ],
+    "opens": "12:00",
+    "closes": "21:00"
+  },
+  "sameAs": [
+    "https://maps.app.goo.gl/YMXq48W16dg1EcseA?g_st=ac" 
+  ],
+  "description": "مكتب عقاري في مدينة نصر بقيادة طارق طنطاوي، يعتمد على المصداقية والوصف الدقيق للعقارات."
+}
+</script>
 
 <!-- =========================================================
      1. الواجهة السينمائية (Hero Section)
@@ -15,40 +63,40 @@ body_class: "homepage"
   <!-- اللوجو المتحرك -->
   <div class="hero-logo-container" style="margin-bottom: 2rem; animation: float 6s ease-in-out infinite;">
     <img src="https://i.postimg.cc/Y9c5f6K1/ed53e000_aacd_11f0_8000_6ff54186278f.png" 
-         alt="شعار سمسار طلبك" 
+         alt="شعار سمسار طلبك العقاري" 
          style="filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.4));">
   </div>
 
-  <!-- العنوان الرئيسي -->
+  <!-- العنوان الرئيسي (SEO Optimized H1) -->
   <h1>
-    أهلاً بك في <br>
-    <span style="color: var(--color-primary);">سمسار طلبك</span>
+    سمسار طلبك <br>
+    <span style="color: var(--color-primary); font-size: 0.6em; margin-top: 10px; display: block;">شقق للبيع والإيجار في مدينة نصر</span>
   </h1>
 
   <p>
-    بوابتك العقارية الأولى في مدينة نصر <br>
-    <span style="font-size: 0.9em; opacity: 0.8; margin-top: 10px; display: inline-block;">شفافية • سرعة • أفضل سعر</span>
+    بإدارة: أ/ طارق طنطاوي <br>
+    <span style="font-size: 0.9em; opacity: 0.8; margin-top: 10px; display: inline-block;">المنطقة السادسة • الحي العاشر • زهراء مدينة نصر</span>
   </p>
 
   <!-- أزرار الخدمات الرئيسية -->
   <div class="hero-buttons">
-    <a href="{{ '/properties-filtered.html?highlight=apartments' | relative_url }}" class="nav-btn properties" aria-label="تصفح العقارات المتاحة">
+    <a href="{{ '/properties-filtered.html?highlight=apartments' | relative_url }}" class="nav-btn properties" aria-label="تصفح شقق للبيع والايجار">
       <i class="fas fa-search-location" style="margin-left: 10px;"></i>
       تصفح العروض المتاحة
     </a>
-    <a href="{{ '/requests-filtered.html?highlight=apartments' | relative_url }}" class="nav-btn requests" aria-label="طلبات العقارات">
+    <a href="{{ '/requests-filtered.html?highlight=apartments' | relative_url }}" class="nav-btn requests" aria-label="تقديم طلب عقاري">
       <i class="fas fa-clipboard-list" style="margin-left: 10px;"></i>
       طلبات العملاء
     </a>
   </div>
 
-  <!-- الصندوق السحري (تعبت من اللف؟) -->
+  <!-- الصندوق السحري -->
   <div class="pain-point-box" style="margin-top: 3.5rem; max-width: 600px; padding: 20px 30px; border: 1px solid var(--color-border-light); border-radius: 15px; background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
       <h3 style="color: var(--color-primary); font-size: 1.2rem; margin-bottom: 8px;">
-          <i class="far fa-question-circle"></i> تعبت من اللف وتفاوت الأسعار؟
+          <i class="far fa-question-circle"></i> لماذا "سمسار طلبك"؟
       </h3>
       <p style="color: #ccc; font-size: 0.9rem; margin-bottom: 0; line-height: 1.5;">
-          نحن هنا لننهي حيرتك. نوفر عليك الوقت والجهد ونضمن لك عقارات تم التحقق منها بأسعار السوق الحقيقية.
+          لأننا نرفض سياسة الصور الخادعة. نقدم لك وصفاً دقيقاً وأسعاراً حقيقية. مكتبنا مفتوح لك يومياً من 12 ظهراً لخدمتك بمصداقية مطلقة.
       </p>
   </div>
 
@@ -63,7 +111,7 @@ body_class: "homepage"
             <h2 style="font-size: 2rem; color: var(--color-primary); margin-bottom: 10px; font-weight: 800;">
                 <i class="fas fa-bolt" style="color: var(--color-secondary);"></i> نبض السوق العقاري
             </h2>
-            <p style="color: var(--color-text-secondary);">أحدث الفرص العقارية وطلبات الشراء، لحظة بلحظة</p>
+            <p style="color: var(--color-text-secondary);">أحدث شقق التمليك والإيجار وطلبات الشراء الجادة</p>
         </div>
 
         <div id="featured-container" class="properties-grid">
@@ -82,7 +130,7 @@ body_class: "homepage"
 </section>
 
 <!-- =========================================================
-     3. ✨ جديد: قسم الثقة والأرقام (أرقامنا تتحدث)
+     3. قسم الثقة والأرقام (أرقامنا تتحدث)
      ========================================================= -->
 <section class="trust-section" style="background: url('https://i.postimg.cc/rmJ8kVmK/صور_شقه_برج_الزهراء_الثانيه.webp') fixed center; position: relative; padding: 5rem 2rem;">
     <!-- طبقة تعتيم -->
@@ -116,7 +164,7 @@ body_class: "homepage"
             </div>
         </div>
         
-        <!-- رابط التقييمات - تم التعديل -->
+        <!-- رابط التقييمات -->
         <div style="margin-top: 3rem;">
             <a href="https://search.google.com/local/reviews?placeid=ChIJa3zQ32w-WBQRIxuJURKnXOI" target="_blank" style="color: var(--color-primary); text-decoration: none; border-bottom: 1px solid var(--color-primary); padding-bottom: 5px; transition: all 0.3s;">
                 شاهد تقييماتنا وآراء العملاء على خرائط جوجل <i class="fas fa-star" style="margin-right: 5px; color: #fce205;"></i>
@@ -126,31 +174,37 @@ body_class: "homepage"
 </section>
 
 <!-- =========================================================
-     4. ✨ جديد: قسم نصائح الخبراء (محتوى تعليمي)
+     4. قسم نصائح الخبراء وتفاصيل الاتصال
      ========================================================= -->
 <section class="tips-section" style="padding: 4rem 2rem; background: var(--color-surface-1);">
     <div style="max-width: 1000px; margin: 0 auto;">
+        
+        <!-- عنوان القسم -->
         <div style="text-align: center; margin-bottom: 3rem;">
-            <h2 style="color: var(--color-primary); font-size: 1.8rem;">نصائح عقارية من الخبراء</h2>
-            <p style="color: #888;">دليلك المختصر قبل البيع أو الشراء</p>
+            <h2 style="color: var(--color-primary); font-size: 1.8rem;">نصائح وتواصل</h2>
+            <p style="color: #888;">نحن معك خطوة بخطوة</p>
         </div>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-            <!-- نصيحة 1 -->
+            <!-- بطاقة العنوان والمواعيد -->
             <div class="tip-card" style="background: var(--color-surface-2); padding: 25px; border-radius: 15px; border: 1px solid var(--color-border-light);">
-                <i class="fas fa-paint-roller" style="font-size: 2rem; color: var(--color-secondary); margin-bottom: 15px;"></i>
-                <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 10px;">كيف تجهز شقتك للبيع؟</h3>
+                <i class="fas fa-map-marker-alt" style="font-size: 2rem; color: var(--color-secondary); margin-bottom: 15px;"></i>
+                <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 10px;">مقرنا الرسمي</h3>
                 <p style="color: #aaa; font-size: 0.95rem; line-height: 1.6;">
-                    التفاصيل الصغيرة تفرق! دهان الحوائط بألوان فاتحة، إصلاح السباكة الظاهرة، وتنظيف الشقة جيداً قبل المعاينة قد يرفع سعر عقارك بنسبة 10% ويسرع البيع.
+                    16 شارع محمد حسن الجمل، المنطقة السادسة، مدينة نصر.<br>
+                    <span style="color: var(--color-primary); display:block; margin-top:10px;">
+                        <i class="far fa-clock"></i> يومياً: 12 ظهراً - 9 مساءً<br>
+                        (الجمعة إجازة)
+                    </span>
                 </p>
             </div>
 
-            <!-- نصيحة 2 -->
+            <!-- بطاقة نصيحة الشراء -->
             <div class="tip-card" style="background: var(--color-surface-2); padding: 25px; border-radius: 15px; border: 1px solid var(--color-border-light);">
                 <i class="fas fa-file-contract" style="font-size: 2rem; color: var(--color-secondary); margin-bottom: 15px;"></i>
-                <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 10px;">نصيحة قبل الشراء</h3>
+                <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 10px;">نصيحة أ/ طارق طنطاوي</h3>
                 <p style="color: #aaa; font-size: 0.95rem; line-height: 1.6;">
-                    لا تنخدع بالمظاهر فقط. تأكد دائماً من "تسلسل الملكية" وعدادات المرافق. في سمسار طلبك، نقوم بمراجعة الأوراق القانونية نيابة عنك لضمان أمانك.
+                    لا تشتري عقاراً قبل التأكد من "تسلسل الملكية" وعدادات المرافق. نحن في سمسار طلبك نقوم بالفحص القانوني الكامل نيابة عنك لضمان استثمار آمن 100%.
                 </p>
             </div>
         </div>
@@ -178,8 +232,7 @@ body_class: "homepage"
 
   @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
   
-  /* تأثير الهوفر على رابط المرشد المحلي */
   .stat-box:hover {
       transform: translateY(-5px);
   }
-     </style>
+                     </style>
