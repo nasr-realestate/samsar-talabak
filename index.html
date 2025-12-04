@@ -2,7 +2,7 @@
 layout: default
 title: "سمسار طلبك | بوابتك العقارية الأولى في مدينة نصر"
 description: "وسيطك العقاري الموثوق في مدينة نصر. تصفح أحدث الشقق للبيع والإيجار ببرج الزهراء والمناطق المميزة. نضمن لك الشفافية، السرعة، وأفضل سعر سوقي."
-image: "https://i.postimg.cc/vThyM5fJ/dwn-ʿnwan-(1200-x-630-byksl)-20251203-221216-0000.webp"
+image: "https://i.postimg.cc/rmJ8kVmK/صور_شقه_برج_الزهراء_الثانيه.webp"
 body_class: "homepage"
 ---
 
@@ -19,36 +19,30 @@ body_class: "homepage"
          style="filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.4));">
   </div>
 
-  <!-- العنوان الرئيسي (H1 مهم جداً للسيو) -->
+  <!-- العنوان الرئيسي -->
   <h1>
     أهلاً بك في <br>
     <span style="color: var(--color-primary);">سمسار طلبك</span>
   </h1>
 
-  <!-- الوصف التعريفي -->
   <p>
     بوابتك العقارية الأولى في مدينة نصر <br>
     <span style="font-size: 0.9em; opacity: 0.8; margin-top: 10px; display: inline-block;">شفافية • سرعة • أفضل سعر</span>
   </p>
 
-  <!-- أزرار الخدمات الرئيسية (Call to Action) -->
+  <!-- أزرار الخدمات الرئيسية -->
   <div class="hero-buttons">
-    
-    <!-- زر عرض العقارات (ذهبي) -->
     <a href="{{ '/properties-filtered.html?highlight=apartments' | relative_url }}" class="nav-btn properties" aria-label="تصفح العقارات المتاحة">
       <i class="fas fa-search-location" style="margin-left: 10px;"></i>
       تصفح العروض المتاحة
     </a>
-
-    <!-- زر طلبات العملاء (شفاف) -->
     <a href="{{ '/requests-filtered.html?highlight=apartments' | relative_url }}" class="nav-btn requests" aria-label="طلبات العقارات">
       <i class="fas fa-clipboard-list" style="margin-left: 10px;"></i>
       طلبات العملاء
     </a>
-
   </div>
 
-  <!-- ✨ الصندوق السحري: (تعبت من اللف؟) - لربط الموقع بالفيديو -->
+  <!-- الصندوق السحري (تعبت من اللف؟) -->
   <div class="pain-point-box" style="margin-top: 3.5rem; max-width: 600px; padding: 20px 30px; border: 1px solid var(--color-border-light); border-radius: 15px; background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
       <h3 style="color: var(--color-primary); font-size: 1.2rem; margin-bottom: 8px;">
           <i class="far fa-question-circle"></i> تعبت من اللف وتفاوت الأسعار؟
@@ -58,31 +52,13 @@ body_class: "homepage"
       </p>
   </div>
 
-  <!-- أيقونات الخدمات السريعة (للمظهر الجمالي) -->
-  <div class="services-preview" style="display: flex; gap: 40px; justify-content: center; margin-top: 3rem; flex-wrap: wrap; opacity: 0.7;">
-    <div style="text-align: center; color: var(--color-text-secondary);">
-      <i class="fas fa-key" style="font-size: 1.5rem; color: var(--color-primary); margin-bottom: 8px;"></i>
-      <div style="font-size: 0.8rem;">شقق إيجار</div>
-    </div>
-    <div style="text-align: center; color: var(--color-text-secondary);">
-      <i class="fas fa-home" style="font-size: 1.5rem; color: var(--color-primary); margin-bottom: 8px;"></i>
-      <div style="font-size: 0.8rem;">شقق تمليك</div>
-    </div>
-    <div style="text-align: center; color: var(--color-text-secondary);">
-      <i class="fas fa-store" style="font-size: 1.5rem; color: var(--color-primary); margin-bottom: 8px;"></i>
-      <div style="font-size: 0.8rem;">تجاري وإداري</div>
-    </div>
-  </div>
-
 </section>
 
 <!-- =========================================================
-     2. قسم الدسامة (أحدث الفرص والطلبات) - ديناميكي
+     2. قسم الدسامة (أحدث الفرص والطلبات)
      ========================================================= -->
 <section id="latest-opportunities" style="padding: 4rem 2rem; background: var(--color-surface-1); border-top: 1px solid #222; position: relative; z-index: 2;">
     <div style="max-width: 1200px; margin: 0 auto;">
-        
-        <!-- عنوان القسم -->
         <div style="text-align: center; margin-bottom: 3rem;">
             <h2 style="font-size: 2rem; color: var(--color-primary); margin-bottom: 10px; font-weight: 800;">
                 <i class="fas fa-bolt" style="color: var(--color-secondary);"></i> نبض السوق العقاري
@@ -90,58 +66,112 @@ body_class: "homepage"
             <p style="color: var(--color-text-secondary);">أحدث الفرص العقارية وطلبات الشراء، لحظة بلحظة</p>
         </div>
 
-        <!-- الحاوية التي سيملاها الجافاسكربت (home-featured.js) -->
         <div id="featured-container" class="properties-grid">
-            <!-- مؤشر التحميل (يختفي عند جلب البيانات) -->
             <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #666;">
                 <div class="loading-spinner" style="border: 3px solid #333; border-top-color: var(--color-primary); width: 40px; height: 40px; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem auto;"></div>
                 <span>جاري الاتصال بالسوق...</span>
             </div>
         </div>
 
-        <!-- زر المزيد -->
         <div style="text-align: center; margin-top: 3rem;">
             <a href="{{ '/properties-filtered.html' | relative_url }}" class="nav-btn" style="background: transparent; border: 1px solid #444; color: #ccc; font-size: 0.9rem; padding: 12px 30px;">
                 استعراض كل الفرص المتاحة <i class="fas fa-arrow-left" style="margin-right: 5px;"></i>
             </a>
         </div>
-
     </div>
 </section>
 
 <!-- =========================================================
-     3. ملفات الجافاسكربت وتنسيقات الحركة
+     3. ✨ جديد: قسم الثقة والأرقام (أرقامنا تتحدث)
      ========================================================= -->
+<section class="trust-section" style="background: url('https://i.postimg.cc/rmJ8kVmK/صور_شقه_برج_الزهراء_الثانيه.webp') fixed center; position: relative; padding: 5rem 2rem;">
+    <!-- طبقة تعتيم -->
+    <div style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85);"></div>
+    
+    <div style="position: relative; z-index: 2; max-width: 1000px; margin: 0 auto; text-align: center;">
+        <h2 style="color: #fff; font-size: 2.2rem; margin-bottom: 3rem;">أرقام تبني الثقة</h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px;">
+            <!-- المشاهدات (حقيقي) -->
+            <div class="stat-box">
+                <i class="fas fa-eye" style="font-size: 3rem; color: var(--color-primary); margin-bottom: 15px;"></i>
+                <div style="font-size: 2.5rem; font-weight: 900; color: #fff;">+15M</div>
+                <div style="color: #aaa; font-size: 1rem;">مشاهدة على خرائط جوجل</div>
+            </div>
+            
+            <!-- المستوى (حقيقي) -->
+            <div class="stat-box">
+                <i class="fas fa-medal" style="font-size: 3rem; color: #fce205; margin-bottom: 15px;"></i>
+                <div style="font-size: 2.5rem; font-weight: 900; color: #fff;">Level 7</div>
+                <div style="color: #aaa; font-size: 1rem;">مرشد محلي موثوق (Google Local Guide)</div>
+            </div>
 
-<!-- استدعاء سكريبت الصفحة الرئيسية (تأكد من إنشاء هذا الملف في assets/js/) -->
+            <!-- الخبرة -->
+            <div class="stat-box">
+                <i class="fas fa-calendar-check" style="font-size: 3rem; color: var(--color-primary); margin-bottom: 15px;"></i>
+                <div style="font-size: 2.5rem; font-weight: 900; color: #fff;">2014</div>
+                <div style="color: #aaa; font-size: 1rem;">سنة التأسيس والخبرة</div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 3rem;">
+            <a href="https://maps.app.goo.gl/hr3dndj1dwMvXaNz5" target="_blank" style="color: var(--color-primary); text-decoration: none; border-bottom: 1px solid var(--color-primary);">
+                شاهد تقييماتنا على خرائط جوجل <i class="fas fa-external-link-alt"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================
+     4. ✨ جديد: قسم نصائح الخبراء (محتوى تعليمي)
+     ========================================================= -->
+<section class="tips-section" style="padding: 4rem 2rem; background: var(--color-surface-1);">
+    <div style="max-width: 1000px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <h2 style="color: var(--color-primary); font-size: 1.8rem;">نصائح عقارية من الخبراء</h2>
+            <p style="color: #888;">دليلك المختصر قبل البيع أو الشراء</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            <!-- نصيحة 1 -->
+            <div class="tip-card" style="background: var(--color-surface-2); padding: 25px; border-radius: 15px; border: 1px solid var(--color-border-light);">
+                <i class="fas fa-paint-roller" style="font-size: 2rem; color: var(--color-secondary); margin-bottom: 15px;"></i>
+                <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 10px;">كيف تجهز شقتك للبيع؟</h3>
+                <p style="color: #aaa; font-size: 0.95rem; line-height: 1.6;">
+                    التفاصيل الصغيرة تفرق! دهان الحوائط بألوان فاتحة، إصلاح السباكة الظاهرة، وتنظيف الشقة جيداً قبل المعاينة قد يرفع سعر عقارك بنسبة 10% ويسرع البيع.
+                </p>
+            </div>
+
+            <!-- نصيحة 2 -->
+            <div class="tip-card" style="background: var(--color-surface-2); padding: 25px; border-radius: 15px; border: 1px solid var(--color-border-light);">
+                <i class="fas fa-file-contract" style="font-size: 2rem; color: var(--color-secondary); margin-bottom: 15px;"></i>
+                <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 10px;">نصيحة قبل الشراء</h3>
+                <p style="color: #aaa; font-size: 0.95rem; line-height: 1.6;">
+                    لا تنخدع بالمظاهر فقط. تأكد دائماً من "تسلسل الملكية" وعدادات المرافق. في سمسار طلبك، نقوم بمراجعة الأوراق القانونية نيابة عنك لضمان أمانك.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- استدعاء السكربت والستايل -->
 <script src="{{ '/assets/js/home-featured.js' | relative_url }}"></script>
 
 <style>
-  /* 1. حركة الطفو للوجو */
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
-  }
-
-  /* 2. أنيميشن التحميل */
-  @keyframes spin { 
-    to { transform: rotate(360deg); } 
-  }
-
-  /* 3. ترتيب ظهور العناصر (تسلسل زمني) */
-  .home-hero h1, .home-hero p, .hero-buttons, .pain-point-box, .services-preview {
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  
+  .home-hero h1, .home-hero p, .hero-buttons, .pain-point-box, .stat-box {
     animation: fadeInUp 1s ease-out forwards;
     opacity: 0;
   }
-  
   .home-hero h1 { animation-delay: 0.2s; }
   .home-hero p { animation-delay: 0.4s; }
   .hero-buttons { animation-delay: 0.6s; }
-  .pain-point-box { animation-delay: 1.0s; } /* يظهر بعد الأزرار لتأكيد القرار */
-  .services-preview { animation-delay: 1.4s; }
+  .pain-point-box { animation-delay: 1.0s; }
+  .stat-box:nth-child(1) { animation-delay: 0.2s; }
+  .stat-box:nth-child(2) { animation-delay: 0.4s; }
+  .stat-box:nth-child(3) { animation-delay: 0.6s; }
 
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 </style>
