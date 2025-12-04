@@ -6,54 +6,6 @@ image: "https://i.postimg.cc/rmJ8kVmK/صور_شقه_برج_الزهراء_الث
 body_class: "homepage"
 ---
 
-<head>
-  <!-- JSON-LD للتعريف بالنشاط التجاري -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "RealEstateAgent",
-    "name": "سمسار طلبك",
-    "founder": {
-      "@type": "Person",
-      "name": "طارق طنطاوي"
-    },
-    "description": "بوابتك العقارية الأولى في مدينة نصر. بيع، شراء، إيجار شقق ومكاتب ومحلات تجارية بأفضل الأسعار وبشفافية تامة.",
-    "url": "https://nasr-realestate.github.io/samsar-talabak",
-    "logo": "https://i.postimg.cc/Y9c5f6K1/ed53e000_aacd_11f0_8000_6ff54186278f.png",
-    "image": "https://i.postimg.cc/rmJ8kVmK/صور_شقه_برج_الزهراء_الثانيه.webp",
-    "telephone": "+20 114 775 8857",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "16 Mohammed Hasan El-Gamal, Al Mintaqah as Sādisah",
-      "addressLocality": "Nasr City",
-      "addressRegion": "Cairo Governorate",
-      "postalCode": "11371",
-      "addressCountry": "EG"
-    },
-    "openingHoursSpecification": [
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Saturday"
-        ],
-        "opens": "12:00",
-        "closes": "21:00"
-      }
-    ],
-    "sameAs": [
-      "https://www.facebook.com/Tarekonly",
-      "https://www.linkedin.com/in/tarek-tantawy-444269162?utm_source=share_via&utm_content=profile&utm_medium=member_android",
-      "https://pin.it/ZfAsMoqPC",
-      "https://maps.app.goo.gl/hr3dndj1dwMvXaNz5?g_st=ac"
-    ]
-  }
-  </script>
-</head>
-
 <!-- =========================================================
      1. الواجهة السينمائية (Hero Section)
      ========================================================= -->
@@ -79,7 +31,7 @@ body_class: "homepage"
     <span style="font-size: 0.9em; opacity: 0.8; margin-top: 10px; display: inline-block;">شفافية • سرعة • أفضل سعر</span>
   </p>
 
-  <!-- أزرار الخدمات الرئيسية -->
+  <!-- أزرار الخدمات الرئيسية (Call to Action) -->
   <div class="hero-buttons">
     <a href="{{ '/properties-filtered.html?highlight=apartments' | relative_url }}" class="nav-btn properties" aria-label="تصفح العقارات المتاحة">
       <i class="fas fa-search-location" style="margin-left: 10px;"></i>
@@ -92,7 +44,7 @@ body_class: "homepage"
   </div>
 
   <!-- الصندوق السحري -->
-  <div class="pain-point-box" style="margin-top: 3.5rem; max-width: 600px; padding: 20px 30px; border: 1px solid var(--color-border-light); border-radius: 15px; background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+  <div class="pain-point-box" style="margin-top: 3.5rem; max-width: 600px; padding: 20px 30px; border-radius: 15px; background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
       <h3 style="color: var(--color-primary); font-size: 1.2rem; margin-bottom: 8px;">
           <i class="far fa-question-circle"></i> تعبت من اللف وتفاوت الأسعار؟
       </h3>
@@ -116,13 +68,12 @@ body_class: "homepage"
       <div style="font-size: 0.8rem;">تجاري وإداري</div>
     </div>
   </div>
-
 </section>
 
 <!-- =========================================================
-     2. أحدث الفرص العقارية
+     2. قسم الفرص والطلبات الديناميكي
      ========================================================= -->
-<section id="latest-opportunities" style="padding: 4rem 2rem; background: var(--color-surface-1); border-top: 1px solid #222; position: relative; z-index: 2;">
+<section id="latest-opportunities" style="padding: 4rem 2rem; background: var(--color-surface-1); border-top: 1px solid #222;">
     <div style="max-width: 1200px; margin: 0 auto;">
         
         <div style="text-align: center; margin-bottom: 3rem;">
@@ -144,26 +95,62 @@ body_class: "homepage"
                 استعراض كل الفرص المتاحة <i class="fas fa-arrow-left" style="margin-right: 5px;"></i>
             </a>
         </div>
-
     </div>
 </section>
 
 <!-- =========================================================
-     3. استدعاء سكريبتات وحركات
+     3. استدعاء الفوتر الموحد
+     ========================================================= -->
+{% include footer.html %}
+
+<!-- =========================================================
+     4. السكربتات والستايلات
      ========================================================= -->
 <script src="{{ '/assets/js/home-featured.js' | relative_url }}"></script>
 
 <style>
-  @keyframes float { 0%,100%{transform:translateY(0);}50%{transform:translateY(-15px);} }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .home-hero h1, .home-hero p, .hero-buttons, .pain-point-box, .services-preview { animation: fadeInUp 1s ease-out forwards; opacity:0; }
-  .home-hero h1 { animation-delay:0.2s; } .home-hero p{animation-delay:0.4s;}
-  .hero-buttons{animation-delay:0.6s;} .pain-point-box{animation-delay:1.0s;}
-  .services-preview{animation-delay:1.4s;}
-  @keyframes fadeInUp { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:translateY(0);} }
+  @keyframes float {0%,100%{transform:translateY(0);}50%{transform:translateY(-15px);}}
+  @keyframes spin {to{transform:rotate(360deg);}}
+  .home-hero h1, .home-hero p, .hero-buttons, .pain-point-box, .services-preview {animation: fadeInUp 1s ease-out forwards;opacity:0;}
+  .home-hero h1{animation-delay:0.2s;} .home-hero p{animation-delay:0.4s;} .hero-buttons{animation-delay:0.6s;}
+  .pain-point-box{animation-delay:1s;} .services-preview{animation-delay:1.4s;}
+  @keyframes fadeInUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
 </style>
 
 <!-- =========================================================
-     4. الفوتر
+     5. JSON-LD لتعريف الشركة لجوجل
      ========================================================= -->
-{% include footer.html %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "RealEstateAgent",
+  "name": "سمسار طلبك",
+  "image": "https://i.postimg.cc/Y9c5f6K1/ed53e000_aacd_11f0_8000_6ff54186278f.png",
+  "url": "https://nasr-realestate.github.io/samsar-talabak",
+  "telephone": "+201147758857",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "16 Mohammed Hasan El-Gamal, Al Mintaqah as Sādisah",
+    "addressLocality": "Nasr City",
+    "addressRegion": "Cairo Governorate",
+    "postalCode": "11371",
+    "addressCountry": "EG"
+  },
+  "sameAs": [
+    "https://www.facebook.com/Tarekonly",
+    "https://www.linkedin.com/in/tarek-tantawy-444269162",
+    "https://pin.it/ZfAsMoqPC",
+    "https://maps.app.goo.gl/hr3dndj1dwMvXaNz5?g_st=ac"
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday", "Tuesday", "Wednesday", "Thursday", "Saturday", "Sunday"
+      ],
+      "opens": "12:00",
+      "closes": "21:00"
+    }
+  ]
+}
+</script>
