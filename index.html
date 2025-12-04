@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "سمسار طلبك | بوابتك العقارية الأولى في مدينة نصر"
-description: "وسيطك العقاري الموثوق في مدينة نصر. تصفح أحدث الشقق للبيع والإيجار ببرج الزهراء والمناطق المميزة. نضمن لك الشفافية، السرعة، وأفضل سعر سوقي."
+description: "وسيطك العقاري الموثوق في مدينة نصر. تصفح أحدث الشقق و المحلات والمكاتب الإداريه للبيع والإيجار. نضمن لك الشفافية، السرعة، وأفضل سعر سوقي."
 image: "https://i.postimg.cc/rmJ8kVmK/صور_شقه_برج_الزهراء_الثانيه.webp"
 body_class: "homepage"
 ---
@@ -99,11 +99,13 @@ body_class: "homepage"
                 <div style="color: #aaa; font-size: 1rem;">مشاهدة على خرائط جوجل</div>
             </div>
             
-            <!-- المستوى (حقيقي) -->
-            <div class="stat-box">
-                <i class="fas fa-medal" style="font-size: 3rem; color: #fce205; margin-bottom: 15px;"></i>
-                <div style="font-size: 2.5rem; font-weight: 900; color: #fff;">Level 7</div>
-                <div style="color: #aaa; font-size: 1rem;">مرشد محلي موثوق (Google Local Guide)</div>
+            <!-- المستوى (حقيقي) - تم ربطه ببروفايل المرشد المحلي -->
+            <div class="stat-box" style="cursor: pointer; transition: transform 0.3s ease;">
+                <a href="https://maps.app.goo.gl/YMXq48W16dg1EcseA?g_st=ac" target="_blank" style="text-decoration: none; display: block;">
+                    <i class="fas fa-medal" style="font-size: 3rem; color: #fce205; margin-bottom: 15px;"></i>
+                    <div style="font-size: 2.5rem; font-weight: 900; color: #fff;">Level 7</div>
+                    <div style="color: #aaa; font-size: 1rem;">مرشد محلي موثوق <i class="fas fa-external-link-alt" style="font-size: 0.8rem;"></i></div>
+                </a>
             </div>
 
             <!-- الخبرة -->
@@ -114,9 +116,10 @@ body_class: "homepage"
             </div>
         </div>
         
+        <!-- رابط التقييمات - تم التعديل -->
         <div style="margin-top: 3rem;">
-            <a href="https://maps.app.goo.gl/hr3dndj1dwMvXaNz5" target="_blank" style="color: var(--color-primary); text-decoration: none; border-bottom: 1px solid var(--color-primary);">
-                شاهد تقييماتنا على خرائط جوجل <i class="fas fa-external-link-alt"></i>
+            <a href="https://search.google.com/local/reviews?placeid=ChIJa3zQ32w-WBQRIxuJURKnXOI" target="_blank" style="color: var(--color-primary); text-decoration: none; border-bottom: 1px solid var(--color-primary); padding-bottom: 5px; transition: all 0.3s;">
+                شاهد تقييماتنا وآراء العملاء على خرائط جوجل <i class="fas fa-star" style="margin-right: 5px; color: #fce205;"></i>
             </a>
         </div>
     </div>
@@ -174,4 +177,9 @@ body_class: "homepage"
   .stat-box:nth-child(3) { animation-delay: 0.6s; }
 
   @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-</style>
+  
+  /* تأثير الهوفر على رابط المرشد المحلي */
+  .stat-box:hover {
+      transform: translateY(-5px);
+  }
+     </style>
