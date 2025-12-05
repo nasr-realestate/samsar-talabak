@@ -1,6 +1,6 @@
 /**
  * 🏠 سمسار طلبك - الرادار الذكي (Browser-Side Sorting)
- * v10.0 - يقوم بالترتيب داخل المتصفح لضمان الدقة
+ * v10.1 - يقوم بالترتيب داخل المتصفح ويختار أحدث العناصر بذكاء
  */
 
 class HomeGlobalScanner {
@@ -37,25 +37,32 @@ class HomeGlobalScanner {
             }
 
             // 2. الترتيب الزمني الحقيقي (الأحدث في الأعلى)
-            // هنا يكمن السر: المتصفح يقرأ التواريخ ويرتب بناءً عليها
             allItems.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
 
-            // 3. اختيار العينة (2 عرض + 1 طلب)
+            // 3. *** التعديل الرئيسي: اختيار العينة بذكاء ***
+            // سنقوم بالمرور على القائمة المرتبة ونختار أول عرضين وأول طلب نجدهم
             let finalDisplay = [];
-            
-            // نأخذ أحدث العروض (بيع أو إيجار)
-            const offers = allItems.filter(i => i.sourceType === 'offer');
-            if (offers.length > 0) finalDisplay.push(offers[0]);
-            if (offers.length > 1) finalDisplay.push(offers[1]);
+            let offerCount = 0;
+            let requestCount = 0;
+            const MAX_OFFERS = 2;
+            const MAX_REQUESTS = 1;
 
-            // نأخذ أحدث طلب
-            const requests = allItems.filter(i => i.sourceType === 'request');
-            if (requests.length > 0) finalDisplay.push(requests[0]);
+            for (const item of allItems) {
+                if (item.sourceType === 'offer' && offerCount < MAX_OFFERS) {
+                    finalDisplay.push(item);
+                    offerCount++;
+                } else if (item.sourceType === 'request' && requestCount < MAX_REQUESTS) {
+                    finalDisplay.push(item);
+                    requestCount++;
+                }
 
-            // ترتيب العينة النهائية للعرض
-            finalDisplay.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+                // نتوقف عندما نجمع العدد المطلوب من العروض والطلبات
+                if (offerCount === MAX_OFFERS && requestCount === MAX_REQUESTS) {
+                    break;
+                }
+            }
 
-            // 4. العرض
+            // 4. العرض (لا حاجة لإعادة الترتيب لأن القائمة أصلاً مرتبة)
             this.renderItems(finalDisplay);
 
         } catch (error) {
@@ -73,11 +80,7 @@ class HomeGlobalScanner {
             const files = await response.json();
             if (!files || files.length === 0) return [];
 
-            // 💡 الذكاء هنا:
-            // بما أن الملفات غير مرتبة في السيرفر، سنجلبها كلها (أو عينة كبيرة منها)
-            // ونترك المتصفح يختار الأحدث. هذا يضمن عدم تفويت أي ملف جديد.
-            // نأخذ عينة (آخر 6 ملفات في القائمة عشوائياً) لتسريع الموقع
-            // (عادة الملفات الجديدة تضاف في الآخر حتى بدون ترتيب دقيق)
+            // نأخذ عينة (آخر 6 ملفات في القائمة) لتسريع الموقع
             const sampleFiles = files.slice(-6); 
 
             const itemPromises = sampleFiles.map(filename => 
