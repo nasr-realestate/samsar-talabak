@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>سمسار طلبك - بطاقة مشاركة الطلبات</title>
+    <title>سمسار طلبك - بطاقة تفاصيل العرض</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
             font-family: 'Cairo', sans-serif;
         }
 
-        /* نفس الحاوية الفخمة */
+        /* الحاوية الرئيسية (نفس الأبعاد القياسية) */
         .design-card {
             width: 1200px;
             height: 630px;
@@ -30,12 +30,13 @@
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 40px 60px;
+            padding: 45px 60px;
             border: 4px solid #d4af37;
             overflow: hidden;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            box-shadow: 0 0 60px rgba(212, 175, 55, 0.1);
         }
 
+        /* الخلفية الزخرفية */
         .design-card::before {
             content: '';
             position: absolute;
@@ -44,26 +45,25 @@
             z-index: 0;
         }
 
-        /* --- الأيقونات (تم تغييرها لتعبر عن الطلب والبحث) --- */
+        /* --- الأيقونات (تعبر عن التفاصيل والمفتاح) --- */
         .icons-top {
             display: flex;
-            gap: 40px;
+            gap: 30px;
             align-items: center;
-            margin-top: 10px;
+            margin-top: 15px;
             z-index: 1;
-            opacity: 0.8;
         }
 
-        .icon-users {
+        .icon-file {
             font-size: 70px;
             color: transparent;
-            -webkit-text-stroke: 2px #d4af37; /* مفرغة ذهبي */
+            -webkit-text-stroke: 2px #d4af37; /* مفرغة */
         }
         
-        .icon-search {
+        .icon-key {
             font-size: 65px;
             color: #d4af37; /* ذهبي مملوء */
-            transform: rotate(0deg);
+            transform: rotate(-45deg);
         }
 
         /* --- النصوص --- */
@@ -79,8 +79,8 @@
         }
 
         h1 {
-            font-size: 80px; /* تكبير الخط قليلاً */
-            line-height: 1.1;
+            font-size: 80px;
+            line-height: 1.2;
             color: #ffffff;
             font-weight: 900;
             margin: 0;
@@ -88,21 +88,22 @@
         }
 
         .gold-line {
-            width: 150px;
+            width: 180px;
             height: 6px;
             background: linear-gradient(90deg, transparent, #d4af37, transparent);
-            margin: 30px auto;
+            margin: 25px auto;
             border-radius: 4px;
         }
 
         h2 {
-            font-size: 40px;
+            font-size: 38px;
             color: #cccccc;
             font-weight: 700;
             margin: 0;
+            letter-spacing: 1px;
         }
 
-        /* --- التذييل --- */
+        /* --- التذييل الموحد --- */
         .footer {
             width: 100%;
             display: flex;
@@ -113,11 +114,7 @@
             z-index: 1;
         }
 
-        .footer-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
+        .footer-right { display: flex; align-items: center; gap: 20px; }
         
         .logo-img {
             height: 90px;
@@ -158,20 +155,21 @@
 
     <div class="design-card">
         
-        <!-- أيقونات تعبر عن (عملاء + بحث) -->
+        <!-- أيقونات: ملف التفاصيل + مفتاح الاستلام -->
         <div class="icons-top">
-            <i class="fas fa-users icon-users"></i>
-            <i class="fas fa-search-dollar icon-search"></i>
+            <i class="fas fa-file-contract icon-file"></i>
+            <i class="fas fa-key icon-key"></i>
         </div>
 
-        <!-- النص الرئيسي القوي -->
+        <!-- النص الرئيسي -->
         <div class="main-content">
-            <h1>طلبات جادة..<br>ومشترين <span style="color: #d4af37;">جاهزين</span></h1>
+            <h1>التفاصيل الكاملة..<br>لعقارك <span style="color: #d4af37;">المثالي</span></h1>
             <div class="gold-line"></div>
-            <h2>هل عقارك هو ما يبحثون عنه؟</h2>
+            <!-- العناصر التي تجذب المشتري -->
+            <h2>المواصفات • الموقع • السعر</h2>
         </div>
 
-        <!-- التذييل الموحد -->
+        <!-- التذييل (نفس تذييل البطاقات السابقة للتوحيد) -->
         <div class="footer">
             <div class="footer-right">
                 <img src="https://i.postimg.cc/Y9c5f6K1/ed53e000_aacd_11f0_8000_6ff54186278f.png" alt="سمسار طلبك" class="logo-img">
