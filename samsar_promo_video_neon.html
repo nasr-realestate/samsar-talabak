@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>سمسار طلبك - بطاقة تفاصيل العرض</title>
+    <title>سمسار طلبك - بطاقة تفاصيل الطلب</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
             font-family: 'Cairo', sans-serif;
         }
 
-        /* الحاوية الرئيسية (نفس الأبعاد القياسية) */
+        /* الحاوية المتطابقة مع سابقاتها */
         .design-card {
             width: 1200px;
             height: 630px;
@@ -36,7 +36,6 @@
             box-shadow: 0 0 60px rgba(212, 175, 55, 0.1);
         }
 
-        /* الخلفية الزخرفية */
         .design-card::before {
             content: '';
             position: absolute;
@@ -45,7 +44,7 @@
             z-index: 0;
         }
 
-        /* --- الأيقونات (تعبر عن التفاصيل والمفتاح) --- */
+        /* --- الأيقونات (بحث وتدقيق) --- */
         .icons-top {
             display: flex;
             gap: 30px;
@@ -54,16 +53,16 @@
             z-index: 1;
         }
 
-        .icon-file {
+        .icon-search-loc {
             font-size: 70px;
             color: transparent;
             -webkit-text-stroke: 2px #d4af37; /* مفرغة */
         }
         
-        .icon-key {
+        .icon-list-check {
             font-size: 65px;
-            color: #d4af37; /* ذهبي مملوء */
-            transform: rotate(-45deg);
+            color: #d4af37; /* مملوءة */
+            transform: rotate(-5deg);
         }
 
         /* --- النصوص --- */
@@ -155,21 +154,20 @@
 
     <div class="design-card">
         
-        <!-- أيقونات: ملف التفاصيل + مفتاح الاستلام -->
+        <!-- الأيقونات: بحث في موقع + قائمة المواصفات -->
         <div class="icons-top">
-            <i class="fas fa-file-contract icon-file"></i>
-            <i class="fas fa-key icon-key"></i>
+            <i class="fas fa-search-location icon-search-loc"></i>
+            <i class="fas fa-clipboard-list icon-list-check"></i>
         </div>
 
         <!-- النص الرئيسي -->
         <div class="main-content">
-            <h1>التفاصيل الكاملة..<br>لعقارك <span style="color: #d4af37;">المثالي</span></h1>
+            <h1>مواصفات الطلب..<br>والميزانية <span style="color: #d4af37;">المحددة</span></h1>
             <div class="gold-line"></div>
-            <!-- العناصر التي تجذب المشتري -->
-            <h2>المواصفات • الموقع • السعر</h2>
+            <h2>هل عقارك يطابق هذه المواصفات؟</h2>
         </div>
 
-        <!-- التذييل (نفس تذييل البطاقات السابقة للتوحيد) -->
+        <!-- التذييل الموحد -->
         <div class="footer">
             <div class="footer-right">
                 <img src="https://i.postimg.cc/Y9c5f6K1/ed53e000_aacd_11f0_8000_6ff54186278f.png" alt="سمسار طلبك" class="logo-img">
