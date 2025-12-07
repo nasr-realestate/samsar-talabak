@@ -2,8 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>Samsar Talabak - Royal Gold Edition</title>
-    <!-- خط الموقع الرسمي -->
+    <title>سمسار طلبك - بطاقة مشاركة العروض</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap" rel="stylesheet">
@@ -13,7 +12,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         body {
-            background-color: #222; /* خلفية خارجية فقط */
+            background-color: #111; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -21,137 +20,176 @@
             font-family: 'Cairo', sans-serif;
         }
 
-        /* --- الكارت (بنفس هوية الموقع تماماً) --- */
-        .royal-card {
+        /* حاوية الصورة (أبعاد فيسبوك ولينكدإن المثالية 1.91:1) */
+        .design-card {
             width: 1200px;
-            height: 800px;
-            /* الخلفية الملكية السوداء المتدرجة */
-            background-color: #050505;
-            background-image: radial-gradient(circle at 50% 30%, #1a1a1a 0%, #000000 80%);
+            height: 630px; /* تم تعديل الارتفاع ليكون مثالياً للمشاركة */
+            /* خلفية متدرجة فخمة تشبه الموقع */
+            background: radial-gradient(circle at 50% 30%, #1a1a2e 0%, #050505 100%);
             position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 60px;
+            border: 4px solid #d4af37; /* إطار ذهبي */
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        }
+
+        /* --- خلفية زخرفية خفيفة --- */
+        .design-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: 0;
+        }
+
+        /* --- القسم العلوي: الأيقونات --- */
+        .icons-top {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            margin-top: 10px;
+            z-index: 1;
+            opacity: 0.8;
+        }
+
+        .icon-city {
+            font-size: 70px;
+            color: transparent;
+            -webkit-text-stroke: 2px #d4af37; /* ذهبي */
+        }
+        
+        .icon-handshake {
+            font-size: 70px;
+            color: #d4af37; /* ذهبي */
+            transform: rotate(-10deg);
+        }
+
+        /* --- القسم الأوسط: النصوص --- */
+        .main-content {
+            text-align: center;
+            width: 100%;
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            border: 6px solid #d4af37; /* إطار ذهبي سميك */
-            overflow: hidden;
-            padding: 40px;
-        }
-
-        /* تأثيرات خلفية خفيفة (ملمس الموقع) */
-        .bg-pattern {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
             z-index: 1;
         }
 
-        /* --- 1. الشعار الحقيقي --- */
-        .logo-container {
-            z-index: 2;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.3)); /* توهج ذهبي خفيف */
-        }
-        
-        .logo-container img {
-            width: 280px; /* حجم مثالي */
-            height: auto;
-        }
-
-        /* --- 2. النصوص --- */
-        .content {
-            z-index: 2;
-            text-align: center;
-            width: 100%;
-        }
-
         h1 {
-            font-size: 90px;
+            font-size: 75px;
             line-height: 1.2;
+            color: #ffffff;
             font-weight: 900;
-            margin: 10px 0;
-            /* النص الذهبي المتدرج (هوية الموقع) */
-            background: linear-gradient(to bottom, #d4af37, #fffeb3, #b38f1d);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            margin: 0;
             text-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
 
-        .gold-divider {
-            width: 200px;
-            height: 5px;
+        /* الخط الذهبي الفاصل */
+        .gold-line {
+            width: 150px;
+            height: 6px;
             background: linear-gradient(90deg, transparent, #d4af37, transparent);
-            margin: 30px auto;
-            border-radius: 5px;
+            margin: 25px auto;
+            border-radius: 4px;
         }
 
         h2 {
-            font-size: 45px;
-            color: #cccccc; /* فضي فاتح */
-            font-weight: 400;
+            font-size: 38px;
+            color: #cccccc;
+            font-weight: 700;
             margin: 0;
         }
 
-        /* --- 3. التذييل --- */
+        /* --- القسم السفلي: التذييل (الشعار والاتصال) --- */
         .footer {
-            z-index: 2;
-            position: absolute;
-            bottom: 0;
             width: 100%;
-            padding: 30px 60px;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            padding-top: 20px;
+            border-top: 1px solid rgba(212, 175, 55, 0.3); /* خط فاصل ذهبي خفيف */
+            z-index: 1;
         }
 
-        .website-url {
-            color: #d4af37;
-            font-size: 35px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            font-family: sans-serif;
+        .footer-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        /* تنسيق الشعار */
+        .logo-img {
+            height: 90px; /* حجم مناسب جداً */
+            width: auto;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.2));
         }
 
-        .phone-number {
-            color: #fff;
-            font-size: 40px;
-            font-weight: 700;
+        .footer-left {
             display: flex;
             align-items: center;
             gap: 15px;
+            color: #ffffff;
+            font-size: 35px;
+            font-weight: 700;
+            background: rgba(255,255,255,0.05);
+            padding: 10px 25px;
+            border-radius: 50px;
+            border: 1px solid #333;
         }
-        
-        .phone-number i {
+
+        .phone-icon {
+            transform: rotate(90deg);
+            font-size: 30px;
+            color: #d4af37; /* ذهبي */
+        }
+
+        .site-url {
+            font-size: 24px;
             color: #d4af37;
+            margin-right: 20px;
+            font-family: sans-serif;
+            letter-spacing: 1px;
         }
 
     </style>
 </head>
 <body>
 
-    <div class="royal-card">
-        <div class="bg-pattern"></div>
-
-        <!-- 1. الشعار الحقيقي -->
-        <div class="logo-container">
-            <img src="https://i.postimg.cc/Y9c5f6K1/ed53e000_aacd_11f0_8000_6ff54186278f.png" alt="سمسار طلبك">
+    <div class="design-card">
+        
+        <!-- الأيقونات التعبيرية -->
+        <div class="icons-top">
+            <i class="fas fa-building icon-city"></i>
+            <i class="fas fa-handshake icon-handshake"></i>
         </div>
 
-        <!-- 2. النص الملكي -->
-        <div class="content">
-            <h1>لا تبحث عن شقة..<br>بل امتلك أسلوب حياة</h1>
-            <div class="gold-divider"></div>
+        <!-- النص الرئيسي -->
+        <div class="main-content">
+            <h1>لا تبحث عن شقة..<br>بل امتلك <span style="color: #d4af37;">أسلوب حياة</span></h1>
+            <div class="gold-line"></div>
             <h2>القائمة المختارة لأرقى عقارات مدينة نصر</h2>
         </div>
 
-        <!-- 3. التذييل -->
+        <!-- التذييل (الشعار والبيانات) -->
         <div class="footer">
-            <div class="website-url">SAMSAR TALABAK</div>
-            <div class="phone-number">
+            
+            <!-- الشعار في اليمين (البداية) -->
+            <div class="footer-right">
+                <img src="https://i.postimg.cc/Y9c5f6K1/ed53e000_aacd_11f0_8000_6ff54186278f.png" alt="سمسار طلبك" class="logo-img">
+            </div>
+
+            <!-- رابط الموقع -->
+            <div class="site-url">aqarnasr.netlify.app</div>
+
+            <!-- رقم الهاتف في اليسار -->
+            <div class="footer-left">
+                <i class="fas fa-phone phone-icon"></i>
                 <span>01147758857</span>
-                <i class="fas fa-phone"></i>
             </div>
         </div>
 
