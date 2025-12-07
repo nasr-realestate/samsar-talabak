@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>سمسار طلبك - بطاقة تفاصيل الطلب</title>
+    <title>سمسار طلبك - الصفحة الرئيسية</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
             font-family: 'Cairo', sans-serif;
         }
 
-        /* الحاوية المتطابقة مع سابقاتها */
+        /* الحاوية المتطابقة */
         .design-card {
             width: 1200px;
             height: 630px;
@@ -44,7 +44,7 @@
             z-index: 0;
         }
 
-        /* --- الأيقونات (بحث وتدقيق) --- */
+        /* --- الأيقونات (مدينة + موقع) --- */
         .icons-top {
             display: flex;
             gap: 30px;
@@ -53,16 +53,16 @@
             z-index: 1;
         }
 
-        .icon-search-loc {
+        .icon-outline {
             font-size: 70px;
             color: transparent;
             -webkit-text-stroke: 2px #d4af37; /* مفرغة */
         }
         
-        .icon-list-check {
+        .icon-filled {
             font-size: 65px;
             color: #d4af37; /* مملوءة */
-            transform: rotate(-5deg);
+            transform: rotate(0deg);
         }
 
         /* --- النصوص --- */
@@ -154,17 +154,17 @@
 
     <div class="design-card">
         
-        <!-- الأيقونات: بحث في موقع + قائمة المواصفات -->
+        <!-- الأيقونات: مدينة (Outline) + علامة موقع (Filled) -->
         <div class="icons-top">
-            <i class="fas fa-search-location icon-search-loc"></i>
-            <i class="fas fa-clipboard-list icon-list-check"></i>
+            <i class="fas fa-city icon-outline"></i>
+            <i class="fas fa-map-marker-alt icon-filled"></i>
         </div>
 
         <!-- النص الرئيسي -->
         <div class="main-content">
-            <h1>مواصفات الطلب..<br>والميزانية <span style="color: #d4af37;">المحددة</span></h1>
+            <h1>بوابتك العقارية..<br>الأولى في <span style="color: #d4af37;">مدينة نصر</span></h1>
             <div class="gold-line"></div>
-            <h2>هل عقارك يطابق هذه المواصفات؟</h2>
+            <h2>بيع - شراء - إيجار .. بأمان ومصداقية</h2>
         </div>
 
         <!-- التذييل الموحد -->
