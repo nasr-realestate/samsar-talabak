@@ -234,8 +234,76 @@ body_class: "homepage"
      6. ستايلات الحركة واستدعاء السكربت
      ========================================================= -->
 <style>
-  @keyframes float {0%,100%{transform:translateY(0);}50%{transform:translateY(-15px);}}
-  @keyframes spin {to{transform:rotate(360deg);}}
+  /* 1. حاوية الشعار (الختم الذهبي) */
+  .hero-logo-container {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 2rem auto;
+    
+    /* الدائرة والخلفية */
+    background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+    border-radius: 50%;
+    
+    /* الحدود الذهبية المزدوجة */
+    border: 2px solid rgba(212, 175, 55, 0.3);
+    box-shadow: 
+        0 0 0 4px rgba(0, 0, 0, 0.8), /* فاصل أسود */
+        0 0 0 6px rgba(212, 175, 55, 0.6), /* حد ذهبي خارجي */
+        0 0 50px rgba(212, 175, 55, 0.4); /* توهج */
+        
+    /* التمركز */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* الحركة */
+    animation: float 6s ease-in-out infinite;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* 2. لمعة الذهب (Shine Effect) */
+  .hero-logo-container::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0) 60%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(30deg);
+    animation: shine 4s infinite linear; /* لمعة تمر كل 4 ثواني */
+  }
+
+  /* 3. الشعار نفسه */
+  .hero-logo-container img {
+    width: 110px; /* حجم مناسب داخل الدائرة */
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.8));
+    z-index: 2;
+  }
+
+  /* الحركات */
+  @keyframes float {
+    0%, 100% { transform: translateY(0); box-shadow: 0 0 0 4px #000, 0 0 0 6px rgba(212,175,55,0.6), 0 0 30px rgba(212,175,55,0.2); }
+    50% { transform: translateY(-15px); box-shadow: 0 0 0 4px #000, 0 0 0 6px rgba(212,175,55,1), 0 0 60px rgba(212,175,55,0.6); }
+  }
+
+  @keyframes shine {
+    0% { transform: translateX(-150%) rotate(30deg); }
+    20% { transform: translateX(150%) rotate(30deg); }
+    100% { transform: translateX(150%) rotate(30deg); }
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ظهور النصوص */
   .home-hero h1, .home-hero p, .hero-buttons, .pain-point-box, .services-preview, .stat-box {
     animation: fadeInUp 1s ease-out forwards; 
     opacity: 0;
@@ -249,6 +317,6 @@ body_class: "homepage"
   .stat-box:hover {transform: translateY(-5px);}
   
   @keyframes fadeInUp {from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
-</style>
+       </style>
 
 <script src="{{ '/assets/js/home-featured.js' | relative_url }}"></script>
