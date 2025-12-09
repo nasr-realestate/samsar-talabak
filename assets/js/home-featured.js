@@ -1,27 +1,23 @@
 /**
- * 🏠 سمسار طلبك - الرادار الذكي (v10.2 - البحث الشامل)
- * يقوم بجلب كل الملفات لضمان عدم تفويت أي تحديث، بغض النظر عن ترتيبه.
+ * 🏠 سمسار طلبك - الرادار الذكي (High Contrast Edition)
+ * v12.0 - تم تفتيح الألوان لتحسين القراءة (SEO & Accessibility)
  */
 
 class HomeGlobalScanner {
     constructor() {
         this.container = document.getElementById("featured-container");
         
-        // *** تعديل: تحديث قائمة المصادر لتشمل كل المجلدات ***
+        // المصادر التي نمسحها
         this.sources = [
-            // --- العروض (Properties) ---
             { section: 'properties', category: 'apartments', type: 'offer' },
             { section: 'properties', category: 'apartments-rent', type: 'offer' },
             { section: 'properties', category: 'offices', type: 'offer' },
             { section: 'properties', category: 'shops', type: 'offer' },
-            { section: 'properties', category: 'admin-hq', type: 'offer' }, // تمت الإضافة
-
-            // --- الطلبات (Requests) ---
+            { section: 'properties', category: 'admin-hq', type: 'offer' },
             { section: 'requests', category: 'apartments', type: 'request' },
-            { section: 'requests', category: 'apartments-rent', type: 'request' }, // تمت الإضافة
             { section: 'requests', category: 'offices', type: 'request' },
-            { section: 'requests', category: 'shops', type: 'request' },     // تمت الإضافة
-            { section: 'requests', category: 'admin-hq', type: 'request' }      // تمت الإضافة
+            { section: 'requests', category: 'shops', type: 'request' },
+            { section: 'requests', category: 'admin-hq', type: 'request' }
         ];
 
         this.init();
@@ -31,75 +27,60 @@ class HomeGlobalScanner {
         if (!this.container) return;
         
         try {
-            // 1. جلب كل الملفات من كل الأقسام (الآن بشكل شامل)
-            const promises = this.sources.map(source => this.scanFolder(source));
+            // جلب عينة من البيانات
+            const promises = this.sources.map(source => this.scanFolderSample(source));
             const results = await Promise.all(promises);
             
-            let allItems = results.flat().filter(item => item !== null && item.date); // فلترة أي عنصر بدون تاريخ
+            // دمج النتائج
+            let allItems = results.flat().filter(item => item !== null);
 
             if (allItems.length === 0) {
-                this.container.innerHTML = `<div style="text-align:center; padding:2rem; color:#777;">جاري إضافة العروض...</div>`;
+                this.container.innerHTML = `<div style="text-align:center; padding:2rem; color:#ccc;">جاري إضافة العروض...</div>`;
                 return;
             }
 
-            // 2. الترتيب الزمني الدقيق (الأحدث في الأعلى)
-            allItems.sort((a, b) => new Date(b.date) - new Date(a.date));
+            // ترتيب زمني مبدئي
+            allItems.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
 
-            // 3. اختيار العينة بذكاء (أحدث عرضين وأحدث طلب)
+            // اختيار العينة (2 عرض + 1 طلب)
             let finalDisplay = [];
-            let offerCount = 0;
-            let requestCount = 0;
-            const MAX_OFFERS = 2;
-            const MAX_REQUESTS = 1;
+            
+            const offers = allItems.filter(i => i.sourceType === 'offer');
+            if (offers.length > 0) finalDisplay.push(offers[0]);
+            if (offers.length > 1) finalDisplay.push(offers[1]);
 
-            for (const item of allItems) {
-                if (item.sourceType === 'offer' && offerCount < MAX_OFFERS) {
-                    finalDisplay.push(item);
-                    offerCount++;
-                } else if (item.sourceType === 'request' && requestCount < MAX_REQUESTS) {
-                    finalDisplay.push(item);
-                    requestCount++;
-                }
-                if (offerCount >= MAX_OFFERS && requestCount >= MAX_REQUESTS) {
-                    break;
-                }
-            }
+            const requests = allItems.filter(i => i.sourceType === 'request');
+            if (requests.length > 0) finalDisplay.push(requests[0]);
 
-            // 4. العرض
+            // الترتيب النهائي للعرض
+            finalDisplay.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+
+            // العرض
             this.renderItems(finalDisplay);
 
         } catch (error) {
-            console.error("خطأ حرج في HomeGlobalScanner:", error);
-            this.container.innerHTML = `<p style="text-align:center; color:red;">خطأ في تحميل البيانات.</p>`;
+            console.error("Scanner Error:", error);
         }
     }
 
-    async scanFolder(source) {
+    async scanFolderSample(source) {
         try {
+            // إضافة t=timestamp لمنع الكاش
             const response = await fetch(`/data/${source.section}/${source.category}/index.json?t=${Date.now()}`);
             if (!response.ok) return [];
             
             const files = await response.json();
             if (!files || files.length === 0) return [];
 
-            // *** التعديل الجذري: لا نأخذ عينة، بل نستخدم كل الملفات ***
-            // const sampleFiles = files.slice(-6); // << تم إلغاء هذا السطر
-            const allFiles = files; // نستخدم كل القائمة
+            // نأخذ آخر 3 ملفات فقط
+            const sampleFiles = files.slice(-3); 
 
-            const itemPromises = allFiles.map(filename => 
+            const itemPromises = sampleFiles.map(filename => 
                 fetch(`/data/${source.section}/${source.category}/${filename}?t=${Date.now()}`)
-                    .then(res => {
-                        if (!res.ok) return null;
-                        return res.json();
-                    })
+                    .then(res => res.json())
                     .then(data => {
-                        if (!data) return null;
-
-                        // تحديد نوع العرض (إيجار أم بيع) بشكل أدق
                         let displayType = source.type;
-                        if (source.category === 'apartments-rent') {
-                            displayType = 'rent';
-                        } else if (source.type === 'offer' && data.title && data.title.includes('إيجار')) {
+                        if (source.type === 'offer' && data.title && data.title.includes('إيجار')) {
                             displayType = 'rent';
                         }
                         
@@ -112,37 +93,31 @@ class HomeGlobalScanner {
                             displayType: displayType
                         };
                     })
-                    .catch(() => null) // تجاهل الملفات التي تفشل في التحميل
+                    .catch(() => null)
             );
 
             return await Promise.all(itemPromises);
 
         } catch (e) {
-            console.error(`فشل في مسح المجلد: ${source.category}`, e);
-            return []; // نرجع مصفوفة فارغة عند حدوث خطأ لمنع انهيار التطبيق
+            return [];
         }
     }
 
-    // ... باقي الدوال (renderItems, genCard, etc.) تبقى كما هي ...
     renderItems(items) {
         this.container.innerHTML = '';
-        if (items.length === 0) {
-            this.container.innerHTML = `<div style="text-align:center; padding:2rem; color:#777;">لا توجد عناصر لعرضها حالياً.</div>`;
-            return;
-        }
         items.forEach((item, index) => {
             let card;
             if (item.sourceType === 'request') card = this.createRequestCard(item);
             else if (item.displayType === 'rent') card = this.createRentCard(item);
             else card = this.createSaleCard(item);
             
-            if (card) {
-                card.style.opacity = '0';
-                card.style.animation = `fadeInUp 0.6s ease forwards ${index * 0.2}s`;
-                this.container.appendChild(card);
-            }
+            card.style.opacity = '0';
+            card.style.animation = `fadeInUp 0.6s ease forwards ${index * 0.2}s`;
+            this.container.appendChild(card);
         });
     }
+
+    // --- القوالب (تم تفتيح الألوان هنا) ---
 
     createSaleCard(p) { return this.genCard(p, '#d4af37', 'fa-certificate', 'بيع', '/details.html'); }
     createRentCard(p) { return this.genCard(p, '#fce205', 'fa-key', 'إيجار', '/details.html'); }
@@ -160,7 +135,7 @@ class HomeGlobalScanner {
         const id = item.filename.replace('.json', '');
         card.onclick = () => window.location.href = `${pageUrl}?id=${id}&category=${item.category}`;
         
-        const val = item.budget ? `ميزانية: ${item.budget}` : (item.price_display || item.price || 'غير محدد');
+        const val = item.budget ? `ميزانية: ${item.budget}` : (item.price_display || item.price);
 
         card.innerHTML = `
             <div class="property-header" style="border-bottom:1px dashed #333; padding-bottom:10px; margin-bottom:15px;">
@@ -168,35 +143,27 @@ class HomeGlobalScanner {
                     <span style="color:${color}; border:1px solid ${color}; padding:2px 8px; border-radius:10px;">
                         <i class="fas ${icon}"></i> ${label}
                     </span>
-                    <span style="color:#666;">${this.timeAgo(item.date)}</span>
+                    <!-- تم تغيير اللون من #666 إلى #ccc -->
+                    <span style="color:#ccc;">${this.timeAgo(item.date)}</span>
                 </div>
-                <h3 style="color:#fff; font-size:1.1rem; margin:5px 0;">${item.title || 'عنوان غير متوفر'}</h3>
-                <p style="color:#888; font-size:0.9rem;">${item.location || 'غير محدد'}</p>
+                <h3 style="color:#fff; font-size:1.1rem; margin:5px 0;">${item.title}</h3>
+                <!-- تم تغيير اللون من #888 إلى #b0b0b0 -->
+                <p style="color:#b0b0b0; font-size:0.9rem;">${item.location || 'مدينة نصر'}</p>
             </div>
+
             <div class="property-details">
                  <div style="color:${color}; font-weight:bold; font-size:1.1rem;">${val}</div>
             </div>
+
             <div style="margin-top:auto; padding-top:10px;">
-                <span style="color:#aaa; font-size:0.9rem;">التفاصيل <i class="fas fa-arrow-left" style="color:${color}"></i></span>
+                <!-- تم تغيير اللون من #aaa إلى #ccc -->
+                <span style="color:#ccc; font-size:0.9rem;">التفاصيل <i class="fas fa-arrow-left" style="color:${color}"></i></span>
             </div>
         `;
         return card;
     }
 
-    timeAgo(d) {
-        if (!d) return '';
-        const date = new Date(d);
-        const now = new Date();
-        const seconds = Math.round((now - date) / 1000);
-        
-        if (seconds < 60) return `الآن`;
-        const minutes = Math.round(seconds / 60);
-        if (minutes < 60) return `منذ ${minutes} د`;
-        const hours = Math.round(minutes / 60);
-        if (hours < 24) return `منذ ${hours} س`;
-        const days = Math.round(hours / 24);
-        return `منذ ${days} ي`;
-    }
+    timeAgo(d) { return d ? 'جديد' : ''; }
 }
 
 document.addEventListener('DOMContentLoaded', () => new HomeGlobalScanner());
