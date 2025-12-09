@@ -1,11 +1,17 @@
 <!-- 
-  شريط التنقل العلوي (Navbar) - النسخة الذهبية
+  شريط التنقل العلوي (Navbar) - النسخة السريعة (Local Logo)
 -->
 <nav class="navbar">
   <!-- الشعار -->
   <div class="navbar-logo">
     <a href="{{ '/' | relative_url }}">
-      <img src="https://i.postimg.cc/Y9c5f6K1/ed53e000_aacd_11f0_8000_6ff54186278f.png" alt="{{ site.title }}">
+      <!-- 
+        تحديد العرض والارتفاع ضروري جداً لمنع اهتزاز الصفحة (CLS) 
+        واستخدام الصورة المحلية (WebP) للسرعة
+      -->
+      <img src="{{ '/assets/img/logo.webp' | relative_url }}" 
+           alt="{{ site.title }}" 
+           width="120" height="120">
     </a>
   </div>
 
