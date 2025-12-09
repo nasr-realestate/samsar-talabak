@@ -1,13 +1,14 @@
 ---
 layout: default
 title: "سمسار طلبك | بوابتك العقارية الأولى في مدينة نصر"
-description: "وسيطك العقاري الموثوق في مدينة نصر بقيادة طارق طنطاوي. تصفح أحدث الشقق والمحلات والمكاتب التجارية للبيع والإيجار بالمنطقه الأولي، الحي العاشر، والمنطقة السادسة. شفافية، سرعة، وبدون صور مضللة."
-image: "https://i.postimg.cc/bvnnjMLn/Social-media-sharing-image-for-homepage.webp"
+description: "وسيطك العقاري الموثوق في مدينة نصر بقيادة طارق طنطاوي. تصفح أحدث الشقق والمحلات والمكاتب التجارية للبيع والإيجار. شفافية، سرعة، وأفضل سعر."
+image: "/assets/img/social-home.webp"
 body_class: "homepage"
 ---
 
 <!-- =========================================================
-     1. الهوية الرقمية (SEO Schema Markup)
+     1. الهوية الرقمية الكاملة (Schema Markup)
+     هذا الكود يخبر جوجل بكل تفاصيل البيزنس الخاصة بك
      ========================================================= -->
 <script type="application/ld+json">
 {
@@ -16,10 +17,10 @@ body_class: "homepage"
   "name": "سمسار طلبك",
   "alternateName": "Tarek Tantawy Real Estate",
   "founder": "طارق طنطاوي",
-  "url": "https://nasr-realestate.github.io/samsar-talabak",
-  "logo": "https://i.postimg.cc/Y9c5f6K1/ed53e000_aacd_11f0_8000_6ff54186278f.png",
-  "image": "https://i.postimg.cc/yYCs1tNJ/Real-estate-image-of-the-site.webp",
-  "description": "بوابتك العقارية الأولى في مدينة نصر. شقق للبيع والإيجار ببرج الزهراء والمناطق المميزة. نضمن لك الشفافية، السرعة، وأفضل سعر سوقي.",
+  "url": "https://aqarnasr.netlify.app",
+  "logo": "https://aqarnasr.netlify.app/assets/img/logo.webp",
+  "image": "https://aqarnasr.netlify.app/assets/img/hero-bg.webp",
+  "description": "بوابتك العقارية الأولى في مدينة نصر. شقق للبيع والإيجار ببرج الزهراء والمناطق المميزة.",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "16 Mohammed Hasan El-Gamal, Al Mintaqah as Sādisah",
@@ -35,22 +36,19 @@ body_class: "homepage"
   },
   "hasMap": "https://maps.app.goo.gl/hr3dndj1dwMvXaNz5?g_st=ac",
   "telephone": "+201147758857",
-  "email": "samsar.talabak@mailo.com",
+  "email": "elraikonly@outlook.sa",
   "sameAs": [
     "https://www.facebook.com/Tarekonly",
     "https://www.linkedin.com/company/smsar-talabk-madinat-nasr/",
     "https://www.linkedin.com/in/tarek-tantawy-444269162",
-    "https://pin.it/ZfAsMoqPC",
-    "https://maps.app.goo.gl/hr3dndj1dwMvXaNz5?g_st=ac"
+    "https://pin.it/ZfAsMoqPC"
   ],
   "openingHoursSpecification": [
     {
       "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Saturday"
-      ],
-      "opens": "12:00",
-      "closes": "21:00"
+      "dayOfWeek": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Saturday"],
+      "opens": "10:00",
+      "closes": "22:00"
     }
   ],
   "priceRange": "$$"
@@ -58,16 +56,25 @@ body_class: "homepage"
 </script>
 
 <!-- =========================================================
-     2. الواجهة السينمائية (Hero Section)
+     2. الواجهة السينمائية (Hero Section) - الحل النهائي للسرعة
      ========================================================= -->
-<section class="home-hero hero-background-image" 
-         style="background-image: linear-gradient(to bottom, rgba(5,5,5,0.7), rgba(5,5,5,0.95)), url('https://i.postimg.cc/yYCs1tNJ/Real-estate-image-of-the-site.webp'); position: relative; padding-bottom: 6rem;">
+<section class="home-hero" style="position: relative; padding-bottom: 6rem; overflow: hidden; min-height: 85vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
   
-  <!-- اللوجو المتحرك -->
-  <div class="hero-logo-container" style="margin-bottom: 2rem; animation: float 6s ease-in-out infinite;">
-    <img src="https://i.postimg.cc/Y9c5f6K1/ed53e000_aacd_11f0_8000_6ff54186278f.png" 
+  <!-- 
+    🔥 LCP FIX: صورة الخلفية كعنصر img صريح بأولوية قصوى
+    هذا يضمن تحميلها فوراً وعدم انتظار ملف CSS
+  -->
+  <img src="{{ '/assets/img/hero-bg.webp' | relative_url }}" 
+       alt="عقارات مدينة نصر" 
+       fetchpriority="high"
+       style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; filter: brightness(0.3);">
+
+  <!-- اللوجو المتحرك (الختم الملكي) -->
+  <div class="hero-logo-container">
+    <!-- CLS FIX: تحديد الأبعاد بدقة لمنع الاهتزاز -->
+    <img src="{{ '/assets/img/logo.webp' | relative_url }}" 
          alt="شعار سمسار طلبك" 
-         style="filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.4));">
+         width="110" height="110">
   </div>
 
   <!-- العنوان الرئيسي -->
@@ -82,7 +89,7 @@ body_class: "homepage"
     <span style="font-size: 0.9em; opacity: 0.8; margin-top: 10px; display: inline-block;">مدينة نصر • شفافية • سرعة • أفضل سعر</span>
   </p>
 
-  <!-- أزرار الخدمات الرئيسية -->
+  <!-- أزرار الخدمات -->
   <div class="hero-buttons">
     <a href="{{ '/properties-filtered.html?highlight=apartments' | relative_url }}" class="nav-btn properties" aria-label="تصفح العقارات المتاحة">
       <i class="fas fa-search-location" style="margin-left: 10px;"></i>
@@ -95,35 +102,35 @@ body_class: "homepage"
     </a>
   </div>
 
-  <!-- الصندوق السحري -->
-  <div class="pain-point-box" style="margin-top: 3.5rem; max-width: 600px; padding: 20px 30px; border: 1px solid var(--color-border-light); border-radius: 15px; background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-      <h3 style="color: var(--color-primary); font-size: 1.2rem; margin-bottom: 8px;">
+  <!-- الصندوق السحري (SEO Fix: h2 بدلاً من h3) -->
+  <div class="pain-point-box" style="margin-top: 3.5rem; max-width: 600px; padding: 20px 30px; border: 1px solid var(--color-border-light); border-radius: 15px; background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.4);">
+      <h2 style="color: var(--color-primary); font-size: 1.2rem; margin-bottom: 8px;">
           <i class="far fa-question-circle"></i> لماذا نحن؟
-      </h3>
-      <p style="color: #ccc; font-size: 0.9rem; margin-bottom: 0; line-height: 1.5;">
+      </h2>
+      <p style="color: #ccc; font-size: 0.95rem; margin-bottom: 0; line-height: 1.6;">
           نحن ننهي حيرتك. نوفر عليك الوقت والجهد ونضمن لك عقارات تم التحقق من أوراقها القانونية بأسعار السوق الحقيقية. لا نستخدم صوراً مضللة، بل وصفاً دقيقاً يعكس الواقع.
       </p>
   </div>
 
-  <!-- أيقونات الخدمات السريعة -->
-  <div class="services-preview" style="display: flex; gap: 40px; justify-content: center; margin-top: 3rem; flex-wrap: wrap; opacity: 0.7;">
+  <!-- أيقونات الخدمات -->
+  <div class="services-preview" style="display: flex; gap: 40px; justify-content: center; margin-top: 3rem; flex-wrap: wrap; opacity: 0.8;">
     <div style="text-align: center; color: var(--color-text-secondary);">
       <i class="fas fa-key" style="font-size: 1.5rem; color: var(--color-primary); margin-bottom: 8px;"></i>
-      <div style="font-size: 0.8rem;">شقق إيجار</div>
+      <div style="font-size: 0.85rem;">شقق إيجار</div>
     </div>
     <div style="text-align: center; color: var(--color-text-secondary);">
       <i class="fas fa-home" style="font-size: 1.5rem; color: var(--color-primary); margin-bottom: 8px;"></i>
-      <div style="font-size: 0.8rem;">شقق تمليك</div>
+      <div style="font-size: 0.85rem;">شقق تمليك</div>
     </div>
     <div style="text-align: center; color: var(--color-text-secondary);">
       <i class="fas fa-store" style="font-size: 1.5rem; color: var(--color-primary); margin-bottom: 8px;"></i>
-      <div style="font-size: 0.8rem;">تجاري وإداري</div>
+      <div style="font-size: 0.85rem;">تجاري وإداري</div>
     </div>
   </div>
 </section>
 
 <!-- =========================================================
-     3. نبض السوق العقاري (الفرص)
+     3. نبض السوق (ديناميكي)
      ========================================================= -->
 <section id="latest-opportunities" style="padding: 4rem 2rem; background: var(--color-surface-1); border-top: 1px solid #222; position: relative; z-index: 2;">
   <div style="max-width: 1200px; margin: 0 auto;">
@@ -134,7 +141,7 @@ body_class: "homepage"
         <p style="color: var(--color-text-secondary);">أحدث الفرص العقارية وطلبات الشراء، لحظة بلحظة</p>
     </div>
 
-    <!-- حاوية العقارات التي يملؤها الجافاسكريبت -->
+    <!-- الحاوية -->
     <div id="featured-container" class="properties-grid">
         <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #666;">
             <div class="loading-spinner" style="border: 3px solid #333; border-top-color: var(--color-primary); width: 40px; height: 40px; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem auto;"></div>
@@ -151,79 +158,63 @@ body_class: "homepage"
 </section>
 
 <!-- =========================================================
-     4. أرقام الثقة (Social Proof)
+     4. أرقام الثقة (Social Proof) - بالصورة المحلية السريعة
      ========================================================= -->
-<section class="trust-section" style="background: url('https://i.postimg.cc/rmJ8kVmK/صور_شقه_برج_الزهراء_الثانيه.webp') fixed center; position: relative; padding: 5rem 2rem;">
-    <!-- طبقة تعتيم -->
-    <div style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85);"></div>
+<section class="trust-section" style="position: relative; padding: 5rem 2rem; overflow: hidden;">
+    <!-- خلفية ثابتة سريعة -->
+    <img src="{{ '/assets/img/hero-bg.webp' | relative_url }}" alt="Background" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; filter: brightness(0.2);">
     
     <div style="position: relative; z-index: 2; max-width: 1000px; margin: 0 auto; text-align: center;">
         <h2 style="color: #fff; font-size: 2.2rem; margin-bottom: 3rem;">أرقام تبني الثقة</h2>
         
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px;">
-            <!-- المشاهدات (حقيقي) -->
             <div class="stat-box">
                 <i class="fas fa-eye" style="font-size: 3rem; color: var(--color-primary); margin-bottom: 15px;"></i>
                 <div style="font-size: 2.5rem; font-weight: 900; color: #fff;">+15M</div>
-                <div style="color: #aaa; font-size: 1rem;">مشاهدة على خرائط جوجل</div>
+                <div style="color: #aaa; font-size: 1rem;">مشاهدة على الخرائط</div>
             </div>
             
-            <!-- المستوى (حقيقي) -->
-            <div class="stat-box" style="cursor: pointer; transition: transform 0.3s ease;">
+            <div class="stat-box" style="cursor: pointer;">
                 <a href="https://maps.app.goo.gl/YMXq48W16dg1EcseA?g_st=ac" target="_blank" style="text-decoration: none; display: block;">
                     <i class="fas fa-medal" style="font-size: 3rem; color: #fce205; margin-bottom: 15px;"></i>
                     <div style="font-size: 2.5rem; font-weight: 900; color: #fff;">Level 7</div>
-                    <div style="color: #aaa; font-size: 1rem;">مرشد محلي موثوق <i class="fas fa-external-link-alt" style="font-size: 0.8rem;"></i></div>
+                    <div style="color: #aaa; font-size: 1rem;">مرشد محلي موثوق</div>
                 </a>
             </div>
 
-            <!-- الخبرة -->
             <div class="stat-box">
                 <i class="fas fa-calendar-check" style="font-size: 3rem; color: var(--color-primary); margin-bottom: 15px;"></i>
                 <div style="font-size: 2.5rem; font-weight: 900; color: #fff;">2014</div>
-                <div style="color: #aaa; font-size: 1rem;">سنة التأسيس والخبرة</div>
+                <div style="color: #aaa; font-size: 1rem;">خبرة في السوق</div>
             </div>
-        </div>
-        
-        <!-- رابط التقييمات -->
-        <div style="margin-top: 3rem;">
-            <a href="https://search.google.com/local/reviews?placeid=ChIJa3zQ32w-WBQRIxuJURKnXOI" target="_blank" style="color: var(--color-primary); text-decoration: none; border-bottom: 1px solid var(--color-primary); padding-bottom: 5px; transition: all 0.3s;">
-                شاهد تقييماتنا وآراء العملاء على خرائط جوجل <i class="fas fa-star" style="margin-right: 5px; color: #fce205;"></i>
-            </a>
         </div>
     </div>
 </section>
 
 <!-- =========================================================
-     5. قسم النصائح وتفاصيل الاتصال
+     5. قسم النصائح
      ========================================================= -->
 <section class="tips-section" style="padding: 4rem 2rem; background: var(--color-surface-1);">
     <div style="max-width: 1000px; margin: 0 auto;">
-        <div style="text-align: center; margin-bottom: 3rem;">
-            <h2 style="color: var(--color-primary); font-size: 1.8rem;">تواصل مع الخبراء</h2>
-            <p style="color: #888;">نحن معك خطوة بخطوة</p>
-        </div>
-
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-            <!-- بطاقة العنوان والمواعيد -->
+            <!-- بطاقة العنوان -->
             <div class="tip-card" style="background: var(--color-surface-2); padding: 25px; border-radius: 15px; border: 1px solid var(--color-border-light);">
                 <i class="fas fa-map-marker-alt" style="font-size: 2rem; color: var(--color-secondary); margin-bottom: 15px;"></i>
                 <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 10px;">مقرنا الرسمي</h3>
                 <p style="color: #aaa; font-size: 0.95rem; line-height: 1.6;">
                     16 شارع محمد حسن الجمل، المنطقة السادسة، مدينة نصر.<br>
                     <span style="color: var(--color-primary); display:block; margin-top:10px;">
-                        <i class="far fa-clock"></i> يومياً: 12 ظهراً - 9 مساءً<br>
-                        (الجمعة إجازة)
+                        <i class="far fa-clock"></i> يومياً: 10 صباحاً - 10 مساءً
                     </span>
                 </p>
             </div>
 
-            <!-- بطاقة نصيحة الشراء -->
+            <!-- بطاقة النصيحة -->
             <div class="tip-card" style="background: var(--color-surface-2); padding: 25px; border-radius: 15px; border: 1px solid var(--color-border-light);">
                 <i class="fas fa-file-contract" style="font-size: 2rem; color: var(--color-secondary); margin-bottom: 15px;"></i>
                 <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 10px;">نصيحة أ/ طارق طنطاوي</h3>
                 <p style="color: #aaa; font-size: 0.95rem; line-height: 1.6;">
-                    لا تشتري عقاراً قبل التأكد من "تسلسل الملكية" وعدادات المرافق. نحن في سمسار طلبك نقوم بالفحص القانوني الكامل نيابة عنك لضمان استثمار آمن 100%.
+                    لا تشتري عقاراً قبل التأكد من "تسلسل الملكية" وعدادات المرافق. نحن في سمسار طلبك نقوم بالفحص القانوني الكامل نيابة عنك.
                 </p>
             </div>
         </div>
@@ -231,92 +222,49 @@ body_class: "homepage"
 </section>
 
 <!-- =========================================================
-     6. ستايلات الحركة واستدعاء السكربت
+     6. ستايلات خاصة (الختم الذهبي والحركة)
      ========================================================= -->
 <style>
-  /* 1. حاوية الشعار (الختم الذهبي) */
+  /* تصميم الختم الملكي */
   .hero-logo-container {
-    width: 180px;
-    height: 180px;
+    width: 180px; height: 180px;
     margin: 0 auto 2rem auto;
-    
-    /* الدائرة والخلفية */
     background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
     border-radius: 50%;
-    
-    /* الحدود الذهبية المزدوجة */
     border: 2px solid rgba(212, 175, 55, 0.3);
-    box-shadow: 
-        0 0 0 4px rgba(0, 0, 0, 0.8), /* فاصل أسود */
-        0 0 0 6px rgba(212, 175, 55, 0.6), /* حد ذهبي خارجي */
-        0 0 50px rgba(212, 175, 55, 0.4); /* توهج */
-        
-    /* التمركز */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    /* الحركة */
+    box-shadow: 0 0 0 4px rgba(0,0,0,0.5), 0 0 30px rgba(212,175,55,0.2);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
     animation: float 6s ease-in-out infinite;
-    position: relative;
-    overflow: hidden;
+    will-change: transform; /* للأداء */
   }
 
-  /* 2. لمعة الذهب (Shine Effect) */
+  /* لمعة الذهب */
   .hero-logo-container::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0) 40%,
-        rgba(255, 255, 255, 0.2) 50%,
-        rgba(255, 255, 255, 0) 60%,
-        rgba(255, 255, 255, 0) 100%
-    );
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%);
     transform: rotate(30deg);
-    animation: shine 4s infinite linear; /* لمعة تمر كل 4 ثواني */
+    animation: shine 5s infinite linear;
   }
 
-  /* 3. الشعار نفسه */
-  .hero-logo-container img {
-    width: 110px; /* حجم مناسب داخل الدائرة */
-    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.8));
-    z-index: 2;
-  }
+  .hero-logo-container img { z-index: 2; position: relative; }
 
-  /* الحركات */
-  @keyframes float {
-    0%, 100% { transform: translateY(0); box-shadow: 0 0 0 4px #000, 0 0 0 6px rgba(212,175,55,0.6), 0 0 30px rgba(212,175,55,0.2); }
-    50% { transform: translateY(-15px); box-shadow: 0 0 0 4px #000, 0 0 0 6px rgba(212,175,55,1), 0 0 60px rgba(212,175,55,0.6); }
-  }
-
-  @keyframes shine {
-    0% { transform: translateX(-150%) rotate(30deg); }
-    20% { transform: translateX(150%) rotate(30deg); }
-    100% { transform: translateX(150%) rotate(30deg); }
-  }
-
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+  @keyframes shine { 0% { transform: translateX(-150%) rotate(30deg); } 100% { transform: translateX(150%) rotate(30deg); } }
   @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* ظهور النصوص */
+  
+  /* ظهور العناصر */
   .home-hero h1, .home-hero p, .hero-buttons, .pain-point-box, .services-preview, .stat-box {
-    animation: fadeInUp 1s ease-out forwards; 
-    opacity: 0;
+    animation: fadeInUp 1s ease-out forwards; opacity: 0;
   }
   .home-hero h1 {animation-delay: 0.2s;}
   .home-hero p {animation-delay: 0.4s;}
   .hero-buttons {animation-delay: 0.6s;}
   .pain-point-box {animation-delay: 1s;}
   .services-preview {animation-delay: 1.4s;}
-  .stat-box {transition: transform 0.3s ease;}
-  .stat-box:hover {transform: translateY(-5px);}
   
-  @keyframes fadeInUp {from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
-       </style>
+  @keyframes fadeInUp {from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+</style>
 
+<!-- استدعاء السكربت -->
 <script src="{{ '/assets/js/home-featured.js' | relative_url }}"></script>
