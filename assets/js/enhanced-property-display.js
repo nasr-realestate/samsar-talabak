@@ -1,6 +1,6 @@
 /**
- * 🏢 سمسار طلبك - نظام عرض العقارات (النسخة الذهبية - الروابط المصححة)
- * v6.0 - Fixed Routing
+ * 🏢 سمسار طلبك - نظام عرض العقارات (النسخة الذهبية - المحدثة)
+ * v7.0 - Mobile Optimized & Active Filters
  */
 
 class EnhancedPropertyDisplay {
@@ -39,13 +39,19 @@ class EnhancedPropertyDisplay {
     }
   }
 
+  // 1️⃣ تحديث: تلوين الزر النشط بوضوح
   createFilterButtons() {
     if (!this.filterContainer) return;
     this.filterContainer.innerHTML = '';
+    
     Object.entries(this.categories).forEach(([key, category]) => {
       const button = document.createElement("button");
       button.innerHTML = `<i class="fas ${category.icon}"></i> ${category.label}`;
       button.className = "filter-btn";
+      
+      // حفظ اللون الأصلي في متغير لاستخدامه عند التنشيط
+      button.dataset.activeColor = category.color;
+      
       button.onclick = (e) => {
         e.preventDefault();
         this.handleCategoryChange(key, button);
@@ -57,8 +63,22 @@ class EnhancedPropertyDisplay {
   async handleCategoryChange(category, button) {
     if (this.isLoading || this.currentCategory === category) return;
     
-    this.filterContainer.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    // إعادة تعيين جميع الأزرار للوضع الطبيعي
+    this.filterContainer.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+        btn.style.backgroundColor = 'transparent';
+        btn.style.color = 'var(--color-text-secondary)';
+        btn.style.borderColor = 'var(--color-border)';
+    });
+
+    // تفعيل الزر المختار وتلوينه بلونه الخاص
     button.classList.add('active');
+    const activeColor = this.categories[category].color;
+    
+    button.style.backgroundColor = activeColor;
+    button.style.color = '#000'; // نص أسود للتباين
+    button.style.borderColor = activeColor;
+    button.style.boxShadow = `0 0 15px ${activeColor}40`; // لمعة خفيفة
 
     this.currentCategory = category;
     localStorage.setItem('lastCategory', category);
@@ -68,10 +88,14 @@ class EnhancedPropertyDisplay {
   loadDefaultCategory() {
     const savedCategory = localStorage.getItem('lastCategory');
     const defaultCategory = savedCategory && this.categories[savedCategory] ? savedCategory : Object.keys(this.categories)[0];
-    const defaultButton = this.filterContainer.querySelector(`[data-category="${defaultCategory}"]`) 
-                       || this.filterContainer.firstElementChild;
+    
+    // البحث عن الزر وتفعيله برمجياً
+    // نستخدم includes لأن النص قد يحتوي على مسافات أو أيقونات
+    const buttons = Array.from(this.filterContainer.children);
+    const defaultButton = buttons.find(btn => btn.innerText.includes(this.categories[defaultCategory].label)) || buttons[0];
+    
     if (defaultButton) {
-        // محاكاة النقر لتفعيل الفئة
+        // نستدعي دالة التغيير مباشرة لتطبيق التلوين
         this.handleCategoryChange(defaultCategory, defaultButton);
     }
   }
@@ -81,31 +105,21 @@ class EnhancedPropertyDisplay {
     this.showLoadingState();
 
     try {
-      // 1. جلب البيانات
       const indexResponse = await fetch(`/data/properties/${category}/index.json?t=${Date.now()}`);
-      if (!indexResponse.ok) {
-          this.showEmptyState(); 
-          return;
-      }
+      if (!indexResponse.ok) { this.showEmptyState(); return; }
       
       const files = await indexResponse.json();
-      if (!Array.isArray(files) || files.length === 0) {
-          this.showEmptyState();
-          return;
-      }
+      if (!Array.isArray(files) || files.length === 0) { this.showEmptyState(); return; }
 
-      // 2. جلب تفاصيل كل ملف
       const promises = files.map(filename => 
         fetch(`/data/properties/${category}/${filename}`)
           .then(res => res.json())
-          .then(data => ({ ...data, filename, category })) // نمرر اسم الملف والقسم
+          .then(data => ({ ...data, filename, category }))
           .catch(() => null)
       );
 
       const results = await Promise.all(promises);
       const validProperties = results.filter(p => p !== null);
-      
-      // 3. العرض
       await this.displayProperties(validProperties);
 
     } catch (error) {
@@ -131,41 +145,36 @@ class EnhancedPropertyDisplay {
       return;
     }
 
-    // ترتيب بالأحدث
     const sorted = properties.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
-
     this.container.innerHTML = '';
     
     for (const property of sorted) {
       const card = this.createPropertyCard(property);
       this.container.appendChild(card);
-      // تأثير بسيط
       await new Promise(r => setTimeout(r, 20));
       card.style.opacity = '1';
       card.style.transform = 'translateY(0)';
     }
   }
 
-  // 💎💎 دالة إنشاء البطاقة (الروابط الصحيحة) 💎💎
+  // 2️⃣ تحديث: تصميم البطاقة (متجاوب للموبايل)
   createPropertyCard(property) {
     const card = document.createElement("div");
     card.className = "property-card text-mode"; 
-    card.style.borderTop = "4px solid var(--color-primary)";
     
-    // أنيميشن الدخول
+    // تلوين الحد العلوي حسب الفئة (ذهبي للبيع / أصفر للإيجار)
+    let accentColor = "#d4af37";
+    if (this.currentCategory === 'apartments-rent') accentColor = "#fce205";
+    
+    card.style.borderTop = `4px solid ${accentColor}`;
     card.style.opacity = "0";
     card.style.transform = "translateY(20px)";
     card.style.transition = "all 0.3s ease";
 
-    // 🔴 التصحيح هنا: استخراج الـ ID بشكل نظيف وبناء الرابط الصحيح
-    // ID هو اسم الملف بدون .json
     const propertyId = property.filename.replace('.json', '');
-    // الرابط الصحيح: details.html?id=...
     const targetUrl = `/details.html?id=${propertyId}`;
-
     card.onclick = () => window.location.href = targetUrl;
     
-    // البيانات
     const title = property.title || "عرض مميز";
     const price = property.price_display || property.price || "تواصل للسعر";
     const location = property.location || "مدينة نصر";
@@ -174,29 +183,41 @@ class EnhancedPropertyDisplay {
     card.innerHTML = `
       <div class="property-header" style="border-bottom: 1px dashed #333; padding-bottom: 10px; margin-bottom: 15px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-            <div style="background: rgba(212, 175, 55, 0.1); color: var(--color-primary); padding: 4px 10px; border-radius: 15px; font-size: 0.8rem; border: 1px solid var(--color-primary);">
+            <div style="background: rgba(255, 255, 255, 0.05); color: ${accentColor}; padding: 4px 10px; border-radius: 15px; font-size: 0.8rem; border: 1px solid ${accentColor};">
                 <i class="fas fa-clock"></i> ${timeAgo}
             </div>
-            <div style="color: #888; font-size: 0.85rem;">
+            <div style="color: #ccc; font-size: 0.85rem;">
                <i class="fas fa-map-marker-alt"></i> ${location}
             </div>
         </div>
-        <h3 class="property-title" style="font-size: 1.2rem; margin: 5px 0; color: #fff;">${title}</h3>
+        <!-- تم السماح للعنوان بالنزول لسطر ثاني -->
+        <h3 class="property-title" style="font-size: 1.2rem; margin: 5px 0; color: #fff; line-height: 1.4;">${title}</h3>
       </div>
 
-      <div class="property-details" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
-        <div class="property-detail" style="grid-column: 1 / -1; background: linear-gradient(90deg, rgba(212,175,55,0.1), transparent); border-right: 3px solid var(--color-primary);">
+      <!-- استخدام Flex Wrap بدلاً من Grid للموبايل -->
+      <div class="property-details" style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px;">
+        
+        <!-- السعر يأخذ السطر كامل -->
+        <div class="property-detail" style="flex: 1 1 100%; background: linear-gradient(90deg, rgba(255,255,255,0.05), transparent); border-right: 3px solid ${accentColor}; padding: 5px;">
           <span class="detail-icon"><i class="fas fa-tag"></i></span>
           <span class="detail-label">السعر:</span>
-          <span class="detail-value" style="color: var(--color-primary); font-size: 1.1rem;">${price}</span>
+          <span class="detail-value" style="color: ${accentColor}; font-size: 1.1rem; font-weight: bold;">${price}</span>
         </div>
-        ${property.area ? `<div class="property-detail"><span class="detail-icon"><i class="fas fa-ruler-combined"></i></span><span class="detail-label">المساحة:</span><span class="detail-value">${property.area}</span></div>` : ''}
-        ${property.rooms ? `<div class="property-detail"><span class="detail-icon"><i class="fas fa-bed"></i></span><span class="detail-label">الغرف:</span><span class="detail-value">${property.rooms}</span></div>` : ''}
+        
+        ${property.area ? `
+        <div class="property-detail" style="flex: 1 1 45%; min-width: 120px; font-size: 0.9rem; color: #ccc;">
+            <span class="detail-icon"><i class="fas fa-ruler-combined"></i></span> ${property.area}
+        </div>` : ''}
+        
+        ${property.rooms ? `
+        <div class="property-detail" style="flex: 1 1 45%; min-width: 120px; font-size: 0.9rem; color: #ccc;">
+            <span class="detail-icon"><i class="fas fa-bed"></i></span> ${property.rooms}
+        </div>` : ''}
       </div>
 
       <div style="margin-top: auto;">
           <a href="${targetUrl}" class="view-details-btn" style="display:block; text-align:center; width: 100%; margin: 0; background: transparent; border: 1px solid #444; color: #ccc; text-decoration:none; padding: 8px;">
-              التفاصيل <i class="fas fa-arrow-left" style="margin-right: 5px; color: var(--color-primary);"></i>
+              التفاصيل <i class="fas fa-arrow-left" style="margin-right: 5px; color: ${accentColor};"></i>
           </a>
       </div>
     `;
@@ -216,7 +237,8 @@ class EnhancedPropertyDisplay {
     if (!dateString) return 'جديد';
     const diff = new Date() - new Date(dateString);
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    if (days === 0) return 'اليوم';
+    if (days <= 0) return 'اليوم';
+    if (days === 1) return 'أمس';
     if (days < 30) return `منذ ${days} يوم`;
     return `منذ شهر`;
   }
