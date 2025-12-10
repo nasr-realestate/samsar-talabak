@@ -1,25 +1,24 @@
 #!/bin/bash
 set -e
 
-echo "--- 🛠️ BUILD STARTED (FINAL FIX) ---"
+echo "--- 🛠️ BUILD START ---"
 
-# 1. توليد فهارس البيانات (للموقع نفسه)
+# 1. توليد فهارس البيانات (للموقع)
 find data/properties data/requests -mindepth 1 -type d | while read dir; do
     find "$dir" -maxdepth 1 -name "*.json" ! -name "index.json" -printf '%f\n' | jq -R . | jq -s . > "$dir/index.json"
 done
 
 # 2. توليد الفهارس الرئيسية
-echo "--> Generating Indexes..."
+echo "--> Generating JSON Indexes..."
 find data/properties -name "*.json" ! -name "index.json" -print0 | xargs -0 -I {} jq -n --arg path "{}" '{id: ($path | split("/")[-1] | split(".")[0]), path: ("/" + $path), category: ($path | split("/")[-2])}' | jq -s '.' > data/properties_index.json
 find data/requests -name "*.json" ! -name "index.json" -print0 | xargs -0 -I {} jq -n --arg path "{}" '{id: ($path | split("/")[-1] | split(".")[0]), path: ("/" + $path), category: ($path | split("/")[-2])}' | jq -s '.' > data/requests_index.json
 
-# 3. بناء الموقع (Jekyll Build) - الخطوة الأولى
-echo "--> Jekyll Build..."
+# 3. بناء موقع Jekyll (يجب أن يتم هذا أولاً!)
+echo "--> Building Jekyll Site..."
 bundle exec jekyll build
 
-# 4. توليد الخريطة (Sitemap) - الخطوة الأخيرة والحاسمة
-# نضعها هنا لتكتب داخل مجلد _site بعد أن ينتهي جيكل من عمله
+# 4. توليد الخريطة المخصصة (الآن المجلد _site موجود، فنضع الخريطة فيه)
 echo "--> Injecting Custom Sitemap..."
 python3 generate_sitemap.py
 
-echo "--- ✅ DONE ---"
+echo "--- ✅ BUILD DONE ---"
