@@ -4,9 +4,11 @@ from datetime import datetime
 
 # إعدادات الموقع
 BASE_URL = "https://aqarnasr.netlify.app"
-SITEMAP_FILE = "sitemap.xml"
+# التغيير الجوهري: الكتابة داخل مجلد النشر مباشرة
+OUTPUT_DIR = "_site"
+SITEMAP_FILE = os.path.join(OUTPUT_DIR, "sitemap.xml")
 
-# الصفحات الثابتة الهامة
+# الصفحات الثابتة
 static_pages = [
     "",
     "about-us",
@@ -18,10 +20,14 @@ static_pages = [
 ]
 
 def generate_xml():
+    # التأكد من وجود مجلد النشر (لأننا سنعمل بعد بناء جيكل)
+    if not os.path.exists(OUTPUT_DIR):
+        os.makedirs(OUTPUT_DIR)
+
     xml_content = '<?xml version="1.0" encoding="UTF-8"?>\n'
     xml_content += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
 
-    # 1. إضافة الصفحات الثابتة
+    # 1. الصفحات الثابتة
     for page in static_pages:
         xml_content += '  <url>\n'
         xml_content += f'    <loc>{BASE_URL}/{page}</loc>\n'
@@ -29,16 +35,16 @@ def generate_xml():
         xml_content += '    <priority>0.8</priority>\n'
         xml_content += '  </url>\n'
 
-    # 2. إضافة العقارات (العروض)
-    # المسار: data/properties/{category}/{filename}
+    # 2. العقارات (العروض)
+    count_props = 0
     for filepath in glob.glob("data/properties/*/*.json"):
         if "index.json" in filepath: continue
         
         filename = os.path.basename(filepath)
         clean_id = filename.replace('.json', '')
+        # استخراج اسم المجلد (apartments, shops...)
         category = os.path.basename(os.path.dirname(filepath))
         
-        # تكوين الرابط الديناميكي الصحيح
         full_url = f"{BASE_URL}/details.html?id={clean_id}&amp;category={category}"
         
         xml_content += '  <url>\n'
@@ -46,8 +52,10 @@ def generate_xml():
         xml_content += '    <changefreq>monthly</changefreq>\n'
         xml_content += '    <priority>0.9</priority>\n'
         xml_content += '  </url>\n'
+        count_props += 1
 
-    # 3. إضافة الطلبات
+    # 3. الطلبات
+    count_reqs = 0
     for filepath in glob.glob("data/requests/*/*.json"):
         if "index.json" in filepath: continue
         
@@ -62,14 +70,16 @@ def generate_xml():
         xml_content += '    <changefreq>monthly</changefreq>\n'
         xml_content += '    <priority>0.7</priority>\n'
         xml_content += '  </url>\n'
+        count_reqs += 1
 
     xml_content += '</urlset>'
     
-    # كتابة الملف
+    # الكتابة القسرية في المجلد النهائي
     with open(SITEMAP_FILE, "w", encoding="utf-8") as f:
         f.write(xml_content)
     
-    print(f"✅ Sitemap generated successfully with custom dynamic links.")
+    print(f"✅ FORCED SITEMAP GENERATION: {count_props} properties, {count_reqs} requests.")
+    print(f"✅ File written to: {SITEMAP_FILE}")
 
 if __name__ == "__main__":
     generate_xml()
