@@ -13,5 +13,6 @@ gem "webrick"
 # 3. إضافات السيو والخرائط
 group :jekyll_plugins do
   gem "jekyll-seo-tag"
-  gem "jekyll-sitemap"
+  # 🛑 تم تعطيل هذه الإضافة لمنع التضارب مع السكربت المخصص
+  # gem "jekyll-sitemap"
 end
