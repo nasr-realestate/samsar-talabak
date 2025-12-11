@@ -43,3 +43,7 @@ defaults:
     values:
       layout: "default"
       image: "/assets/img/social-home.webp"
+
+# --- 7. إعدادات إضافية (مهم جداً) ---
+seo:
+  sitemap: false # 🛑 منع إضافة jekyll-seo-tag من إنشاء خريطة موقع
