@@ -1,80 +1,71 @@
 import os
-import glob
-import re
+import json
 
 BASE_URL = "https://aqarnasr.netlify.app"
-# المسار النهائي للملف الذي سنقرأه ونكتب فوقه
-SITEMAP_PATH = os.path.join('_site', 'sitemap.xml')
+OUTPUT_FILE = "sitemap.xml"
 
-def run_sitemap_modifier():
-    print("🚀 Starting Sitemap Modifier Script...")
+STATIC_PAGES = [
+    "/",
+    "/properties-filtered.html",
+    "/requests-filtered.html",
+    "/about.html",
+    "/contact.html"
+]
 
-    if not os.path.exists(SITEMAP_PATH):
-        print(f"❌ ERROR: Base sitemap not found at '{SITEMAP_PATH}'. Jekyll build might have failed.")
-        return
+def collect_json_urls():
+    urls = []
 
-    # --- 1. قراءة الروابط الموجودة حاليًا من الملف ---
-    with open(SITEMAP_PATH, 'r', encoding='utf-8') as f:
-        content = f.read()
-    
-    # استخدام set لتخزين الروابط الموجودة لضمان عدم التكرار
-    existing_urls = set(re.findall(r'<loc>(.*?)</loc>', content))
-    print(f"🔍 Found {len(existing_urls)} existing URLs in the base sitemap.")
-
-    # --- 2. البحث عن الروابط الديناميكية المفقودة ---
-    new_urls_to_add = set()
-    
-    # البحث في مجلد 'data' الأصلي عن ملفات JSON
     # العقارات
-    search_path_props = os.path.join('data', 'properties', '**', '*.json')
-    for filepath in glob.glob(search_path_props, recursive=True):
-        if "index.json" in os.path.basename(filepath): continue
-        clean_id = os.path.basename(filepath).replace('.json', '')
-        category = os.path.basename(os.path.dirname(filepath))
-        if category and category != 'properties':
-            url = f"{BASE_URL}/details.html?id={clean_id}&amp;category={category}"
-            if url not in existing_urls:
-                new_urls_to_add.add(url)
+    for root, dirs, files in os.walk("data/properties"):
+        for file in files:
+            if file.endswith(".json") and file != "index.json":
+                clean_id = file.replace(".json", "")
+                category = os.path.basename(root)
+                if category != "properties":
+                    url = f"{BASE_URL}/details.html?id={clean_id}&category={category}"
+                    urls.append(url)
 
     # الطلبات
-    search_path_reqs = os.path.join('data', 'requests', '**', '*.json')
-    for filepath in glob.glob(search_path_reqs, recursive=True):
-        if "index.json" in os.path.basename(filepath): continue
-        clean_id = os.path.basename(filepath).replace('.json', '')
-        category = os.path.basename(os.path.dirname(filepath))
-        if category and category != 'requests':
-            url = f"{BASE_URL}/request-details.html?id={clean_id}&amp;category={category}"
-            if url not in existing_urls:
-                new_urls_to_add.add(url)
+    for root, dirs, files in os.walk("data/requests"):
+        for file in files:
+            if file.endswith(".json") and file != "index.json":
+                clean_id = file.replace(".json", "")
+                category = os.path.basename(root)
+                if category != "requests":
+                    url = f"{BASE_URL}/request-details.html?id={clean_id}&category={category}"
+                    urls.append(url)
 
-    print(f"✨ Found {len(new_urls_to_add)} new dynamic URLs to add.")
+    return urls
 
-    if not new_urls_to_add:
-        print("✅ No new URLs to add. Sitemap is already up-to-date.")
-        # إضافة تعليق للتأكيد أن السكربت عمل
-        final_content = content.replace('</urlset>', '<!-- SCRIPT RUN: NO NEW URLS -->\n</urlset>')
-    else:
-        # --- 3. بناء الروابط الجديدة وإضافتها إلى الملف ---
-        new_xml_entries = ''
-        for url in sorted(list(new_urls_to_add)):
-            # سنستخدم نفس تنسيق الملف الأصلي لإضافة الروابط
-            new_xml_entries += (
-                '  <url>\n'
-                f'    <loc>{url}</loc>\n'
-                '    <changefreq>weekly</changefreq>\n'
-                '    <priority>0.7</priority>\n'
-                '  </url>\n'
-            )
-        
-        # إضافة تعليق مميز والروابط الجديدة قبل وسم الإغلاق
-        final_content = content.replace('</urlset>', f'{new_xml_entries}\n<!-- ✅ SCRIPT RUN: {len(new_urls_to_add)} URLS INJECTED -->\n</urlset>')
 
-    # --- 4. كتابة الملف النهائي ---
-    with open(SITEMAP_PATH, 'w', encoding='utf-8') as f:
-        f.write(final_content)
+def generate_sitemap():
+    print("🚀 Generating Final Sitemap.xml ...")
 
-    print(f"✅ Sitemap successfully modified and overwritten at '{SITEMAP_PATH}'.")
-    print(f"Total URLs should now be: {len(existing_urls) + len(new_urls_to_add)}")
+    all_urls = []
+
+    # إضافة الصفحات الثابتة
+    for page in STATIC_PAGES:
+        all_urls.append(f"{BASE_URL}{page}")
+
+    # إضافة الروابط الديناميكية
+    all_urls.extend(collect_json_urls())
+
+    # كتابة الملف النهائي
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        f.write('<?xml version="1.0" encoding="UTF-8"?>\n')
+        f.write('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
+
+        for url in sorted(set(all_urls)):
+            f.write("  <url>\n")
+            f.write(f"    <loc>{url}</loc>\n")
+            f.write("    <changefreq>weekly</changefreq>\n")
+            f.write("    <priority>0.8</priority>\n")
+            f.write("  </url>\n")
+
+        f.write("</urlset>")
+
+    print(f"✅ Sitemap Created Successfully with {len(all_urls)} URLs.")
+
 
 if __name__ == "__main__":
-    run_sitemap_modifier()
+    generate_sitemap()
